@@ -8,8 +8,10 @@ import svgr from "vite-plugin-svgr";
 export default defineConfig({
   plugins: [react(), svgr()],
   build: {
-    outDir: "build",
+    outDir: "dist",
     target: "esnext",
+    sourcemap: true,
+    emptyOutDir: true,
   },
   test: {
     // ...

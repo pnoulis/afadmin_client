@@ -4,9 +4,7 @@
   "description": "afadmin_client-summary",
   "homepage": "https://github.com/pnoulis/afadmin_client#readme",
   "bugs": "https://github.com/pnoulis/afadmin_client/issues",
-  "keywords": [
-    "afadmin_client-keywords"
-  ],
+  "keywords": ["afadmin_client-keywords"],
   "repository": {
     "type": "git",
     "url": "https://github.com/pnoulis/afadmin_client.git"
@@ -24,10 +22,10 @@
     "npm": ">=9.5.1"
   },
   "dependencies": {
-    "js_utils": "github:pnoulis/js_utils",
+    "js_utils": "../../lib/js_utils",
     "pino": "^8.11.0",
     "react": "^18.2.0",
-    "react_utils": "github:pnoulis/react_utils",
+    "react_utils": "../react_utils",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.10.0",
     "styled-components": "^5.3.9"

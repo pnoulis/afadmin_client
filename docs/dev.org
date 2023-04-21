@@ -1,0 +1,11 @@
+* Log
+** Integrate development work, from afadmin_core to afadmin_client
+*** DONE Flash Messages
+CLOSED: [2023-04-24 Mon 15:38]
+
+*** DONE Dialogs
+CLOSED: [2023-04-25 Tue 14:14]
+
+* How'tos
+** How to contain any element within the app boundaries.
+position: absolute;

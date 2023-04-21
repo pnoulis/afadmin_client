@@ -22,10 +22,11 @@ PRETTY_OUTPUT = npx pino-pretty
 MAKE_ENV = ./scripts/dotenv.sh --pkgdir=. --envdir=./config/env
 
 .PHONY: all
-all: run
+all: build
 
-.PHONY: node-run
-node-run:
+# ------------------------------ RUN ------------------------------ #
+.PHONY: run scratch
+run:
 	@if test -z "$$params"; then echo \
 	"make node-exec missing params: -> params=./file make node-exec"; \
 	exit 1; \
@@ -33,30 +34,29 @@ node-run:
 	$(MAKE_ENV) --mode=dev --host=dev
 	@set -a; source ./.env && node "$${params}" | $(PRETTY_OUTPUT)
 
-.PHONY: scratch
 scratch:
 	$(MAKE_ENV) --mode=dev --host=dev
 	set -a; source ./.env && node ./tmp/scratch.js | $(PRETTY_OUTPUT)
 
-# ------------------------------ RUN ------------------------------ #
-.PHONY: run run-dev run-staging run-prod
-run: run-dev
+# ------------------------------ DEV ------------------------------ #
+.PHONY: dev dev-dev dev-staging dev-prod
+dev: dev-dev
 
-run-dev:
+dev-dev:
 	$(MAKE_ENV) --mode=dev --host=dev
 	set -a; source ./.env && $(BUILD_SYS) serve --mode=dev
 
-run-staging: dirs
+dev-staging: dirs
 	$(MAKE_ENV) --mode=staging --host=dev
 	set -a; source ./.env && $(BUILD_SYS) serve --mode=staging
 
-run-prod: dirs
+dev-prod: dirs
 	$(MAKE_ENV) --mode=prod --host=dev
 	set -a; source ./.env && $(BUILD_SYS) serve --mode=prod
 
 # ------------------------------ BUILD ------------------------------ #
 .PHONY: build build-dev build-staging build-prod
-build: build-dev
+build: build-prod
 
 build-dev:
 	$(MAKE_ENV) --mode=dev --host=prod

@@ -1,19 +1,18 @@
 import * as React from "react";
+import {
+  PanelLayout,
+  PanelLayoutHeader,
+  PanelLayoutMain,
+} from "/src/app/site_wide/index.js";
 
 function RouteHome() {
   return (
-    <div>
-      <h1
-        style={{
-          textAlign: "center",
-          fontSize: "1.3rem",
-          fontWeight: "bold",
-          color: "black",
-        }}
-      >
-        Crapp, an application template generator. -_-
-      </h1>
-    </div>
+    <PanelLayout>
+      <PanelLayoutHeader />
+      <PanelLayoutMain>
+        <div>Crapp, an application template generator. -_-</div>
+      </PanelLayoutMain>
+    </PanelLayout>
   );
 }
 

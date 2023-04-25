@@ -22,7 +22,7 @@
     "npm": ">=9.5.1"
   },
   "dependencies": {
-    "js_utils": "../../lib/js_utils",
+    "js_utils": "file:../../lib/js_utils",
     "pino": "^8.11.0",
     "react": "^18.2.0",
     "react_utils": "../react_utils",

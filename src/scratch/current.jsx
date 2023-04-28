@@ -1,1 +1,1 @@
-export { default } from "./ScratchDefaultDialog.jsx";
+export { default } from "./ScratchAfmachine.jsx";

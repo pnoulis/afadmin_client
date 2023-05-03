@@ -46,7 +46,6 @@ const StyleLayoutFmMessage = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
-  text-transform: capitalize;
 `;
 
 const StyleLayoutFmRoot = styled.div`

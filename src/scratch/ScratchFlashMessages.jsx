@@ -2,7 +2,10 @@ import * as React from "react";
 import { fmAgent } from "/src/components/flash_messages/index.js";
 
 function genFm() {
-  fmAgent.info({ message: "info" });
+  fmAgent.info({
+    message:
+      "infooteuhseo ueotu heousnoeh useonthu eosuheouseousteo hsoetuoestuhoes",
+  });
   fmAgent.warn({ message: "warn" });
   fmAgent.error({ message: "error" });
   fmAgent.success({ message: "success" });

@@ -15,5 +15,6 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("app-react-root")).render(
   <React.StrictMode>
     <RouterProvider router={router} />
+    errorElement: <ErrorPage />,
   </React.StrictMode>
 );

@@ -5,6 +5,7 @@ import {
   PanelLayoutMain,
 } from "/src/app/site_wide/index.js";
 import { RegistrationPanelHeader } from "./RegistrationPanelHeader.jsx";
+import { Outlet } from "react-router-dom";
 
 function RouteRegistration() {
   return (
@@ -13,7 +14,7 @@ function RouteRegistration() {
         <RegistrationPanelHeader />
       </PanelLayoutHeader>
       <PanelLayoutMain>
-        <div>route registration</div>
+        <Outlet />
       </PanelLayoutMain>
     </PanelLayout>
   );

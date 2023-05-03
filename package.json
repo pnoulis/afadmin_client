@@ -25,7 +25,7 @@
     "js_utils": "file:../../lib/js_utils",
     "pino": "^8.11.0",
     "react": "^18.2.0",
-    "react_utils": "../react_utils",
+    "react_utils": "file:../react_utils",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.10.0",
     "styled-components": "^5.3.9"

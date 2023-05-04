@@ -45,7 +45,6 @@ const DialogDescription = styled(BasicDialog.Description)`
   font-size: var(--tx-nl);
   letter-spacing: 1px;
   word-spacing: 2px;
-  text-transform: capitalize;
 `;
 
 const DialogClose = styled(BasicDialog.Close)`

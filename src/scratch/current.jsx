@@ -1,1 +1,1 @@
-export { default } from "./ScratchAfmachine";
+export { default } from "./ScratchAfmachine.jsx";

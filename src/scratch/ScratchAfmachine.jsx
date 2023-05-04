@@ -5,7 +5,8 @@ import {
 } from "/src/afmachine_interface/index.js";
 
 function RequestAfmachine() {
-  const { listPlayers, loginPlayer, registerPlayer } = useAfmachineCtx();
+  const { listPlayers, loginPlayer, registerPlayer, searchPlayer } =
+    useAfmachineCtx();
   return (
     <div>
       <h1>Request afmachine</h1>
@@ -47,6 +48,15 @@ function RequestAfmachine() {
         }}
       >
         register player
+      </h3>
+      <h3
+        onClick={() =>
+          searchPlayer("@maze.com")
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err))
+        }
+      >
+        search player
       </h3>
     </div>
   );

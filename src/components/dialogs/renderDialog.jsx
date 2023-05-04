@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactClient from "react-dom/client";
 
-function renderDialog(Dialog) {
+function renderDialog(Dialog, handleClose) {
   if (document.getElementById("dialog-render")) {
     return;
   }
@@ -14,9 +14,9 @@ function renderDialog(Dialog) {
       <React.StrictMode>
         {React.cloneElement(Dialog(), {
           onClose: (confirmed) => {
-            Dialog().props.onClose(confirmed);
             setTimeout(() => {
               document.getElementById("dialog-render").remove();
+              handleClose(confirmed);
             }, 0);
           },
         })}

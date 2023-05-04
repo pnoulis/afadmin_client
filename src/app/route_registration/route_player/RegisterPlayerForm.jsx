@@ -12,15 +12,9 @@ import { ReactComponent as SaveIcon } from "agent_factory.shared/ui/icons/save_1
 import styled from "styled-components";
 
 const TextInput = styled(TextInput_0)`
-  .input {
-    border: 2px solid var(--grey-medium);
-    background-color: white;
-    border-radius: var(--br-lg);
-  }
-
-  .input:focus ~ label,
-  input:not(:placeholder-shown) ~ label {
-    background-color: white;
+  text-transform: uppercase !important;
+  & > * {
+    font-size: var(--tx-sm) !important;
   }
 `;
 

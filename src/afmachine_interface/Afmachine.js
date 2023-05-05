@@ -34,6 +34,12 @@ if (!Afmachine.backend.initialized) {
       .run(() => req())
       .then((res) => parseResponse(req, res))
       .catch((err) => parseError(req, err));
+
+  Afmachine.subscribe = (route, options, cb) =>
+    Afmachine.backend.backend.subscribe(route, options, cb);
+
+  Afmachine.publish = (route, payload, options) =>
+    Afmachine.backend.backend.publish(route, payload, options);
 }
 
 export { Afmachine };

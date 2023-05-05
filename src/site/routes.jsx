@@ -1,5 +1,5 @@
 import * as React from "react";
-import { App } from "./App.jsx";
+import { Site } from "/src/app/index.js";
 import { RouteHome } from "./route_home/index.js";
 import {
   RouteRegistration,
@@ -11,7 +11,7 @@ import {
 const routesApp = [
   {
     path: "/",
-    element: <App />,
+    element: <Site />,
     children: [
       {
         path: "/",

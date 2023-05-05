@@ -1,7 +1,7 @@
 import * as React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { routesApp } from "./app/index.js";
+import { routesApp } from "./site/index.js";
 import { routesScratch } from "./scratch/routes.jsx";
 
 const router = createBrowserRouter([

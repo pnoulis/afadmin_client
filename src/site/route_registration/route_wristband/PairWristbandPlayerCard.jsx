@@ -5,6 +5,7 @@ import { ReactComponent as TrashIcon } from "agent_factory.shared/ui/icons/x-103
 import { SvgBall } from "react_utils/svgs";
 import { mapWristbandColor } from "agent_factory.shared/utils/index.js";
 import { useRegistrationCtx } from "/src/stores/index.js";
+import { useAppCtx } from "/src/app/index.js";
 
 const StylePlayerRemoveSvg = styled(SvgBall)`
   background-color: var(--black-subtle) !important;
@@ -112,14 +113,10 @@ const StyleWristband = styled.div`
 
 function getPlayerStatus(player) {
   if (player.wristband?.active) {
-    return "In game";
+    return "registered";
   }
 
-  if (player.wristbandMerged) {
-    return "Paired";
-  }
-
-  return "Registered";
+  return "empty";
 }
 
 const StyleWristbandSignal = styled(SvgBall)`
@@ -135,9 +132,11 @@ const StyleWristbandSignal = styled(SvgBall)`
   ${({ pairing }) => (pairing ? animatePairing : "")};
 `;
 
-function PairWristbandPlayerCard({ player: gPlayer }) {
+function PairWristbandPlayerCard({ player }) {
   const { players, setPlayers } = useRegistrationCtx();
-  const [player, setPlayer] = React.useState(gPlayer);
+  const { togglePlayerWristbandPairing } = useAppCtx();
+
+  console.log(players);
 
   return (
     <StylePlayer>
@@ -179,32 +178,9 @@ function PairWristbandPlayerCard({ player: gPlayer }) {
         <div className="wristband-signal">
           <StyleWristbandSignal
             onClick={(e) => {
-              if (player.wristband.pairing) {
-                setPlayer({
-                  ...player,
-                  wristband: {
-                    ...player.wristband,
-                    pairing: false,
-                  },
-                });
-              } else {
-                setPlayers(
-                  players.map((p) => ({
-                    ...p,
-                    wristband: {
-                      ...p.wristband,
-                      pairing: false,
-                    },
-                  }))
-                );
-                setPlayer({
-                  ...player,
-                  wristband: {
-                    ...player.wristband,
-                    pairing: true,
-                  },
-                });
-              }
+              togglePlayerWristbandPairing(players, player, (players) =>
+                setPlayers(players)
+              );
             }}
             pairing={player.wristband?.pairing}
             className={"wristband"}

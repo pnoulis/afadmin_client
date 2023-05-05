@@ -1,12 +1,15 @@
 import * as React from "react";
-import {
-  useAfmachineCtx,
-  ProvideAfmachine,
-} from "/src/afmachine_interface/index.js";
+import { useAfmachine } from "/src/afmachine_interface/index.js";
 
 function RequestAfmachine() {
-  const { listPlayers, loginPlayer, registerPlayer, searchPlayer } =
-    useAfmachineCtx();
+  const {
+    Afmachine,
+    listenWristbandScan,
+    listPlayers,
+    loginPlayer,
+    registerPlayer,
+    searchPlayer,
+  } = useAfmachine();
   return (
     <div>
       <h1>Request afmachine</h1>
@@ -58,17 +61,25 @@ function RequestAfmachine() {
       >
         search player
       </h3>
+
+      <h3
+        onClick={() => {
+          listenWristbandScan({})
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
+        }}
+      >
+        pair player wristband
+      </h3>
     </div>
   );
 }
 
 export default function ScratchAfmachine() {
   return (
-    <ProvideAfmachine>
-      <div>
-        <h1>Scratch Afmachine</h1>
-        <RequestAfmachine />
-      </div>
-    </ProvideAfmachine>
+    <div>
+      <h1>Scratch Afmachine</h1>
+      <RequestAfmachine />
+    </div>
   );
 }

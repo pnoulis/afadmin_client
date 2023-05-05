@@ -3,6 +3,7 @@ import styled from "styled-components";
 const StyleLayoutFm = styled.div`
   pointer-events: none;
   padding: 10px 20px;
+  width: 100%;
   min-width: 400px;
   max-width: 600px;
   width: max-content;
@@ -46,6 +47,7 @@ const StyleLayoutFmMessage = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
+  word-break: break-all;
 `;
 
 const StyleLayoutFmRoot = styled.div`

@@ -1,4 +1,4 @@
-import { home } from "/src/app/links.jsx";
+import { home } from "/src/site/links.jsx";
 import { ReactComponent as Logo } from "agent_factory.shared/ui/brand/maze_logo.svg";
 import { Svg } from "react_utils/svgs";
 import styled from "styled-components";

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useAfmachineCtx } from "/src/afmachine_interface";
+import { useAppCtx } from "/src/app/index.js";
 import {
   useForm,
   FormProvider,
@@ -19,7 +19,7 @@ const TextInput = styled(TextInput_0)`
 `;
 
 function RegisterPlayerForm({ className }) {
-  const { registerPlayer } = useAfmachineCtx();
+  const { registerPlayer } = useAppCtx();
   const [form, setForm] = useForm({
     submitting: false,
     fields: {

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Outlet } from "react-router-dom";
 
 // ASSETS
 import "agent_factory.shared/ui/reset.css";
@@ -17,7 +18,7 @@ import {
   AppSidebar,
 } from "./site_wide/index.js";
 
-function Site({ children }) {
+function Site() {
   return (
     <AppLayout>
       <AppLayoutHeader>
@@ -26,7 +27,9 @@ function Site({ children }) {
       <AppLayoutSidebar>
         <AppSidebar />
       </AppLayoutSidebar>
-      <AppLayoutMain>{children}</AppLayoutMain>
+      <AppLayoutMain>
+        <Outlet />
+      </AppLayoutMain>
     </AppLayout>
   );
 }

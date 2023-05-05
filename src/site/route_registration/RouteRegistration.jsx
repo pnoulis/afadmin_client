@@ -3,7 +3,7 @@ import {
   PanelLayout,
   PanelLayoutHeader,
   PanelLayoutMain,
-} from "/src/app/site_wide/index.js";
+} from "/src/site/site_wide/index.js";
 import { RegistrationPanelHeader } from "./RegistrationPanelHeader.jsx";
 import { ProvideRegistrationCtx } from "/src/stores/index.js";
 import { Outlet } from "react-router-dom";

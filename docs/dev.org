@@ -4,8 +4,22 @@
 CLOSED: [2023-04-24 Mon 15:38]
 
 *** DONE Dialogs
-CLOSED: [2023-04-25 Tue 14:14]
+CLOSED: [2023-04-25 Tue 14:
+** Separate the application logic
+I want to be able to:
 
+- have all controllers defined in their own directory.
+  This allows the decoupling of the controllers from the view.
+- The view must have an easy way to interact with the model
+- The controllers must take into account react's model
+
+*** implementation
+The <App> provides the global model to the app through context.
+That takes into account the react model.
+
+When changes will occur on the model, the app will render the new model.
+* Dealing with wristband subscriptions
+user toggles pairing mode.
 * How'tos
 ** How to contain any element within the app boundaries.
 position: absolute;

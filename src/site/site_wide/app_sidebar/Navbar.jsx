@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import { registration } from "/src/app/links.jsx";
+import { registration } from "/src/site/links.jsx";
 
 const StyleLayoutNavbar = styled.ul`
   all: unset;

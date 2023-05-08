@@ -9,6 +9,8 @@ function RequestAfmachine() {
     loginPlayer,
     registerPlayer,
     searchPlayer,
+    registerWristband,
+    unregisterWristband,
   } = useAfmachine();
   return (
     <div>
@@ -40,11 +42,11 @@ function RequestAfmachine() {
       <h3
         onClick={() => {
           registerPlayer({
-            username: "yolo",
-            name: "yolo_name",
-            surname: "yolo_surname",
-            password: "yolo_password",
-            email: "yolo_email@gmail.com",
+            username: "test10",
+            name: "test10_name",
+            surname: "test10_surname",
+            password: "test10_password",
+            email: "test10@gmail.com",
           })
             .then((res) => console.log(res))
             .catch((err) => console.log(err));
@@ -70,6 +72,32 @@ function RequestAfmachine() {
         }}
       >
         pair player wristband
+      </h3>
+      <h3
+        onClick={() =>
+          registerWristband({
+            username: "test10",
+            wristbandNumber: 100,
+          })
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err))
+        }
+      >
+        register wristband
+      </h3>
+      <h3
+        onClick={() =>
+          unregisterWristband({
+            username: "test10",
+            wristbandNumber: 100,
+          })
+            .then((res) => {
+              console.log("WRISTBAND UNREGISTERED");
+            })
+            .catch((err) => console.log(err))
+        }
+      >
+        unregister wristband
       </h3>
     </div>
   );

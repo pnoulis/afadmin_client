@@ -134,7 +134,7 @@ const StyleWristbandSignal = styled(SvgBall)`
 
 function PairWristbandPlayerCard({ player }) {
   const { players, setPlayers } = useRegistrationCtx();
-  const { togglePlayerWristbandPairing } = useAppCtx();
+  const { toggleWristbandPairing } = useAppCtx();
 
   console.log(players);
 
@@ -178,9 +178,21 @@ function PairWristbandPlayerCard({ player }) {
         <div className="wristband-signal">
           <StyleWristbandSignal
             onClick={(e) => {
-              togglePlayerWristbandPairing(players, player, (players) =>
-                setPlayers(players)
-              );
+              toggleWristbandPairing(players, player, (err, registered) => {
+                setPlayers(
+                  players.map((player) =>
+                    player.username === registered.username
+                      ? registered
+                      : {
+                          ...player,
+                          wristband: {
+                            ...player.wristband,
+                            pairing: false,
+                          },
+                        }
+                  )
+                );
+              }).then((players) => setPlayers(players));
             }}
             pairing={player.wristband?.pairing}
             className={"wristband"}

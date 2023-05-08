@@ -1,16 +1,8 @@
 import * as Errors from "/src/errors.js";
 import { fmAgent } from "/src/components/flash_messages/index.js";
-import {
-  Dialog,
-  DialogHeading,
-  DialogDescription,
-  DialogClose,
-  DialogConfirm,
-  renderDialog,
-} from "/src/components/dialogs/index.js";
 
 function handleResponse(res) {
-  return res;
+  return res.players;
 }
 
 function handleError(err) {
@@ -19,20 +11,22 @@ function handleError(err) {
       validationErrors: err.cause.validationErrors,
     };
   } else if (err instanceof Errors.ModelError) {
+    fmAgent.warn({ message: err.message });
     throw {
       modelError: err.message,
     };
   } else if (err instanceof Errors.TimeoutError) {
     window.location.assign("/408.html");
   } else {
-    fmAgent.error({ message: err.message });
     window.location.assign("/500.html");
   }
 }
 
-export default (Afmachine) => ({
-  event: async (payload) =>
-    Afmachine.request(() => Afmachine.players.login(payload))
+export default (appRef) => ({
+  searchPlayer: async (player) =>
+    appRef.current.Afmachine.request(() =>
+      appRef.current.Afmachine.players.search(player)
+    )
       .then(handleResponse)
       .catch(handleError),
 });

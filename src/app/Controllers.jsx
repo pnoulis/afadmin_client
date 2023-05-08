@@ -42,9 +42,13 @@ a new wristband`,
       onPlayerSelection(player);
     } else {
       renderDialog(DialogUnpairWristband, (unpair) => {
+        console.log("RENDER DIALOG RETURN");
         if (!unpair) return;
-
-        onPlayerSelection(player);
+        const { unregisterWristband } = getControllers(app);
+        unregisterWristband(player, (unregistered) => {
+          onPlayerSelection(unregistered);
+        });
+        // onPlayerSelection(player);
       });
     }
   },
@@ -84,7 +88,7 @@ a new wristband`,
       app.listenersRef.current.push({
         type: "wristbandScan",
         cb: ({ wristbandNumber, wristbandColor }) => {
-          const { registerWristband } = app;
+          const { registerWristband } = app.Afmachine;
 
           registerWristband({ username, wristbandNumber }).then(() => {
             onPlayersChange(
@@ -126,6 +130,53 @@ a new wristband`,
         };
       })
     );
+  },
+  unregisterWristband: (player, onPlayerChange) => {
+    const { unregisterWristband: _unregisterWristband } = app.Afmachine;
+
+    _unregisterWristband(player)
+      .then((res) => {
+        onPlayerChange({
+          ...player,
+          wristbandMerged: false,
+          wristband: {
+            wristbandColor: null,
+            wristbandNumber: null,
+            active: false,
+            pairing: false,
+          },
+        });
+      })
+      .catch((err) => console.log(err));
+  },
+
+  registerWristband: (player, onPlayerChange) => {
+    const { registerWristband: _registerWristband } = app.Afmachine;
+
+    _registerWristband({ username, wristbandNumber }).then(() => {
+      onPlayersChange(
+        players.map((p) => {
+          if (p.username === username)
+            return {
+              ..._player,
+              wristband: {
+                ..._player.wristband,
+                wristbandNumber,
+                wristbandColor,
+                active: true,
+                pairing: false,
+              },
+            };
+          return {
+            ...p,
+            wristband: {
+              ...p.wristband,
+              pairing: false,
+            },
+          };
+        })
+      );
+    });
   },
 });
 

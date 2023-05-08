@@ -11,13 +11,43 @@ I want to be able to:
 - have all controllers defined in their own directory.
   This allows the decoupling of the controllers from the view.
 - The view must have an easy way to interact with the model
+  through actions
 - The controllers must take into account react's model
+  Changes in the model for which the view should be notified must
+  cause a re-render of the component tree.
+
+  What about encapsulation? Maybe some part of the hierarchy
+  defines its own model.
+- A controller must be able to invoke any other controller
+- User actions triggering controllers should take into account rapid fire.
+
+  One must take into account controllers which sometimes behave asynchcronously and
+  other times asynchronously. In particular one must be weary of situations such as:
+
+  - a user event, such as clicking a button.
+  - The user might click the button in very rapid succession causing problems.
+
+    Such behavior should be buffered. Only the last user initiated event should
+    be taken into account.
+
+    What happens if the user initiates the actions when the action is already midway?
+
+    Controllers must be either asynchronous or synchronous.
+
+    If they are asynchronous and some of the asynchronous calls needs to communicate
+    with the backend end then this following situation must be taken into consideration:
+
+    - A user initiated event communicates with the backend.
+    - A second user initiated event of the same type invokes the controller
+      but this time the controller does not need to communicate with the backend
+      but must still perform some asynchronous call.
 
 *** implementation
 The <App> provides the global model to the app through context.
 That takes into account the react model.
 
 When changes will occur on the model, the app will render the new model.
+
 * Dealing with wristband subscriptions
 user toggles pairing mode.
 * How'tos

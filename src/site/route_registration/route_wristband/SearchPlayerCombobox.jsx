@@ -22,6 +22,7 @@ import {
   renderDialog,
 } from "/src/components/dialogs/index.js";
 import { fmAgent } from "/src/components/flash_messages/index.js";
+import selectPlayerWristbandRegistration from "../../../app/controllers/selectPlayerWristbandRegistration.jsx";
 
 function DialogUnpairWristband() {
   return (
@@ -157,7 +158,7 @@ const StyleSearchPlayerCombobox = styled.article`
 
 function SearchPlayerCombobox() {
   const { players, setPlayers } = useRegistrationCtx();
-  const { searchPlayer, selectPlayerForWristbandRegistration } = useAppCtx();
+  const { searchPlayer, selectPlayerWristbandRegistration } = useAppCtx();
   const remoteData = useRemoteData({ getRemoteData: searchPlayer });
 
   return (
@@ -177,9 +178,9 @@ function SearchPlayerCombobox() {
               };
             }}
             onSelect={(player) =>
-              selectPlayerForWristbandRegistration(player, (player) =>
-                setPlayers([...players, player])
-              )
+              selectPlayerWristbandRegistration(player).then((res) => {
+                setPlayers([...players, res]);
+              })
             }
           >
             <StyleTrigger placeholder="username or email" />

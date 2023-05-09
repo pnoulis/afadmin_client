@@ -1,21 +1,14 @@
 import * as React from "react";
 import styled from "styled-components";
-import { registration } from "/src/site/links.jsx";
+import { registration, merge } from "/src/site/links.jsx";
 
 const StyleLayoutNavbar = styled.ul`
   all: unset;
-  /* Type */
   box-sizing: border-box;
-  (display):flex ;
+  display: flex;
   flex-flow: column nowrap;
-  column-gap: 2px;
-  /* Dimensions */
-  /* Position */
-  /* Fonts */
-  /* Effects */
+  gap: 10px;
   list-style: none;
-  /* Children */
-
   li {
     flex: 1;
   }
@@ -63,6 +56,7 @@ function Navbar() {
       <StyleNavbarLink to={registration.path}>
         {registration.label}
       </StyleNavbarLink>
+      <StyleNavbarLink to={merge.path}>{merge.label}</StyleNavbarLink>
     </StyleLayoutNavbar>
   );
 }

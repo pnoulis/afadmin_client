@@ -1,19 +1,25 @@
-import getRegisterPlayer from "./controllers/registerPlayer.jsx";
-import getLoginPlayer from "./controllers/loginPlayer.jsx";
-import getSelectPlayerWristbandRegistration from "./controllers/selectPlayerWristbandRegistration.jsx";
-import getUnregisterWristband from "./controllers/unregisterWristband.jsx";
-import getToggleWristbandPairing from "./controllers/toggleWristbandPairing.jsx";
-import getRegisterWristband from "./controllers/registerWristband.jsx";
-import getSearchPlayer from "./controllers/searchPlayer.jsx";
+import registerPlayer from "./controllers/registerPlayer.jsx";
+import loginPlayer from "./controllers/loginPlayer.jsx";
+import unregisterWristband from "./controllers/unregisterWristband.jsx";
+import toggleWristbandPairing from "./controllers/toggleWristbandPairing.jsx";
+import registerWristband from "./controllers/registerWristband.jsx";
+import searchPlayer from "./controllers/searchPlayer.jsx";
+import addPlayerWristbandRegistrationQueue from "./controllers/addPlayerWristbandRegistrationQueue.jsx";
+import removePlayerWristbandRegistrationQueue from "./controllers/removePlayerWristbandRegistrationQueue.jsx";
+import listRegisteredPlayers from "./controllers/listRegisteredPlayers.jsx";
+import listAvailablePlayers from "./controllers/listAvailablePlayers.jsx";
 
 const getControllers = (app) => ({
-  ...getRegisterPlayer(app),
-  ...getLoginPlayer(app),
-  ...getUnregisterWristband(app),
-  ...getRegisterWristband(app),
-  ...getSelectPlayerWristbandRegistration(app),
-  ...getToggleWristbandPairing(app),
-  ...getSearchPlayer(app),
+  ...registerPlayer(app),
+  ...loginPlayer(app),
+  ...unregisterWristband(app),
+  ...registerWristband(app),
+  ...toggleWristbandPairing(app),
+  ...searchPlayer(app),
+  ...addPlayerWristbandRegistrationQueue(app),
+  ...removePlayerWristbandRegistrationQueue(app),
+  ...listRegisteredPlayers(app),
+  ...listAvailablePlayers(app),
 });
 
 export { getControllers };

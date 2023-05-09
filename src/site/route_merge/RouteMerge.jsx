@@ -4,23 +4,23 @@ import {
   PanelLayoutHeader,
   PanelLayoutMain,
 } from "/src/site/site_wide/index.js";
-import { RegistrationPanelHeader } from "./RegistrationPanelHeader.jsx";
-import { ProvideStoreRegistration } from "/src/stores/index.js";
+import { ProvideStoreMerge } from "/src/stores/index.js";
 import { Outlet } from "react-router-dom";
+import { MergePanelHeader } from "./MergePanelHeader.jsx";
 
-function RouteRegistration() {
+function RouteMerge() {
   return (
     <PanelLayout>
       <PanelLayoutHeader>
-        <RegistrationPanelHeader />
+        <MergePanelHeader />
       </PanelLayoutHeader>
       <PanelLayoutMain>
-        <ProvideStoreRegistration>
+        <ProvideStoreMerge>
           <Outlet />
-        </ProvideStoreRegistration>
+        </ProvideStoreMerge>
       </PanelLayoutMain>
     </PanelLayout>
   );
 }
 
-export { RouteRegistration };
+export { RouteMerge };

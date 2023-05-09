@@ -1,13 +1,31 @@
 import * as React from "react";
-const RegistrationCtx = React.createContext(null);
-const useRegistrationCtx = () => {
-  const ctx = React.useContext(RegistrationCtx);
+const CtxRegistration = React.createContext(null);
+const useCtxRegistration = () => {
+  const ctx = React.useContext(CtxRegistration);
   if (ctx == null) {
-    throw new Error("<ProvideRegistrationCtx/> missing");
+    throw new Error("<ProvideCtxRegistration/> missing");
   }
   return ctx;
 };
-const ProvideRegistrationCtx = ({ value, children }) => (
-  <RegistrationCtx.Provider value={value}>{children}</RegistrationCtx.Provider>
+const ProvideCtxRegistration = ({ value, children }) => (
+  <CtxRegistration.Provider value={value}>{children}</CtxRegistration.Provider>
 );
-export { useRegistrationCtx, ProvideRegistrationCtx };
+const useModelRegistration = () => {
+  const [modelRegistration, setModelRegistration] = React.useState({
+    players: [],
+  });
+  const modelRegistrationRef = React.useRef(null);
+  modelRegistrationRef.current = modelRegistration;
+  return {
+    ...modelRegistration,
+    setModelRegistration,
+    modelRegistrationRef,
+  };
+};
+function ProvideStoreRegistration({ children }) {
+  const model = useModelRegistration();
+  return (
+    <ProvideCtxRegistration value={model}>{children}</ProvideCtxRegistration>
+  );
+}
+export { useCtxRegistration, ProvideStoreRegistration };

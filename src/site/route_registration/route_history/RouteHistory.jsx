@@ -1,5 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
+import { useLoaderData } from "react-router-dom";
+import { TablePlayers } from "./TablePlayers.jsx";
 
 const StyleRouteHistory = styled.div`
   width: 100%;
@@ -10,7 +12,12 @@ const StyleRouteHistory = styled.div`
 `;
 
 function RouteHistory() {
-  return <StyleRouteHistory>route history</StyleRouteHistory>;
+  const players = useLoaderData();
+  return (
+    <StyleRouteHistory>
+      <TablePlayers rows={players} />
+    </StyleRouteHistory>
+  );
 }
 
 export { RouteHistory };

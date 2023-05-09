@@ -7,6 +7,12 @@ import {
   RouteWristband,
   RouteHistory,
 } from "./route_registration/index.js";
+import { RouteMerge, RouteTeam } from "./route_merge/index.js";
+import { useAfmachine } from "/src/afmachine_interface/index.js";
+import { getControllers } from "/src/app/index.js";
+
+const app = { current: { Afmachine: useAfmachine().Afmachine } };
+const { listRegisteredPlayers, listAvailablePlayers } = getControllers(app);
 
 const routesApp = [
   {
@@ -32,6 +38,18 @@ const routesApp = [
           {
             path: "/registration/player/history",
             element: <RouteHistory />,
+            loader: async () => listRegisteredPlayers(),
+          },
+        ],
+      },
+      {
+        path: "/merge",
+        element: <RouteMerge />,
+        loader: async () => listAvailablePlayers(),
+        children: [
+          {
+            path: "/merge",
+            element: <RouteTeam />,
           },
         ],
       },

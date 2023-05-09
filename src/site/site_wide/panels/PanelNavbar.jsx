@@ -7,7 +7,7 @@ const StylePanelNavbar = styled.nav`
   all: unset;
   box-sizing: border-box;
   display: block;
-  width: max-content;
+  width: 100%;
   height: 100%;
   padding: 3px 0;
 
@@ -18,14 +18,14 @@ const StylePanelNavbar = styled.nav`
     flex-flow: row nowrap;
     align-items: center;
     gap: 10px;
-    width: max-content;
+    width: 100%;
     height: 100%;
     list-style: none;
   }
 
   .navbar-list-item {
-    width: 100%;
     height: 100%;
+    width: 150px;
   }
 `;
 

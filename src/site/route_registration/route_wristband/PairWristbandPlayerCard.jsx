@@ -4,7 +4,7 @@ import { ReactComponent as Signal } from "agent_factory.shared/ui/icons/signal_1
 import { ReactComponent as TrashIcon } from "agent_factory.shared/ui/icons/x-10329.svg";
 import { SvgBall } from "react_utils/svgs";
 import { mapWristbandColor } from "agent_factory.shared/utils/index.js";
-import { useRegistrationCtx } from "/src/stores/index.js";
+import { useCtxRegistration } from "/src/stores/index.js";
 import { useAppCtx } from "/src/app/index.js";
 
 const StylePlayerRemoveSvg = styled(SvgBall)`
@@ -133,10 +133,10 @@ const StyleWristbandSignal = styled(SvgBall)`
 `;
 
 function PairWristbandPlayerCard({ player }) {
-  const { players, setPlayers } = useRegistrationCtx();
-  const { toggleWristbandPairing } = useAppCtx();
-
-  console.log(players);
+  const { players, modelRegistrationRef, setModelRegistration } =
+    useCtxRegistration();
+  const { toggleWristbandPairing, removePlayerWristbandRegistrationQueue } =
+    useAppCtx();
 
   return (
     <StylePlayer>
@@ -179,8 +179,8 @@ function PairWristbandPlayerCard({ player }) {
           <StyleWristbandSignal
             onClick={(e) => {
               toggleWristbandPairing(players, player, (err, registered) => {
-                setPlayers(
-                  players.map((player) =>
+                setModelRegistration({
+                  players: modelRegistrationRef.current.players.map((player) =>
                     player.username === registered.username
                       ? registered
                       : {
@@ -190,9 +190,9 @@ function PairWristbandPlayerCard({ player }) {
                             pairing: false,
                           },
                         }
-                  )
-                );
-              }).then((players) => setPlayers(players));
+                  ),
+                });
+              }).then((queue) => setModelRegistration({ players: queue }));
             }}
             pairing={player.wristband?.pairing}
             className={"wristband"}
@@ -203,10 +203,12 @@ function PairWristbandPlayerCard({ player }) {
         </div>
       </StyleWristband>
       <PlayerRemove
+        tabIndex={-1}
         onClick={(e) => {
           e.preventDefault();
-          setPlayers(players.filter((p) => p.username !== player.username));
-          document.getElementById("players-trigger").focus();
+          removePlayerWristbandRegistrationQueue(players, player).then(
+            (queue) => setModelRegistration({ players: queue })
+          );
         }}
       />
       <div className={"status"}></div>

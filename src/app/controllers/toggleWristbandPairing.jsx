@@ -64,7 +64,14 @@ export default (appRef) => ({
                   wristbandColor,
                 },
               })
-              .then((registered) => onPaired(null, registered))
+              .then((registered) => {
+                // remove all wristband scan subscriptions
+                appRef.current.listenersRef.current =
+                  appRef.current.listenersRef.current.filter(
+                    (l) => l.type !== "wristbandScan"
+                  );
+                onPaired(null, registered);
+              })
               .catch(onPaired);
           },
         });
@@ -82,94 +89,5 @@ export default (appRef) => ({
               }
         )
       );
-
-      // end
     }),
 });
-
-// export default (appRef) => ({
-//   toggleWristbandPairing: (players, player, onToggle) => {
-//     if (!player?.wristband) {
-//       throw new Error("Playing missing wristband");
-//     }
-//     // Remove all wristband scan subscriptions
-//     appRef.current.listenersRef.current = app.listenersRef.current.filter(
-//       (l) => l.type !== "wristbandScan"
-//     );
-
-//     if (player?.wristband?.active) {
-//       return appRef.current.unregisterWristband(player, (p) =>
-//         toggleWristbandPairing(players, p, onToggle)
-//       );
-//     }
-
-//     if (player?.wristband?.pairing) {
-//       player = {
-//         ...player,
-//         wristband: {
-//           ...player.wristband,
-//           pairing: false,
-//         },
-//       };
-//     } else {
-//       player = {
-//         ...player,
-//         wristband: {
-//           ...player.wristband,
-//           pairing: true,
-//         },
-//       };
-
-//       appRef.current.listenersRef.current.push({
-//         type: "wristbandScan",
-//         cb: ({ wristbandNumber, wristbandColor }) => {
-//           const Afmachine = appRef.current.Afmachine.Afmachine;
-//           Afmachine(() =>
-//             Afmachine.players.registerWristband({
-//               username: player.username,
-//               wristbandNumber,
-//             })
-//           ).then(handleResponse);
-//           then((res) =>
-//             onToggle(
-//               players.map((p) =>
-//                 p.username === player.username
-//                   ? {
-//                       ...player,
-//                       wristband: {
-//                         ...player.wristband,
-//                         wristbandNumber,
-//                         wristbandColor,
-//                         active: true,
-//                         pairing: false,
-//                       },
-//                     }
-//                   : {
-//                       ...p,
-//                       wristband: {
-//                         ...p.wristband,
-//                         pairing: false,
-//                       },
-//                     }
-//               )
-//             )
-//           ).catch(handleError);
-//         },
-//       });
-//     }
-
-//     onToggle(
-//       players.map((p) =>
-//         p.username === player.username
-//           ? player
-//           : {
-//               ...p,
-//               wristband: {
-//                 ...p.wristband,
-//                 pairing: false,
-//               },
-//             }
-//       )
-//     );
-//   },
-// });

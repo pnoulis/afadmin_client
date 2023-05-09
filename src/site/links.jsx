@@ -50,10 +50,21 @@ const registrationHistory = {
   ),
 };
 
+const merge = {
+  path: "/merge",
+  label: "merge",
+  asComponent: ({ children, ...props }) => (
+    <NavLink to="/merge" {...props}>
+      {children}
+    </NavLink>
+  ),
+};
+
 export {
   home,
   registration,
   registrationPlayer,
   registrationWristband,
   registrationHistory,
+  merge,
 };

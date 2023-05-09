@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import { ReactComponent as WristbandIcon } from "agent_factory.shared/ui/icons/wristband_image.svg";
-import { useRegistrationCtx } from "/src/stores/index.js";
+import { useCtxRegistration } from "/src/stores/index.js";
 import { PairWristbandPlayerCard } from "./PairWristbandPlayerCard.jsx";
 
 const StylePairWristband = styled.section`
@@ -17,6 +17,7 @@ const StylePairWristband = styled.section`
   background-color: var(--grey-base);
   padding: 15px 15px;
   border-radius: var(--br-lg);
+  overflow: auto;
 `;
 
 const StyleWristbandIcon = styled.div`
@@ -35,7 +36,7 @@ const StyleWristbandIcon = styled.div`
 `;
 
 function PairWristband({ className, ...props }) {
-  const { players } = useRegistrationCtx();
+  const { players } = useCtxRegistration();
   return (
     <StylePairWristband className={className} {...props}>
       {players.map((p) => {

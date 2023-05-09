@@ -12,30 +12,7 @@ import {
 } from "react_utils";
 import { useAppCtx } from "/src/app/index.js";
 import { SearchPlayerCard } from "./SearchPlayerCard.jsx";
-import { useRegistrationCtx } from "/src/stores/index.js";
-import {
-  Dialog,
-  DialogHeading,
-  DialogDescription,
-  DialogClose,
-  DialogConfirm,
-  renderDialog,
-} from "/src/components/dialogs/index.js";
-import { fmAgent } from "/src/components/flash_messages/index.js";
-import selectPlayerWristbandRegistration from "../../../app/controllers/selectPlayerWristbandRegistration.jsx";
-
-function DialogUnpairWristband() {
-  return (
-    <Dialog initialOpen>
-      <DialogHeading>Unpair Wristband?</DialogHeading>
-      <DialogDescription>
-        It seems the player has already registered a wristband.
-      </DialogDescription>
-      <DialogClose tabIndex={0}>cancel</DialogClose>
-      <DialogConfirm>unpair</DialogConfirm>
-    </Dialog>
-  );
-}
+import { useCtxRegistration } from "/src/stores/index.js";
 
 const StyleSuccessIcon = styled(Svg)`
   fill: var(--success-medium);
@@ -157,17 +134,25 @@ const StyleSearchPlayerCombobox = styled.article`
 `;
 
 function SearchPlayerCombobox() {
-  const { players, setPlayers } = useRegistrationCtx();
-  const { searchPlayer, selectPlayerWristbandRegistration } = useAppCtx();
-  const remoteData = useRemoteData({ getRemoteData: searchPlayer });
+  const [isComboboxOpen, setIsComboboxOpen] = React.useState(true);
+  const { players, setModelRegistration } = useCtxRegistration();
+  const { searchPlayer, addPlayerWristbandRegistrationQueue } = useAppCtx();
+  const remoteData = useRemoteData({
+    getRemoteData: searchPlayer,
+    fetchDelay: 500,
+    successDelay: 100,
+  });
 
   return (
-    <RemoteDataProvider value={remoteData}>
+    <RemoteDataProvider key={players} value={remoteData}>
       <StyleSearchPlayerCombobox>
         <h1 id="search-player-combobox">search player</h1>
         <div className="combobox-wrapper">
           <Combobox
+            initialOpen
             name="players"
+            open={isComboboxOpen}
+            setIsComboboxOpen={setIsComboboxOpen}
             labelledBy="search-player-combobox"
             options={remoteData.startFetching}
             parseOptions={(options) => {
@@ -178,9 +163,9 @@ function SearchPlayerCombobox() {
               };
             }}
             onSelect={(player) =>
-              selectPlayerWristbandRegistration(player).then((res) => {
-                setPlayers([...players, res]);
-              })
+              addPlayerWristbandRegistrationQueue(players, player).then(
+                (queue) => setModelRegistration({ players: queue })
+              )
             }
           >
             <StyleTrigger placeholder="username or email" />

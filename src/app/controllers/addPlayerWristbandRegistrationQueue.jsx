@@ -2,7 +2,6 @@ import * as Errors from "/src/errors.js";
 import { fmAgent } from "/src/components/flash_messages/index.js";
 
 function handleResponse(res) {
-  console.log("SELECTED PLAYER WRISTBAND REGISTRATION");
   return res;
 }
 
@@ -51,6 +50,30 @@ The wristband registration process is different for the following 3 cases:
 */
 
 export default (appRef) => ({
+  addPlayerWristbandRegistrationQueue: (queue, player) =>
+    new Promise((resolve) => {
+      // player is already in the queue
+      if (queue.find((p) => p.username === player.username)) return;
+
+      // case 2
+      if (player?.wristbandMerged) {
+        fmAgent.warn({
+          message: `Player ${player.username} is part of a team.
+The team must be disbanded or the player removed from the team to register
+a new wristband`,
+        });
+
+        //  case 3
+      } else if (!player?.wristband?.active) {
+        resolve([...queue, player]);
+
+        // case 1
+      } else {
+        appRef.current
+          .unregisterWristband(player)
+          .then((unregistered) => resolve([...queue, unregistered]));
+      }
+    }),
   selectPlayerWristbandRegistration: (player) =>
     new Promise((resolve) => {
       if (player?.wristbandMerged) {

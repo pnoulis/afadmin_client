@@ -24,6 +24,9 @@
     "npm": ">=9.5.1"
   },
   "dependencies": {
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.12.3",
     "js_utils": "file:../../lib/js_utils",
     "pino": "^8.11.0",
     "react": "^18.2.0",

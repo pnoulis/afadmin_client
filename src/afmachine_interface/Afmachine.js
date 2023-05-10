@@ -1,6 +1,9 @@
-import { Afmachine } from "afmachine";
+import { CONFIG } from "afmachine/config";
 import { TaskRunner } from "js_utils";
 import * as Errors from "/src/errors.js";
+
+const Afmachine = CONFIG.Afmachine;
+console.log(Afmachine);
 
 function parseResponse(req, res) {
   if (res.result === "NOK") {

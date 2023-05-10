@@ -48,6 +48,53 @@ That takes into account the react model.
 
 When changes will occur on the model, the app will render the new model.
 
+** 05/10/23
+*** Merge teams page
+Within the merge teams page the administrator creates a new team.
+
+In order for a new team to be created the following conditions must be met:
+
+1. The team name must be unique
+2. All team members must have their wristbands registered
+
+The creation of the team is actuated by a button with the label merge.
+
+On the event, the team and its members are checked against the stated
+conditions. If the conditions are met, the team is created.
+
+**** Displaying and selecting available players
+Within the merge teams page a combobox is utilized for displaying and selecting
+players.
+
+The administrator selects a player by either CLICKING on his Card, pressing
+ENTER or TAB.
+
+In order to assist in the selection process the administrator is provided with
+the following options:
+
+1. scroll the list
+2. search for a player through the text input
+3. re-arrange the list by using the various sort options
+   - by group party
+
+**** Team staging area
+The team staging area holds the team members that have been selected through the
+combobox.
+
+It is a list comprised of six player cards which are initially empty and upon
+player selection are populated with the information of the player.
+
+Each player card provides the actuators for the:
+
+1. Removal of the player from the staging area.
+2. Toggling wristband pairing.
+
+**** Team name and creation
+1. Text input
+   Through which the administrator defines a new teams name
+2. Merge button
+   Through which the administrator may create the new team.
+
 * Dealing with wristband subscriptions
 user toggles pairing mode.
 * How'tos

@@ -26,7 +26,7 @@ const PanelLayoutMain = styled.div`
   all: unset;
   box-sizing: border-box;
   grid-area: main;
-  padding: 50px 0px 10px 0px;
+  padding: 60px 25px 10px 25px;
 `;
 
 export { PanelLayout, PanelLayoutHeader, PanelLayoutMain };

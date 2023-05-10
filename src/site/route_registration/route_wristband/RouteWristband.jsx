@@ -7,7 +7,6 @@ const StyleRouteWristband = styled.div`
   width: 100%;
   height: 100%;
   display: grid;
-  padding: 50px 25px 0 25px;
   grid-template-columns: 40% 60%;
   grid-template-rows: auto;
   grid-template-areas: "search_player pair_wristband";
@@ -21,6 +20,7 @@ const StyleSearchPlayer = styled(SearchPlayer)`
 
 const StylePairWristband = styled(PairWristband)`
   grid-area: pair_wristband;
+  align-self: center;
 `;
 
 function RouteWristband() {

@@ -65,10 +65,9 @@ const StyleListbox = styled(AsyncCombobox.Listbox)`
   margin-top: 10px;
   width: 700px;
   margin-left: 138px;
-  border-top-left-radius: var(--br-lg);
-  border-top-right-radius: var(--br-lg);
+  border-radius: var(--br-lg);
   background-color: var(--grey-light);
-  height: 450px;
+  height: 520px;
   padding: 20px 15px;
   outline: none;
   overflow-y: scroll;

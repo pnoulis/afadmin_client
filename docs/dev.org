@@ -116,6 +116,8 @@ CLOSED: [2023-05-11 Thu 12:53]
 **** DONE Remove player from staging area
 CLOSED: [2023-05-11 Thu 12:56]
 
+*** Live view
+**** TODO Prepary the route directory template
 * Dealing with wristband subscriptions
 user toggles pairing mode.
 * How'tos

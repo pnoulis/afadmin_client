@@ -24,6 +24,7 @@
     "npm": ">=9.5.1"
   },
   "dependencies": {
+    "@babel/plugin-syntax-import-assertions": "^7.20.0",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.12.3",

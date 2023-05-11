@@ -15,6 +15,7 @@ function MemberWidget({ index, player, className, ...props }) {
     <div className={className} {...props}>
       <StyleMemberPairWristband
         onClick={(e) => {
+          if (player == null) return;
           toggleWristbandPairing(
             modelMergeRef.current.stagingArea,
             player,

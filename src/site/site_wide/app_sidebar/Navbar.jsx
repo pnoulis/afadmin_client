@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import { registration, merge } from "/src/site/links.jsx";
+import { registration, merge, liveView } from "/src/site/links.jsx";
 
 const StyleLayoutNavbar = styled.ul`
   all: unset;
@@ -57,6 +57,7 @@ function Navbar() {
         {registration.label}
       </StyleNavbarLink>
       <StyleNavbarLink to={merge.path}>{merge.label}</StyleNavbarLink>
+      <StyleNavbarLink to={liveView.path}>{liveView.label}</StyleNavbarLink>
     </StyleLayoutNavbar>
   );
 }

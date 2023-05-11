@@ -107,20 +107,20 @@ function mapWristbandColorCode(wristbandColorCode) {
 
 function TablePlayers({ rows }) {
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(8);
+  const [rowsPerPage, setRowsPerPage] = React.useState(20);
 
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
   const handlePageChange = (e, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (e) => {
-    setRowsPerPage(parseInt(e.target.value, 10));
+    setRowsPerPage(parseInt(e.target.value, 20));
     setPage(0);
   };
 
   return (
     <Box>
       <Paper>
-        <TableContainer sx={{ height: 500, width: 1300 }}>
+        <TableContainer sx={{ height: 725, width: 1500 }}>
           <Table stickyHeader>
             <PlayersTableHeader />
             <TableBody>
@@ -164,7 +164,7 @@ function TablePlayers({ rows }) {
           rowsPerPage={rowsPerPage}
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleChangeRowsPerPage}
-          rowsPerPageOptions={[8, 10, 25]}
+          rowsPerPageOptions={[20, 40, 80]}
           page={page}
           labelDisplayedRows={({ page }) => {
             return `Page: ${page + 1}`;

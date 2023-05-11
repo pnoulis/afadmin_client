@@ -27,6 +27,7 @@ const PanelLayoutMain = styled.div`
   box-sizing: border-box;
   grid-area: main;
   padding: 60px 25px 10px 25px;
+overflow-x: scroll;
 `;
 
 export { PanelLayout, PanelLayoutHeader, PanelLayoutMain };

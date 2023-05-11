@@ -95,6 +95,27 @@ Each player card provides the actuators for the:
 2. Merge button
    Through which the administrator may create the new team.
 
+** 06/10/23
+*** Displaying and selecting available players
+**** DONE Player card
+CLOSED: [2023-05-11 Thu 11:09]
+Each player listed is represented by a playerCard.
+
+The playerCard displays the following information:
+
+- username
+- rfid
+- wristband
+- a visual cue informing the admin of the player being of a group party
+
+**** DONE Add selected player to the staging area
+CLOSED: [2023-05-11 Thu 12:27]
+*** Staging area
+**** DONE Toggling pairing mode
+CLOSED: [2023-05-11 Thu 12:53]
+**** DONE Remove player from staging area
+CLOSED: [2023-05-11 Thu 12:56]
+
 * Dealing with wristband subscriptions
 user toggles pairing mode.
 * How'tos

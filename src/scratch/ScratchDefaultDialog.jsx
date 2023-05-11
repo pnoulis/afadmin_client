@@ -1,21 +1,17 @@
 import * as React from "react";
 import {
-  Dialog,
-  DialogHeading,
-  DialogDescription,
-  DialogClose,
-  DialogConfirm,
+  InputDialog as Dialog,
+  InputDialogHeading as DialogHeading,
+  InputDialogDescription as DialogDescription,
+  InputDialogClose as DialogClose,
+  InputDialogConfirm as DialogConfirm,
   renderDialog,
 } from "/src/components/dialogs/index.js";
 
-function TestDialog() {
+function TestDialog({ handleClose }) {
+  const [state, setState] = React.useState(false);
   return (
-    <Dialog
-      initialOpen
-      onClose={(confirmed) => {
-        alert(confirmed);
-      }}
-    >
+    <Dialog initialOpen onClose={handleClose}>
       <DialogHeading>my dialog</DialogHeading>
       <DialogDescription>my description</DialogDescription>
       <DialogClose>cancel</DialogClose>
@@ -25,10 +21,16 @@ function TestDialog() {
 }
 
 export default function ScratchDefaultDialog() {
-  renderDialog(TestDialog);
   return (
     <div>
       <h3>Scratch default dialog</h3>
+      <div
+        onClick={() => {
+          renderDialog(TestDialog, () => {});
+        }}
+      >
+        render dialog
+      </div>
     </div>
   );
 }

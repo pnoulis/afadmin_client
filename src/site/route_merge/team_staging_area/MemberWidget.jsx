@@ -4,21 +4,66 @@ import { ReactComponent as Signal } from "agent_factory.shared/ui/icons/signal_1
 import { ReactComponent as TrashIcon } from "agent_factory.shared/ui/icons/trash_2.svg";
 import { SvgBall, Svg } from "react_utils/svgs";
 import { mapWristbandColor } from "agent_factory.shared/utils/index.js";
+import { useAppCtx } from "/src/app/index.js";
+import { useCtxMerge } from "/src/stores/index.js";
 
 function MemberWidget({ index, player, className, ...props }) {
+  const { toggleWristbandPairing } = useAppCtx();
+  const { modelMergeRef, setModelMerge } = useCtxMerge();
+
   return (
     <div className={className} {...props}>
-      <StyleMemberPairWristband player={player} />
+      <StyleMemberPairWristband
+        onClick={(e) => {
+          toggleWristbandPairing(
+            modelMergeRef.current.stagingArea,
+            player,
+            (err, registered) => {
+              console.log(registered);
+              setModelMerge({
+                ...modelMergeRef.current,
+                stagingArea: modelMergeRef.current.stagingArea.map(
+                  (position, i) =>
+                    position?.username === registered?.username
+                      ? registered
+                      : position
+                ),
+              });
+            }
+          ).then((stagingArea) =>
+            setModelMerge({
+              ...modelMergeRef.current,
+              stagingArea,
+            })
+          );
+        }}
+        player={player}
+      />
       <StyleMemberInfo index={index} player={player} />
-      <StyleMemberRemove />
+      <StyleMemberRemove
+        onClick={() => {
+          if (player == null) {
+            return;
+          }
+          setModelMerge({
+            ...modelMergeRef.current,
+            stagingArea: modelMergeRef.current.stagingArea.map((position, i) =>
+              position?.username === player?.username ? null : position
+            ),
+          });
+        }}
+      />
     </div>
   );
 }
 
-function MemberPairWristband({ className, ...props }) {
+function MemberPairWristband({ player, className, ...props }) {
   return (
     <div className={className} {...props}>
-      <StyleWristbandSignalIcon pairing={Math.random() > 0.5 ? true : false}>
+      <StyleWristbandSignalIcon
+        pairing={player?.wristband?.pairing}
+        wristbandColorCode={player?.wristband?.wristbandColor}
+      >
         <Signal />
       </StyleWristbandSignalIcon>
     </div>
@@ -75,15 +120,22 @@ const StyleWristbandSignalIcon = styled(SvgBall)`
   width: 75px !important;
   height: 75px !important;
   padding: 12px !important;
-  border: 3px solid var(--primary-subtle);
-  background-color: ${({ wristbandColorCode }) => {
-    if (!wristbandColorCode) {
-      return "var(--grey-subtle)";
+  border: 3px solid transparent;
+
+  ${({ wristbandColorCode }) => {
+    if (wristbandColorCode) {
+      const color = mapWristbandColor("colorCode", wristbandColorCode);
+      return `
+border-color: ${color};
+background-color: ${color};
+`;
+    } else {
+      return `
+border-color: var(--primary-subtle);
+background-color: var(--grey-subtle);
+`;
     }
-
-    return mapWristbandColor("colorCode", wristbandColorCode);
-  }};
-
+  }}
   ${({ pairing }) => (pairing ? animatePairing : "")};
 `;
 

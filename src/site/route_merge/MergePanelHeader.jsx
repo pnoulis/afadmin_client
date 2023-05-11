@@ -1,24 +1,43 @@
 import * as React from "react";
 import styled from "styled-components";
 import { Svg } from "react_utils/svgs";
-import { ReactComponent as GroupPartyIcon } from "agent_factory.shared/ui/icons/arrow4.svg";
+import { ReactComponent as GroupPartyIcon } from "agent_factory.shared/ui/icons/group_add_filled.svg";
 import { ReactComponent as MergeTeamIcon } from "agent_factory.shared/ui/icons/merge_team.svg";
+import { CreateTeam } from "./create_team/index.js";
+import { renderDialog } from "/src/components/dialogs/index.js";
+import { useCtxMerge } from "/src/stores/index.js";
+import { useAppCtx } from "/src/app/index.js";
 
 function MergePanelHeader({ className, ...props }) {
+  const ctxMerge = useCtxMerge();
+  const ctxApp = useAppCtx();
+
+  const stagingArea = ctxMerge;
+
   return (
     <div className={className} {...props}>
       <ul className="header-list">
         <StyleMergePanelHeaderItem
+          onClick={() => {
+            console.log("create group party");
+          }}
           text="create group party"
           Icon={<GroupPartyIcon />}
         />
-        <StyleMergePanelHeaderItem text="merge team" Icon={<MergeTeamIcon />} />
+        <StyleMergePanelHeaderItem
+          onClick={() =>
+            stagingArea.length > 0 &&
+            renderDialog(null, CreateTeam, { ctxMerge, ctxApp })
+          }
+          text="merge team"
+          Icon={<MergeTeamIcon />}
+        />
       </ul>
     </div>
   );
 }
 
-function MergePanelHeaderItem({ text, Icon, onClick, className, ...props }) {
+function MergePanelHeaderItem({ text, Icon, className, ...props }) {
   return (
     <li className={className} {...props}>
       <div className="item-icon">

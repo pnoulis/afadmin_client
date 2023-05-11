@@ -9,9 +9,9 @@ import {
   renderDialog,
 } from "/src/components/dialogs/index.js";
 
-function DialogUnpairWristband() {
+function DialogUnpairWristband({ handleClose }) {
   return (
-    <Dialog initialOpen>
+    <Dialog initialOpen onClose={handleClose}>
       <DialogHeading>Unpair Wristband?</DialogHeading>
       <DialogDescription>
         It seems the player has already registered a wristband.
@@ -47,7 +47,7 @@ function handleError(err) {
 export default (appRef) => ({
   unregisterWristband: async (player) =>
     new Promise((resolve, reject) => {
-      renderDialog(DialogUnpairWristband, (yes) => {
+      renderDialog(null, DialogUnpairWristband, (yes) => {
         if (!yes) return;
         const Afmachine = appRef.current.Afmachine;
         Afmachine.request(() =>

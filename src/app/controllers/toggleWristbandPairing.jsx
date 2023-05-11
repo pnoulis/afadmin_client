@@ -32,7 +32,7 @@ export default (appRef) => ({
           .then((unregistered) =>
             resolve(
               players.map((player) =>
-                player.username === unregistered.username
+                player?.username === unregistered.username
                   ? unregistered
                   : player
               )

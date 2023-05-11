@@ -113,6 +113,33 @@ function Component() {
         >
           toggle wristband pairing mode
         </StyleButton>
+        <StyleButton
+          onClick={() => {
+            const { createTeam } = app;
+            createTeam(
+              [
+                {
+                  username: "yolo5_username",
+                  name: "test1_name",
+                  surname: "test1_surname",
+                  email: "test1_email@gmail.com",
+                  password: "test1_password",
+                  wristbandMerged: false,
+                  wristband: {
+                    wristbandNumber: 10,
+                    wristbandColor: 0,
+                    active: true,
+                  },
+                },
+              ],
+              "team_test3"
+            )
+              .then((res) => console.log(res))
+              .catch((err) => console.log(err));
+          }}
+        >
+          create team
+        </StyleButton>
       </div>
     </div>
   );

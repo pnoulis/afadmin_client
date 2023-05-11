@@ -8,6 +8,8 @@ import addPlayerWristbandRegistrationQueue from "./controllers/addPlayerWristban
 import removePlayerWristbandRegistrationQueue from "./controllers/removePlayerWristbandRegistrationQueue.jsx";
 import listRegisteredPlayers from "./controllers/listRegisteredPlayers.jsx";
 import listAvailablePlayers from "./controllers/listAvailablePlayers.jsx";
+import addPlayerMergeTeamStagingArea from "./controllers/AddPlayerMergeTeamStagingArea.jsx";
+import createTeam from "./controllers/createTeam.jsx";
 
 const getControllers = (app) => ({
   ...registerPlayer(app),
@@ -20,6 +22,8 @@ const getControllers = (app) => ({
   ...removePlayerWristbandRegistrationQueue(app),
   ...listRegisteredPlayers(app),
   ...listAvailablePlayers(app),
+  ...addPlayerMergeTeamStagingArea(app),
+  ...createTeam(app),
 });
 
 export { getControllers };

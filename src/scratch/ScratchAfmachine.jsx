@@ -11,6 +11,7 @@ function RequestAfmachine() {
     searchPlayer,
     registerWristband,
     unregisterWristband,
+    createTeam,
   } = useAfmachine();
   return (
     <div>
@@ -98,6 +99,45 @@ function RequestAfmachine() {
         }
       >
         unregister wristband
+      </h3>
+      <h3
+        onClick={() => {
+          createTeam(
+            [
+              {
+                username: "test1_username",
+                name: "test1_name",
+                surname: "test1_surname",
+                email: "test1_email@gmail.com",
+                password: "test1_password",
+                wristbandMerged: false,
+                wristband: {
+                  wristbandNumber: 10,
+                  wristbandColor: 0,
+                  active: true,
+                },
+              },
+              {
+                username: "group2_username",
+                name: "group2_name",
+                surname: "group2_surname",
+                email: "group2_email@gmail.com",
+                password: "group2_password",
+                wristbandMerged: false,
+                wristband: {
+                  wristbandNumber: 9,
+                  wristbandColor: 1,
+                  active: true,
+                },
+              },
+            ],
+            "team_test1"
+          )
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
+        }}
+      >
+        create team
       </h3>
     </div>
   );

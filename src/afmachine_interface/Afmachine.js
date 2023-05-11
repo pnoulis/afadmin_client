@@ -3,9 +3,9 @@ import { TaskRunner } from "js_utils";
 import * as Errors from "/src/errors.js";
 
 const Afmachine = CONFIG.Afmachine;
-console.log(Afmachine);
 
 function parseResponse(req, res) {
+  console.log(res);
   if (res.result === "NOK") {
     if (res.validationErrors) {
       throw new Errors.ValidationError({ message: res.message, req, ...res });

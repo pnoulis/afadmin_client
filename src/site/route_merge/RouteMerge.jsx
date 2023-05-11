@@ -33,19 +33,19 @@ const StyleCreateTeam = styled(CreateTeam)`
 
 function RouteMerge() {
   return (
-    <PanelLayout>
-      <PanelLayoutHeader>
-        <MergePanelHeader />
-      </PanelLayoutHeader>
-      <PanelLayoutMain>
-        <ProvideStoreMerge>
+    <ProvideStoreMerge>
+      <PanelLayout>
+        <PanelLayoutHeader>
+          <MergePanelHeader />
+        </PanelLayoutHeader>
+        <PanelLayoutMain>
           <RouteMergeLayout>
             <StyleSelectPlayer />
             <StyleTeamStagingArea />
           </RouteMergeLayout>
-        </ProvideStoreMerge>
-      </PanelLayoutMain>
-    </PanelLayout>
+        </PanelLayoutMain>
+      </PanelLayout>
+    </ProvideStoreMerge>
   );
 }
 

@@ -1,1 +1,1 @@
-export { default } from "./ScratchStoreRegistration.jsx";
+export { default } from "./ScratchApp.jsx";

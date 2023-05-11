@@ -29,10 +29,12 @@ function MemberWidgetList() {
 
 function TeamStagingArea({ className, ...props }) {
   return (
-    <section className={className} {...props}>
+    <StyleTeamStagingArea className={className} {...props}>
       <MemberWidgetList />
-    </section>
+    </StyleTeamStagingArea>
   );
 }
+
+const StyleTeamStagingArea = styled.section``;
 
 export { TeamStagingArea };

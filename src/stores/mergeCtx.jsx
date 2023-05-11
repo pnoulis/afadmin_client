@@ -16,7 +16,7 @@ const ProvideCtxMerge = ({ value, children }) => (
 const useModelMerge = () => {
   const [modelMerge, setModelMerge] = React.useState(() => ({
     players: [],
-    stagingArea: new Array(MAX_TEAM_SIZE).fill(PLAYER_SCHEMA),
+    stagingArea: new Array(MAX_TEAM_SIZE).fill(null),
     teams: [],
   }));
   const modelMergeRef = React.useRef(null);

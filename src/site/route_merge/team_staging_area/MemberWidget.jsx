@@ -20,7 +20,6 @@ function MemberWidget({ index, player, className, ...props }) {
             modelMergeRef.current.stagingArea,
             player,
             (err, registered) => {
-              console.log(registered);
               setModelMerge({
                 ...modelMergeRef.current,
                 stagingArea: modelMergeRef.current.stagingArea.map(

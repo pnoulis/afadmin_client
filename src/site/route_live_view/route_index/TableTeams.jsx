@@ -13,12 +13,8 @@ import {
   TablePagination,
 } from "@mui/material";
 import styled from "styled-components";
-import {
-  flattenObj
-} from 'js_utils/misc';
-import {
-  TEAM_SCHEMA
-} from 'agent_factory.shared/schemas.js';
+import { flattenObj } from "js_utils/misc";
+import { TEAM_SCHEMA } from "agent_factory.shared/schemas.js";
 
 function TeamsTableHeader() {
   return (
@@ -47,7 +43,7 @@ const StyleTableHeadRow = styled(TableRow)`
     color: var(--primary-base);
     letter-spacing: 1px;
     text-transform: capitalize;
-text-align: center;
+    text-align: center;
   }
 `;
 
@@ -72,71 +68,61 @@ const StyleTableTeamsRow = styled(TableRow)`
   }
 `;
 
-function RowCellCurrentPackage({
-  row
-}) {
-  const currentPackage = row?.packages?.find((pkg) => pkg
-    .active != false) || {};
+function RowCellCurrentPackage({ row }) {
+  const currentPackage =
+    row?.packages?.find((pkg) => pkg.active != false) || {};
 
   return (
     <TableCell className="number">{currentPackage?.name || "-"}</TableCell>
   );
 }
 
-function RowCellRemainingPackages({
-  row
-}) {
-  const remainingPackages = row?.packages?.filter((pkg) => pkg.active == false)
-    .length;
+function RowCellRemainingPackages({ row }) {
+  const remainingPackages = row?.packages?.filter(
+    (pkg) => pkg.active == false
+  ).length;
 
-  return (
-    <TableCell className="number">{remainingPackages || "-"}</TableCell>
-  );
+  return <TableCell className="number">{remainingPackages || "-"}</TableCell>;
 }
 
-function RowCellTotalCost({
-  row
-}) {
+function RowCellTotalCost({ row }) {
   let totalCost = 0.0;
-  row?.packages?.forEach((pkg) => totalCost += pkg.cost ? pkg.cost : 0);
+  row?.packages?.forEach((pkg) => (totalCost += pkg.cost ? pkg.cost : 0));
 
-  return (
-    <TableCell className="number">{totalCost || "-"}</TableCell>
-  );
+  return <TableCell className="number">{totalCost || "-"}</TableCell>;
 }
 
-function RowCellMissions({
-  row
-}) {
-  const currentPackage = row?.packages?.find((pkg) => pkg
-    .active != false) || {};
+function RowCellMissions({ row }) {
+  const currentPackage =
+    row?.packages?.find((pkg) => pkg.active != false) || {};
 
   const missions = /mission/i.test(currentPackage.name);
 
   return (
-    <TableCell className="number">{missions ? currentPackage?.missions : "-"}</TableCell>
+    <TableCell className="number">
+      {missions ? currentPackage?.missions : "-"}
+    </TableCell>
   );
 }
 
-function RowCellMissionsPlayed({
-  row
-}) {
-  const currentPackage = row?.packages?.find((pkg) => pkg
-    .active != false) || {};
+function RowCellMissionsPlayed({ row }) {
+  const currentPackage =
+    row?.packages?.find((pkg) => pkg.active != false) || {};
 
   const missions = /mission/i.test(currentPackage.name);
 
   return (
-    <TableCell className="number">{missions ? currentPackage?.missionsPlayed : "-"}</TableCell>
+    <TableCell className="number">
+      {missions ? currentPackage?.missionsPlayed : "-"}
+    </TableCell>
   );
-
 }
 
 const getTime = (() => {
   let currentLang;
   let locale;
   const time = new Map();
-  return (timestamp, lang = 'en-uS') => {
+  return (timestamp, lang = "en-uS") => {
     const date = new Date(time || Date.now());
     if (typeof locale === "undefined" || lang !== currentLang) {
       locale = new Intl.DateTimeFormat(lang, {
@@ -149,35 +135,30 @@ const getTime = (() => {
         hourCycle: "h24",
       });
     }
-    locale.formatToParts(timestamp)
+    locale
+      .formatToParts(timestamp)
       .forEach((el) => time.set(el.type, el.value));
     return Object.fromEntries(time);
   };
 })();
 
-function RowCellTimeStarted({
-  row
-}) {
-  const currentPackage = row?.packages?.find((pkg) => pkg
-    .active != false) || {};
+function RowCellTimeStarted({ row }) {
+  const currentPackage =
+    row?.packages?.find((pkg) => pkg.active != false) || {};
 
   const time = /time/i.test(currentPackage.name);
-  const {
-    hour,
-    minute,
-    literal
-  } = getTime(currentPackage?.started);
+  const { hour, minute, literal } = getTime(currentPackage?.started);
 
   return (
-    <TableCell className="number">{time ? `${hour}${literal}${minute}` : "-"}</TableCell>
+    <TableCell className="number">
+      {time ? `${hour}${literal}${minute}` : "-"}
+    </TableCell>
   );
 }
 
-function RowCellTimePlaying({
-  row
-}) {
-  const currentPackage = row?.packages?.find((pkg) => pkg
-    .active != false) || {};
+function RowCellTimePlaying({ row }) {
+  const currentPackage =
+    row?.packages?.find((pkg) => pkg.active != false) || {};
 
   const time = /time/i.test(currentPackage.name);
 
@@ -189,26 +170,24 @@ function RowCellTimePlaying({
   }
 
   return (
-    <TableCell className="number">{time ? `${playing}mn`: "-"}</TableCell>
+    <TableCell className="number">{time ? `${playing}mn` : "-"}</TableCell>
   );
 }
 
-function RowCellTimeRemaining({
-  row
-}) {
-  const currentPackage = row?.packages?.find((pkg) => pkg
-    .active != false) || {};
+function RowCellTimeRemaining({ row }) {
+  const currentPackage =
+    row?.packages?.find((pkg) => pkg.active != false) || {};
 
   const time = /time/i.test(currentPackage.name);
 
   return (
-    <TableCell className="number">{time ? currentPackage?.started : "-"}</TableCell>
+    <TableCell className="number">
+      {time ? currentPackage?.started : "-"}
+    </TableCell>
   );
 }
 
-function TableTeams({
-  rows
-}) {
+function TableTeams({ rows }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(20);
 
@@ -223,7 +202,7 @@ function TableTeams({
   return (
     <Box>
       <Paper>
-        <TableContainer sx={{ height: 725, width: 1500 }}>
+        <TableContainer sx={{ height: 550, width: 1500 }}>
           <Table stickyHeader>
             <TeamsTableHeader />
             <TableBody>
@@ -233,19 +212,23 @@ function TableTeams({
                     page * rowsPerPage + rowsPerPage
                   )
                 : rows
-               ).map((row, i) => (
+              ).map((row, i) => (
                 <StyleTableTeamsRow key={`${row.name}_${i}`}>
                   <TableCell>{row?.name || "-"}</TableCell>
                   <TableCell>{row?.teamState || "-"}</TableCell>
-                  <TableCell className="number">{row?.currentRoster?.players?.length || "-"}</TableCell>
-                  <TableCell className="number">{row?.packages?.length || "-"}</TableCell>
-                  <RowCellRemainingPackages row={row}/>
-                  <RowCellTotalCost row={row}/>
-                  <RowCellCurrentPackage row={row}/>
-                  <RowCellMissions row={row}/>
-                  <RowCellMissionsPlayed row={row}/>
-                  <RowCellTimeStarted row={row}/>
-                  <RowCellTimePlaying row={row}/>
+                  <TableCell className="number">
+                    {row?.currentRoster?.players?.length || "-"}
+                  </TableCell>
+                  <TableCell className="number">
+                    {row?.packages?.length || "-"}
+                  </TableCell>
+                  <RowCellRemainingPackages row={row} />
+                  <RowCellTotalCost row={row} />
+                  <RowCellCurrentPackage row={row} />
+                  <RowCellMissions row={row} />
+                  <RowCellMissionsPlayed row={row} />
+                  <RowCellTimeStarted row={row} />
+                  <RowCellTimePlaying row={row} />
                 </StyleTableTeamsRow>
               ))}
             </TableBody>
@@ -271,6 +254,4 @@ function TableTeams({
   );
 }
 
-export {
-  TableTeams
-};
+export { TableTeams };

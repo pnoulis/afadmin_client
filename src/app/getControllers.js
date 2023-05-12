@@ -10,7 +10,8 @@ import listRegisteredPlayers from "./controllers/listRegisteredPlayers.jsx";
 import listAvailablePlayers from "./controllers/listAvailablePlayers.jsx";
 import addPlayerMergeTeamStagingArea from "./controllers/AddPlayerMergeTeamStagingArea.jsx";
 import createTeam from "./controllers/createTeam.jsx";
-import listTeams from './controllers/listTeams.jsx';
+import listTeams from "./controllers/listTeams.jsx";
+import generateGroupPlayers from "./controllers/generateGroupPlayers.jsx";
 
 const getControllers = (app) => ({
   ...registerPlayer(app),
@@ -26,6 +27,7 @@ const getControllers = (app) => ({
   ...addPlayerMergeTeamStagingArea(app),
   ...createTeam(app),
   ...listTeams(app),
+  ...generateGroupPlayers(app),
 });
 
 export { getControllers };

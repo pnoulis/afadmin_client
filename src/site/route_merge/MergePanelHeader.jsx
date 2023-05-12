@@ -4,31 +4,56 @@ import { Svg } from "react_utils/svgs";
 import { ReactComponent as GroupPartyIcon } from "agent_factory.shared/ui/icons/group_add_filled.svg";
 import { ReactComponent as MergeTeamIcon } from "agent_factory.shared/ui/icons/merge_team.svg";
 import { CreateTeam } from "./create_team/index.js";
-import { renderDialog } from "/src/components/dialogs/index.js";
 import { useCtxMerge } from "/src/stores/index.js";
 import { useAppCtx } from "/src/app/index.js";
+import { fmAgent } from "/src/components/flash_messages/index.js";
+import {
+  AlertDialog,
+  AlertDialogHeading,
+  AlertDialogDescription,
+  renderDialog,
+} from "/src/components/dialogs";
+
+function DialogInsufficientPlayers({ handleClose }) {
+  return (
+    <AlertDialog initialOpen onClose={handleClose}>
+      <AlertDialogHeading>Merge team</AlertDialogHeading>
+      <AlertDialogDescription>
+        A team must be comprised of at least 2 players
+      </AlertDialogDescription>
+    </AlertDialog>
+  );
+}
 
 function MergePanelHeader({ className, ...props }) {
   const ctxMerge = useCtxMerge();
   const ctxApp = useAppCtx();
 
-  const stagingArea = ctxMerge;
+  const stagingArea = ctxMerge.stagingArea;
 
   return (
     <div className={className} {...props}>
       <ul className="header-list">
         <StyleMergePanelHeaderItem
           onClick={() => {
+            const { generateGroupPlayers } = ctxApp;
+
             console.log("create group party");
+            generateGroupPlayers()
+              .then((players) => console.log(players))
+              .catch((err) => console.log(err));
           }}
           text="create group party"
           Icon={<GroupPartyIcon />}
         />
         <StyleMergePanelHeaderItem
-          onClick={() =>
-            stagingArea.length > 0 &&
-            renderDialog(null, CreateTeam, { ctxMerge, ctxApp })
-          }
+          onClick={() => {
+            if (stagingArea.filter((positions) => !!positions).length < 2) {
+              renderDialog(null, DialogInsufficientPlayers);
+            } else {
+              renderDialog(null, CreateTeam, { ctxMerge, ctxApp });
+            }
+          }}
           text="merge team"
           Icon={<MergeTeamIcon />}
         />

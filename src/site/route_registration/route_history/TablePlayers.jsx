@@ -120,7 +120,7 @@ function TablePlayers({ rows }) {
   return (
     <Box>
       <Paper>
-        <TableContainer sx={{ height: 725, width: 1500 }}>
+        <TableContainer sx={{ height: 550, width: 1500 }}>
           <Table stickyHeader>
             <PlayersTableHeader />
             <TableBody>

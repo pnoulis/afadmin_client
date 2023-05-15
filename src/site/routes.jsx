@@ -9,6 +9,10 @@ import {
 } from "./route_registration/index.js";
 import { RouteMerge } from "./route_merge/index.js";
 import { RouteLiveView, RouteLiveViewIndex } from "./route_live_view/index.js";
+import {
+  RouteGroupParty,
+  RouteGroupPartyIndex,
+} from "./route_group_party/index.js";
 import { useAfmachine } from "/src/afmachine_interface/index.js";
 import { getControllers } from "/src/app/index.js";
 import mockTeams from "agent_factory.shared/mocks/teams.json" assert { type: "json" };
@@ -60,10 +64,19 @@ const routesApp = [
         children: [
           {
             path: "/liveView",
-            // loader: () => mockTeams,
             loader: async () =>
               listTeams().then((teams) => [...teams, ...mockTeams]),
             element: <RouteLiveViewIndex />,
+          },
+        ],
+      },
+      {
+        path: "/groupParty",
+        element: <RouteGroupParty />,
+        children: [
+          {
+            path: "/groupParty",
+            element: <RouteGroupPartyIndex />,
           },
         ],
       },

@@ -8,7 +8,7 @@ const PanelLayout = styled.div`
   grid-template-columns: 1fr;
   grid-template-areas: "header" "main";
   width: 100%;
-  height: 100%;
+  height: 860px;
   padding: 15px;
   background-color: white;
   border-radius: var(--br-xl);
@@ -26,8 +26,10 @@ const PanelLayoutMain = styled.div`
   all: unset;
   box-sizing: border-box;
   grid-area: main;
-  padding: 60px 25px 10px 25px;
-overflow-x: scroll;
+  margin: 60px 0 10px 0;
+  padding: 0 25px;
+  overflow-x: scroll;
+  overflow-y: scroll;
 `;
 
 export { PanelLayout, PanelLayoutHeader, PanelLayoutMain };

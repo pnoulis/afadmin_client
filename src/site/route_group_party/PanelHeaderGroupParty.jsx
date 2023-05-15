@@ -3,79 +3,56 @@ import styled from "styled-components";
 import { Svg } from "react_utils/svgs";
 import { ReactComponent as GroupPartyIcon } from "agent_factory.shared/ui/icons/group_add_filled.svg";
 import { ReactComponent as MergeTeamIcon } from "agent_factory.shared/ui/icons/merge_team.svg";
-import { CreateTeam } from "./create_team/index.js";
-import { useCtxMerge } from "/src/stores/index.js";
-import { useAppCtx } from "/src/app/index.js";
-import { fmAgent } from "/src/components/flash_messages/index.js";
-import {
-  AlertDialog,
-  AlertDialogHeading,
-  AlertDialogDescription,
-  renderDialog,
-} from "/src/components/dialogs";
+import { useCtxGroupParty } from "/src/stores/index.js";
 
-function DialogInsufficientPlayers({ handleClose }) {
-  return (
-    <AlertDialog initialOpen onClose={handleClose}>
-      <AlertDialogHeading>Merge team</AlertDialogHeading>
-      <AlertDialogDescription>
-        A team must be comprised of at least 2 players
-      </AlertDialogDescription>
-    </AlertDialog>
-  );
-}
-
-function MergePanelHeader({ className, ...props }) {
-  const ctxMerge = useCtxMerge();
-  const ctxApp = useAppCtx();
-
-  const stagingArea = ctxMerge.stagingArea;
+function PanelHeaderGroupParty({ className, ...props }) {
+  const { generateGroupPartyTeam, modelGroupPartyRef, setModelGroupParty } =
+    useCtxGroupParty();
 
   return (
-    <div className={className} {...props}>
+    <StylePanelHeaderGroupParty className={className} {...props}>
       <ul className="header-list">
-        <StyleMergePanelHeaderItem
+        <PanelHeaderItem
           onClick={() => {
-            const { generateGroupPlayers } = ctxApp;
+            const newTeams = [...modelGroupPartyRef.current.teams];
 
-            console.log("create group party");
-            generateGroupPlayers()
-              .then((players) => console.log(players))
-              .catch((err) => console.log(err));
+            console.log(generateGroupPartyTeam());
+
+            /* setModelGroupParty({ */
+            /*   teams: [ */
+            /*     ...modelGroupPartyRef.current.teams, */
+            /*     generateGroupPartyTeam(), */
+            /*   ], */
+            /* }); */
           }}
-          text="create group party"
+          text="add team"
           Icon={<GroupPartyIcon />}
         />
-        <StyleMergePanelHeaderItem
+        <PanelHeaderItem
           onClick={() => {
-            if (stagingArea.filter((positions) => !!positions).length < 2) {
-              renderDialog(null, DialogInsufficientPlayers);
-            } else {
-              renderDialog(null, CreateTeam, { ctxMerge, ctxApp });
-            }
+            console.log("merge group party");
           }}
-          text="merge team"
+          text="merge group party"
           Icon={<MergeTeamIcon />}
         />
       </ul>
-    </div>
+    </StylePanelHeaderGroupParty>
   );
 }
-
-function MergePanelHeaderItem({ text, Icon, className, ...props }) {
+function PanelHeaderItem({ text, Icon, className, ...props }) {
   return (
-    <li className={className} {...props}>
+    <StyleMergePanelHeaderItem className={className} {...props}>
       <div className="item-icon">
         <Svg fill="black" width="50px" height="50px">
           {Icon}
         </Svg>
       </div>
       <p className="item-text">{text}</p>
-    </li>
+    </StyleMergePanelHeaderItem>
   );
 }
 
-const StyleMergePanelHeaderItem = styled(MergePanelHeaderItem)`
+const StyleMergePanelHeaderItem = styled.li`
   all: unset;
   /* Type */
   box-sizing: border-box;
@@ -136,7 +113,7 @@ const StyleMergePanelHeaderItem = styled(MergePanelHeaderItem)`
   }
 `;
 
-const StyleMergePanelHeader = styled(MergePanelHeader)`
+const StylePanelHeaderGroupParty = styled.div`
   all: unset;
   box-sizing: border-box;
   display: block;
@@ -162,4 +139,4 @@ const StyleMergePanelHeader = styled(MergePanelHeader)`
   }
 `;
 
-export { StyleMergePanelHeader as MergePanelHeader };
+export { PanelHeaderGroupParty };

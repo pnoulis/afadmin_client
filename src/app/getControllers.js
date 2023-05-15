@@ -12,6 +12,7 @@ import addPlayerMergeTeamStagingArea from "./controllers/AddPlayerMergeTeamStagi
 import createTeam from "./controllers/createTeam.jsx";
 import listTeams from "./controllers/listTeams.jsx";
 import generateGroupPlayers from "./controllers/generateGroupPlayers.jsx";
+import registerWristbandScanListener from "./controllers/registerWristbandScanListener.jsx";
 
 const getControllers = (app) => ({
   ...registerPlayer(app),
@@ -28,6 +29,7 @@ const getControllers = (app) => ({
   ...createTeam(app),
   ...listTeams(app),
   ...generateGroupPlayers(app),
+  ...registerWristbandScanListener(app),
 });
 
 export { getControllers };

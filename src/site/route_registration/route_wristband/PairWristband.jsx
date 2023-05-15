@@ -26,7 +26,7 @@ const StyleWristbandIcon = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(75%, -18%);
+  transform: translate(50%, -18%);
 
   .handBracelet .circle {
     fill: var(--success-light);

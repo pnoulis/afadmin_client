@@ -1,6 +1,5 @@
 import * as React from "react";
 import { MAX_TEAM_SIZE } from "agent_factory.shared/constants.js";
-import { PLAYER_SCHEMA } from "agent_factory.shared/schemas.js";
 
 const CtxMerge = React.createContext(null);
 const useCtxMerge = () => {

@@ -1,3 +1,13 @@
+* TODOS
+** Friday
+<2023-05-19 Fri>
+*** TODO Group party
+*** TODO Packages
+*** TODO Subscriptions
+*** TODO Team controls
+**** start
+**** stop
+
 * Log
 ** Integrate development work, from afadmin_core to afadmin_client
 *** DONE Flash Messages
@@ -118,6 +128,20 @@ CLOSED: [2023-05-11 Thu 12:56]
 
 *** Live view
 **** TODO Prepary the route directory template
+** 15/10/23
+*** Group party
+A group party refers to the capability offered by agent_factory to quickly
+generate teams and players so that a group of people may quickly enter a game,
+bypassing the normal registration procedure.
+
+**** DONE removing a team from the group party
+CLOSED: [2023-05-15 Mon 15:06]
+**** DONE removing a player from the team
+CLOSED: [2023-05-15 Mon 15:06]
+**** DONE adding a player to the team
+CLOSED: [2023-05-15 Mon 15:06]
+**** TODO pairing wristband
+**** TODO unpairing wristband
 * Dealing with wristband subscriptions
 user toggles pairing mode.
 * How'tos

@@ -1,22 +1,17 @@
 import * as React from "react";
-import styled from "styled-components";
-import {
-  Outlet
-} from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import {
   PanelLayout,
   PanelLayoutHeader,
   PanelLayoutMain,
 } from "/src/site/site_wide/index.js";
-import {
-  PanelHeaderLiveView
-} from "./PanelHeaderLiveView.jsx";
+import { PanelHeaderLiveView } from "./PanelHeaderLiveView.jsx";
 
 function RouteLiveView() {
   return (
     <PanelLayout>
       <PanelLayoutHeader>
-        <PanelHeaderLiveView/>
+        <PanelHeaderLiveView />
       </PanelLayoutHeader>
       <PanelLayoutMain>
         <Outlet />
@@ -25,6 +20,4 @@ function RouteLiveView() {
   );
 }
 
-export {
-  RouteLiveView
-};
+export { RouteLiveView };

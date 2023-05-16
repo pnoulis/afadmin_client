@@ -5,9 +5,8 @@ import { useCtxRegistration } from "/src/stores/index.js";
 import { PairWristbandPlayerCard } from "./PairWristbandPlayerCard.jsx";
 
 const StylePairWristband = styled.section`
-  width: 100%;
-  height: 100%;
-  max-width: 700px;
+  width: 700px;
+  height: 600px;
   display: flex;
   flex-flow: column nowrap;
   gap: 30px;
@@ -18,15 +17,19 @@ const StylePairWristband = styled.section`
   padding: 15px 15px;
   border-radius: var(--br-lg);
   overflow: auto;
+  position: relative;
 `;
 
 const StyleWristbandIcon = styled.div`
-  width: 500px;
-  height: 500px;
   position: absolute;
-  top: 50%;
+  width: 400px;
+  height: 400px;
   left: 50%;
-  transform: translate(50%, -18%);
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .handBracelet .circle {
     fill: var(--success-light);

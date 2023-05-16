@@ -1,7 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
 import { useForm, FormProvider, SimpleInput } from "react_utils";
-import { generateRandomName } from "js_utils";
 
 const StyledForm = styled.form`
   grid-area: description;
@@ -48,41 +47,21 @@ const StyledSimpleInput = styled(SimpleInput)`
   }
 `;
 
-function FormTeamName({ teamName, done, className }) {
+function FormTeamName({ teamName, onChange, className }) {
   const [form, setForm] = useForm({
     submitting: false,
     fields: {
       teamName: "",
     },
   });
-  // const [randomName, setRandomName] = React.useState(() =>
-  //   generateRandomName()
-  // );
-  // const { createTeam } = ctxApp;
-  // const { modelMergeRef } = ctxMerge;
-
-  // React.useEffect(() => {
-  //   if (!form.submitting) return;
-
-  //   createTeam(
-  //     modelMergeRef.current.stagingArea,
-  //     form.fields.teamName || randomName
-  //   )
-  //     .then(done)
-  //     .catch((err) => console.log(err));
-  // }, [form.submitting]);
-
   return (
     <FormProvider value={{ ...form, setForm }}>
-      <StyledForm
-        id="formTeamName"
-        className={className}
-        onSubmit={(e) => {
-          e.preventDefault();
-          setForm("setSubmit", true);
-        }}
-      >
-        <StyledSimpleInput name="teamName" placeholder={teamName} />
+      <StyledForm id={`${teamName}-name-form`} className={className}>
+        <StyledSimpleInput
+          name="teamName"
+          placeholder={teamName}
+          onChange={(value) => onChange(value || teamName)}
+        />
       </StyledForm>
     </FormProvider>
   );

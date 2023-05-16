@@ -1,3 +1,4 @@
+#+TODO: TODO BUG | DONE
 * TODOS
 ** Friday
 <2023-05-19 Fri>
@@ -142,7 +143,52 @@ CLOSED: [2023-05-15 Mon 15:06]
 CLOSED: [2023-05-15 Mon 15:06]
 **** TODO pairing wristband
 **** TODO unpairing wristband
+** 16/10/23
+*** Group Party
+**** DONE add group team corrupted roster players                       :BUG:
+CLOSED: [2023-05-16 Tue 10:49]
+***** Description
+The action 'add group team' if initiated after a wristband has been paired to a
+roster member instead of creating a new team and roster with the default initial
+state it toggles on the wristband.pairing flag for each automatically created
+roster member.
+***** Cause
+the generateGroupPartyTeam function was using the PLAYER_SCHEMA in order to generate
+a team.
+
+The PLAYER_SCHEMA is comprised of the WRISTBAND_SCHEMA.
+
+Because PLAYER_SCHEMA is an object and spread syntax was used to copy its
+properties, the WRISTBAND_SCHEMA  property which is itself  an object was not
+deep cloned. Thus each roster member referenced by a unique address space shared
+the same address space for their WRISTBANDS. o(-.-)o
+
+**** DONE pairing wristband
+CLOSED: [2023-05-16 Tue 11:11]
+**** DONE unpairing wristband
+CLOSED: [2023-05-16 Tue 11:11]
+**** DONE validate each wristband
+CLOSED: [2023-05-16 Tue 15:07]
+Each roster member's wristband must:
+
+1. Be of a unique color across the roster
+   If the color of the wristband is not unique the administrator is instructed
+   and the scanned wristband is discarded.
+2. Must be available for pairing
+   After passing the wristband color test, the wristband is send to the server
+   for verification. If it is not free for pairing to the roster member then the
+   scanned wristband is discarded. If the test is passed the wristband is paired
+   with the player but not registered.
+
+**** DONE Wristband colors must be unique across a team
+CLOSED: [2023-05-16 Tue 15:07]
+**** TODO team creation
+Each group party team is created after the merge_group_party event.
+
+The merging of the teams is sequential. When one team has been registered, the next one is chosen for registration.
+
 * Dealing with wristband subscriptions
+
 user toggles pairing mode.
 * How'tos
 ** How to contain any element within the app boundaries.

@@ -1,5 +1,5 @@
 import * as React from "react";
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { MemberWidget } from "./MemberWidget.jsx";
 import { FormTeamName } from "./FormTeamName.jsx";
 import { SvgBall, Svg } from "react_utils/svgs";
@@ -15,15 +15,22 @@ function CardTeam({ team, className, children, ...props }) {
     removeGroupPartyTeam,
     removeRosterPlayer,
     addRosterPlayer,
+    changeTeamName,
+    merging,
   } = useCtxGroupParty();
   const {
-    toggleWristbandPairing,
-    removePlayerWristbandRegistrationQueue,
     registerWristbandScanListener,
+    ensureUniqueWristbandColor,
+    validateWristband,
   } = useAppCtx();
 
   return (
-    <StyleCardTeam className={className} {...props}>
+    <StyleCardTeam
+      mergedStatus={team.mergedStatus}
+      creating={team.creating}
+      className={className}
+      {...props}
+    >
       <CardTeamToolbar>
         <ToolbarDeleteTeam
           onClick={() => {
@@ -45,55 +52,24 @@ function CardTeam({ team, className, children, ...props }) {
       </CardTeamToolbar>
       <CardTeamToolbar />
       <CardTeamName>
-        <FormTeamName teamName={team.name} />
+        <FormTeamName
+          teamName={team.name}
+          onChange={(newTeamName) =>
+            setModelGroupParty({
+              teams: changeTeamName(
+                modelGroupPartyRef.current.teams,
+                team,
+                newTeamName
+              ),
+            })
+          }
+        />
       </CardTeamName>
       <CardTeamRoster>
-        {team.roster.map((player) => (
-          <StyleCardTeamRosterItem key={player.username}>
+        {team.roster.map((member) => (
+          <StyleCardTeamRosterItem key={member?.username}>
             <MemberWidget
-              onPlayerToggleWristbandPairing={(player) => {
-                const queue = modelGroupPartyRef.current.teams
-                  .map((team) => team.roster)
-                  .flat();
-
-                registerWristbandScanListener(
-                  queue,
-                  player,
-                  (err, scannedWristband) => {
-                    if (err) return;
-                    console.log("WRISTBAND RETURN");
-                    console.log(modelGroupPartyRef.current);
-                    setModelGroupParty({
-                      teams: modelGroupPartyRef.current.teams.map((_team) =>
-                        _team?.name === team.name
-                          ? {
-                              ...team,
-                              roster: _team.roster.map((_player) =>
-                                _player?.wristband?.pairing
-                                  ? {
-                                      ..._player,
-                                      wristband: {
-                                        ...scannedWristband,
-                                        pairing: false,
-                                        active: true,
-                                      },
-                                    }
-                                  : _player
-                              ),
-                            }
-                          : _team
-                      ),
-                    });
-                  }
-                ).then((queue) =>
-                  setModelGroupParty({
-                    teams: modelGroupPartyRef.current.teams.map((_team) => ({
-                      ..._team,
-                      roster: queue.splice(0, _team.roster.length),
-                    })),
-                  })
-                );
-              }}
+              player={member}
               onPlayerRemove={(player) =>
                 setModelGroupParty({
                   teams: removeRosterPlayer(
@@ -103,7 +79,53 @@ function CardTeam({ team, className, children, ...props }) {
                   ),
                 })
               }
-              player={player}
+              onPlayerToggleWristbandPairing={(player) => {
+                registerWristbandScanListener(
+                  modelGroupPartyRef.current.teams.map((_) => _.roster).flat(),
+                  player,
+                  (err, scannedWristband) => {
+                    if (err) return;
+                    ensureUniqueWristbandColor(team, scannedWristband)
+                      .then(() =>
+                        validateWristband(
+                          scannedWristband,
+                          modelGroupPartyRef.current.teams
+                        )
+                      )
+                      .then(() => {
+                        setModelGroupParty({
+                          teams: modelGroupPartyRef.current.teams.map((_) =>
+                            _?.name === team.name
+                              ? {
+                                  ..._,
+                                  roster: _.roster.map((_player) =>
+                                    _player?.wristband?.pairing
+                                      ? {
+                                          ..._player,
+                                          wristband: {
+                                            ...scannedWristband,
+                                            pairing: false,
+                                            active: true,
+                                          },
+                                        }
+                                      : _player
+                                  ),
+                                }
+                              : _
+                          ),
+                        });
+                      })
+                      .catch((err) => console.log(err));
+                  }
+                ).then((queue) =>
+                  setModelGroupParty({
+                    teams: modelGroupPartyRef.current.teams.map((_) => ({
+                      ..._,
+                      roster: queue.splice(0, _.roster.length),
+                    })),
+                  })
+                );
+              }}
             />
           </StyleCardTeamRosterItem>
         ))}
@@ -152,6 +174,18 @@ function CardTeamRoster({ className, children, ...props }) {
   );
 }
 
+const animate = keyframes`
+50% {
+background-color: white;
+border-color: var(--grey-subtle);
+}
+`;
+const animatePairing = css`
+  border-color: var(--success-base);
+  background-color: var(--success-base);
+  animation: ${animate} 2s infinite;
+`;
+
 const StyleCardTeam = styled.article`
   display: flex;
   flex-flow: row nowrap;
@@ -160,7 +194,29 @@ const StyleCardTeam = styled.article`
   padding: 30px 10px;
   border-radius: var(--br-lg);
   box-sizing: border-box;
-  height: 225px;
+  height: 220px;
+  width: 1320px;
+
+  ${({ mergedStatus }) => {
+    switch (mergedStatus) {
+      case "merging":
+        return animatePairing;
+      case "merged":
+        return `
+pointer-events: none;
+border: 3px solid var(--success-medium);
+`;
+      case "failed":
+        return `
+border: 3px solid var(--error-medium);
+`;
+      default:
+        return `
+border: 3px solid black;
+background-color: white;
+`;
+    }
+  }}
 `;
 
 const StyleCardTeamName = styled.h1``;

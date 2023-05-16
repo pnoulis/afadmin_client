@@ -8,7 +8,7 @@ const PanelLayout = styled.div`
   grid-template-columns: 1fr;
   grid-template-areas: "header" "main";
   width: 100%;
-  height: 860px;
+  height: 840px;
   padding: 15px;
   background-color: white;
   border-radius: var(--br-xl);

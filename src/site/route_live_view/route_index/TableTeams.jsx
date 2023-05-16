@@ -200,9 +200,9 @@ function TableTeams({ rows }) {
   };
 
   return (
-    <Box>
+    <Box sx={{ height: 550, width: 1500 }}>
       <Paper>
-        <TableContainer sx={{ height: 550, width: 1500 }}>
+        <TableContainer>
           <Table stickyHeader>
             <TeamsTableHeader />
             <TableBody>

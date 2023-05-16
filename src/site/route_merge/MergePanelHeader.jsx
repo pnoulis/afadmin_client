@@ -36,18 +36,6 @@ function MergePanelHeader({ className, ...props }) {
       <ul className="header-list">
         <StyleMergePanelHeaderItem
           onClick={() => {
-            const { generateGroupPlayers } = ctxApp;
-
-            console.log("create group party");
-            generateGroupPlayers()
-              .then((players) => console.log(players))
-              .catch((err) => console.log(err));
-          }}
-          text="create group party"
-          Icon={<GroupPartyIcon />}
-        />
-        <StyleMergePanelHeaderItem
-          onClick={() => {
             if (stagingArea.filter((positions) => !!positions).length < 2) {
               renderDialog(null, DialogInsufficientPlayers);
             } else {

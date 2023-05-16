@@ -13,6 +13,9 @@ import createTeam from "./controllers/createTeam.jsx";
 import listTeams from "./controllers/listTeams.jsx";
 import generateGroupPlayers from "./controllers/generateGroupPlayers.jsx";
 import registerWristbandScanListener from "./controllers/registerWristbandScanListener.jsx";
+import ensureUniqueWristbandColor from "./controllers/ensureUniqueWristbandColor.jsx";
+import validateWristband from "./controllers/validateWristband.jsx";
+import createGroupPartyTeam from "./controllers/createGroupPartyTeam.jsx";
 
 const getControllers = (app) => ({
   ...registerPlayer(app),
@@ -30,6 +33,9 @@ const getControllers = (app) => ({
   ...listTeams(app),
   ...generateGroupPlayers(app),
   ...registerWristbandScanListener(app),
+  ...ensureUniqueWristbandColor(app),
+  ...validateWristband(app),
+  ...createGroupPartyTeam(app),
 });
 
 export { getControllers };

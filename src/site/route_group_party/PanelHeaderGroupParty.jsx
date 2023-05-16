@@ -6,32 +6,23 @@ import { ReactComponent as MergeTeamIcon } from "agent_factory.shared/ui/icons/m
 import { useCtxGroupParty } from "/src/stores/index.js";
 
 function PanelHeaderGroupParty({ className, ...props }) {
-  const { generateGroupPartyTeam, modelGroupPartyRef, setModelGroupParty } =
+  const { addGroupPartyTeam, initMergingSequence, merging } =
     useCtxGroupParty();
 
   return (
-    <StylePanelHeaderGroupParty className={className} {...props}>
+    <StylePanelHeaderGroupParty
+      merging={merging}
+      className={className}
+      {...props}
+    >
       <ul className="header-list">
         <PanelHeaderItem
-          onClick={() => {
-            const newTeams = [...modelGroupPartyRef.current.teams];
-
-            console.log(generateGroupPartyTeam());
-
-            /* setModelGroupParty({ */
-            /*   teams: [ */
-            /*     ...modelGroupPartyRef.current.teams, */
-            /*     generateGroupPartyTeam(), */
-            /*   ], */
-            /* }); */
-          }}
+          onClick={addGroupPartyTeam}
           text="add team"
           Icon={<GroupPartyIcon />}
         />
         <PanelHeaderItem
-          onClick={() => {
-            console.log("merge group party");
-          }}
+          onClick={initMergingSequence}
           text="merge group party"
           Icon={<MergeTeamIcon />}
         />
@@ -120,6 +111,7 @@ const StylePanelHeaderGroupParty = styled.div`
   width: 100%;
   height: 100%;
   padding: 3px 0;
+  // pointer-events: ${({ merging }) => (merging ? "none" : "initial")};
 
   .header-list {
     all: unset;

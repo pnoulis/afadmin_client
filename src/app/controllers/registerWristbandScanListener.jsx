@@ -47,6 +47,10 @@ export default (appRef) => ({
           )
           .catch(reject);
       }
+
+      console.log("REGISTER WRISTBAND SCAN LISTENER");
+      console.log(players);
+      console.log(toPair);
       // remove all wristband scan subscriptions
       appRef.current.listenersRef.current =
         appRef.current.listenersRef.current.filter(

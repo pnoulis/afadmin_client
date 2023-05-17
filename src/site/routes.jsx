@@ -13,6 +13,7 @@ import {
   RouteGroupParty,
   RouteGroupPartyIndex,
 } from "./route_group_party/index.js";
+import { RouteTeam, RouteTeamPackages } from "./route_team/index.js";
 import { useAfmachine } from "/src/afmachine_interface/index.js";
 import { getControllers } from "/src/app/index.js";
 import mockTeams from "agent_factory.shared/mocks/teams.json" assert { type: "json" };
@@ -67,6 +68,14 @@ const routesApp = [
             loader: async () =>
               listTeams().then((teams) => [...teams, ...mockTeams]),
             element: <RouteLiveViewIndex />,
+          },
+          {
+            path: "/liveView/:teamId/packages",
+            element: (
+              <RouteTeam>
+                <RouteTeamPackages />
+              </RouteTeam>
+            ),
           },
         ],
       },

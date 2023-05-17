@@ -28,8 +28,7 @@ const PanelLayoutMain = styled.div`
   grid-area: main;
   margin: 60px 0 10px 0;
   padding: 0 25px;
-  overflow-x: scroll;
-  overflow-y: scroll;
+  overflow: auto;
 `;
 
 export { PanelLayout, PanelLayoutHeader, PanelLayoutMain };

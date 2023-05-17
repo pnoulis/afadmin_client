@@ -13,6 +13,8 @@ import {
   TablePagination,
 } from "@mui/material";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { teamPackages } from "/src/site/links.jsx";
 import { flattenObj } from "js_utils/misc";
 import { TEAM_SCHEMA } from "agent_factory.shared/schemas.js";
 
@@ -48,6 +50,10 @@ const StyleTableHeadRow = styled(TableRow)`
 `;
 
 const StyleTableTeamsRow = styled(TableRow)`
+  cursor: pointer;
+  :hover {
+    background-color: var(--info-subtle);
+  }
   td {
     font-family: Roboto-Regular;
     font-size: var(--tx-nl);
@@ -188,6 +194,7 @@ function RowCellTimeRemaining({ row }) {
 }
 
 function TableTeams({ rows }) {
+  const navigate = useNavigate();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(20);
 
@@ -213,7 +220,15 @@ function TableTeams({ rows }) {
                   )
                 : rows
               ).map((row, i) => (
-                <StyleTableTeamsRow key={`${row.name}_${i}`}>
+                <StyleTableTeamsRow
+                  key={`${row.name}_${i}`}
+                  onClick={() =>
+                    navigate(teamPackages(row.name).path, {
+                      relative: true,
+                      state: row,
+                    })
+                  }
+                >
                   <TableCell>{row?.name || "-"}</TableCell>
                   <TableCell>{row?.teamState || "-"}</TableCell>
                   <TableCell className="number">

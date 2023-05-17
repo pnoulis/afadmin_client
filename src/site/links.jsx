@@ -80,6 +80,16 @@ const groupParty = {
   ),
 };
 
+const teamPackages = (teamId) => ({
+  path: `${teamId}/packages`,
+  label: "team packages",
+  asComponent: ({ children, ...props }) => (
+    <Navlink to={`${teamId}/packages`} {...props}>
+      {children}
+    </Navlink>
+  ),
+});
+
 export {
   home,
   registration,
@@ -89,4 +99,5 @@ export {
   merge,
   liveView,
   groupParty,
+  teamPackages,
 };

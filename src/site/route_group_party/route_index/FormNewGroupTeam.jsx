@@ -5,6 +5,7 @@ import { useForm, FormProvider, SimpleInput } from "react_utils";
 const StyledForm = styled.form`
   grid-area: description;
   box-sizing: content-box;
+  padding: 0 10px;
   width: 400px;
   height: 150px;
   display: flex;
@@ -39,6 +40,8 @@ const StyledSimpleInput = styled(SimpleInput)`
     letter-spacing: 1.5px;
     outline: none;
     color: black;
+
+    ${({ error }) => error && "border-color: var(--error-base)"}
   }
 
   .input::placeholder {
@@ -47,25 +50,55 @@ const StyledSimpleInput = styled(SimpleInput)`
   }
 `;
 
-function FormTeamName({ teamName, onChange, disabled, className }) {
+const StyleError = styled.p`
+  height: 20px;
+  font-family: Roboto-Bold;
+  text-transform: uppercase;
+  font-size: var(--tx-sm);
+  text-align: center;
+  letter-spacing: 1.5px;
+  color: var(--error-base);
+`;
+
+function FormNewGroupTeam({ done, className }) {
   const [form, setForm] = useForm({
     submitting: false,
+    errors: {},
     fields: {
-      teamName: "",
+      nPlayers: "",
     },
   });
+
+  React.useEffect(() => {
+    if (!form.submitting) return;
+    done(form.fields.nPlayers);
+  }, [form.submitting]);
+
   return (
     <FormProvider value={{ ...form, setForm }}>
-      <StyledForm id={`${teamName}-name-form`} className={className}>
+      <StyledForm
+        id="form-new-group-team"
+        className={className}
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (/^[1-9][0-9]*/.test(form.fields.nPlayers)) {
+            setForm("setSubmit", true);
+          } else {
+            setForm("setErrors", {
+              nPlayers: "Wrong number of players",
+            });
+          }
+        }}
+      >
         <StyledSimpleInput
-          disabled={disabled}
-          name="teamName"
-          placeholder={teamName}
-          onChange={(value) => onChange(value || teamName)}
+          error={form.errors.nPlayers}
+          name="nPlayers"
+          placeholder="number of players"
         />
+        <StyleError>{form.errors.nPlayers}</StyleError>
       </StyledForm>
     </FormProvider>
   );
 }
 
-export { FormTeamName };
+export { FormNewGroupTeam };

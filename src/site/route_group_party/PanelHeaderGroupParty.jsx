@@ -1,12 +1,13 @@
 import * as React from "react";
 import styled from "styled-components";
 import { Svg } from "react_utils/svgs";
-import { ReactComponent as GroupPartyIcon } from "agent_factory.shared/ui/icons/group_add_filled.svg";
+import { ReactComponent as GroupPartyAddTeamIcon } from "agent_factory.shared/ui/icons/group_add_filled.svg";
 import { ReactComponent as MergeTeamIcon } from "agent_factory.shared/ui/icons/merge_team.svg";
+import { ReactComponent as GroupPartyIcon } from "agent_factory.shared/ui/icons/group_filled.svg";
 import { useCtxGroupParty } from "/src/stores/index.js";
 
 function PanelHeaderGroupParty({ className, ...props }) {
-  const { addGroupPartyTeam, initMergingSequence, merging } =
+  const { createGroupParty, addGroupPartyTeam, initMergingSequence, merging } =
     useCtxGroupParty();
 
   return (
@@ -17,9 +18,14 @@ function PanelHeaderGroupParty({ className, ...props }) {
     >
       <ul className="header-list">
         <PanelHeaderItem
+          onClick={createGroupParty}
+          text="new group party"
+          Icon={<GroupPartyIcon />}
+        />
+        <PanelHeaderItem
           onClick={addGroupPartyTeam}
           text="add team"
-          Icon={<GroupPartyIcon />}
+          Icon={<GroupPartyAddTeamIcon />}
         />
         <PanelHeaderItem
           onClick={initMergingSequence}
@@ -93,6 +99,7 @@ const StyleMergePanelHeaderItem = styled.li`
 
   .item-text {
     all: unset;
+    min-height: 50px;
     box-sizing: border-box;
     text-align: center;
     font-size: var(--text-xs);
@@ -111,7 +118,7 @@ const StylePanelHeaderGroupParty = styled.div`
   width: 100%;
   height: 100%;
   padding: 3px 0;
-  // pointer-events: ${({ merging }) => (merging ? "none" : "initial")};
+  pointer-events: ${({ merging }) => (merging ? "none" : "initial")};
 
   .header-list {
     all: unset;

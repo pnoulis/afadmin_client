@@ -11,6 +11,7 @@ import {
 } from "/src/components/dialogs/index.js";
 
 function handleResponse(res) {
+  fmAgent.success({ message: res.message });
   return res;
 }
 
@@ -34,14 +35,21 @@ function handleError(err) {
 export default (appRef) => ({
   createGroupPartyTeam: async (groupTeam) =>
     new Promise((resolve, reject) => {
-      setTimeout(() => {
-        Math.random() > 0.5 ? resolve("resolved") : reject("rejected");
-      }, 1000);
-      // const Afmachine = appRef.current.Afmachine;
-      // Afmachine.request(() => Afmachine.players.createGroupTeam(groupTeam))
-      //   .then(handleResponse)
-      //   .then(resolve)
-      //   .catch(handleError)
-      //   .catch(reject);
+      const Afmachine = appRef.current.Afmachine;
+      Afmachine.request(() =>
+        Afmachine.players.createGroupTeam({
+          teamName: groupTeam.customName || groupTeam.name,
+          groupPlayers: groupTeam.roster.map(
+            ({ username, wristband: { wristbandNumber } }) => ({
+              username,
+              wristbandNumber,
+            })
+          ),
+        })
+      )
+        .then(handleResponse)
+        .then(resolve)
+        .catch(handleError)
+        .catch(reject);
     }),
 });

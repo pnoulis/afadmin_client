@@ -179,6 +179,7 @@ function PairWristbandPlayerCard({ player }) {
           <StyleWristbandSignal
             onClick={(e) => {
               toggleWristbandPairing(players, player, (err, registered) => {
+                if (!registered) return;
                 setModelRegistration({
                   players: modelRegistrationRef.current.players.map((player) =>
                     player.username === registered.username

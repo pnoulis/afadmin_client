@@ -3,6 +3,7 @@
 ** Friday
 <2023-05-19 Fri>
 *** TODO Group party
+CLOSED: [2023-05-17 Wed 14:29]
 *** TODO Packages
 *** TODO Subscriptions
 *** TODO Team controls
@@ -186,6 +187,18 @@ CLOSED: [2023-05-16 Tue 15:07]
 Each group party team is created after the merge_group_party event.
 
 The merging of the teams is sequential. When one team has been registered, the next one is chosen for registration.
+
+** 17/10/23
+*** Group party
+**** TODO Should a group party team be allowed to be removed if it is the only one left in the group party?
+**** DONE team creation
+CLOSED: [2023-05-17 Wed 14:28]
+The merging of the teams is sequential. When one team has been registered, the next one is chosen for registration.
+
+Each group party team is created after the merge_group_party event.
+
+
+**** TODO Spread group party size evenly among teams
 
 * Dealing with wristband subscriptions
 

@@ -26,6 +26,7 @@ function CardTeam({ team, className, children, ...props }) {
 
   return (
     <StyleCardTeam
+      merging={merging}
       mergedStatus={team.mergedStatus}
       creating={team.creating}
       className={className}
@@ -53,6 +54,7 @@ function CardTeam({ team, className, children, ...props }) {
       <CardTeamToolbar />
       <CardTeamName>
         <FormTeamName
+          disabled={team.mergedStatus === "merged" || merging}
           teamName={team.name}
           onChange={(newTeamName) =>
             setModelGroupParty({
@@ -190,12 +192,13 @@ const StyleCardTeam = styled.article`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  border: 3px solid black;
+  border: 5px solid black;
   padding: 30px 10px;
   border-radius: var(--br-lg);
   box-sizing: border-box;
   height: 220px;
   width: 1320px;
+  pointer-events: ${({ merging }) => (merging ? "none" : "initial")};
 
   ${({ mergedStatus }) => {
     switch (mergedStatus) {
@@ -204,15 +207,15 @@ const StyleCardTeam = styled.article`
       case "merged":
         return `
 pointer-events: none;
-border: 3px solid var(--success-medium);
+border: 5px solid var(--success-base);
 `;
       case "failed":
         return `
-border: 3px solid var(--error-medium);
+border: 5px solid var(--error-subtle);
 `;
       default:
         return `
-border: 3px solid black;
+border: 5px solid black;
 background-color: white;
 `;
     }

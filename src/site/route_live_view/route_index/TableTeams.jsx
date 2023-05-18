@@ -206,6 +206,8 @@ function TableTeams({ rows }) {
     setPage(0);
   };
 
+  console.log(rows);
+
   return (
     <Box sx={{ height: 550, width: 1500 }}>
       <Paper>

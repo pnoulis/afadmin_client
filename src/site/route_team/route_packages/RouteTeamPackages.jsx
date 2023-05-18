@@ -16,7 +16,7 @@ const StyleRouteTeamPackages = styled.div`
     "team_packages_controls team_packages_controls"
     "list_packages select_package"
     "list_packages configure_package";
-  row-gap: 15px;
+  row-gap: 40px;
   column-gap: 50px;
 `;
 

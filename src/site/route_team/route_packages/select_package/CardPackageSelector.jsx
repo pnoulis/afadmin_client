@@ -1,13 +1,33 @@
 import * as React from "react";
 import styled from "styled-components";
-import { useCtxTeamPackages } from "/src/stores/index.js";
+import {
+  useCtxTeamPackages
+} from "/src/stores/index.js";
+import {
+  ComboboxPackageCatalogue
+} from './ComboboxPackageCatalogue.jsx';
 
-function CardPackageSelector({ header, description, catalogue }) {
+function CardPackageSelector({
+  type,
+  header,
+  description,
+  catalogue,
+  onSelect,
+  selected
+}) {
   return (
-    <StyleCardPackageSelector>
+    <StyleCardPackageSelector selected={selected}>
       <p className="pkg-header">{header}</p>
       <p className="pkg-description">{description}</p>
-      <p></p>
+      <div className='pkg-catalogue'>
+        <ComboboxPackageCatalogue
+          selected={selected}
+          type={type}
+          options={catalogue.map(({name}) => name)}
+          labelledBy="pkg-description"
+          onSelect={(pkgName) => onSelect(catalogue.find((pkg) => pkg.name === pkgName))}
+        />
+      </div>
     </StyleCardPackageSelector>
   );
 }
@@ -15,7 +35,7 @@ function CardPackageSelector({ header, description, catalogue }) {
 const StyleCardPackageSelector = styled.article`
   width: 350px;
   height: 225px;
-  border: 4px solid transparent;
+  border: 4px solid ${({selected}) => selected ? 'var(--primary-medium)' : 'transparent'};
   box-shadow: var(--sd-14);
   border-radius: var(--br-xl);
   font-family: NoirPro-Medium;
@@ -28,6 +48,10 @@ const StyleCardPackageSelector = styled.article`
   cursor: pointer;
   padding: 25px 15px 20px 15px;
 
+&:hover {
+border-color: var(--primary-medium);
+}
+
   .pkg-header {
     font-size: var(--tx-lg);
   }
@@ -35,6 +59,13 @@ const StyleCardPackageSelector = styled.article`
   .pkg-description {
     margin-top: 30px;
   }
+
+.pkg-catalogue {
+margin-top: 30px;
+}
+
 `;
 
-export { CardPackageSelector };
+export {
+  CardPackageSelector
+};

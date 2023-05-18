@@ -10,8 +10,8 @@ function TeamPackagesControls({ className, ...props }) {
   return (
     <StyleTeamPackagesControls className={className} {...props}>
       <NewPackage onClick={addNewPkg} />
-      <UploadPackage />
-      <DeletePackage />
+      <UploadPackage className="upload"/>
+      <DeletePackage className='delete'/>
     </StyleTeamPackagesControls>
   );
 }
@@ -41,8 +41,13 @@ function DeletePackage({ className, ...props }) {
 }
 
 const StyleTeamPackagesControls = styled.section`
+padding: 0 5px 0 0px;
   display: flex;
   flex-flow: row nowrap;
+.upload {
+margin-left: auto;
+margin-right: 30px;
+}
 `;
 
 const StyleSvgButton = styled(SvgBall)`

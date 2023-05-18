@@ -1,6 +1,10 @@
 import * as React from "react";
-import { PACKAGE_SCHEMA } from "agent_factory.shared/schemas.js";
-import { mapPackage } from "agent_factory.shared/utils/index.js";
+import {
+  PACKAGE_SCHEMA
+} from "agent_factory.shared/schemas.js";
+import {
+  mapPackage
+} from "agent_factory.shared/utils/index.js";
 
 const CtxTeamPackages = React.createContext(null);
 const useCtxTeamPackages = () => {
@@ -10,7 +14,10 @@ const useCtxTeamPackages = () => {
   }
   return ctx;
 };
-const ProvideCtxTeamPackages = ({ value, children }) => (
+const ProvideCtxTeamPackages = ({
+  value,
+  children
+}) => (
   <CtxTeamPackages.Provider value={value}>{children}</CtxTeamPackages.Provider>
 );
 
@@ -25,9 +32,8 @@ const useModelTeamPackages = (ctxTeam) => {
 
   const [modelTeamPkgs, setModelTeamPkgs] = React.useState(() => {
     const packages =
-      ctxTeam.team?.packages?.length > 0
-        ? ctxTeam.team?.packages
-        : [generatePkg(0)];
+      ctxTeam.team?.packages?.length > 0 ?
+      ctxTeam.team?.packages : [generatePkg(0)];
     const selectedPkgId = packages[0].id;
     return {
       selectedPkgId,
@@ -59,6 +65,18 @@ const useModelTeamPackages = (ctxTeam) => {
     });
   };
 
+  const configurePkg = (pkg) => {
+    setModelTeamPkgs({
+      ...modelTeamPkgs,
+      packages: modelTeamPkgs.packages.map((_) => _.id === modelTeamPkgs
+        .selectedPkgId ? ({
+          ..._,
+          ...pkg,
+        }) : _)
+    });
+  };
+
+  console.log(modelTeamPkgs);
   return {
     ...ctxTeam.team,
     ...modelTeamPkgs,
@@ -66,14 +84,21 @@ const useModelTeamPackages = (ctxTeam) => {
     modelTeamPkgsRef,
     addNewPkg,
     selectPkg,
+    configurePkg,
   };
 };
 
-function ProvideStoreTeamPackages({ ctxTeam, children }) {
+function ProvideStoreTeamPackages({
+  ctxTeam,
+  children
+}) {
   const model = useModelTeamPackages(ctxTeam);
   return (
     <ProvideCtxTeamPackages value={model}>{children}</ProvideCtxTeamPackages>
   );
 }
 
-export { useCtxTeamPackages, ProvideStoreTeamPackages };
+export {
+  useCtxTeamPackages,
+  ProvideStoreTeamPackages
+};

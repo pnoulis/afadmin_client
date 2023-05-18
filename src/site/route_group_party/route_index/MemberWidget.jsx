@@ -19,7 +19,7 @@ function MemberWidget({
         player={player}
       />
       <StyleMemberInfo player={player} />
-      <StyleMemberRemove onClick={() => onPlayerRemove(player)} />
+      <MemberRemove onClick={() => onPlayerRemove(player)} />
     </div>
   );
 }
@@ -135,7 +135,5 @@ const StyleTrashIcon = styled(SvgBall)`
     background-color: var(--grey-light);
   }
 `;
-
-const StyleMemberRemove = styled(MemberRemove)``;
 
 export { StyleMemberWidget as MemberWidget };

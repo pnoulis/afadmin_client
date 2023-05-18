@@ -1,8 +1,5 @@
 import * as React from "react";
-import {
-  App,
-  useAppCtx
-} from "/src/app/index.js";
+import { App, useAppCtx } from "/src/app/index.js";
 import styled from "styled-components";
 
 const StyleButton = styled.button`
@@ -145,10 +142,22 @@ function Component() {
         <StyleButton
           onClick={() => {
             const { listTeams } = app;
-            listTeams().then((res) => console.log(res)).catch((err) => console.log(err));
+            listTeams()
+              .then((res) => console.log(res))
+              .catch((err) => console.log(err));
           }}
         >
           list teams
+        </StyleButton>
+        <StyleButton
+          onClick={() => {
+            const { listPackages } = app;
+            listPackages()
+              .then((res) => console.log(res))
+              .catch((err) => console.log(err));
+          }}
+        >
+          list packages
         </StyleButton>
       </div>
     </div>

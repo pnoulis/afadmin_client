@@ -183,7 +183,8 @@ Each roster member's wristband must:
 
 **** DONE Wristband colors must be unique across a team
 CLOSED: [2023-05-16 Tue 15:07]
-**** TODO team creation
+**** DONE team creation
+CLOSED: [2023-05-18 Thu 08:59]
 Each group party team is created after the merge_group_party event.
 
 The merging of the teams is sequential. When one team has been registered, the next one is chosen for registration.
@@ -200,6 +201,9 @@ Each group party team is created after the merge_group_party event.
 
 **** TODO Spread group party size evenly among teams
 
+** 18/10/23
+*** Packages
+**** dividie the layout into the appropriate sections
 * Dealing with wristband subscriptions
 
 user toggles pairing mode.

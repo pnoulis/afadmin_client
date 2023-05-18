@@ -221,6 +221,8 @@ function TableTeams({ rows }) {
                 : rows
               ).map((row, i) => (
                 <StyleTableTeamsRow
+                  role="link"
+                  tabIndex={0}
                   key={`${row.name}_${i}`}
                   onClick={() =>
                     navigate(teamPackages(row.name).path, {

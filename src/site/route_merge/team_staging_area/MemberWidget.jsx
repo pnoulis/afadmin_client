@@ -40,7 +40,7 @@ function MemberWidget({ index, player, className, ...props }) {
         player={player}
       />
       <StyleMemberInfo index={index} player={player} />
-      <StyleMemberRemove
+      <MemberRemove
         onClick={() => {
           if (player == null) {
             return;
@@ -170,6 +170,5 @@ const StyleTrashIcon = styled(SvgBall)`
     background-color: var(--grey-light);
   }
 `;
-const StyleMemberRemove = styled(MemberRemove)``;
 
 export { StyleMemberWidget as MemberWidget };

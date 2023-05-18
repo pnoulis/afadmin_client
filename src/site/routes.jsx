@@ -17,13 +17,14 @@ import { RouteTeam, RouteTeamPackages } from "./route_team/index.js";
 import { useAfmachine } from "/src/afmachine_interface/index.js";
 import { getControllers } from "/src/app/index.js";
 import mockTeams from "agent_factory.shared/mocks/teams.json" assert { type: "json" };
+import { mapTeam } from "agent_factory.shared/utils/misc.js";
 
 const app = {
   current: {
     Afmachine: useAfmachine().Afmachine,
   },
 };
-const { listRegisteredPlayers, listAvailablePlayers, listTeams } =
+const { listRegisteredPlayers, listAvailablePlayers, listTeams, listPackages } =
   getControllers(app);
 
 const routesApp = [
@@ -66,11 +67,16 @@ const routesApp = [
           {
             path: "/liveView",
             loader: async () =>
-              listTeams().then((teams) => [...teams, ...mockTeams]),
+              listTeams()
+                .then((teams) => [...teams, ...mockTeams])
+                .then((teams) =>
+                  teams.map((team) => mapTeam(team, "frontend"))
+                ),
             element: <RouteLiveViewIndex />,
           },
           {
             path: "/liveView/:teamId/packages",
+            loader: async () => listPackages().then((pkgs) => pkgs),
             element: (
               <RouteTeam>
                 <RouteTeamPackages />

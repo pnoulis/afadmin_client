@@ -1,1 +1,1 @@
-export { default } from "./ScratchGroupParty.jsx";
+export { default } from "./ScratchApp.jsx";

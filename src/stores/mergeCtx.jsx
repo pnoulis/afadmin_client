@@ -20,10 +20,27 @@ const useModelMerge = () => {
   }));
   const modelMergeRef = React.useRef(null);
   modelMergeRef.current = modelMerge;
+
+  const removePlayer = (player) => {
+    const roster = modelMergeRef.current.stagingArea.filter(
+      (pos) => pos != null && pos.username !== player.username
+    );
+    console.log(modelMergeRef.current);
+    console.log("ROSTER");
+    console.log(roster);
+    setModelMerge({
+      ...modelMergeRef.current,
+      stagingArea: modelMergeRef.current.stagingArea.map(
+        () => roster.shift() || null
+      ),
+    });
+  };
+
   return {
     ...modelMerge,
     setModelMerge,
     modelMergeRef,
+    removePlayer,
   };
 };
 function ProvideStoreMerge({ children }) {

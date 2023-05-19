@@ -41,7 +41,6 @@ function RouteTeamPackages() {
         <StyleTeamPackagesControls />
         <StyleListPackages />
         <StyleSelectPackage />
-        <StyleConfigurePackage />
       </StyleRouteTeamPackages>
     </ProvideStoreTeamPackages>
   );

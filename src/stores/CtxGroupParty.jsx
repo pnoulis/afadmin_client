@@ -64,7 +64,7 @@ function AlertMergeSequenceFail({ teamName, handleClose }) {
 }
 
 const StyleConfirmationDialog = styled(ConfirmationDialog)`
-  width: 600px;
+  width: 400px;
 `;
 
 const StyleConfirmationDialogDescription = styled(
@@ -77,7 +77,7 @@ const StyleConfirmationDialogDescription = styled(
   text-transform: uppercase;
   letter-spacing: 1.5px;
   word-spacing: 3px;
-  margin-top: 30px;
+  margin-top: 20px;
   text-align: center;
 `;
 
@@ -86,7 +86,7 @@ function ConfirmDiscardGroupParty({ handleClose }) {
     <StyleConfirmationDialog
       initialOpen
       onClose={handleClose}
-      style={{ wdith: "600px" }}
+      style={{ wdith: "400px" }}
     >
       <ConfirmationDialogHeading>new group party</ConfirmationDialogHeading>
       <StyleConfirmationDialogDescription>

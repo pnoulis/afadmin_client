@@ -2,8 +2,7 @@ import * as Errors from "/src/errors.js";
 import { fmAgent } from "/src/components/flash_messages/index.js";
 
 function handleResponse(res) {
-  console.log("REGISTERED PLAYER");
-  fmAgent.info({
+  fmAgent.success({
     message: `Registered player: ${res?.player?.username}`,
   });
   return res.player;

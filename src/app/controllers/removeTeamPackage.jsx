@@ -1,8 +1,17 @@
+import * as React from "react";
 import * as Errors from "/src/errors.js";
 import { fmAgent } from "/src/components/flash_messages/index.js";
+import {
+  Dialog,
+  DialogHeading,
+  DialogDescription,
+  DialogClose,
+  DialogConfirm,
+  renderDialog,
+} from "/src/components/dialogs/index.js";
 
 function handleResponse(res) {
-  console.log(`REGISTERED PLAYER WRISTBAND`);
+  fmAgent.success({ message: `Removed package from team:${res.team.name}` });
   return res;
 }
 
@@ -24,26 +33,12 @@ function handleError(err) {
 }
 
 export default (appRef) => ({
-  registerWristband: async (player) =>
+  removeTeamPackage: async (payload) =>
     new Promise((resolve, reject) => {
       const Afmachine = appRef.current.Afmachine;
-      Afmachine.request(() =>
-        Afmachine.players.registerWristband({
-          username: player?.username,
-          wristbandNumber: player?.wristband?.wristbandNumber,
-        })
-      )
+      Afmachine.request(() => Afmachine.players.removePackage(payload))
         .then(handleResponse)
-        .then((res) =>
-          resolve({
-            ...player,
-            wristband: {
-              ...player.wristband,
-              pairing: false,
-              active: true,
-            },
-          })
-        )
+        .then(resolve)
         .catch(handleError)
         .catch(reject);
     }),

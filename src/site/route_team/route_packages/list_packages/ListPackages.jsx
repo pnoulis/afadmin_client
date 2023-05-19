@@ -34,7 +34,7 @@ const StyleScrollableList = styled.ul`
   overflow-y: auto;
   scrollbar-color: rgb(48, 25, 52) grey;
   scrollbar-gutter: stable both-edges;
-  height: 570px;
+  height: 540px;
   display: flex;
   flex-flow: column nowrap;
   padding-right: 20px;

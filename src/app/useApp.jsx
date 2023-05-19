@@ -49,6 +49,8 @@ function useApp() {
     return () => appRef.current.umount();
   }, []);
 
+  console.log("LISTENERS REF");
+  console.log(listenersRef);
   return appRef.current;
 }
 

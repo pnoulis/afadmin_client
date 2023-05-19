@@ -17,11 +17,13 @@ import { useNavigate } from "react-router-dom";
 import { teamPackages } from "/src/site/links.jsx";
 import { flattenObj } from "js_utils/misc";
 import { TEAM_SCHEMA } from "agent_factory.shared/schemas.js";
+import { TeamActions } from "./TeamActions.jsx";
 
 function TeamsTableHeader() {
   return (
     <TableHead>
       <StyleTableHeadRow>
+        <TableCell>actions</TableCell>
         <TableCell>name</TableCell>
         <TableCell>state</TableCell>
         <TableCell>players</TableCell>
@@ -233,6 +235,9 @@ function TableTeams({ rows }) {
                     })
                   }
                 >
+                  <TableCell>
+                    <TeamActions team={row} />
+                  </TableCell>
                   <TableCell>{row?.name || "-"}</TableCell>
                   <TableCell>{row?.teamState || "-"}</TableCell>
                   <TableCell className="number">

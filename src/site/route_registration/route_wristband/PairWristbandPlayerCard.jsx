@@ -178,6 +178,7 @@ function PairWristbandPlayerCard({ player }) {
         <div className="wristband-signal">
           <StyleWristbandSignal
             onClick={(e) => {
+              console.log(player);
               toggleWristbandPairing(players, player, (err, registered) => {
                 if (!registered) return;
                 setModelRegistration({

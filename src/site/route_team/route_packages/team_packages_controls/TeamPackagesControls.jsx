@@ -6,12 +6,12 @@ import { ReactComponent as UploadIcon } from "agent_factory.shared/ui/icons/save
 import { useCtxTeamPackages } from "/src/stores/index.js";
 
 function TeamPackagesControls({ className, ...props }) {
-  const { addNewPkg } = useCtxTeamPackages();
+  const { addNewPkg, uploadPkg, removePkg } = useCtxTeamPackages();
   return (
     <StyleTeamPackagesControls className={className} {...props}>
       <NewPackage onClick={addNewPkg} />
-      <UploadPackage className="upload"/>
-      <DeletePackage className='delete'/>
+      <UploadPackage onClick={uploadPkg} className="upload" />
+      <DeletePackage onClick={removePkg} className="delete" />
     </StyleTeamPackagesControls>
   );
 }
@@ -41,13 +41,14 @@ function DeletePackage({ className, ...props }) {
 }
 
 const StyleTeamPackagesControls = styled.section`
-padding: 0 5px 0 0px;
+  padding: 0px 5px 0 0px;
   display: flex;
   flex-flow: row nowrap;
-.upload {
-margin-left: auto;
-margin-right: 30px;
-}
+  align-items: center;
+  .upload {
+    margin-left: auto;
+    margin-right: 30px;
+  }
 `;
 
 const StyleSvgButton = styled(SvgBall)`

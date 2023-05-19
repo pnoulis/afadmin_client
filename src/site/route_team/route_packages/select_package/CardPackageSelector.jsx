@@ -1,31 +1,32 @@
 import * as React from "react";
 import styled from "styled-components";
-import {
-  useCtxTeamPackages
-} from "/src/stores/index.js";
-import {
-  ComboboxPackageCatalogue
-} from './ComboboxPackageCatalogue.jsx';
+import { useCtxTeamPackages } from "/src/stores/index.js";
+import { ComboboxPackageCatalogue } from "./ComboboxPackageCatalogue.jsx";
 
 function CardPackageSelector({
   type,
+  lock,
+  name,
   header,
   description,
   catalogue,
   onSelect,
-  selected
+  selected,
 }) {
   return (
-    <StyleCardPackageSelector selected={selected}>
+    <StyleCardPackageSelector lock={lock} selected={selected}>
       <p className="pkg-header">{header}</p>
       <p className="pkg-description">{description}</p>
-      <div className='pkg-catalogue'>
+      <div className="pkg-catalogue">
         <ComboboxPackageCatalogue
           selected={selected}
+          value={name}
           type={type}
-          options={catalogue.map(({name}) => name)}
+          options={catalogue.map(({ name }) => name)}
           labelledBy="pkg-description"
-          onSelect={(pkgName) => onSelect(catalogue.find((pkg) => pkg.name === pkgName))}
+          onSelect={(pkgName) =>
+            onSelect(catalogue.find((pkg) => pkg.name === pkgName))
+          }
         />
       </div>
     </StyleCardPackageSelector>
@@ -35,7 +36,8 @@ function CardPackageSelector({
 const StyleCardPackageSelector = styled.article`
   width: 350px;
   height: 225px;
-  border: 4px solid ${({selected}) => selected ? 'var(--primary-medium)' : 'transparent'};
+  border: 4px solid
+    ${({ selected }) => (selected ? "var(--primary-medium)" : "transparent")};
   box-shadow: var(--sd-14);
   border-radius: var(--br-xl);
   font-family: NoirPro-Medium;
@@ -48,9 +50,9 @@ const StyleCardPackageSelector = styled.article`
   cursor: pointer;
   padding: 25px 15px 20px 15px;
 
-&:hover {
-border-color: var(--primary-medium);
-}
+  &:hover {
+    border-color: var(--primary-medium);
+  }
 
   .pkg-header {
     font-size: var(--tx-lg);
@@ -60,12 +62,11 @@ border-color: var(--primary-medium);
     margin-top: 30px;
   }
 
-.pkg-catalogue {
-margin-top: 30px;
-}
+  .pkg-catalogue {
+    margin-top: 30px;
+  }
 
+  pointer-events: ${({ lock }) => (lock ? "none" : "iniital")};
 `;
 
-export {
-  CardPackageSelector
-};
+export { CardPackageSelector };

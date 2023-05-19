@@ -22,8 +22,10 @@ function DialogUnpairWristband({ handleClose }) {
   );
 }
 
-function handleResponse(res) {
-  console.log("UNREGISTERED PLAYER WRISTBAND");
+function handleResponse(username, res) {
+  fmAgent.success({
+    message: `Successfully unregistered player's ${username} wristband`,
+  });
   return res;
 }
 
@@ -47,29 +49,52 @@ function handleError(err) {
 export default (appRef) => ({
   unregisterWristband: async (player) =>
     new Promise((resolve, reject) => {
-      renderDialog(null, DialogUnpairWristband, (yes) => {
-        if (!yes) return;
-        const Afmachine = appRef.current.Afmachine;
-        Afmachine.request(() =>
-          Afmachine.players.unregisterWristband({
-            username: player?.username,
-            wristbandNumber: player?.wristband?.wristbandNumber,
+      const Afmachine = appRef.current.Afmachine;
+      console.log("UNREGISTER WRISTBAND");
+      console.log(player);
+      Afmachine.request(() =>
+        Afmachine.players.unregisterWristband({
+          username: player?.username,
+          wristbandNumber: player?.wristband?.wristbandNumber,
+        })
+      )
+        .then((res) => handleResponse(player.username, res))
+        .then(() =>
+          resolve({
+            ...player,
+            wristbandMerged: false,
+            wristband: {
+              wristbandNumber: null,
+              wristbandColor: null,
+              active: false,
+            },
           })
         )
-          .then(handleResponse)
-          .then(() =>
-            resolve({
-              ...player,
-              wristbandMerged: false,
-              wristband: {
-                wristbandNumber: null,
-                wristbandColor: null,
-                active: false,
-              },
-            })
-          )
-          .catch(handleError)
-          .catch(reject);
-      });
+        .catch(handleError)
+        .catch(reject);
+      // renderDialog(null, DialogUnpairWristband, (yes) => {
+      //   if (!yes) return;
+      //   const Afmachine = appRef.current.Afmachine;
+      //   Afmachine.request(() =>
+      //     Afmachine.players.unregisterWristband({
+      //       username: player?.username,
+      //       wristbandNumber: player?.wristband?.wristbandNumber,
+      //     })
+      //   )
+      //     .then((res) => handleResponse(player.username, res))
+      //     .then(() =>
+      //       resolve({
+      //         ...player,
+      //         wristbandMerged: false,
+      //         wristband: {
+      //           wristbandNumber: null,
+      //           wristbandColor: null,
+      //           active: false,
+      //         },
+      //       })
+      //     )
+      //     .catch(handleError)
+      //     .catch(reject);
+      // });
     }),
 });

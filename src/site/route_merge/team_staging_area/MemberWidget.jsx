@@ -9,7 +9,7 @@ import { useCtxMerge } from "/src/stores/index.js";
 
 function MemberWidget({ index, player, className, ...props }) {
   const { toggleWristbandPairing } = useAppCtx();
-  const { modelMergeRef, setModelMerge } = useCtxMerge();
+  const { modelMergeRef, setModelMerge, removePlayer } = useCtxMerge();
 
   return (
     <div className={className} {...props}>
@@ -45,12 +45,7 @@ function MemberWidget({ index, player, className, ...props }) {
           if (player == null) {
             return;
           }
-          setModelMerge({
-            ...modelMergeRef.current,
-            stagingArea: modelMergeRef.current.stagingArea.map((position, i) =>
-              position?.username === player?.username ? null : position
-            ),
-          });
+          removePlayer(player);
         }}
       />
     </div>

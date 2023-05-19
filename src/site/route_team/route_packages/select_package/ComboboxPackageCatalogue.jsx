@@ -1,10 +1,6 @@
-import * as React from 'react';
-import styled, {
-  css
-} from 'styled-components';
-import {
-  SelectOnlyCombobox
-} from 'react_utils';
+import * as React from "react";
+import styled, { css } from "styled-components";
+import { SelectOnlyCombobox } from "react_utils";
 
 const Combobox = SelectOnlyCombobox.Provider;
 const StyleTrigger = styled(SelectOnlyCombobox.Trigger)`
@@ -17,19 +13,19 @@ const StyleTrigger = styled(SelectOnlyCombobox.Trigger)`
   font-size: var(--tx-md);
   letter-spacing: 1.5px;
   outline: none;
-
   &:hover {
     cursor: pointer;
   }
 
-
-${({selected}) => selected ? `
+  ${({ selected }) =>
+    selected
+      ? `
 color: white;
 background-color: var(--primary-medium);
-` : `
+`
+      : `
 background-color: var(--grey-light);
 `}
-
 `;
 const StyleListbox = styled(SelectOnlyCombobox.Listbox)`
   margin-top: 10px;
@@ -72,6 +68,7 @@ border-color: var(--primary-medium);
 
 function ComboboxPackageCatalogue({
   type,
+  value,
   options,
   onSelect,
   labelledBy,
@@ -79,22 +76,18 @@ function ComboboxPackageCatalogue({
   className,
   ...props
 }) {
-
   return (
     <Combobox
       name="package-catalogue"
+      value={value}
       options={options}
       labelledBy={labelledBy}
       onSelect={onSelect}
     >
-    <StyleTrigger
-      selected={selected}
-      placeholder={`select ${type}`}/>
-      <StyleListbox renderOption={(props) => (<StyleOption {...props}/>)}/>
+      <StyleTrigger selected={selected} placeholder={`select ${type}`} />
+      <StyleListbox renderOption={(props) => <StyleOption {...props} />} />
     </Combobox>
   );
 }
 
-export {
-  ComboboxPackageCatalogue
-};
+export { ComboboxPackageCatalogue };

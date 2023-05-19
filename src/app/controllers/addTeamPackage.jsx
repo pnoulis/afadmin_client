@@ -1,8 +1,17 @@
+import * as React from "react";
 import * as Errors from "/src/errors.js";
 import { fmAgent } from "/src/components/flash_messages/index.js";
+import {
+  Dialog,
+  DialogHeading,
+  DialogDescription,
+  DialogClose,
+  DialogConfirm,
+  renderDialog,
+} from "/src/components/dialogs/index.js";
 
 function handleResponse(res) {
-  console.log(`REGISTERED PLAYER WRISTBAND`);
+  fmAgent.success({ message: `New package added to team:${res.team.name}` });
   return res;
 }
 
@@ -17,33 +26,21 @@ function handleError(err) {
       modelError: err.message,
     };
   } else if (err instanceof Errors.TimeoutError) {
-    window.location.assign("/408.html");
+    console.log(err);
+    // window.location.assign("/408.html");
   } else {
-    window.location.assign("/500.html");
+    console.log(err);
+    // window.location.assign("/500.html");
   }
 }
 
 export default (appRef) => ({
-  registerWristband: async (player) =>
+  addTeamPackage: async (payload) =>
     new Promise((resolve, reject) => {
       const Afmachine = appRef.current.Afmachine;
-      Afmachine.request(() =>
-        Afmachine.players.registerWristband({
-          username: player?.username,
-          wristbandNumber: player?.wristband?.wristbandNumber,
-        })
-      )
+      Afmachine.request(() => Afmachine.players.addPackage(payload))
         .then(handleResponse)
-        .then((res) =>
-          resolve({
-            ...player,
-            wristband: {
-              ...player.wristband,
-              pairing: false,
-              active: true,
-            },
-          })
-        )
+        .then(resolve)
         .catch(handleError)
         .catch(reject);
     }),

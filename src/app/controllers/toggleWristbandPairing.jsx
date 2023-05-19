@@ -1,5 +1,53 @@
 import * as Errors from "/src/errors.js";
 import { fmAgent } from "/src/components/flash_messages/index.js";
+import styled from "styled-components";
+import {
+  ConfirmationDialog,
+  ConfirmationDialogHeading,
+  ConfirmationDialogDescription,
+  ConfirmationDialogClose,
+  ConfirmationDialogConfirm,
+  renderDialog,
+} from "/src/components/dialogs/index.js";
+
+const StyleConfirmationDialog = styled(ConfirmationDialog)`
+  width: 400px;
+`;
+
+const StyleConfirmationDialogDescription = styled(
+  ConfirmationDialogDescription
+)`
+  box-sizing: border-box;
+  color: var(--primary-medium);
+  font-family: NoirPro-SemiBold;
+  font-size: var(--tx-md);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  word-spacing: 3px;
+  margin-top: 20px;
+  text-align: center;
+`;
+
+function ConfirmUnregisterWristband({ username, handleClose }) {
+  return (
+    <StyleConfirmationDialog
+      initialOpen
+      onClose={handleClose}
+      style={{ wdith: "400px" }}
+    >
+      <ConfirmationDialogHeading>
+        toggle wristband pairing
+      </ConfirmationDialogHeading>
+      <StyleConfirmationDialogDescription>
+        Unregister players {username} wristband?
+      </StyleConfirmationDialogDescription>
+      <ConfirmationDialogClose tabIndex={0}>cancel</ConfirmationDialogClose>
+      <ConfirmationDialogConfirm style={{ width: "150px" }}>
+        unregister
+      </ConfirmationDialogConfirm>
+    </StyleConfirmationDialog>
+  );
+}
 
 function handleResponse(res) {
   console.log("TOGGLED WRISTBAND PAIRING MODE");
@@ -26,19 +74,32 @@ function handleError(err) {
 export default (appRef) => ({
   toggleWristbandPairing: async (players, toPair, onPaired) =>
     new Promise((resolve, reject) => {
+      console.log("TOGGLE WRISTBAND PAIRING");
       if (toPair?.wristband?.active) {
-        return appRef.current
-          .unregisterWristband(toPair)
-          .then((unregistered) =>
-            resolve(
-              players.map((player) =>
-                player?.username === unregistered.username
-                  ? unregistered
-                  : player
-              )
-            )
-          )
-          .catch(reject);
+        renderDialog(
+          null,
+          ConfirmUnregisterWristband,
+          {
+            username: toPair.username,
+          },
+          (unregister) => {
+            if (!unregister) return;
+            appRef.current
+              .unregisterWristband(toPair)
+              .then((unregistered) => {
+                console.log("UNREGISTERED");
+                console.log(unregistered);
+                return appRef.current.toggleWristbandPairing(
+                  players,
+                  unregistered,
+                  onPaired
+                );
+              })
+              .then(resolve)
+              .catch(reject);
+          }
+        );
+        return;
       }
 
       // remove all wristband scan subscriptions
@@ -55,39 +116,48 @@ export default (appRef) => ({
         appRef.current.listenersRef.current.push({
           type: "wristbandScan",
           cb: ({ wristbandNumber, wristbandColor }) => {
+            console.log("WRISTBAND SCAN RECEICEVED");
             appRef.current
-              .registerWristband({
-                ...toPair,
-                wristband: {
-                  ...toPair.wristband,
-                  wristbandNumber,
-                  wristbandColor,
-                },
-              })
+              .validateWristband({ wristbandNumber })
+              .then((validated) =>
+                appRef.current.registerWristband({
+                  ...toPair,
+                  wristband: {
+                    ...toPair.wristband,
+                    wristbandNumber,
+                    wristbandColor,
+                  },
+                })
+              )
               .then((registered) => {
-                // remove all wristband scan subscriptions
                 appRef.current.listenersRef.current =
                   appRef.current.listenersRef.current.filter(
                     (l) => l.type !== "wristbandScan"
                   );
                 onPaired(null, registered);
               })
-              .catch(onPaired);
+              .catch((err) => {
+                onPaired(err);
+              });
           },
         });
       }
       resolve(
-        players.map((player) =>
-          player.username === toPair.username
-            ? toPair
-            : {
-                ...player,
-                wristband: {
-                  ...player.wristband,
-                  pairing: false,
-                },
-              }
-        )
+        players.map((player) => {
+          if (player == null) {
+            return null;
+          } else if (player.username === toPair.username) {
+            return toPair;
+          } else {
+            return {
+              ...player,
+              wristband: {
+                ...player.wristband,
+                pairing: false,
+              },
+            };
+          }
+        })
       );
     }),
 });

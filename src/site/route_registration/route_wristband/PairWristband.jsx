@@ -26,7 +26,7 @@ const StyleWristbandIcon = styled.div`
   height: 400px;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-43%, -50%);
   display: flex;
   justify-content: center;
   align-items: center;

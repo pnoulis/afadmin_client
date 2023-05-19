@@ -1,41 +1,36 @@
 import * as React from "react";
 import styled from "styled-components";
-import {
-  useCtxTeamPackages
-} from "/src/stores/index.js";
-import {
-  useLoaderData
-} from "react-router-dom";
-import {
-  CardPackageSelector
-} from "./CardPackageSelector.jsx";
+import { useCtxTeamPackages } from "/src/stores/index.js";
+import { useLoaderData } from "react-router-dom";
+import { CardPackageSelector } from "./CardPackageSelector.jsx";
 
-function SelectPackage({
-  className,
-  ...props
-}) {
+function SelectPackage({ className, ...props }) {
   const availablePackages = useLoaderData();
-  const {
-    selectedPkgId,
-    packages,
-    configurePkg
-  } = useCtxTeamPackages();
+  const { selectedPkgId, packages, configurePkg } = useCtxTeamPackages();
 
-  console.log(
-    packages.find((_) => _.id === selectedPkgId)
-  );
-  console.log(availablePackages);
+  const name = packages.find((pkg) => pkg.id === selectedPkgId).name;
+  const status = packages.find((pkg) => pkg.id === selectedPkgId).status;
+  const type = packages.find((pkg) => pkg.id === selectedPkgId).type;
+  console.log(status);
   return (
-    <StyleSelectPackage className={className} {...props}>
-      {availablePackages.map((pkg) => (
+    <StyleSelectPackage
+      key={`${selectedPkgId}${type || ""}`}
+      className={className}
+      {...props}
+    >
+      {availablePackages.map((pkg, i) => (
         <CardPackageSelector
-          key={pkg.type}
+          key={i}
+          lock={status !== "new"}
+          name={pkg.catalogue.find((_pkg) => _pkg.name === name)?.name}
           type={pkg.type}
           header={pkg.type}
           description={pkg.description}
           catalogue={pkg.catalogue}
           onSelect={configurePkg}
-          selected={packages.find((_) => _.id === selectedPkgId)?.type === pkg.type}
+          selected={
+            packages.find((_) => _.id === selectedPkgId)?.type === pkg.type
+          }
         />
       ))}
     </StyleSelectPackage>
@@ -48,6 +43,4 @@ const StyleSelectPackage = styled.section`
   justify-content: space-between;
 `;
 
-export {
-  SelectPackage
-};
+export { SelectPackage };

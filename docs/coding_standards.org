@@ -1,0 +1,401 @@
+* Module exports
+About:
+This article seeks to define the structure of a module in terms of file[s],
+filenames and exported objects.
+
+A module represents an encapsulated, discreet, homogenous (uniform) piece of
+functionality.
+
+That does not mean that a module exports strictly one object. A discreet piece
+of functionality may be separated into multiple sections as per the separation
+of concerns (wikipedia: separation of concerns) design principle. Separating a
+service into multiple sections should not be interpreted to mean necessarily
+multiple files which is an implementation detail. A module offering a service
+split into sections may be named a 'composite' service. Whilst a service not
+split into sections may be named a 'simple' service.
+
+In general the objects found within a module may be placed under one of two
+categories.
+Exported or not-Exported.
+Interface or Implementation.
+External or Internal.
+
+The placement of the objects of any type is an implementation detail. Meaning
+that the programmer may either choose to split the code into multiple files or
+not. Keep in mind that splitting a service into multiple files does not mean
+that module exports a 'composite' service. It may very well be that each of
+these files defines a not-exported object for internal consumption.
+
+Be that as it may the principle goes:
+
+Directory structure:
+If a module exporting a service (composite or simple) is spread out into
+multiple files then:
+
+- Directory houses the service.
+- index.js file serves as the entry point.
+  check the index.js pattern
+
+If a module exporting a service (composite or simple) is contained within one
+file then:
+
+- there is no need for a directory.
+- there is no need for the index.js pattern.
+
+Ecmascript exports:
+
+Regardless of the directory structure a service using ES modules has a
+choice of either using a 'default export' or a 'named export'.
+
+Default exports should not be used.
+Only named exports. As such:
+
+export { ComponentA, ComponentB };
+
+The export statement itself should always be placed at the end of the file.
+Placing the export statement at the end of the file and not at the start allows
+exporting objects which do not support *hoisting*.
+
+Consider the statements:
+
+export { fn };
+const fn = () => {};
+
+Evaluating these statements shall throw an Error. The identifier fn has not been
+declared yet.
+
+The previous example would work if:
+
+const fn = () => {};
+export { fn };
+
+* Components
+** About
+This is an attempt to place components into categories, mark them as such and
+define a directory structure.
+** route components
+Some components are accessed by means of *navigation* to the appropriate
+*location*. Such components represent routes or pages.
+
+As such they should be prefixed using the word *Route[r]* or *Page*.
+
+for example:
+
+RouteRegistration
+
+Each such route component must be placed within its own directory with the
+following structure:
+
+route_registration/
+route_registration/index.js
+route_registration/RouteRegistration.jsx
+route_registration/route.jsx
+
+_index.js_
+
+export * from './RouteRegistration';
+export * from './route.jsx';
+
+_route.jsx_
+
+import { RouteRegistration } from './RouteRegistration';
+
+const routeRegistration = {
+   path: 'relative/path',
+   element: <RouteRegistration/>
+};
+
+const linkRegistration = {
+   path: '/absolute/path'
+};
+
+export { routeRegistration, linkRegistration };
+
+It is common that such route components are nested.
+
+In such a case the parent route component of a child nested component is
+responsible for exporting the child:
+
+For example if having a structure such as:
+
+route_registartion/
+route_registration/index.js
+route_registration/route.js
+route_registration/RouteRegistration.jsx
+route_registration/route_team_players/
+route_registration/route_team_players/index.js
+route_registration/route_team_players/route.js
+route_registration/route_team_players/RouteTeamPlayers.jsx
+
+The parent route must export its children like so:
+
+_route_registration/index.js_
+
+export * from './RouteRegistration';
+export * from './route';
+export * from './route_team_players';
+
+** shared functional components
+** shared styled components
+** components that introduce layouts
+*** The problem
+components which introduce a layout are:
+
+grid
+flex
+table
+ul
+forms
+LayoutField
+images
+
+will be suffixed with their type such as:
+
+SiteLayout
+TeamsLayout
+SidebarLayout
+
+if styled-components is being used then:
+
+StyleSiteLayout
+StyleTeamsLayout
+StyleSidebarLayout
+
+Such layout components must also be accompanied by the sub-components.
+
+For tables:
+
+LayoutCaption -> caption
+LayoutHeader -> thead
+LayoutFooter -> tfoot
+LayoutBody -> tbody
+LayoutRow -> tr
+LayoutHeaderData -> th
+LayoutData -> td
+
+for grids:
+
+LayoutItem -> *
+
+for flex:
+
+LayoutItem -> *
+
+for lists:
+LayoutList -> ul
+LayoutListItem -> <li>
+
+for forms:
+
+LayoutFieldSet -> fieldset
+LayoutLegend -> legend
+LayoutField -> div
+LayoutSubmit -> button
+
+for LayoutFields:
+
+LayoutFieldLabel -> label
+LayoutFieldInput -> input
+
+
+Each subcomponent must be defined in the same file as the layout introducing
+component. For example if one defines a list of players within the file:
+
+PlayersList.jsx
+
+where within:
+
+function PlayersList() {
+return (
+<StyleLayoutPlayersList>
+</StyleLayoutPlayersList>
+);
+}
+
+the component <StyleLayoutPlayersList/>
+
+could either be defined within the same file
+or if defined in its own file it should be named as:
+
+StyleLayoutPlayersList.jsx
+
+Where within the file the following components should be defined:
+
+const StyleLayoutPlayersList = styled.ul`
+`
+
+const StyleLayoutPlayersListItem = styled.li`
+`
+
+or if it makes sense to split them a directory should be created
+appropriately named such as:
+
+layout_players_list/
+layout_players_list/StyleLayoutPlayersList
+layout_players_list/StyleLayoutPlayersListItem
+
+
+The component which introduces the layout component should ideally include its
+subcomponents in the same render function. such as:
+
+function RouteIndex() {
+
+return (
+<SiteLayout>
+   <SiteLayoutItem>
+       ....
+   </SiteLayoutItem>
+</SiteLayout>
+);
+}
+
+Instead of:
+
+function RouteIndex() {
+return (
+<SiteLayout>
+   <Sidebar/>
+</SiteLayout>
+);
+}
+
+where:
+
+Sidebar.js
+import { SiteLayoutItem } from './...';
+function Sidebar() {
+return (
+<SiteLayoutItem>
+....
+</SiteLayoutItem>
+);
+}
+*** pattern 1 (styled components)
+Using styled component
+
+Consider a Parent component which introduces a layout.
+
+const StyleLayoutSidebar = styled.aside`
+display: flex;
+`
+
+import SidebarWidget;
+
+const StyleLayoutSidebarItemWidget = styled(SidebarWidget)`
+
+`
+
+
+return (
+<StyleLayoutSidebar>
+   <StyleLayoutSidebarItemWidget/>
+</StyleLayoutSidebar>
+)
+
+*** pattern 2 (styled components && clasess)
+
+const StyleLayoutSidebar = styled.aside`
+display: flex;
+
+& .layout-item.widget {
+}
+
+`
+
+import Widget;
+
+return (
+<StyleLayoutSidebar>
+   <section className='layout-item widget>
+    <Widget/>
+   </section>
+</StyleLayoutSidebar>
+);
+
+* Naming things
+Directories follow snake_case.
+https://en.wikipedia.org/wiki/Snake_case
+Files follow camelCase.
+https://en.wikipedia.org/wiki/Camel_case
+Files which export React Components should:
+1. follow upper camel case: CamelCase
+   ReactComponent
+2. The main exported react component name must be exactly the same as the file
+   it is used to export it.
+   ReactComponent -> file
+   exports -> ReactComponent
+
+
+
+Programming identifiers follow camelCase.
+
+functions should follow the syntax:
+verbNoun
+such as:
+composeMusic
+
+All other identifiers should follow the syntax:
+[type]Noun
+such as:
+linkHomePage
+personAge
+age
+
+Classes follow upper CamelCase:
+AClass
+
+Css identifiers follow kebab case:
+https://en.wikipedia.org/wiki/Letter_case#Kebab_case
+site-header
+
+* Css
+** component template
+all: unset;
+/* Type */
+box-sizing: border-box;
+/* Dimensions */
+/* Position */
+/* Fonts */
+/* Effects */
+/* Children */
+
+* Patterns
+* Dependency Injection
+** Using Context
+**** Context and Store template
+#+begin_src js
+  import * as React from 'react';
+  const CtxOfSomething = React.createContext(null);
+  const ProvideCtxOfSomething = ({value, children}) => (<CtxOfSomething.Provider value={value}>{children}</CtxOfSomething.Provider/>);
+  const useCtxOfSomething = () => {
+    const ctx = React.useContext(CtxOfSomething);
+    if (ctx == null) {
+      throw new Error('<ProvideCtxOfSomething/> missing');
+    }
+    return ctx;
+  }
+  function useStoreOfSomething() {
+    const [ store, setStore ] = React.useState({});
+    const storeRef = React.useRef(null);
+    storeRef.current = store;
+    return {
+      ...store,
+      setStore,
+      storeRef,
+    }
+  }
+  function ProvideStoreOfSomething() {
+    const store = useStoreOfSomething();
+    return (
+      <ProvideCtxOfSomething value={store}>{children}</ProvideCtxOfSomething>
+    );
+  }
+
+  export {
+    ProvideCtxOfSomething,
+    ProvideStoreOfSomething,
+    useCtxOfSomething,
+    useStoreOfSomething
+  };
+#+end_src
+**** Using Context and Store

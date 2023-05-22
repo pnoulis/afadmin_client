@@ -10,6 +10,73 @@ CLOSED: [2023-05-17 Wed 14:29]
 **** start
 **** stop
 
+** Friday 26/10/23
+*** Refactoring
+**** TODO Route structure should be standardized
+**** TODO Remove unnecessary code from afmachine_interface
+**** TODO Remove unnecessary code from app/
+**** TODO Providing a store and its controllers should be standardized
+**** TODO Actions which trigger asynchronous state changes must be carefully designed.
+**** TODO Extract common components such as PlayerWidget, PlayerCard, etc etc
+**** TODO Tooltip component
+**** TODO Comboboxes empty listbox Component
+**** TODO Comboboxes option abstraction
+**** TODO Comboboxes positioning and dimensions.
+**** TODO Initial capability for protected routes and resources
+**** TODO Error states must be handled client side.
+**** TODO Handle unkwown errors and control their end state and visualization.
+**** TODO Sync UI with backend state changes.
+**** Common entities from which components are derived across afadmin_client
+***** Team
+***** Roster
+***** Package | pkg
+***** Roster member | member
+***** Wristband
+***** Player
+***** Cashier
+***** Admin
+***** Manager
+***** Root
+***** Afmachine
+***** Panel
+***** Layout
+***** Route
+renders store
+renders the layout
+each layout renders a panel.
+***** Store
+***** Context | ctx
+***** Site
+- Responsible for rendering the site according to display size etc.
+- Hosting of outlet.
+- It is itself a layout component
+***** App
+Instantiates the connection to afmachine.
+Instantiates stores, controllers
+Instantiates subscriptions.
+Responsible for redirecting user to authentication page.
+***** Authorize
+**** Routes structure
+/ -> renders App
+The App Component
+
+Registration -> render Navigate to=/register/player
+layout -> registration -> render navigate to
+
+All top level routes share the same layout. Which is the
+#+begin_src js
+    <App>
+    <Site>
+    <Layout/>
+    <Outlet/>
+    </Layout>
+    </Site>
+    </App>
+
+#+end_src
+**** Route and Resource protection
+Authorize({level: "", children})
+
 * Log
 ** Integrate development work, from afadmin_core to afadmin_client
 *** DONE Flash Messages
@@ -204,6 +271,30 @@ Each group party team is created after the merge_group_party event.
 ** 18/10/23
 *** Packages
 **** dividie the layout into the appropriate sections
+** 22/10/23
+*** Refactor
+**** Context, store guidelines
+
+React's dependency injection mechanism utilizes the Context interface.
+
+The user instantiates a context Component.
+------------------------------
+const Context = React.createContext(null);
+
+Provides the context within a Component.
+------------------------------
+function Component() {
+
+return <Context.Provider value={}></Context.Provider>
+}
+
+Consumes the Context within a descendant Component of the Provider.
+------------------------------
+import Context from 'ContextFile';
+function Descendant() {
+const context = React.useContext(Context);
+}
+
 * Dealing with wristband subscriptions
 
 user toggles pairing mode.

@@ -77,6 +77,81 @@ All top level routes share the same layout. Which is the
 **** Route and Resource protection
 Authorize({level: "", children})
 
+** Friday 27/10/23
+*** Refactoring
+**** TODO Route structure should documented and cleanly structured
+**** TODO Remove unnecessary code from afmachine_interface
+**** TODO Remove unnecessary code from app/
+**** TODO Providing a store and its controllers should be standardized
+**** TODO Actions which trigger asynchronous state changes must be carefully designed.
+**** TODO Extract common components such as PlayerWidget, PlayerCard, etc etc
+**** TODO Tooltip component
+**** TODO Comboboxes empty listbox Component
+**** TODO Comboboxes option abstraction
+**** TODO Comboboxes positioning and dimensions.
+**** TODO Initial capability for protected routes and resources
+**** TODO Error states must be handled client side.
+**** TODO Handle unkwown errors and control their end state and visualization.
+**** TODO Sync UI with backend state changes.
+**** Common entities from which components are derived across afadmin_client
+***** Team
+***** Roster
+***** Package | pkg
+***** Roster member | member
+***** Wristband
+***** Player
+***** Cashier
+***** Admin
+***** Manager
+***** Root
+***** Afmachine
+***** Panel
+***** Layout
+***** Route
+renders store
+renders the layout
+each layout renders a panel.
+***** Store
+***** Context | ctx
+***** Site
+- Responsible for rendering the site according to display size etc.
+- Hosting of outlet.
+- It is itself a layout component
+***** App
+Instantiates the connection to afmachine.
+Instantiates stores, controllers
+Instantiates subscriptions.
+Responsible for redirecting user to authentication page.
+***** Authorize
+**** Routes structure
+/ -> renders App
+The App Component
+
+Registration -> render Navigate to=/register/player
+layout -> registration -> render navigate to
+
+All top level routes share the same layout. Which is the
+#+begin_src js
+    <App>
+    <Site>
+    <Layout/>
+    <Outlet/>
+    </Layout>
+    </Site>
+    </App>
+
+#+end_src
+**** Route and Resource protection
+Authorize({level: "", children})
+
+*** src/routes.jsx
+The Router.jsx file is used to instantiate the client side router Component
+provided by react-router-dom.
+
+The fact that it is used to declare routes and the component's they render
+for the whole app makes it a natural point of centralization.
+
+
 * Log
 ** Integrate development work, from afadmin_core to afadmin_client
 *** DONE Flash Messages

@@ -1,17 +1,12 @@
 import * as React from "react";
-import styled from "styled-components";
-import {
-  Panel,
-  StylePanelHeader,
-  StylePanelMain,
-} from "/src/components/panels/index.js";
+import { PanelRegistration } from "./PanelRegistration.jsx";
+import { Outlet } from "react-router-dom";
 
 function RouteRegistration() {
   return (
-    <Panel>
-      <StylePanelHeader>panel header</StylePanelHeader>
-      <StylePanelMain>panel main</StylePanelMain>
-    </Panel>
+    <PanelRegistration>
+      <Outlet />
+    </PanelRegistration>
   );
 }
 

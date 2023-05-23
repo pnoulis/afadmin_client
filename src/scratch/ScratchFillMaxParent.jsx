@@ -2,9 +2,9 @@ import * as React from "react";
 import styled from "styled-components";
 import { AncestorDimensions } from "react_utils/misc";
 import {
-  Panel,
-  StylePanelHeader,
-  StylePanelMain,
+  StylePanel,
+  PanelHeader,
+  PanelMain,
 } from "/src/components/panels/index.js";
 
 export default function ScratchFillMaxParent() {
@@ -13,13 +13,9 @@ export default function ScratchFillMaxParent() {
       <h1>Scratch fill max parent</h1>
       <main style={{ width: "1000px" }}>
         <div id="yolo" style={{ width: "500px", height: "150px" }}>
-          <Panel>
+          <StylePanel>
             <StylePanelMain />
-            <StylePanelMain />
-            <StylePanelMain />
-            <StylePanelMain />
-            <StylePanelMain />
-          </Panel>
+          </StylePanel>
         </div>
       </main>
     </div>

@@ -26,14 +26,27 @@ const StyleLayoutTimeWidgetItemTime = styled.p`
   /* Dimensions */
   /* Position */
   /* Fonts */
-  font-size: 2em;
+position: relative;
+  left: 5px;
+  font-size: 1.7em;
   letter-spacing: 3px;
+  font-family: NoirPro-Medium;
   /* Effects */
   /* Children */
 
   & > i {
-    font-weight: light;
+    font-weight: bold;
+  }
+
+  .hour::after,
+  .minute::after {
+    content: ":";
     margin: 0 3px;
+  }
+
+  .seconds {
+    display: inline-block;
+    width: 55px;
   }
 `;
 const StyleLayoutTimeWidgetItemDate = styled.p`
@@ -46,15 +59,16 @@ const StyleLayoutTimeWidgetItemDate = styled.p`
   top: -3px;
   left: -1px;
   /* Fonts */
-  font-size: 0.8em;
+  font-size: 1em;
   letter-spacing: 0.5px;
   /* Effects */
   transform: translateX(-50%, 50%);
   /* Children */
 
-  & > i {
-    margin-right: 5px;
-    font-weight: light;
+  .weekday::after,
+  .month::before {
+    content: ",";
+    margin: 0 5px;
   }
 `;
 
@@ -70,6 +84,7 @@ const getTime = (() => {
         day: "numeric",
         hour: "2-digit",
         second: "2-digit",
+        minute: "2-digit",
         hourCycle: "h24",
       });
     }
@@ -82,6 +97,8 @@ const getTime = (() => {
         case "day":
           return time.set(el.type, el.value);
         case "hour":
+          return time.set(el.type, el.value);
+        case "minute":
           return time.set(el.type, el.value);
         case "second":
           return time.set(el.type, el.value);
@@ -104,10 +121,14 @@ function TimeWidget({ lang = LANG }) {
   return (
     <StyleLayoutTimeWidget>
       <StyleLayoutTimeWidgetItemTime>
-        {time.hour}:<i>{time.second}</i>
+        <i className="hour">{time.hour - 1}</i>
+        <i className="minute">{time.minute}</i>
+        <i className="seconds">{time.second}</i>
       </StyleLayoutTimeWidgetItemTime>
       <StyleLayoutTimeWidgetItemDate>
-        {time.weekday},<i>{time.day}</i>
+        <i className="weekday">{time.weekday}</i>
+        <i>{time.day}</i>
+        <i className="month">{time.month}</i>
       </StyleLayoutTimeWidgetItemDate>
     </StyleLayoutTimeWidget>
   );

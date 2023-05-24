@@ -1,12 +1,15 @@
 import * as React from "react";
-import { PanelRegistration } from "./PanelRegistration.jsx";
 import { Outlet } from "react-router-dom";
+import { PanelRegistration } from "./PanelRegistration.jsx";
+import { StoreProvideRegistration } from "/src/stores/registration/index.js";
 
 function RouteRegistration() {
   return (
-    <PanelRegistration>
-      <Outlet />
-    </PanelRegistration>
+    <StoreProvideRegistration>
+      <PanelRegistration>
+        <Outlet />
+      </PanelRegistration>
+    </StoreProvideRegistration>
   );
 }
 

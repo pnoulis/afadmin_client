@@ -22,7 +22,7 @@ const login = {
 };
 
 const registration = {
-  path: "/registration",
+  path: "/registration/player",
   label: "registration",
   asComponent: ({ children, ...props }) => (
     <NavLink to="/registration" {...props}>
@@ -31,11 +31,11 @@ const registration = {
   ),
 };
 
-const registrationPlayers = {
+const registrationPlayer = {
   path: "/registration/player",
   label: "register player",
   asComponent: ({ children, ...props }) => (
-    <NavLink to="/registration/player" {...props}>
+    <NavLink to="/registration" {...props}>
       {children}
     </NavLink>
   ),
@@ -85,7 +85,17 @@ const liveView = {
   path: "/liveView",
   label: "live view",
   asComponent: ({ children, ...props }) => (
-    <NavLink to="/merge" {...props}>
+    <NavLink to="/liveView" {...props}>
+      {children}
+    </NavLink>
+  ),
+};
+
+const liveViewTeams = {
+  path: "/liveView",
+  label: "live teams",
+  asComponent: ({ children, ...props }) => (
+    <NavLink to="/liveView" {...props}>
       {children}
     </NavLink>
   ),
@@ -95,10 +105,11 @@ export {
   index,
   login,
   registration,
-  registrationPlayers,
+  registrationPlayer,
   registrationWristband,
   registrationHistory,
   merge,
   groupParty,
   liveView,
+  liveViewTeams,
 };

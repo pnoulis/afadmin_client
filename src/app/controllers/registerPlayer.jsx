@@ -1,18 +1,12 @@
 import * as React from "react";
 import * as Errors from "/src/errors.js";
 import { fmAgent } from "/src/components/flash_messages/index.js";
-import {
-  Dialog,
-  DialogHeading,
-  DialogDescription,
-  DialogClose,
-  DialogConfirm,
-  renderDialog,
-} from "/src/components/dialogs/index.js";
 
 function handleResponse(res) {
-  fmAgent.success({ message: res.message });
-  return res;
+  fmAgent.success({
+    message: `Successfull registration of player:${res?.player?.username}`,
+  });
+  return res.player;
 }
 
 function handleError(err) {
@@ -37,10 +31,10 @@ function handleError(err) {
 }
 
 export default (appRef) => ({
-  event: async (payload) =>
+  registerPlayer: async (player) =>
     new Promise((resolve, reject) => {
-      const Afmachine = appRef.current;
-      Afmachine.request(() => appRef.current.Afmachine.players.login(payload))
+      const { Afmachine } = appRef.current;
+      Afmachine.request(() => appRef.current.Afmachine.players.register(player))
         .then(handleResponse)
         .then(resolve)
         .catch(handleError)

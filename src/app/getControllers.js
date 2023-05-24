@@ -1,8 +1,9 @@
 import subscribeWristbandScan from "./controllers/subscribeWristbandScan.jsx";
+import registerPlayer from "./controllers/registerPlayer.jsx";
 
-function getControllers(appRef) {
-  return {
-    ...subscribeWristbandScan(appRef),
-  };
-}
+const getControllers = (appRef) => ({
+  ...subscribeWristbandScan(appRef),
+  ...registerPlayer(appRef),
+});
+
 export { getControllers };

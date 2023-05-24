@@ -40,11 +40,12 @@ const StyleNavbarLink = styled(registration.asComponent)`
   border-radius: var(--br-nl);
 
   &:hover {
-    opacity: 0.6;
+    opacity: 0.7;
   }
 
   &:focus,
   &.active {
+    opacity: 1;
     background: var(--primary-base);
   }
   /* Children */

@@ -1,12 +1,12 @@
 import * as React from "react";
 import { Outlet } from "react-router-dom";
-import { ProvideStoreApp } from "./CtxApp.jsx";
+import { StoreProvideApp } from "./StoreApp.jsx";
 
 function App() {
   return (
-    <ProvideStoreApp>
+    <StoreProvideApp>
       <Outlet />
-    </ProvideStoreApp>
+    </StoreProvideApp>
   );
 }
 

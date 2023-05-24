@@ -151,7 +151,6 @@ provided by react-router-dom.
 The fact that it is used to declare routes and the component's they render
 for the whole app makes it a natural point of centralization.
 
-
 * Log
 ** Integrate development work, from afadmin_core to afadmin_client
 *** DONE Flash Messages
@@ -370,6 +369,15 @@ function Descendant() {
 const context = React.useContext(Context);
 }
 
+** 24/10/23 May Wednesday
+**** DONE Route structure should documented and cleanly structured
+CLOSED: [2023-05-24 Wed 13:52]
+**** DONE Remove unnecessary code from afmachine_interface
+CLOSED: [2023-05-24 Wed 13:52]
+**** DONE Remove unnecessary code from app/
+CLOSED: [2023-05-24 Wed 13:52]
+**** DONE Providing a store and its controllers should be standardized
+CLOSED: [2023-05-24 Wed 15:23]
 * Dealing with wristband subscriptions
 
 user toggles pairing mode.

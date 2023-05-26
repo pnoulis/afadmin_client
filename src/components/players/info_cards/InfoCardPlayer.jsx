@@ -28,11 +28,6 @@ const StyleInfoCardPlayer = styled.article`
   padding: 10px;
   align-items: center;
   cursor: pointer;
-
-  &:hover,
-  &:focus {
-    border-color: var(--info-light);
-  }
 `;
 
 export { InfoCardPlayer };

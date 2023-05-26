@@ -2,17 +2,19 @@ import * as React from "react";
 import * as Errors from "/src/errors.js";
 import { fmAgent } from "/src/components/flash_messages/index.js";
 import {
-  Dialog,
-  DialogHeading,
-  DialogDescription,
-  DialogClose,
-  DialogConfirm,
-  renderDialog,
-} from "/src/components/dialogs/index.js";
+  PLAYER_SCHEMA,
+  WRISTBAND_SCHEMA,
+} from "agent_factory.shared/schemas.js";
 
 function handleResponse(res) {
-  fmAgent.success({ message: res.message });
-  return res;
+  return res?.players.map((p) => ({
+    ...PLAYER_SCHEMA,
+    ...p,
+    wristband: {
+      ...WRISTBAND_SCHEMA,
+      ...p.wristband,
+    },
+  }));
 }
 
 function handleError(err) {
@@ -37,11 +39,11 @@ function handleError(err) {
 }
 
 export default (appRef) => ({
-  event: async (payload) =>
+  searchPlayer: async (searchTerm) =>
     new Promise((resolve, reject) => {
-      const Afmachine = appRef.current;
+      const { Afmachine } = appRef.current;
       if (!Afmachine) throw new Error("MISSING Afmachine");
-      Afmachine.request(() => appRef.current.Afmachine.players.login(payload))
+      Afmachine.request(() => Afmachine.players.search(searchTerm))
         .then(handleResponse)
         .then(resolve)
         .catch(handleError)

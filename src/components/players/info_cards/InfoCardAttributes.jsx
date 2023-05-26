@@ -9,7 +9,8 @@ const StyleInfoCardAttributes = styled.section`
   border-radius: var(--br-lg);
   padding: 10px 12px;
   display: grid;
-  column-gap: 15px;
+  column-gap: 30px;
+  min-width: 200px;
   align-items: center;
 `;
 

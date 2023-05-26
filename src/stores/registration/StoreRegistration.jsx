@@ -12,7 +12,7 @@ function StoreProvideRegistration({ children }) {
 }
 
 function useStoreRegistration() {
-  const { registerPlayer } = useContextApp();
+  const { registerPlayer, searchPlayer } = useContextApp();
   const [store, setStore] = React.useState({});
   const storeRef = React.useRef(null);
   storeRef.current = store;
@@ -22,6 +22,7 @@ function useStoreRegistration() {
     setStoreRegistration: setStore,
     storeRegistrationRef: storeRef,
     registerPlayer,
+    searchPlayer,
   };
 }
 

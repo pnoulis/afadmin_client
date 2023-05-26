@@ -4,8 +4,6 @@ import { PLAYER_SCHEMA } from "agent_factory.shared/schemas.js";
 const ContextPlayer = React.createContext(null);
 
 function ContextProvidePlayer({ player, useSchema, children }) {
-  React.useEffect(() => {}, [player]);
-
   return (
     <ContextPlayer.Provider
       value={

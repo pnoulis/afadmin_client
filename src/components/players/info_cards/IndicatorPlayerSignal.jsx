@@ -11,7 +11,10 @@ function IndicatorPlayerWristband({ size, className, ...props }) {
   return (
     <StyleSignalIcon
       $pairing={wristband.status === "pairing"}
-      $wristbandColor={mapWristbandColor("colorCode", 2)}
+      $wristbandColor={mapWristbandColor(
+        "colorCode",
+        wristband?.wristbandColor
+      )}
       size={size}
       className={className}
       {...props}
@@ -43,7 +46,7 @@ background-color: ${$wristbandColor};
 fill: white;
 `
       : `
-background-color: var(--grey-light);
+background-color: var(--grey-base);
 `}
 `;
 

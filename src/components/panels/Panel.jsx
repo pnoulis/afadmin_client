@@ -43,8 +43,8 @@ const StyleMainScrollarea = styled.div`
   all: unset;
   box-sizing: border-box;
   display: block;
-  width: ${({ width }) => width};
-  height: ${({ height }) => height};
+  width: ${({ $width }) => `${$width || 0}px`};
+  height: ${({ $height }) => `${$height || 0}px`};
   overflow: auto;
 `;
 

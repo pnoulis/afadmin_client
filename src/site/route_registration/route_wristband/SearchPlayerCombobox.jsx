@@ -2,18 +2,89 @@ import * as React from "react";
 import styled from "styled-components";
 import { ReactComponent as SuccessIcon } from "agent_factory.shared/ui/icons/success_icon_filled.svg";
 import { ReactComponent as FailIcon } from "agent_factory.shared/ui/icons/warning_icon_filled.svg";
-import { Svg } from "react_utils/svgs";
 import { MoonLoader } from "react-spinners";
 import {
-  AsyncCombobox,
+  AsyncSearchableCombobox as Combobox,
   useRemoteData,
   RemoteDataProvider,
   RemoteDataStates,
+  AncestorDimensions,
+  Svg,
 } from "react_utils";
 import { useAppCtx } from "/src/app/index.js";
 import { SearchPlayerCard } from "./SearchPlayerCard.jsx";
 import { useCtxRegistration } from "/src/stores/index.js";
 
+function ComboboxSearchPlayer() {
+  const { players, setModelRegistration } = useCtxRegistration();
+  const { searchPlayer, addPlayerWristbandRegistrationQueue } = useAppCtx();
+  const remoteData = useRemoteData({
+    getRemoteData: searchPlayerComboboxWrapper(searchPlayer),
+    fetchDelay: 500,
+    successDelay: 100,
+  });
+
+  return (
+    <StyleComboboxSearchPlayer>
+      <h1 id="combobox-search-player-label">search player</h1>
+      <div className="combobox-search-player-wrapper">
+        <RemoteDataProvider key={players} value={remoteData}>
+          <Combobox.Provider
+            initialOpen
+            asTable
+            onSelect={(player) =>
+              addPlayerWristbandRegistrationQueue(players, player).then(
+                (queue) => setModelRegistration({ players: queue })
+              )
+            }
+            name="search-player"
+            labelledBy="combobox-search-player-label"
+            options={remoteData.startFetching}
+          >
+            <section className="combobox-search-player-trigger-wrapper">
+              <StyleTrigger placeholder="username or email" />
+              <div className="combobox-search-player-search-state">
+                <RemoteDataStates
+                  RenderPending={<StyleMoonLoader />}
+                  RenderSuccess={
+                    <StyleSuccessIcon>
+                      <SuccessIcon />
+                    </StyleSuccessIcon>
+                  }
+                  RenderError={
+                    <StyleFailIcon>
+                      <FailIcon />
+                    </StyleFailIcon>
+                  }
+                />
+              </div>
+            </section>
+            <section
+              className="combobox-search-player-listbox-wrapper"
+              id="ancestor-scrollarea"
+            >
+              <AncestorDimensions ancestor="#ancestor-scrollarea">
+                <StyleListbox
+                  renderOnEmpty={OnEmpty}
+                  renderOption={(props) => <StyleOption {...props} />}
+                />
+              </AncestorDimensions>
+            </section>
+          </Combobox.Provider>
+        </RemoteDataProvider>
+      </div>
+    </StyleComboboxSearchPlayer>
+  );
+}
+
+const searchPlayerComboboxWrapper = (searchPlayer) => (searchTerm) =>
+  searchPlayer(searchTerm).then((candidates) => {
+    const combobox = new Map();
+    candidates.forEach((c) => combobox.set(c.username, c));
+    return combobox;
+  });
+
+/* --------------- REMOTE DATA STATES --------------- */
 const StyleSuccessIcon = styled(Svg)`
   fill: var(--success-medium);
   pointer-events: none;
@@ -32,13 +103,11 @@ const StyleMoonLoader = () => (
   <MoonLoader loading color="var(--info-strong)" size={40} />
 );
 
-const Combobox = AsyncCombobox.Provider;
+/* --------------- COMBOBOX --------------- */
 
-const StyleTrigger = styled(AsyncCombobox.Trigger)`
+const StyleTrigger = styled(Combobox.Trigger)`
   background-color: white;
   border-radius: var(--br-lg);
-  height: 50px;
-
   pointer-events: auto;
   text-transform: uppercase;
   width: 100%;
@@ -61,32 +130,32 @@ const StyleTrigger = styled(AsyncCombobox.Trigger)`
   }
 `;
 
-const StyleListbox = styled(AsyncCombobox.Listbox)`
+const StyleListbox = styled(Combobox.Listbox)`
   margin-top: 10px;
-  width: 700px;
-  margin-left: 138px;
   border-radius: var(--br-lg);
   background-color: var(--grey-light);
-  height: 520px;
-  padding: 20px 15px;
   outline: none;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: none;
   display: flex;
   flex-flow: column nowrap;
   gap: 15px;
+  &:not(:empty) {
+    padding: 20px 15px;
+  }
+  max-height: ${({ $height }) => `${$height ? $height - 10 : 0}px`};
+  width: 560px;
 `;
 
-const StyleOption = styled(AsyncCombobox.Option)`
+const StyleOption = styled(Combobox.Option)`
   border: 4px solid transparent;
-  padding: 10px 10px;
   border-radius: var(--br-md);
   background-color: white;
 
   ${({ selected, active }) => {
     if (active) {
       return `
-border-color: var(--primary-medium);
+border-color: var(--primary-light);
 cursor: pointer;
 `;
     } else if (selected) {
@@ -97,108 +166,69 @@ border-color: var(--success-base);
       return `
   &:hover {
     cursor: pointer;
-    border-color: var(--primary-medium);
+    border-color: var(--primary-light);
   }
 `;
     }
   }}
 `;
 
-const StyleSearchPlayerCombobox = styled.article`
+function OnEmpty({ inputValue }) {
+  return inputValue ? (
+    <StyleOnEmpty>
+      No player found with the name: <span>{inputValue}</span>
+    </StyleOnEmpty>
+  ) : null;
+}
+
+const StyleOnEmpty = styled.li`
+  font-family: NoirPro-Regular;
+  font-size: var(--tx-lg);
+  span {
+    margin-left: 8px;
+    color: var(--primary-medium);
+  }
+`;
+
+/* --------------- SEARCH PLAYER CONTAINER --------------- */
+const StyleComboboxSearchPlayer = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-flow: column nowrap;
-  gap: 30px;
-  width: 100%;
-  #search-player-combobox {
+  height: 100%;
+  gap: 20px;
+
+  #combobox-search-player-label {
     font-size: 1.5em;
     font-family: NoirPro-Regular;
     text-transform: capitalize;
     letter-spacing: 2px;
   }
 
-  .combobox-wrapper {
+  .combobox-search-player-wrapper {
+    box-sizing: border-box;
+    flex: 1;
     display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-    gap: 10px;
+    flex-flow: column nowrap;
 
-    #players-trigger {
-      flex: 0 0 70;
+    .combobox-search-player-trigger-wrapper {
+      display: flex;
+      flex-flow: row nowrap;
+      gap: 10px;
+
+      ${StyleTrigger} {
+        flex: 0 1 80%;
+      }
+
+      .combobox-search-player-search-state {
+        flex: 0 0 20%;
+      }
     }
 
-    .combobox-states {
-      flex: 1 0 30%;
+    .combobox-search-player-listbox-wrapper {
+      box-sizing: border-box;
+      flex: 1;
     }
   }
 `;
-
-function SearchPlayerCombobox() {
-  const [isComboboxOpen, setIsComboboxOpen] = React.useState(true);
-  const { players, setModelRegistration } = useCtxRegistration();
-  const { searchPlayer, addPlayerWristbandRegistrationQueue } = useAppCtx();
-  const remoteData = useRemoteData({
-    getRemoteData: searchPlayer,
-    fetchDelay: 500,
-    successDelay: 100,
-  });
-
-  return (
-    <RemoteDataProvider key={players} value={remoteData}>
-      <StyleSearchPlayerCombobox>
-        <h1 id="search-player-combobox">search player</h1>
-        <div className="combobox-wrapper">
-          <Combobox
-            initialOpen
-            name="players"
-            open={isComboboxOpen}
-            setIsComboboxOpen={setIsComboboxOpen}
-            labelledBy="search-player-combobox"
-            options={remoteData.startFetching}
-            parseOptions={(options) => {
-              const labels = options.map((opt) => opt.username);
-              return {
-                labels,
-                options,
-              };
-            }}
-            onSelect={(player) =>
-              addPlayerWristbandRegistrationQueue(players, player).then(
-                (queue) => setModelRegistration({ players: queue })
-              )
-            }
-          >
-            <StyleTrigger placeholder="username or email" />
-            <StyleListbox
-              renderOption={(props) => (
-                <StyleOption {...props}>
-                  <SearchPlayerCard
-                    player={props.option}
-                    active={props.active}
-                    selected={props.selected}
-                  />
-                </StyleOption>
-              )}
-            />
-          </Combobox>
-          <div className="combobox-states">
-            <RemoteDataStates
-              RenderPending={<StyleMoonLoader />}
-              RenderSuccess={
-                <StyleSuccessIcon>
-                  <SuccessIcon />
-                </StyleSuccessIcon>
-              }
-              RenderFailure={
-                <StyleFailIcon>
-                  <FailIcon />
-                </StyleFailIcon>
-              }
-            />
-          </div>
-        </div>
-      </StyleSearchPlayerCombobox>
-    </RemoteDataProvider>
-  );
-}
-
-export { SearchPlayerCombobox };
+export { ComboboxSearchPlayer as SearchPlayerCombobox };

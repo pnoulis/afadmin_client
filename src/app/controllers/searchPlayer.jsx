@@ -2,7 +2,13 @@ import * as Errors from "/src/errors.js";
 import { fmAgent } from "/src/components/flash_messages/index.js";
 
 function handleResponse(res) {
-  return res.players;
+  return res.players.map((p) => ({
+    ...p,
+    wristband: {
+      ...p.wristband,
+      pairing: false,
+    },
+  }));
 }
 
 function handleError(err) {
@@ -16,9 +22,11 @@ function handleError(err) {
       modelError: err.message,
     };
   } else if (err instanceof Errors.TimeoutError) {
-    window.location.assign("/408.html");
+    console.log(err);
+    // window.location.assign("/408.html");
   } else {
-    window.location.assign("/500.html");
+    // window.location.assign("/500.html");
+    console.log(err);
   }
 }
 

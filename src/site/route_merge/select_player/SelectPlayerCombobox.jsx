@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import { TableCombobox } from "react_utils/comboboxes";
+import { AsyncSearchableCombobox as TableCombobox } from "react_utils/comboboxes";
 import { SelectPlayerCard } from "./SelectPlayerCard.jsx";
 
 function SelectPlayerCombobox({

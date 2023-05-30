@@ -11,6 +11,7 @@ import {
 } from "/src/components/dialogs/index.js";
 
 function handleResponse(res) {
+  console.log(res);
   fmAgent.success({ message: res.message });
   return res;
 }
@@ -37,13 +38,27 @@ function handleError(err) {
 }
 
 export default (appRef) => ({
-  event: async (payload) =>
+  registerWristband: async (player) =>
     new Promise((resolve, reject) => {
       const { Afmachine } = appRef.current;
-      Afmachine.request(() => appRef.current.Afmachine.players.login(payload))
-        .then(handleResponse)
-        .then(resolve)
-        .catch(handleError)
-        .catch(reject);
+      const { unregisterWristband } = appRef.current.controllers;
+
+      const register = () =>
+        Afmachine.request(() =>
+          Afmachine.players.registerWristband({
+            username: player?.username,
+            wristbandNumber: player?.wristband.wristbandNumber,
+          })
+        )
+          .then(handleResponse)
+          .then(resolve)
+          .catch(handleError)
+          .catch(reject);
+
+      if (player?.wristband.active) {
+        unregisterWristband(player).then(register).catch(reject);
+      } else {
+        register();
+      }
     }),
 });

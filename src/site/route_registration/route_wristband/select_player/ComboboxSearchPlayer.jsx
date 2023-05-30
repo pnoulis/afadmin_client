@@ -12,10 +12,8 @@ import { MoonLoader } from "react-spinners";
 import { ReactComponent as SuccessIcon } from "agent_factory.shared/ui/icons/success_icon_filled.svg";
 import { ReactComponent as FailIcon } from "agent_factory.shared/ui/icons/warning_icon_filled.svg";
 import { InfoCardPlayer } from "./InfoCardPlayer.jsx";
-import { useContextRegistration } from "/src/stores/registration/index.js";
 
-function ComboboxSearchPlayer() {
-  const { players, searchPlayer } = useContextRegistration();
+function ComboboxSearchPlayer({ players, searchPlayer, onPlayerSelection }) {
   const remoteData = useRemoteData({
     getRemoteData: searchPlayerComboboxWrapper(searchPlayer),
     fetchDelay: 500,
@@ -30,6 +28,7 @@ function ComboboxSearchPlayer() {
           <Combobox.Provider
             initialOpen
             asTable
+            onSelect={onPlayerSelection}
             name="search-player"
             labelledBy="combobox-search-player-label"
             options={remoteData.startFetching}

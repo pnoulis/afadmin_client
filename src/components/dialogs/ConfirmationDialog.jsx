@@ -5,7 +5,7 @@ import styled from "styled-components";
 const DialogContent = styled.div`
   display: grid;
   width: 400px;
-  min-height: 200px;
+  min-height: 150px;
   grid-template-rows: auto auto auto auto;
   grid-template-columns: 1fr 1fr;
   position: fixed;
@@ -15,6 +15,7 @@ const DialogContent = styled.div`
   grid-template-areas: "heading heading" "description description" "content content" "close confirm";
   box-sizing: border-box;
   z-index: 4;
+  row-gap: 15px;
   padding: 15px 15px;
   background: white;
   flex-flow: column nowrap;
@@ -41,10 +42,14 @@ const ConfirmationDialogDescription = styled(BasicDialog.Description)`
   align-self: center;
   text-align: center;
   box-sizing: border-box;
-  font-family: NoirPro-Regular;
-  font-size: var(--tx-nl);
-  letter-spacing: 1px;
-  word-spacing: 2px;
+  color: var(--primary-medium);
+  font-family: NoirPro-SemiBold;
+  font-size: var(--tx-md);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 10px;
+  word-spacing: 3px;
+  text-align: center;
 `;
 
 const ConfirmationDialogClose = styled(BasicDialog.Close)`
@@ -52,7 +57,7 @@ const ConfirmationDialogClose = styled(BasicDialog.Close)`
   justify-self: center;
   align-self: end;
   box-sizing: border-box;
-  width: 110px;
+  min-width: 110px;
   height: 40px;
   cursor: pointer;
   background-color: var(--primary-medium);
@@ -70,8 +75,8 @@ const ConfirmationDialogConfirm = styled(BasicDialog.Confirm)`
   justify-self: center;
   align-self: end;
   box-sizing: border-box;
-  padding: 5px;
-  width: 110px;
+  padding: 8px;
+  min-width: 110px;
   height: 40px;
   cursor: pointer;
   background-color: var(--primary-medium);

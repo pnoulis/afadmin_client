@@ -3,15 +3,29 @@ import styled from "styled-components";
 import { ComboboxSearchPlayer } from "./select_player/ComboboxSearchPlayer.jsx";
 import { ListPlayers } from "./pair_wristband/ListPlayers.jsx";
 import { ReactComponent as WristbandIcon } from "agent_factory.shared/ui/icons/wristband_image.svg";
+import { useContextRegistration } from "/src/stores/registration/index.js";
 
 function RouteRegistrationWristband({ className, ...props }) {
+  const {
+    players,
+    searchPlayer,
+    handlePlayerSelection,
+    handleToggleWristbandPairing,
+  } = useContextRegistration();
+
   return (
     <StyleRouteRegistrationWristband className={className} {...props}>
       <StyleSelectPlayer>
-        <ComboboxSearchPlayer />
+        <ComboboxSearchPlayer
+          searchPlayer={searchPlayer}
+          onPlayerSelection={handlePlayerSelection}
+        />
       </StyleSelectPlayer>
-      <StylePairWristband>
-        <ListPlayers />
+      <StylePairWristband id="ancestor-pair-wristband">
+        <ListPlayers
+          players={players}
+          onToggleWristbandPairing={handleToggleWristbandPairing}
+        />
         <StyleWristbandIcon>
           <WristbandIcon />
         </StyleWristbandIcon>
@@ -41,6 +55,8 @@ const StylePairWristband = styled.section`
   grid-area: pair_wristband;
   width: 100%;
   height: 100%;
+  max-width: 650px;
+  margin: auto;
   position: relative;
   background-color: var(--grey-base);
   padding: 15px 15px;

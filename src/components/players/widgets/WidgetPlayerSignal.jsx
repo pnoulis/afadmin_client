@@ -1,26 +1,39 @@
 import * as React from "react";
 import styled, { css, keyframes } from "styled-components";
+import { Svg } from "react_utils/svgs";
+import { TooltipDefault } from "/src/components/tooltips/index.js";
 import { useContextPlayer } from "/src/stores/player/index.js";
 import { ReactComponent as SignalIcon } from "agent_factory.shared/ui/icons/signal_1.svg";
 import { mapWristbandColor } from "agent_factory.shared/utils/index.js";
-import { Svg } from "react_utils/svgs";
 
-function IndicatorPlayerWristband({ size, className, ...props }) {
-  const { wristband } = useContextPlayer();
+function WidgetPlayerSignal({
+  size,
+  pairing,
+  onToggleWristbandPairing,
+  className,
+  ...props
+}) {
+  const player = useContextPlayer();
 
   return (
-    <StyleSignalIcon
-      $pairing={wristband.pairing}
-      $wristbandColor={mapWristbandColor(
-        "colorCode",
-        wristband?.wristbandColor
-      )}
-      size={size}
-      className={className}
-      {...props}
-    >
-      <SignalIcon />
-    </StyleSignalIcon>
+    <TooltipDefault
+      trigger={
+        <StyleSignalIcon
+          $pairing={player?.wristband.pairing}
+          $wristbandColor={mapWristbandColor(
+            "colorCode",
+            player?.wristband.wristbandColor
+          )}
+          size={size}
+          onClick={() => onToggleWristbandPairing(player)}
+          className={className}
+          {...props}
+        >
+          <SignalIcon />
+        </StyleSignalIcon>
+      }
+      content="toggle wristband pairing mode"
+    />
   );
 }
 
@@ -64,4 +77,4 @@ const StyleSignalIcon = styled(Svg)`
   ${({ $pairing }) => $pairing && animatePairing}
 `;
 
-export { IndicatorPlayerWristband };
+export { WidgetPlayerSignal };

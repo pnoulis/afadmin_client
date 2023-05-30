@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { alertDialog } from "react_utils/dialogs";
 
 const AlertDialogContent = styled.div`
-  width: 400px;
+  min-width: 600px;
   min-height: 150px;
   position: fixed;
   top: 50%;

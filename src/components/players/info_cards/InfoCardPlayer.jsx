@@ -30,4 +30,4 @@ const StyleInfoCardPlayer = styled.article`
   cursor: pointer;
 `;
 
-export { InfoCardPlayer };
+export { InfoCardPlayer, StyleInfoCardPlayer };

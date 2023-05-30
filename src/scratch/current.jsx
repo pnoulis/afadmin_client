@@ -1,2 +1,2 @@
 // export default null;
-export { default } from "./ScratchInfoCardPlayer.jsx";
+export { default } from "./ScratchTooltips";

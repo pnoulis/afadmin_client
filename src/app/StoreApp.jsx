@@ -26,7 +26,33 @@ function useStoreApp() {
 
   const storeRef = React.useRef(null);
   if (storeRef.current == null) {
+    var umount = () =>
+      subscriptionsRef.current.umount.listeners.forEach((fn) => fn && fn());
+    var notify = (subscription, ...args) =>
+      subscriptionsRef.current[subscription]?.listeners.forEach(
+        (listener) => listener && listener(...args)
+      );
+    var on = (event, listener) => {
+      if (!subscriptionsRef.current.hasOwnProperty(event)) {
+        throw new Error(`Undefined subscription event:${event}`);
+      }
+      subscriptionsRef.current[event].listeners.push(listener);
+    };
+    var flush = (event) => {
+      if (Object.hasOwn(subscriptionsRef.current, event)) {
+        subscriptionsRef.current[event].listeners = [];
+      } else {
+        throw new Error(`Unknown event:${event}`);
+      }
+    };
+    var isSubscribed = (event) => subscriptionsRef.current[event]?.subscribed;
+
     storeRef.current = {
+      umount,
+      notify,
+      on,
+      flush,
+      isSubscribed,
       Afmachine,
       subscriptionsRef,
       controllers: getControllers(storeRef),
@@ -41,21 +67,6 @@ function useStoreApp() {
     }),
     [store, setStore]
   );
-
-  const umount = () =>
-    subscriptionsRef.current.umount.listeners.forEach((fn) => fn && fn());
-  const notify = (subscription, ...args) =>
-    subscriptionsRef.current[subscription]?.listeners.forEach((listener) =>
-      listener(...args)
-    );
-  const on = (event, listener) => {
-    if (!subscriptionsRef.current.hasOwnProperty(event)) {
-      throw new Error(`Undefined subscription event:${event}`);
-    }
-    subscriptionsRef.current[event].listeners.push(listener);
-  };
-
-  const isSubscribed = (event) => subscriptionsRef.current[event]?.subscribed;
 
   React.useEffect(() => {
     const { subscribeWristbandScan } = storeRef.current.controllers;

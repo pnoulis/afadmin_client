@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as Errors from "/src/errors.js";
 import { fmAgent } from "/src/components/flash_messages/index.js";
+import { mapWristbandColor } from "agent_factory.shared/utils/index.js";
 import {
   Dialog,
   DialogHeading,
@@ -10,10 +11,21 @@ import {
   renderDialog,
 } from "/src/components/dialogs/index.js";
 
-function handleResponse(res) {
-  console.log(res);
-  fmAgent.success({ message: res.message });
-  return res;
+function handleResponse(player, wristband, res) {
+  fmAgent.success({
+    message: `Player ${player.username} paired with wristband
+number: ${wristband.wristbandNumber}
+color: ${mapWristbandColor("colorCode", wristband.wristbandColor)}`,
+  });
+  return {
+    ...player,
+    wristband: {
+      ...player.wristband,
+      ...wristband,
+      pairing: false,
+      active: true,
+    },
+  };
 }
 
 function handleError(err) {
@@ -38,7 +50,7 @@ function handleError(err) {
 }
 
 export default (appRef) => ({
-  registerWristband: async (player) =>
+  registerWristband: (player, wristband) =>
     new Promise((resolve, reject) => {
       const { Afmachine } = appRef.current;
       const { unregisterWristband } = appRef.current.controllers;
@@ -46,16 +58,16 @@ export default (appRef) => ({
       const register = () =>
         Afmachine.request(() =>
           Afmachine.players.registerWristband({
-            username: player?.username,
-            wristbandNumber: player?.wristband.wristbandNumber,
+            username: player.username,
+            wristbandNumber: wristband.wristbandNumber,
           })
         )
-          .then(handleResponse)
+          .then((res) => handleResponse(player, wristband, res))
           .then(resolve)
           .catch(handleError)
           .catch(reject);
 
-      if (player?.wristband.active) {
+      if (player?.wristband?.active) {
         unregisterWristband(player).then(register).catch(reject);
       } else {
         register();

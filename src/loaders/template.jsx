@@ -1,8 +1,17 @@
+import * as React from "react";
 import * as Errors from "/src/errors.js";
 import { fmAgent } from "/src/components/flash_messages/index.js";
+import {
+  Dialog,
+  DialogHeading,
+  DialogDescription,
+  DialogClose,
+  DialogConfirm,
+  renderDialog,
+} from "/src/components/dialogs/index.js";
 
 function handleResponse(res) {
-  fmAgent.success({ message: `Successfully subscribed to wristband scan` });
+  fmAgent.success({ message: res.message });
   return res;
 }
 
@@ -19,21 +28,19 @@ function handleError(err) {
   } else if (err instanceof Errors.TimeoutError) {
     console.log(err);
     throw err;
-    // window.location.assign("/408.html");
+    //window.location.assign("/408.html");
   } else {
     console.log(err);
     throw err;
-    // window.location.assign("/500.html");
+    //window.location.assign("/500.html");
   }
 }
 
 export default (appRef) => ({
-  subscribeWristbandScan: async (listener) =>
+  event: async (payload) =>
     new Promise((resolve, reject) => {
       const { Afmachine } = appRef.current;
-      Afmachine.request(() =>
-        Afmachine.players.subscribeWristbandScan(listener)
-      )
+      Afmachine.request(() => appRef.current.Afmachine.players.login(payload))
         .then(handleResponse)
         .then(resolve)
         .catch(handleError)

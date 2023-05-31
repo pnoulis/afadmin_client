@@ -8,23 +8,27 @@ import { useContextRegistration } from "/src/stores/registration/index.js";
 function RouteRegistrationWristband({ className, ...props }) {
   const {
     players,
+    storeId,
     searchPlayer,
     handlePlayerSelection,
-    handleToggleWristbandPairing,
+    handlePlayerRemoval,
+    handleWristbandPairToggle,
   } = useContextRegistration();
 
   return (
     <StyleRouteRegistrationWristband className={className} {...props}>
       <StyleSelectPlayer>
         <ComboboxSearchPlayer
+          key={`${storeId}_${players.length}`}
           searchPlayer={searchPlayer}
-          onPlayerSelection={handlePlayerSelection}
+          onPlayerSelect={handlePlayerSelection}
         />
       </StyleSelectPlayer>
       <StylePairWristband id="ancestor-pair-wristband">
         <ListPlayers
           players={players}
-          onToggleWristbandPairing={handleToggleWristbandPairing}
+          onWristbandPairToggle={handleWristbandPairToggle}
+          onPlayerRemove={handlePlayerRemoval}
         />
         <StyleWristbandIcon>
           <WristbandIcon />
@@ -59,7 +63,7 @@ const StylePairWristband = styled.section`
   margin: auto;
   position: relative;
   background-color: var(--grey-base);
-  padding: 15px 15px;
+  padding: 15px 0 15px 15px;
   border-radius: var(--br-lg);
 `;
 

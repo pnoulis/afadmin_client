@@ -13,7 +13,7 @@ import { ReactComponent as SuccessIcon } from "agent_factory.shared/ui/icons/suc
 import { ReactComponent as FailIcon } from "agent_factory.shared/ui/icons/warning_icon_filled.svg";
 import { InfoCardPlayer } from "./InfoCardPlayer.jsx";
 
-function ComboboxSearchPlayer({ players, searchPlayer, onPlayerSelection }) {
+function ComboboxSearchPlayer({ searchPlayer, onPlayerSelect }) {
   const remoteData = useRemoteData({
     getRemoteData: searchPlayerComboboxWrapper(searchPlayer),
     fetchDelay: 500,
@@ -24,11 +24,11 @@ function ComboboxSearchPlayer({ players, searchPlayer, onPlayerSelection }) {
     <StyleComboboxSearchPlayer>
       <h1 id="combobox-search-player-label">search player</h1>
       <div className="combobox-search-player-wrapper">
-        <RemoteDataProvider key={players} value={remoteData}>
+        <RemoteDataProvider value={remoteData}>
           <Combobox.Provider
             initialOpen
             asTable
-            onSelect={onPlayerSelection}
+            onSelect={onPlayerSelect}
             name="search-player"
             labelledBy="combobox-search-player-label"
             options={remoteData.startFetching}

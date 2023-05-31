@@ -1,6 +1,5 @@
 import * as React from "react";
 import * as Errors from "/src/errors.js";
-import { fmAgent } from "/src/components/flash_messages/index.js";
 import {
   AlertDialog,
   AlertDialogHeading,
@@ -11,7 +10,7 @@ import {
 function AlertOccupiedWristband({ wristbandNumber, handleClose }) {
   return (
     <AlertDialog initialOpen onClose={handleClose}>
-      <AlertDialogHeading>Discarding scanned wristband</AlertDialogHeading>
+      <AlertDialogHeading>Wristband scan</AlertDialogHeading>
       <AlertDialogDescription>
         Wristband {wristbandNumber} is registered to another player.
       </AlertDialogDescription>

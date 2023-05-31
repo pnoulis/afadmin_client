@@ -21,6 +21,10 @@ function useStoreApp() {
         subscribed: false,
         listeners: [],
       },
+      wristbandRegistration: {
+        subscribed: false,
+        listeners: [],
+      },
     };
   }
 
@@ -69,7 +73,8 @@ function useStoreApp() {
   );
 
   React.useEffect(() => {
-    const { subscribeWristbandScan } = storeRef.current.controllers;
+    const { subscribeWristbandScan, subscribeWristbandRegistration } =
+      storeRef.current.controllers;
     if (!isSubscribed("wristbandScan")) {
       subscriptionsRef.current.wristbandScan.subscribed = true;
       subscribeWristbandScan((err, wristband) => {
@@ -81,6 +86,17 @@ function useStoreApp() {
       })
         .then((unsubscribe) => on("umount", unsubscribe))
         .catch();
+    }
+
+    if (!isSubscribed("wristbandRegistration")) {
+      subscriptionsRef.current.wristbandRegistration.subscribed = true;
+      subscribeWristbandRegistration((err, registered) => {
+        if (err) {
+          alert(err);
+        } else {
+          notify("wristbandRegistration", registered);
+        }
+      }).then((unsubscribe) => on("umount", unsubscribe));
     }
     return () => umount();
   }, []);

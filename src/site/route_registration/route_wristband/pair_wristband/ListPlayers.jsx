@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { WidgetPlayer } from "./WidgetPlayer.jsx";
 import { AncestorDimensions } from "react_utils";
 
-function ListPlayers({ players = [], onToggleWristbandPairing }) {
+function ListPlayers({ players = [], onWristbandPairToggle, onPlayerRemove }) {
   return (
     <AncestorDimensions ancestor="#ancestor-pair-wristband">
       <StyleListPlayers>
@@ -11,7 +11,8 @@ function ListPlayers({ players = [], onToggleWristbandPairing }) {
           <WidgetPlayer
             key={player?.username || i}
             player={player}
-            onToggleWristbandPairing={onToggleWristbandPairing}
+            onWristbandPairToggle={onWristbandPairToggle}
+            onPlayerRemove={onPlayerRemove}
           />
         ))}
       </StyleListPlayers>
@@ -28,7 +29,8 @@ const StyleListPlayers = styled.ul`
   display: flex;
   flex-flow: column nowrap;
   gap: 20px;
-  padding-right: 15px;
+  padding-top: 15px;
+  padding-right: 25px;
 `;
 
 export { ListPlayers };

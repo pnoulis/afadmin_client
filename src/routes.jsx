@@ -11,6 +11,9 @@ import { Authorize } from "./components/auth/index.js";
 /* ------------------------------ CONTROLLERS ------------------------------ */
 import { App } from "./app/App.jsx";
 
+/* ------------------------------ LOADERS ------------------------------ */
+import { loadAvailablePlayers } from "./loaders/index.js";
+
 /* ------------------------------ VIEW ------------------------------ */
 import { Site } from "./site/Site.jsx";
 import { RouteLogin } from "./site/route_login/RouteLogin.jsx";
@@ -69,6 +72,7 @@ const routesApp = [
             children: [
               {
                 index: true,
+                loader: loadAvailablePlayers,
                 element: <RouteMergeTeam />,
               },
             ],

@@ -2,17 +2,27 @@ import * as React from "react";
 import * as Errors from "/src/errors.js";
 import { fmAgent } from "/src/components/flash_messages/index.js";
 import {
-  Dialog,
-  DialogHeading,
-  DialogDescription,
-  DialogClose,
-  DialogConfirm,
+  ConfirmationDialog,
+  ConfirmationDialogHeading,
+  ConfirmationDialogDescription,
+  ConfirmationDialogClose,
+  ConfirmationDialogConfirm,
   renderDialog,
 } from "/src/components/dialogs/index.js";
 
-function handleResponse(res) {
-  fmAgent.success({ message: res.message });
-  return res;
+function DialogConfirmUnregisterWristband({ player, handleClose }) {
+  return (
+    <ConfirmationDialog initialOpen onClose={handleClose}>
+      <ConfirmationDialogHeading>
+        toggle wristband pairing mode
+      </ConfirmationDialogHeading>
+      <ConfirmationDialogDescription>
+        Unregister players {player.username} wristband?
+      </ConfirmationDialogDescription>
+      <ConfirmationDialogClose tabIndex={0}>cancel</ConfirmationDialogClose>
+      <ConfirmationDialogConfirm>unregister</ConfirmationDialogConfirm>
+    </ConfirmationDialog>
+  );
 }
 
 function handleError(err) {
@@ -37,48 +47,62 @@ function handleError(err) {
 }
 
 export default (appRef) => ({
-  toggleWristbandPairing: async (player, onPaired) =>
+  toggleWristbandPairing: async (
+    player,
+    onPaired = (err, pairedPlayer) => {}
+  ) =>
     new Promise((resolve, reject) => {
-      const { Afmachine, on, flush } = appRef.current;
-      console.log(appRef.current);
-      const { validateWristband, registerWristband } =
-        appRef.current.controllers;
+      const { on, flush } = appRef.current;
+      const {
+        validateWristband,
+        registerWristband,
+        unregisterWristband,
+        toggleWristbandPairing,
+      } = appRef.current.controllers;
 
-      const registerWristbandScanListener = () =>
+      const registerWristbandScanListener = () => {
+        flush("wristbandScan");
         on("wristbandScan", (wristband) => {
           validateWristband(wristband)
-            .then(registerWristband)
+            .then((validatedWristband) =>
+              registerWristband(player, validatedWristband)
+            )
             .then((registered) => {
-              console.log(registered);
-              alert("wristband registered");
-              // flush("wristbandScan");
-              // onPaired(null, registered);
+              flush("wristbandScan");
+              onPaired(null, registered);
             })
             .catch(handleError)
             .catch(onPaired);
         });
-      // if (player?.wristband.active) {
-      //   const { unregisterWristband } = appRef.current.controllers;
-      //   unregisterWristband(player)
-      // }
+      };
 
-      flush("wristbandScan");
-      registerWristbandScanListener();
-      // if (!player.wristband.pairing) {
-      // }
-
-      resolve({
-        ...player,
-        wristband: {
-          ...player.wristband,
-          pairing: !player.wristband.pairing,
-        },
-      });
-
-      // Afmachine.request(() => appRef.current.Afmachine.players.login(payload))
-      //   .then(handleResponse)
-      //   .then(resolve)
-      //   .catch(handleError)
-      //   .catch(reject);
+      if (player.wristband.active) {
+        renderDialog(
+          null,
+          DialogConfirmUnregisterWristband,
+          { player },
+          (yes) => {
+            if (!yes) {
+              resolve(null);
+            } else {
+              unregisterWristband(player, false)
+                .then((unpairedPlayer) =>
+                  toggleWristbandPairing(unpairedPlayer, onPaired)
+                )
+                .then(resolve)
+                .catch(reject);
+            }
+          }
+        );
+      } else {
+        registerWristbandScanListener();
+        resolve({
+          ...player,
+          wristband: {
+            ...player.wristband,
+            pairing: !player.wristband.pairing,
+          },
+        });
+      }
     }),
 });

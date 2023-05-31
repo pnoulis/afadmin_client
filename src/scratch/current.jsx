@@ -1,2 +1,2 @@
 // export default null;
-export { default } from "./ScratchTooltips";
+export { default } from "./ScratchWidgetPlayer";

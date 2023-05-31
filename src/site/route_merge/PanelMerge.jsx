@@ -8,7 +8,7 @@ import {
   StyleItemText,
   StyleItemIcon,
 } from "/src/components/panels/index.js";
-import { ReactComponent as GroupPartyIcon } from "agent_factory.shared/ui/icons/group_add_filled.svg";
+import { ReactComponent as MergeTeamIcon } from "agent_factory.shared/ui/icons/merge_team.svg";
 
 function PanelMerge({ children }) {
   return (
@@ -17,7 +17,7 @@ function PanelMerge({ children }) {
         <PanelHeaderToolbar>
           <StyleToolbarItem>
             <StyleItemIcon>
-              <GroupPartyIcon />
+              <MergeTeamIcon />
             </StyleItemIcon>
             <StyleItemText>merge team</StyleItemText>
           </StyleToolbarItem>

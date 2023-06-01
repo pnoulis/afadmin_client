@@ -23,11 +23,14 @@ function handleError(err) {
 }
 
 export default (appRef) => ({
-  removePlayerWristbandRegistrationQueue: async (queue, player) =>
+  removePlayerTeamRoster: async (roster, player) =>
     new Promise((resolve, reject) => {
       const { toggleWristbandPairing } = appRef.current.controllers;
       const remove = () =>
-        resolve(queue.filter((p) => p.username !== player.username));
+        resolve([
+          ...roster.filter((seat) => seat?.username !== player.username),
+          null,
+        ]);
 
       if (player.wristband.pairing) {
         toggleWristbandPairing(player)

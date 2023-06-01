@@ -81,7 +81,6 @@ const StyleListbox = styled(Combobox.Listbox)`
   background-color: var(--grey-light);
   outline: none;
   overflow-y: auto;
-  overflow-x: none;
   display: flex;
   flex-flow: column nowrap;
   gap: 15px;
@@ -118,21 +117,13 @@ border-color: var(--success-base);
   }}
 `;
 
-function OnEmpty({ inputValue }) {
-  return inputValue ? (
-    <StyleOnEmpty>
-      No player found with the name: <span>{inputValue}</span>
-    </StyleOnEmpty>
-  ) : null;
+function OnEmpty(props) {
+  return <StyleOnEmpty>No available players found!</StyleOnEmpty>;
 }
 
 const StyleOnEmpty = styled.li`
   font-family: NoirPro-Regular;
   font-size: var(--tx-lg);
-  span {
-    margin-left: 8px;
-    color: var(--primary-medium);
-  }
 `;
 
 /* --------------- SELECT PLAYER CONTAINER --------------- */

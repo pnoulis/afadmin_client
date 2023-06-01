@@ -16,10 +16,10 @@ const StyleMoonLoader = () => (
 function RouteMergeTeam({ className, ...props }) {
   const availablePlayersPromise = useLoaderData();
   const {
-    players,
+    roster,
     handlePlayerSelection,
-    handleWristbandPairToggle,
     handlePlayerRemoval,
+    handleWristbandPairToggle,
   } = useContextMerge();
 
   return (
@@ -32,6 +32,7 @@ function RouteMergeTeam({ className, ...props }) {
           >
             {(availablePlayers) => (
               <ComboboxSelectPlayer
+                key={availablePlayers}
                 players={availablePlayers}
                 onPlayerSelect={handlePlayerSelection}
               />
@@ -41,7 +42,7 @@ function RouteMergeTeam({ className, ...props }) {
       </StyleSelectPlayer>
       <StyleTeamStagingArea id="ancestor-team-staging-area">
         <ListPlayers
-          players={players || []}
+          roster={roster}
           onWristbandPairToggle={handleWristbandPairToggle}
           onPlayerRemove={handlePlayerRemoval}
         />
@@ -59,11 +60,10 @@ const StyleRouteMergeTeam = styled.div`
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 45% 55%;
   grid-template-rows: 1fr;
   grid-template-areas: "select_player team_staging_area";
-  justify-items: start;
-  justify-content: start;
+  justify-items: end;
   align-items: start;
 `;
 

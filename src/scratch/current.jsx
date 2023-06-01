@@ -1,2 +1,2 @@
 // export default null;
-export { default } from "./ScratchWidgetPlayer";
+export { default } from "./ScratchUseSubscriptions.jsx";

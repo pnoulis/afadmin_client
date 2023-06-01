@@ -1,10 +1,11 @@
 import * as Errors from "/src/errors.js";
 import { fmAgent } from "/src/components/flash_messages/index.js";
-import { Afmachine } from "/src/afmachine/Afmachine.js";
-import { defer } from "react-router-dom";
 
 function handleResponse(res) {
-  return res.players;
+  fmAgent.success({
+    message: "Successfully subscribed to wristband unregistration",
+  });
+  return res;
 }
 
 function handleError(err) {
@@ -28,19 +29,16 @@ function handleError(err) {
   }
 }
 
-async function loadAvailablePlayers() {
-  // const availablePlayers = new Promise((resolve, reject) =>
-  //   setTimeout(() => {
-  //     Afmachine.request(() => Afmachine.players.listAvailable()).then(resolve);
-  //   }, 5000)
-  // );
-  console.log("LOADER AVAILABLE PLAYERS");
-  const availablePlayers = Afmachine.request(() =>
-    Afmachine.players.listAvailable()
-  )
-    .then(handleResponse)
-    .catch(handleError);
-  return defer({ availablePlayers });
-}
-
-export { loadAvailablePlayers };
+export default (appRef) => ({
+  subscribeWristbandUnregistration: async (listener) =>
+    new Promise((resolve, reject) => {
+      const { Afmachine } = appRef.current;
+      Afmachine.request(() =>
+        Afmachine.players.subscribeWristbandUnregistration(listener)
+      )
+        .then(handleResponse)
+        .then(resolve)
+        .catch(handleError)
+        .catch(reject);
+    }),
+});

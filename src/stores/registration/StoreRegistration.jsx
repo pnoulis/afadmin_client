@@ -14,10 +14,12 @@ function StoreProvideRegistration({ children }) {
 function useStoreRegistration() {
   const {
     registerPlayer,
+    registerWristband,
     searchPlayer,
     addPlayerWristbandRegistrationQueue,
     removePlayerWristbandRegistrationQueue,
     toggleWristbandPairing,
+    flush,
   } = useContextApp();
   const [store, setStore] = React.useState({
     storeId: "",
@@ -26,6 +28,11 @@ function useStoreRegistration() {
   const storeRef = React.useRef(null);
   storeRef.current = store;
 
+  React.useEffect(() => {
+    return () => flush("wristbandScan");
+  }, []);
+
+  const genId = () => Math.random().toString(32).substring(2, 8);
   const handlePlayerSelection = (player) =>
     addPlayerWristbandRegistrationQueue(store.players, player)
       .then((players) => setStore({ players }))
@@ -41,17 +48,25 @@ function useStoreRegistration() {
       .catch((err) => console.log(err));
 
   const handleWristbandPairToggle = (player) => {
-    toggleWristbandPairing(
-      player,
-      (err, pairedPlayer) =>
-        pairedPlayer &&
-        setStore({
-          storeId: Math.random().toString(32).substring(2, 8),
-          players: storeRef.current.players.map((p) =>
-            p.username === pairedPlayer.username ? pairedPlayer : p
-          ),
-        })
-    ).then(
+    toggleWristbandPairing(player, (err, scannedWristband, cb) => {
+      const playerWhileScan = storeRef.current.players.find(
+        (p) => p?.username === player.username
+      );
+      if (playerWhileScan) {
+        // if player was not removed while waiting for a wristband scan
+        registerWristband(playerWhileScan, scannedWristband)
+          .then((pairedPlayer) => {
+            cb();
+            setStore({
+              storeId: genId(),
+              players: storeRef.current.players.map((p) =>
+                p.username === pairedPlayer.username ? pairedPlayer : p
+              ),
+            });
+          })
+          .catch((err) => console.log(err));
+      }
+    }).then(
       (toggledPlayer) =>
         toggledPlayer &&
         setStore({

@@ -151,6 +151,7 @@ provided by react-router-dom.
 The fact that it is used to declare routes and the component's they render
 for the whole app makes it a natural point of centralization.
 
+** TODO REMOVING PLAYERS FROM QUEUE OR TEAM CALLS WRONG TOGGLEWRISTBAND
 * Log
 ** Integrate development work, from afadmin_core to afadmin_client
 *** DONE Flash Messages

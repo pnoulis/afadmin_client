@@ -25,6 +25,8 @@ const StyleListPlayers = styled.ul`
   overflow-x: none;
   width: 100%;
   height: 100%;
+  max-width: 650px;
+  margin: auto;
   max-height: ${({ $height }) => `${$height ? $height - 10 : 0}px`};
   display: flex;
   flex-flow: column nowrap;

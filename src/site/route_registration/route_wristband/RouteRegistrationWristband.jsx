@@ -59,7 +59,7 @@ const StylePairWristband = styled.section`
   grid-area: pair_wristband;
   width: 100%;
   height: 100%;
-  max-width: 650px;
+  max-width: 700px;
   margin: auto;
   position: relative;
   background-color: var(--grey-base);

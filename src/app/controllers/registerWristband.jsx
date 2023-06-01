@@ -2,14 +2,6 @@ import * as React from "react";
 import * as Errors from "/src/errors.js";
 import { fmAgent } from "/src/components/flash_messages/index.js";
 import { mapWristbandColor } from "agent_factory.shared/utils/index.js";
-import {
-  Dialog,
-  DialogHeading,
-  DialogDescription,
-  DialogClose,
-  DialogConfirm,
-  renderDialog,
-} from "/src/components/dialogs/index.js";
 
 function handleResponse(player, wristband, res) {
   fmAgent.success({

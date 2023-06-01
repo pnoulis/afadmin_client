@@ -13,8 +13,8 @@ import { mapPlayerStatus } from "agent_factory.shared/utils/index.js";
 function WidgetPlayer({
   player,
   index,
-  onToggleWristbandPairing,
-  onRemovePlayer,
+  onWristbandPairToggle,
+  onPlayerRemove,
   className,
   ...props
 }) {
@@ -24,14 +24,14 @@ function WidgetPlayer({
         <>
           <StyleWidgetPlayerPairWristband
             $wristbandColor={player?.wristband?.wristbandColor}
-            onToggleWristbandPairing={onToggleWristbandPairing}
+            onToggleWristbandPairing={onWristbandPairToggle}
           />
           <StyleInfoCardTupleUsername name="username" />
           <StyleInfoCardTupleUsername
             name="status"
             value={mapPlayerStatus(player)}
           />
-          <StyleWidgetPlayerRemove onRemovePlayer={onRemovePlayer} />
+          <StyleWidgetPlayerRemove onRemovePlayer={onPlayerRemove} />
         </>
       ) : (
         <StyleInfoCardTupleUsername
@@ -52,7 +52,7 @@ const StyleWidgetPlayer = styled(WidgetPlayer)`
   background-color: white;
   cursor: initial;
   gap: 8px;
-  opacity: ${({ player }) => (player ? "1" : "0.7")};
+  opacity: ${({ player }) => (player ? "1" : "0.6")};
 `;
 
 const StyleWidgetPlayerPairWristband = styled(WidgetPlayerPairWristband)`
@@ -63,17 +63,6 @@ const StyleWidgetPlayerPairWristband = styled(WidgetPlayerPairWristband)`
   padding: 12px;
   border: 3px solid transparent;
   margin: auto;
-  ${({ $wristbandColor }) =>
-    $wristbandColor
-      ? `
-border-color: ${$wristbandColor};
-background-color: ${$wristbandColor};
-fill: white;
-`
-      : `
-background-color: var(--grey-base);
-border-color: var(--primary-subtle);
-`}
 `;
 
 const StyleWidgetPlayerRemove = styled(WidgetPlayerRemove)`

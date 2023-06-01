@@ -2,6 +2,7 @@ import * as React from "react";
 import { ContextProvideApp } from "./ContextApp";
 import { Afmachine } from "/src/afmachine/Afmachine.js";
 import { getControllers } from "./getControllers.js";
+import { useRevalidator } from "react-router-dom";
 
 function StoreProvideApp({ children }) {
   const store = useStoreApp();
@@ -9,8 +10,8 @@ function StoreProvideApp({ children }) {
 }
 
 function useStoreApp() {
+  const revalidator = useRevalidator();
   const [store, setStore] = React.useState({});
-
   const subscriptionsRef = React.useRef(null);
   if (subscriptionsRef.current == null) {
     subscriptionsRef.current = {
@@ -23,7 +24,19 @@ function useStoreApp() {
       },
       wristbandRegistration: {
         subscribed: false,
-        listeners: [],
+        listeners: [
+          () => {
+            revalidator.revalidate();
+          },
+        ],
+      },
+      wristbandUnregistration: {
+        subscribed: false,
+        listeners: [
+          () => {
+            revalidator.revalidate();
+          },
+        ],
       },
     };
   }
@@ -40,11 +53,29 @@ function useStoreApp() {
       if (!subscriptionsRef.current.hasOwnProperty(event)) {
         throw new Error(`Undefined subscription event:${event}`);
       }
+      console.log(event);
+      console.log("LISTENERS BEFORE");
+      console.log(subscriptionsRef.current[event]);
       subscriptionsRef.current[event].listeners.push(listener);
+      console.log("LISTENERS AFTER");
+      console.log(subscriptionsRef.current[event]);
     };
-    var flush = (event) => {
+    var flush = (event, rmListener) => {
       if (Object.hasOwn(subscriptionsRef.current, event)) {
-        subscriptionsRef.current[event].listeners = [];
+        const subscription = subscriptionsRef.current[event];
+        console.log(event);
+        console.log("FLUSHING BEFORE");
+        console.log(subscription);
+        subscription.listeners = rmListener
+          ? subscription.listeners.filter((l) => {
+              if (l == rmListener) {
+                console.log("FLUSH LISTENER MATCHED");
+              }
+              return l != rmListener;
+            })
+          : [];
+        console.log("FLUSHING AFTER");
+        console.log(subscription);
       } else {
         throw new Error(`Unknown event:${event}`);
       }
@@ -73,8 +104,11 @@ function useStoreApp() {
   );
 
   React.useEffect(() => {
-    const { subscribeWristbandScan, subscribeWristbandRegistration } =
-      storeRef.current.controllers;
+    const {
+      subscribeWristbandScan,
+      subscribeWristbandRegistration,
+      subscribeWristbandUnregistration,
+    } = storeRef.current.controllers;
     if (!isSubscribed("wristbandScan")) {
       subscriptionsRef.current.wristbandScan.subscribed = true;
       subscribeWristbandScan((err, wristband) => {
@@ -85,7 +119,7 @@ function useStoreApp() {
         }
       })
         .then((unsubscribe) => on("umount", unsubscribe))
-        .catch();
+        .catch((err) => console.log(err));
     }
 
     if (!isSubscribed("wristbandRegistration")) {
@@ -96,7 +130,22 @@ function useStoreApp() {
         } else {
           notify("wristbandRegistration", registered);
         }
-      }).then((unsubscribe) => on("umount", unsubscribe));
+      })
+        .then((unsubscribe) => on("umount", unsubscribe))
+        .catch((err) => console.log(err));
+    }
+
+    if (!isSubscribed("wristbandUnregistration")) {
+      subscriptionsRef.current.wristbandUnregistration.subscribed = true;
+      subscribeWristbandUnregistration((err, unregistered) => {
+        if (err) {
+          alert(err);
+        } else {
+          notify("wristbandUnregistration", unregistered);
+        }
+      })
+        .then((unsubscribe) => on("umount", unsubscribe))
+        .catch((err) => console.log(err));
     }
     return () => umount();
   }, []);
@@ -104,6 +153,7 @@ function useStoreApp() {
   return {
     ...store,
     ...storeRef.current.controllers,
+    ...storeRef.current,
     setStoreApp: setStore,
     storeAppRef: storeRef,
   };

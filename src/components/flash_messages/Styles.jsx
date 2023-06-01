@@ -47,7 +47,6 @@ const StyleLayoutFmMessage = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
-  word-break: break-all;
 `;
 
 const StyleLayoutFmRoot = styled.div`

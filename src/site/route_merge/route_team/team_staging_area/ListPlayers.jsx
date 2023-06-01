@@ -3,21 +3,17 @@ import styled from "styled-components";
 import { WidgetPlayer } from "./WidgetPlayer.jsx";
 import { AncestorDimensions } from "react_utils";
 
-function ListPlayers({
-  players = [],
-  onToggleWristbandPairing,
-  onRemovePlayer,
-}) {
+function ListPlayers({ roster = [], onWristbandPairToggle, onPlayerRemove }) {
   return (
     <AncestorDimensions ancestor="#ancestor-team-staging-area">
       <StyleListPlayers>
-        {players.map((player, i) => (
+        {roster.map((player, i) => (
           <WidgetPlayer
             key={player?.username || i}
             player={player}
             index={i + 1}
-            onToggleWristbandPairing={onToggleWristbandPairing}
-            onRemovePlayer={onRemovePlayer}
+            onWristbandPairToggle={onWristbandPairToggle}
+            onPlayerRemove={onPlayerRemove}
           />
         ))}
       </StyleListPlayers>

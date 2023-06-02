@@ -109,6 +109,7 @@ const StyleTrigger = styled(Combobox.Trigger)`
   pointer-events: auto;
   text-transform: uppercase;
   width: 100%;
+  max-width: 465px;
   height: 55px;
   padding: 0 15px;
   border-radius: var(--br-lg);

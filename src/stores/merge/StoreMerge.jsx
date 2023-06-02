@@ -9,6 +9,8 @@ import {
   renderDialog,
 } from "/src/components/dialogs/index.js";
 import { mapWristbandColor } from "agent_factory.shared/utils/index.js";
+import { DialogInputNewTeamName } from "./DialogInputNewTeamName.jsx";
+import { useNavigate } from "react-router-dom";
 
 function AlertDuplicateWristbandColors({ wristbandColor, handleClose }) {
   return (
@@ -23,6 +25,32 @@ function AlertDuplicateWristbandColors({ wristbandColor, handleClose }) {
   );
 }
 
+function AlertInsufficientPlayers({ handleClose }) {
+  return (
+    <AlertDialog initialOpen onClose={handleClose}>
+      <AlertDialogHeading>Merge team</AlertDialogHeading>
+      <AlertDialogDescription>
+        A team must be comprised of at least 2 players.
+        <br />
+        Aborting...
+      </AlertDialogDescription>
+    </AlertDialog>
+  );
+}
+
+function AlertPlayerWristbandUnpaired({ handleClose }) {
+  return (
+    <AlertDialog initialOpen onClose={handleClose}>
+      <AlertDialogHeading>Merge team</AlertDialogHeading>
+      <AlertDialogDescription>
+        Some player in the roster has not been paired with a wristband!
+        <br />
+        Aborting...
+      </AlertDialogDescription>
+    </AlertDialog>
+  );
+}
+
 function StoreProvideMerge({ children }) {
   const store = useStoreMerge();
   return <ContextProvideMerge value={store}>{children}</ContextProvideMerge>;
@@ -30,6 +58,7 @@ function StoreProvideMerge({ children }) {
 
 function useStoreMerge() {
   const {
+    mergeTeam,
     addPlayerTeamRoster,
     removePlayerTeamRoster,
     toggleWristbandPairing,
@@ -39,12 +68,44 @@ function useStoreMerge() {
   const [store, setStore] = React.useState({
     roster: new Array(MAX_TEAM_SIZE).fill(null),
   });
+  const navigate = useNavigate();
   const storeRef = React.useRef(null);
   storeRef.current = store;
 
   React.useEffect(() => {
     return () => flush("wristbandScan");
   }, []);
+
+  const handleTeamNameSubmit = (teamName, cb) => {
+    mergeTeam(teamName, store.roster)
+      .then((newTeam) => {
+        cb(true);
+        setStore({
+          roster: new Array(MAX_TEAM_SIZE).fill(null),
+        });
+        navigate(".");
+      })
+      .catch((err) => {
+        cb(false);
+        console.log(err);
+      });
+  };
+
+  const handleTeamMerge = () => {
+    if (store.roster.filter((seat) => seat != null).length < 2) {
+      renderDialog(null, AlertInsufficientPlayers);
+    } else if (
+      store.roster.some(
+        (seat) => seat && seat.wristband?.wristbandNumber == null
+      )
+    ) {
+      renderDialog(null, AlertPlayerWristbandUnpaired);
+    } else {
+      renderDialog(null, DialogInputNewTeamName, {
+        onSubmit: handleTeamNameSubmit,
+      });
+    }
+  };
 
   const handlePlayerSelection = (player) => {
     addPlayerTeamRoster(store.roster, player)
@@ -123,6 +184,7 @@ function useStoreMerge() {
     ...store,
     setStoreMerge: setStore,
     storeMergeRef: storeRef,
+    handleTeamMerge,
     handlePlayerSelection,
     handlePlayerRemoval,
     handleWristbandPairToggle,

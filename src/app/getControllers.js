@@ -18,6 +18,7 @@ import removePlayerWristbandRegistrationQueue from "./controllers/removePlayerWr
 import validateWristband from "./controllers/validateWristband.jsx";
 import addPlayerTeamRoster from "./controllers/addPlayerTeamRoster.jsx";
 import removePlayerTeamRoster from "./controllers/removePlayerTeamRoster.jsx";
+import mergeTeam from "./controllers/mergeTeam.jsx";
 
 const getControllers = (appRef) => ({
   ...subscribeWristbandScan(appRef),
@@ -33,6 +34,7 @@ const getControllers = (appRef) => ({
   ...validateWristband(appRef),
   ...addPlayerTeamRoster(appRef),
   ...removePlayerTeamRoster(appRef),
+  ...mergeTeam(appRef),
 });
 
 export { getControllers };

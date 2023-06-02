@@ -5,6 +5,8 @@ import * as Errors from "/src/errors.js";
 const Afmachine = CONFIG.Afmachine;
 
 function parseResponse(req, res) {
+  console.log(req);
+  console.log(res);
   if (res.result === "NOK") {
     if (res.validationErrors) {
       throw new Errors.ValidationError({ message: res.message, req, ...res });
@@ -16,6 +18,8 @@ function parseResponse(req, res) {
 }
 
 function parseError(req, err) {
+  console.log(req);
+  console.log(err);
   if (/timeout/.test(err.message)) {
     throw new Errors.TimeoutError({ req, err });
   }

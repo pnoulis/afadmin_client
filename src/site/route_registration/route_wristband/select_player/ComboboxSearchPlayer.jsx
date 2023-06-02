@@ -15,7 +15,12 @@ import { InfoCardPlayer } from "./InfoCardPlayer.jsx";
 
 function ComboboxSearchPlayer({ searchPlayer, onPlayerSelect }) {
   const remoteData = useRemoteData({
-    getRemoteData: searchPlayerComboboxWrapper(searchPlayer),
+    getRemoteData: searchPlayer,
+    parseRes: (candidates) => {
+      const combobox = new Map();
+      candidates.forEach((c) => combobox.set(c.username, c));
+      return combobox;
+    },
     fetchDelay: 500,
     successDelay: 100,
   });
@@ -76,13 +81,6 @@ function ComboboxSearchPlayer({ searchPlayer, onPlayerSelect }) {
     </StyleComboboxSearchPlayer>
   );
 }
-
-const searchPlayerComboboxWrapper = (searchPlayer) => (searchTerm) =>
-  searchPlayer(searchTerm).then((candidates) => {
-    const combobox = new Map();
-    candidates.forEach((c) => combobox.set(c.username, c));
-    return combobox;
-  });
 
 /* --------------- REMOTE DATA STATES --------------- */
 const StyleSuccessIcon = styled(Svg)`

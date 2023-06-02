@@ -29,12 +29,6 @@ function handleError(err) {
 }
 
 async function loadAvailablePlayers() {
-  // const availablePlayers = new Promise((resolve, reject) =>
-  //   setTimeout(() => {
-  //     Afmachine.request(() => Afmachine.players.listAvailable()).then(resolve);
-  //   }, 5000)
-  // );
-  console.log("LOADER AVAILABLE PLAYERS");
   const availablePlayers = Afmachine.request(() =>
     Afmachine.players.listAvailable()
   )

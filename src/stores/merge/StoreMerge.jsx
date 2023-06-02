@@ -9,7 +9,6 @@ import {
   renderDialog,
 } from "/src/components/dialogs/index.js";
 import { mapWristbandColor } from "agent_factory.shared/utils/index.js";
-import { useRevalidator } from "react-router-dom";
 
 function AlertDuplicateWristbandColors({ wristbandColor, handleClose }) {
   return (
@@ -30,7 +29,6 @@ function StoreProvideMerge({ children }) {
 }
 
 function useStoreMerge() {
-  const revalidator = useRevalidator();
   const {
     addPlayerTeamRoster,
     removePlayerTeamRoster,
@@ -39,7 +37,6 @@ function useStoreMerge() {
     flush,
   } = useContextApp();
   const [store, setStore] = React.useState({
-    storeId: "",
     roster: new Array(MAX_TEAM_SIZE).fill(null),
   });
   const storeRef = React.useRef(null);
@@ -49,13 +46,10 @@ function useStoreMerge() {
     return () => flush("wristbandScan");
   }, []);
 
-  const genId = () => Math.random().toString(32).substring(2, 8);
-
   const handlePlayerSelection = (player) => {
     addPlayerTeamRoster(store.roster, player)
       .then((newRoster) => {
         setStore({
-          storeId: genId(),
           roster: newRoster,
         });
       })
@@ -65,7 +59,6 @@ function useStoreMerge() {
     removePlayerTeamRoster(store.roster, player)
       .then((newRoster) => {
         setStore({
-          storeId: genId(),
           roster: newRoster,
         });
       })
@@ -73,6 +66,7 @@ function useStoreMerge() {
   };
   const handleWristbandPairToggle = (player) => {
     toggleWristbandPairing(player, (err, scannedWristband, cb) => {
+      if (err) return;
       if (
         storeRef.current.roster.find(
           (seat) =>
@@ -96,7 +90,6 @@ function useStoreMerge() {
             .then((pairedPlayer) => {
               cb();
               setStore({
-                storeId: genId(),
                 roster: storeRef.current.roster.map((seat) =>
                   seat?.username === pairedPlayer.username ? pairedPlayer : seat
                 ),
@@ -109,7 +102,6 @@ function useStoreMerge() {
       (toggledPlayer) =>
         toggledPlayer &&
         setStore({
-          storeId: genId(),
           roster: storeRef.current.roster.map((seat) =>
             seat == null
               ? null
@@ -126,14 +118,6 @@ function useStoreMerge() {
         })
     );
   };
-
-  // React.useEffect(() => {
-  //   if (!store.storeId) {
-  //     return;
-  //   } else {
-  //     revalidator.revalidate();
-  //   }
-  // }, [store.storeId]);
 
   return {
     ...store,

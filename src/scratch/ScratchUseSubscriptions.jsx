@@ -1,16 +1,17 @@
 import * as React from "react";
 import { useSubscriptions } from "/src/hooks/useSubscriptions.jsx";
-import { StoreProvideApp } from "/src/app/index.js";
+import { StoreProvideApp, useContextApp } from "/src/app/index.js";
 
 function Subs() {
+  const appContext = useContextApp();
   const [a, setA] = React.useState("");
   const [subs, setSubs] = React.useState(() => ["yolo"]);
   const [wristbandRegistered] = useSubscriptions("wristbandRegistration");
 
   React.useEffect(() => {
-    console.log("SOMETHING CHANGED");
-    console.log(wristbandRegistered);
-  }, [wristbandRegistered]);
+    alert("SOMETHING CHANGED");
+    console.log(appContext);
+  }, [appContext.searchPlayer]);
 
   return (
     <div>

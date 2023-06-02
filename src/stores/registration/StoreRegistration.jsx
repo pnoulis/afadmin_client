@@ -22,7 +22,6 @@ function useStoreRegistration() {
     flush,
   } = useContextApp();
   const [store, setStore] = React.useState({
-    storeId: "",
     players: [],
   });
   const storeRef = React.useRef(null);
@@ -49,6 +48,7 @@ function useStoreRegistration() {
 
   const handleWristbandPairToggle = (player) => {
     toggleWristbandPairing(player, (err, scannedWristband, cb) => {
+      if (err) return;
       const playerWhileScan = storeRef.current.players.find(
         (p) => p?.username === player.username
       );
@@ -58,7 +58,6 @@ function useStoreRegistration() {
           .then((pairedPlayer) => {
             cb();
             setStore({
-              storeId: genId(),
               players: storeRef.current.players.map((p) =>
                 p.username === pairedPlayer.username ? pairedPlayer : p
               ),

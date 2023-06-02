@@ -8,7 +8,6 @@ import { useContextRegistration } from "/src/stores/registration/index.js";
 function RouteRegistrationWristband({ className, ...props }) {
   const {
     players,
-    storeId,
     searchPlayer,
     handlePlayerSelection,
     handlePlayerRemoval,
@@ -19,7 +18,6 @@ function RouteRegistrationWristband({ className, ...props }) {
     <StyleRouteRegistrationWristband className={className} {...props}>
       <StyleSelectPlayer>
         <ComboboxSearchPlayer
-          key={`${storeId}_${players.length}`}
           searchPlayer={searchPlayer}
           onPlayerSelect={handlePlayerSelection}
         />

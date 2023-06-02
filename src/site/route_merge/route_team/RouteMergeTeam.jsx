@@ -32,7 +32,6 @@ function RouteMergeTeam({ className, ...props }) {
           >
             {(availablePlayers) => (
               <ComboboxSelectPlayer
-                key={availablePlayers}
                 players={availablePlayers}
                 onPlayerSelect={handlePlayerSelection}
               />

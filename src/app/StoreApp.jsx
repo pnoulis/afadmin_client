@@ -11,8 +11,13 @@ function StoreProvideApp({ children }) {
 
 function useStoreApp() {
   const revalidator = useRevalidator();
-  const [store, setStore] = React.useState({});
+  const [store, setStore] = React.useState({
+    storeId: "",
+  });
+  const storeRef = React.useRef(null);
   const subscriptionsRef = React.useRef(null);
+  const genId = () => Math.random().toString(32).substring(2, 8);
+
   if (subscriptionsRef.current == null) {
     subscriptionsRef.current = {
       umount: {
@@ -27,6 +32,8 @@ function useStoreApp() {
         listeners: [
           () => {
             revalidator.revalidate();
+            storeRef.current.controllers = getControllers(storeRef);
+            setStore({ storeId: genId() });
           },
         ],
       },
@@ -35,13 +42,14 @@ function useStoreApp() {
         listeners: [
           () => {
             revalidator.revalidate();
+            storeRef.current.controllers = getControllers(storeRef);
+            setStore({ storeId: genId() });
           },
         ],
       },
     };
   }
 
-  const storeRef = React.useRef(null);
   if (storeRef.current == null) {
     var umount = () =>
       subscriptionsRef.current.umount.listeners.forEach((fn) => fn && fn());
@@ -53,29 +61,14 @@ function useStoreApp() {
       if (!subscriptionsRef.current.hasOwnProperty(event)) {
         throw new Error(`Undefined subscription event:${event}`);
       }
-      console.log(event);
-      console.log("LISTENERS BEFORE");
-      console.log(subscriptionsRef.current[event]);
       subscriptionsRef.current[event].listeners.push(listener);
-      console.log("LISTENERS AFTER");
-      console.log(subscriptionsRef.current[event]);
     };
     var flush = (event, rmListener) => {
       if (Object.hasOwn(subscriptionsRef.current, event)) {
         const subscription = subscriptionsRef.current[event];
-        console.log(event);
-        console.log("FLUSHING BEFORE");
-        console.log(subscription);
         subscription.listeners = rmListener
-          ? subscription.listeners.filter((l) => {
-              if (l == rmListener) {
-                console.log("FLUSH LISTENER MATCHED");
-              }
-              return l != rmListener;
-            })
+          ? subscription.listeners.filter((l) => l != rmListener)
           : [];
-        console.log("FLUSHING AFTER");
-        console.log(subscription);
       } else {
         throw new Error(`Unknown event:${event}`);
       }
@@ -93,15 +86,6 @@ function useStoreApp() {
       controllers: getControllers(storeRef),
     };
   }
-
-  storeRef.current = React.useMemo(
-    () => ({
-      ...storeRef.current,
-      store,
-      setStore,
-    }),
-    [store, setStore]
-  );
 
   React.useEffect(() => {
     const {

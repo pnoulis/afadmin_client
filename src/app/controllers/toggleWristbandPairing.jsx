@@ -47,22 +47,13 @@ function handleError(err) {
 }
 
 export default (appRef) => ({
-  toggleWristbandPairing: async (
-    player,
-    // onPaired = (err, pairedPlayer) => {},
-    onWristbandScan
-  ) =>
+  toggleWristbandPairing: async (player, onWristbandScan) =>
     new Promise((resolve, reject) => {
       const { on, flush } = appRef.current;
-      const {
-        validateWristband,
-        registerWristband,
-        unregisterWristband,
-        toggleWristbandPairing,
-      } = appRef.current.controllers;
+      const { validateWristband, unregisterWristband, toggleWristbandPairing } =
+        appRef.current.controllers;
 
-      const newRegisterWristbandScanListener = () => {
-        flush("wristbandScan");
+      const registerWristbandScanListener = () =>
         on("wristbandScan", (wristband) =>
           validateWristband(wristband)
             .then((validatedWristband) =>
@@ -75,22 +66,6 @@ export default (appRef) => ({
               onWristbandScan(err, null, () => flush("wristbandScan"))
             )
         );
-      };
-      // const registerWristbandScanListener = () => {
-      //   flush("wristbandScan");
-      //   on("wristbandScan", (wristband) => {
-      //     validateWristband(wristband)
-      //       .then((validatedWristband) =>
-      //         registerWristband(player, validatedWristband)
-      //       )
-      //       .then((registered) => {
-      //         flush("wristbandScan");
-      //         onPaired(null, registered);
-      //       })
-      //       .catch(handleError)
-      //       .catch(onPaired);
-      //   });
-      // };
 
       if (player.wristband.active) {
         renderDialog(
@@ -111,7 +86,11 @@ export default (appRef) => ({
           }
         );
       } else {
-        newRegisterWristbandScanListener();
+        if (player.wristband.pairing) {
+          flush("wristbandScan");
+        } else {
+          registerWristbandScanListener();
+        }
         resolve({
           ...player,
           wristband: {

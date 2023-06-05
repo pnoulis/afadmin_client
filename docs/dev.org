@@ -382,6 +382,11 @@ CLOSED: [2023-05-24 Wed 13:52]
 CLOSED: [2023-05-24 Wed 13:52]
 **** DONE Providing a store and its controllers should be standardized
 CLOSED: [2023-05-24 Wed 15:23]
+** 04/06/23 June Sunday
+*** Finish the group party page.
+Each team shall have a context and a store of its own.
+At initialization the team is composed of the standard team schema from agent
+factory.shared using the fuction structuredClone();
 * Dealing with wristband subscriptions
 
 user toggles pairing mode.

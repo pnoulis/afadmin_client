@@ -8,13 +8,13 @@ import {
   WidgetPlayerPairWristband,
   WidgetPlayerRemove,
 } from "/src/components/players/widgets/index.js";
+import { WidgetTeamPlayerRemove } from "/src/components/teams/widgets/index.js";
 import { mapPlayerStatus } from "agent_factory.shared/utils/index.js";
 
 function WidgetPlayer({
   player,
   index,
   onWristbandPairToggle,
-  onPlayerRemove,
   className,
   ...props
 }) {
@@ -31,7 +31,7 @@ function WidgetPlayer({
             name="status"
             value={mapPlayerStatus(player)}
           />
-          <StyleWidgetPlayerRemove onRemovePlayer={onPlayerRemove} />
+          <StyleWidgetTeamPlayerRemove player={player} />
         </>
       ) : (
         <StyleInfoCardTupleUsername
@@ -66,7 +66,7 @@ const StyleWidgetPlayerPairWristband = styled(WidgetPlayerPairWristband)`
   margin: auto;
 `;
 
-const StyleWidgetPlayerRemove = styled(WidgetPlayerRemove)`
+const StyleWidgetTeamPlayerRemove = styled(WidgetTeamPlayerRemove)`
   margin: auto;
   background-color: var(--grey-subtle);
   width: 20px;

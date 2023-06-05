@@ -5,7 +5,8 @@ import { TooltipDefault } from "/src/components/tooltips/index.js";
 import { useContextTeam } from "/src/stores/team/index.js";
 import { ReactComponent as TrashIcon } from "agent_factory.shared/ui/icons/trash_2.svg";
 
-function WidgetTeamRemove({
+function WidgetTeamPlayerRemove({
+  player,
   size,
   content,
   onRemovePlayer,
@@ -13,13 +14,13 @@ function WidgetTeamRemove({
   children,
   ...props
 }) {
-  const { onClickTeamRemove } = useContextTeam();
+  const { onClickTeamPlayerRemove } = useContextTeam();
   return (
     <TooltipDefault
       trigger={
         children ? (
           React.cloneElement(children, {
-            ...onClickTeamRemove(),
+            ...onClickTeamPlayerRemove(player),
           })
         ) : (
           <StyleTrashIcon
@@ -52,4 +53,4 @@ const StyleTrashIcon = styled.div`
   border-radius: 50%;
 `;
 
-export { WidgetTeamRemove };
+export { WidgetTeamPlayerRemove };

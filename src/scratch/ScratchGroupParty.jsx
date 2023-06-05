@@ -1,12 +1,17 @@
 import * as React from "react";
+import styled from "styled-components";
 import {
   StoreProvideGroupParty,
   useContextGroupParty,
-} from "/src/stores/groupParty/index.js";
+} from "/src/stores/group_party/index.js";
 import { StoreProvideApp, useContextApp } from "/src/app/index.js";
-import { WidgetPlayer } from "/src/site/route_group_party/team/WidgetPlayer.jsx";
 import { Team } from "/src/site/route_group_party/team/Team.jsx";
+import { FormTeamName } from "/src/site/route_group_party/team/FormTeamName.jsx";
 import { ListPlayers } from "/src/site/route_group_party/team/ListPlayers.jsx";
+import { WidgetPlayer } from "/src/site/route_group_party/team/WidgetPlayer.jsx";
+import { ListTeamWidgets } from "/src/site/route_group_party/team/ListTeamWidgets.jsx";
+import { WidgetRemoveTeam } from "/src/site/route_group_party/team/WidgetRemoveTeam.jsx";
+import { WidgetAddPlayer } from "../site/route_group_party/team/WidgetAddPlayer";
 
 const roster = [
   {
@@ -71,13 +76,30 @@ const roster = [
   },
 ];
 
+const StyleBox = styled.div`
+  background-color: grey;
+  min-width: 50px;
+`;
+
 function GroupParty() {
   const groupParty = useContextGroupParty();
-  console.log(groupParty);
   return (
     <div>
       <Team>
-        <ListPlayers roster={roster} />
+        <FormTeamName style={{ gridColumn: "1 / 2", gridRow: "1 / 2" }} />
+        <ListTeamWidgets style={{ gridColumn: " 1 / 2", gridRow: "2 / 3" }}>
+          <WidgetRemoveTeam />
+          <WidgetAddPlayer />
+        </ListTeamWidgets>
+        <ListPlayers style={{ gridColumn: "2 / 3", gridRow: "1 / 3" }}>
+          {roster.map((seat, i) => (
+            <WidgetPlayer
+              key={seat?.username || i}
+              player={seat}
+              index={i + 1}
+            />
+          ))}
+        </ListPlayers>
       </Team>
     </div>
   );

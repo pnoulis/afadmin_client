@@ -1,2 +1,2 @@
 // export default null;
-export { default } from "./ScratchGroupParty.jsx";
+export { default } from "./ScratchTeam.jsx";

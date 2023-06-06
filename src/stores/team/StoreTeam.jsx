@@ -41,7 +41,7 @@ function useStoreTeam(config) {
    */
   const handleTeamNameChange = (teamName, cb) => {};
   const handleTeamMerge = (cb) => {
-    alert('merging team');
+    alert("merging team");
     console.log(mergeTeamStates);
     mergeTeamStates.startFetching();
   };

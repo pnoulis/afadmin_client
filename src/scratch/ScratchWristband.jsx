@@ -49,6 +49,7 @@ export default function ScratchWristband() {
           onClick={(e) => {
             e.preventDefault();
             const ss = new Player();
+            Player.app = { name: 'yolobitch' };
             console.log(ss);
             setPlayer(ss);
           }}
@@ -68,6 +69,13 @@ export default function ScratchWristband() {
           }}
         >
           pair wristband
+        </button>
+        <button
+          onClick={() => {
+            player.getApp();
+          }}
+        >
+          show app
         </button>
       </div>
     </div>

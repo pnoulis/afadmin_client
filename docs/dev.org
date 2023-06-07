@@ -393,3 +393,6 @@ user toggles pairing mode.
 * How'tos
 ** How to contain any element within the app boundaries.
 position: absolute;
+
+* log 07-06-2023
+an event triggers a statefull action.

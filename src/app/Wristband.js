@@ -1,7 +1,17 @@
 import { WRISTBAND_SCHEMA } from "agent_factory.shared/schemas.js";
 import { AsyncEvent } from "./AsyncEvent.js";
 
+class Subscription {
+  constructor(subscription) {
+    this.subscription = subscription;
+    this.listeners = [];
+  }
+}
+
 class Wristband {
+  static subscriptions = {
+    wristbandScan: new Subscription(),
+  };
   static states = ["empty", "pairing", "paired", "registered"];
   static colors = [
     "black",
@@ -12,7 +22,8 @@ class Wristband {
     "blue",
     "orange",
   ];
-  static initialize(conf) {
+
+  static hydrate(conf) {
     const wristband = {};
     wristband.number = conf?.wristbandNumber || null;
     wristband.color = conf?.wristbandColor || null;
@@ -30,10 +41,11 @@ class Wristband {
   constructor(wristband = {}) {
     Object.assign(
       this,
-      Wristband.initialize({ ...WRISTBAND_SCHEMA, ...wristband })
+      Wristband.hydrate({ ...WRISTBAND_SCHEMA, ...wristband })
     );
     this.subscriptions = {
       stateChange: [],
+      scan: Wristband.subscriptions.wristbandScan.flush(),
     };
     this.states = {
       empty: new Empty(this),
@@ -58,7 +70,15 @@ class Wristband {
       : this.state.constructor.name;
   }
 
-  on(event, subscriber) {}
+  on(event, subscriber) {
+    if (!Object.hasOwn(this.subscriptions, event)) {
+      throw new Error(`Unrecognized event: ${event}`);
+    } else if (this.subscriptions[event] instanceof AsyncEvent) {
+      this.subscriptions[event].onStateChange(subscriber);
+    } else if (this.subscriptions[event] instanceof Subscription) {
+      this.subscriptions[event].on("message", subscriber);
+    }
+  }
 
   emit(event) {}
 

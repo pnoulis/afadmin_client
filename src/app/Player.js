@@ -2,7 +2,16 @@ import { PLAYER_SCHEMA } from "agent_factory.shared/schemas.js";
 import { Wristband } from "./Wristband.js";
 import { AsyncEvent } from "./AsyncEvent.js";
 
+function fakePair(username, wristband) {
+  console.log('fake pair');
+  console.log(username);
+  return new Promise((resolve, reject) => {
+    resolve(username);
+  });
+}
+
 class Player {
+  static app;
   static states = ["cached", "registered", "inTeam", "inGame"];
   static initialize(conf) {
     const player = {};
@@ -25,9 +34,8 @@ class Player {
 
     this.subscriptions = {
       stateChange: [],
-      pairWristband: new AsyncEvent()
-      pairWristband: new AsyncEvent(function (player) {
-
+      pairWristband: new AsyncEvent(function (...args) {
+        return fakePair(...args);
       }),
     };
 
@@ -38,8 +46,6 @@ class Player {
       inGame: new InGame(this),
     };
     this.setState(this.states[this.state]);
-
-    this._pairWristband = new AsyncEvent();
   }
 
   setState(state, cb) {
@@ -58,23 +64,21 @@ class Player {
 
   on(event, subscriber) {
     if (!Object.hasOwn(this.subscriptions, event)) {
-      throw new Error(`Undefined event: ${event}`);
+      throw new Error(`Unrecognized event: ${event}`);
     } else if (this.subscriptions[event] instanceof AsyncEvent) {
       this.subscriptions[event].onStateChange(subscriber);
     } else {
       this.subscriptions[event].push(subscriber);
     }
   }
-
   emit(event) {}
   flush(event, subscriber) {}
 
-  _pairWristband() {
-    return () => {};
-  }
-
   pairWristband() {
     this.state.pairWristband();
+  }
+  getApp() {
+    console.log(Player.app);
   }
 }
 
@@ -91,7 +95,7 @@ class Cached extends State {
   }
 
   pairWristband() {
-    alert("pair wristband");
+    alert("pair wristband in cached state");
   }
 }
 
@@ -101,7 +105,12 @@ class Registered extends State {
     super(player);
   }
   pairWristband() {
-    alert("pair wristband");
+    alert("pair wristband in registered state");
+    console.log(this.player);
+    this.player.subscriptions.pairWristband
+      .fire('yolo', {})
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   }
 }
 

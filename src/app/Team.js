@@ -7,23 +7,21 @@ class Team {
     Object.assign(this, window.structuredClone(TEAM_SCHEMA));
     this.name ||= generateRandomName();
 
-    this.actions = {
-      mergeTeam: new AsyncEvent(
-        (teamName, roster) =>
-          new Promise((resolve, reject) => {
-            resolve(teamName);
-          })
-      ),
-    };
+    this.merge = new AsyncEvent(
+      () =>
+        new Promise((resolve, reject) => {
+          resolve(this.name);
+        }),
+      {
+        fireDelay: 3000,
+      }
+    );
   }
 }
 
 /*
   ACTIONS
  */
-Team.prototype.mergeTeam = function mergeTeam() {
-  return this.actions.mergeTeam.fire(this.name, this.currentRoster.players);
-};
 
 /*
   EVENT HANDLERS
@@ -42,21 +40,38 @@ Team.prototype.handleSubmitTeamMerge = function handleSubmitTeamMerge(e, cb) {
 };
 
 /*
-  EVENTS
+  EVENT PROPS
  */
-Team.prototype.onClickTeamPlayerAdd = function onClickTeamPlayerAdd(
-  player,
-  cb
-) {
+Team.prototype.onClickTeamPlayerAdd = function onClickTeamPlayerAdd(player) {
   return {
-    onClick: (e) => this.handleTeamPlayerAdd(player, e, cb),
+    onClick: (e) => {
+      e.preventDefault();
+      this.handleTeamPlayerAdd(player);
+    },
   };
 };
 
-Team.prototype.onSubmitTeamMerge = function onSubmitTeamMerge(cb) {
+Team.prototype.onClickTeamPlayerRemove = function onClickTeamPlayerRemove(
+  player
+) {
   return {
-    onSubmit: (e) => this.handleTeamMerge(e, cb),
-    onClick: (e) => this.handleTeamMerge(e, cb),
+    onClick: (e) => {
+      e.preventDefault();
+      this.handleTeamPlayerRemove(player);
+    },
+  };
+};
+
+Team.prototype.onSubmitTeamMerge = function onSubmitTeamMerge() {
+  return {
+    onSubmit: (e) => {
+      e.preventDefault();
+      this.handleSubmitTeamMerge();
+    },
+    onClick: (e) => {
+      e.preventDefault();
+      this.handleTeamMerge();
+    },
   };
 };
 

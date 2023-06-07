@@ -8,8 +8,9 @@ class AsyncEvent {
       },
       timeout = 10000,
       fireDelay = 0,
-      resolveDuration = 1500,
-      rejectDuration = 1500,
+      minTimePending = 1000,
+      minTimeResolving = 1500,
+      minTimeRejecting = 1500,
     } = {}
   ) {
     Object.assign(this, {
@@ -18,19 +19,21 @@ class AsyncEvent {
       onReject,
       timeout,
       fireDelay,
-      resolveDuration,
-      rejectDuration,
+      minTimePending,
+      minTimeResolving,
+      minTimeRejecting,
     });
     this.states = {
       idle: new Idle(this),
       pending: new Pending(this),
       resolved: new Resolved(this),
       rejected: new Rejected(this),
-      settled: new Settled(this),
     };
     this.state = null;
-    this.setState(this.states.idle);
     this.timeoutId;
+    this.listeners = [];
+    this.forks = [];
+    this.state = this.states.idle;
   }
 
   setState(state, cb) {
@@ -39,14 +42,44 @@ class AsyncEvent {
     );
     this.state = state;
     cb && cb();
+    this.emitStateChange();
   }
 
   getState() {
     return this.state?.constructor?.name;
   }
 
+  onStateChange(listener) {
+    this.setListeners(this.listeners.concat([listener]));
+    return this;
+  }
+
+  emitStateChange() {
+    this.listeners.forEach((listener) => listener && listener(this.getState()));
+  }
+
+  flush(listener) {
+    this.setListeners(this.listeners.filter((l) => l !== listener));
+    return this;
+  }
+
+  setListeners(newListeners) {
+    console.log("LISTENERS CHANGE OLD");
+    console.log(this.listeners);
+    console.log("LISTENERS CHANGE NEW");
+    this.listeners = newListeners;
+    console.log(this.listeners);
+    return this;
+  }
+
   fire(...args) {
     return this.state.fire(...args);
+  }
+
+  fork(resolve, reject, ...args) {
+    this.forks.push((resolve, reject, ...args) =>
+      this.init(resolve, reject, ...args)
+    );
   }
 
   init(resolve, reject, ...args) {
@@ -83,6 +116,8 @@ class State {
   constructor(event) {
     this.event = event;
   }
+
+  init() {}
 }
 
 class Idle extends State {
@@ -117,8 +152,8 @@ class Pending extends State {
   resolve() {
     this.event.setState(this.event.states.resolved, () =>
       setTimeout(
-        () => this.event.setState(this.event.states.settled),
-        this.event.resolveDuration
+        () => this.event.setState(this.event.states.idle),
+        this.event.minTimeResolving
       )
     );
     return (res) => res;
@@ -127,7 +162,7 @@ class Pending extends State {
     this.event.setState(this.event.states.rejected, () =>
       setTimeout(
         () => this.event.setState(this.event.states.settled),
-        this.event.rejectDuration
+        this.event.minTimeRejecting
       )
     );
     return (err) => {
@@ -161,25 +196,6 @@ class Rejected extends State {
   }
   static get name() {
     return "rejected";
-  }
-
-  fire(...args) {}
-  resolve() {
-    return (res) => res;
-  }
-  reject() {
-    return (err) => {
-      throw err;
-    };
-  }
-}
-
-class Settled extends State {
-  constructor(event) {
-    super(event);
-  }
-  static get name() {
-    return "settled";
   }
 
   fire(...args) {}

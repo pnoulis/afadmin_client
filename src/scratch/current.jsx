@@ -1,2 +1,2 @@
 // export default null;
-export { default } from "./ScratchTeamClass.jsx";
+export { default } from "./ScratchWristband.jsx";

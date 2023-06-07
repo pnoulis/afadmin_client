@@ -1,54 +1,72 @@
 import * as React from "react";
 import styled from "styled-components";
-import { Team } from "/src/app/Team.js";
+import { Team, useAsyncEvent } from "/src/app/index.js";
 import { AsyncStates } from "react_utils";
-import { StoreProvideTeamClass } from "/src/stores/team/index.js";
+import { fmAgent } from "/src/components/flash_messages/index.js";
+import { GroupTeamClass } from "/src/components/teams/index.js";
+import { useContextTeam } from "/src/stores/team/index.js";
+
+function RenderTeam() {
+  const context = useContextTeam();
+
+  React.useEffect(() => {
+    console.log(context);
+  }, [context]);
+  return (
+    <div>
+      <AsyncStates state={context.state}>team is rendered</AsyncStates>
+    </div>
+  );
+}
 
 function GroupParty() {
   const [teams, setTeams] = React.useState([]);
 
   React.useEffect(() => {
     if (teams.length > 0) {
-      console.log(teams);
+      fmAgent.info({ message: "created 5 teams" });
     }
-  }, [teams, setTeams]);
+  }, [teams]);
 
   return (
     <div>
-      <button
-        onClick={() => {
-          setTeams(new Array(5).fill(null).map(() => new Team()));
-        }}
-      >
-        make 5 teams
-      </button>
       <h1>group party</h1>
-      <ul>
-        {teams.map((team, i) => (
-          <StoreProvideTeamClass key={i} team={team}>
-            <li>
-              <h1>{team.name}</h1>
+      <div>
+        <button
+          onClick={() =>
+            setTeams(new Array(5).fill(null).map(() => new Team()))
+          }
+        >
+          make 5 teams
+        </button>
+        <ul>
+          {teams.map((team, i) => (
+            <GroupTeamClass key={i} groupTeam={team}>
+              <li>{team.name}</li>
               <button
-                onClick={() => {
-                  console.log(team);
-                  team
-                    .mergeTeam()
-                    .then((res) => console.log(res))
-                    .catch((err) => console.log(err));
+                onClick={(e) => {
+                  e.preventDefault();
+                  team.merge
+                    .fire()
+                    .then((res) => {
+                      console.log(res);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
                 }}
               >
                 merge team
               </button>
-              <AsyncStates state={team.actions.mergeTeam.getState()}>
-                <div>team is rendered</div>
-              </AsyncStates>
-            </li>
-          </StoreProvideTeamClass>
-        ))}
-      </ul>
+              <RenderTeam />
+            </GroupTeamClass>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
+
 export default function ScratchTeamClass() {
   return (
     <div>

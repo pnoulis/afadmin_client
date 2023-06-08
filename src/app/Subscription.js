@@ -116,6 +116,7 @@ class Subscription {
       .catch((err) => {
         this.changeState(this.states.down);
         this.emit("error", err);
+        this.emit("message", err);
       });
   }
   #handleMessage(err, msg) {

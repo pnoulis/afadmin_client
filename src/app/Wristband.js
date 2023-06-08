@@ -12,7 +12,7 @@ class Wristband {
   static subscriptions = {
     wristbandScan: new Subscription(),
   };
-  static states = ["empty", "pairing", "paired", "registered"];
+  static states = ["empty", "pairing", "scanned", "paired"];
   static colors = [
     "black",
     "red",
@@ -50,8 +50,8 @@ class Wristband {
     this.states = {
       empty: new Empty(this),
       pairing: new Pairing(this),
+      scanned: new Scanned(this),
       paired: new Paired(this),
-      registered: new Registered(this),
     };
     this.setState(this.states[this.state]);
   }
@@ -69,6 +69,9 @@ class Wristband {
         )
       : this.state.constructor.name;
   }
+  inState(state) {
+    return state === this.state.constructor.name;
+  }
 
   on(event, subscriber) {
     if (!Object.hasOwn(this.subscriptions, event)) {
@@ -77,10 +80,12 @@ class Wristband {
       this.subscriptions[event].onStateChange(subscriber);
     } else if (this.subscriptions[event] instanceof Subscription) {
       this.subscriptions[event].on("message", subscriber);
+    } else {
+      this.subscriptions[event].push(subscriber);
     }
   }
 
-  emit(event) {}
+  emit(event, ...args) {}
 
   flush(event, subscriber) {}
 
@@ -111,15 +116,15 @@ class Pairing extends State {
   }
 }
 
-class Paired extends State {
-  static name = "paired";
+class Scanned extends State {
+  static name = "scanned";
   constructor(wristband) {
     super(wristband);
   }
 }
 
-class Registered extends State {
-  static name = "registered";
+class Paired extends State {
+  static name = "paired";
   constructor(wristband) {
     super(wristband);
   }

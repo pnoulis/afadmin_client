@@ -1,6 +1,6 @@
 import { CONFIG } from "afmachine/config";
 import { TaskRunner } from "js_utils";
-import * as Errors from "/src/errors.js";
+import * as Errors from "../errors.js";
 
 const Afmachine = CONFIG.Afmachine;
 
@@ -42,7 +42,10 @@ if (!Afmachine.backend.initialized) {
       .catch((err) => parseError(req, err));
 
   Afmachine.subscribe = (route, options, cb) =>
-    Afmachine.backend.backend.subscribe(route, options, cb);
+    tr
+      .run(() => Afmachine.backend.backend.subscribe(route, options, cb))
+      .then((res) => parseResponse(route, res))
+      .catch((err) => parseError(route, err));
 
   Afmachine.publish = (route, payload, options) =>
     Afmachine.backend.backend.publish(route, payload, options);

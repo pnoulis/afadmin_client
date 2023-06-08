@@ -396,3 +396,48 @@ position: absolute;
 
 * log 07-06-2023
 an event triggers a statefull action.
+
+* log 08-06-2023
+** flush() increase flexibility
+Right now flush(event, listener) accepts an event identifier and a listener
+function. The listener function is presumed to be equal to one among the
+registered functions.
+
+Flush then proceeds to iterate over the registered listeners to the event with
+the goal of removing the match if any.
+An error is thrown in the case that a match is not found with the intention of
+helping the user identify bugs.
+
+I think that the flush procedure is too inflexible at the moment.
+
+*1st inflexibility:*
+_function references do not lend themselves as a means of identification_
+
+In particular the use of functions as a means of testing equality is
+problematic. Many times users want to register a function using an anonymous
+function expression. Which means that a reference to the function is not kept
+anywhere. As a result the user is forced to not use anonymous function
+expression's. His only option is to define a function either through a function
+declaration or function expression.
+
+One possible solution to the problem is the use of ids. Each registered function
+could be identified with an ID provided at the time of registration. The string
+ID could then be provided as the second argument to flush(event, stringId). That
+would allow for anonymous function expressions.
+
+*2nd inflexibility:*
+_lack of custom search functions_
+
+Currently the search procedure is a simple iteration that uses the equality
+operator to compare the argument function to the registered functions. If the
+argument function is strictly equal (===) to a registered function , the
+matching registered function is removed(flushed) from the event listeners array.
+The fact that the equality test is fixed creates an overall inflexibility.
+
+One possible solution to the problem is the use of function callbacks. The user
+could be allowed to specify his own custom testing clause.
+
+** DONE allow flush to accept an id
+CLOSED: [2023-06-08 Thu 21:09]
+** DONE ensure flush to accept a clause function
+CLOSED: [2023-06-08 Thu 21:09]

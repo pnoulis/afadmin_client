@@ -1,6 +1,6 @@
 function getState(code) {
   return code
-    ? Subscription.states.findIndex(
+    ? this.state.constructor.states.findIndex(
         (state) => this.state.constructor.name === state
       )
     : this.state?.constructor.name;
@@ -14,14 +14,15 @@ function setState(state, cb) {
 function inState(state) {
   return state === this.state.constructor.name;
 }
-
 function compareStates(test) {
   return test(
-    Subscription.states.reduce((car, cdr, i) => ({ ...car, [cdr]: i }), {}),
+    this.state.constructor.states.reduce(
+      (car, cdr, i) => ({ ...car, [cdr]: i }),
+      {}
+    ),
     this.getState("code")
   );
 }
-
 function stateful(states, options = {}) {
   if (!Object.hasOwn(this.constructor, "states")) {
     Object.defineProperty(this.constructor, "states", {

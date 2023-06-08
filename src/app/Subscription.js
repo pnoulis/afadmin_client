@@ -1,10 +1,16 @@
-import { eventful } from "../src/app/eventful.js";
-import { stateful } from "../src/app/stateful.js";
-import { Afmachine } from "../src/afmachine/Afmachine.js";
+import { eventful } from "./eventful.js";
+import { stateful } from "./stateful.js";
 
 function logStateChange(topic, previous, current) {
   console.log(`[TRANSITION] ${topic} ${previous} -> ${current}`);
 }
+
+/*
+  Options:
+  mode: persistent,
+  timeout: 3000,
+  persistListeners: true
+ */
 
 class Subscription {
   constructor(client = null, topic = "", options = {}) {
@@ -29,9 +35,9 @@ class Subscription {
 
     this.client = client;
     this.topic = topic;
-    this.options = { ...this.options, ...options };
-    this.overseerId;
-    this.subscriptionId;
+    this.options = { ...this.options, mode: "persistent", ...options };
+    this.overseerId = null;
+    this.subscriptionId = null;
     this.on("stateChange", logStateChange);
     this.changeState(this.states.down);
   }
@@ -49,17 +55,17 @@ class Subscription {
     });
   }
 
-  #isSubscriberExpired(date) {
-    return (subscriber) => date >= subscriber.timeout;
-  }
   #inspectSubscribers() {
-    const expiredSubscribers = this.events.message.filter(
-      this.#isSubscriberExpired(Date.now())
-    );
-    expiredSubscribers.forEach((subscriber) => {
-      subscriber.listener(new Error("timeout"));
-      this.flush("message", subscriber);
-    });
+    // remove expired subscribers
+    const now = Date.now();
+    this.events.message = this.events.message.reduce((car, cdr) => {
+      if (now >= cdr.timeout) {
+        cdr.listener(new Error("Subscription timeout"));
+        return car;
+      } else {
+        return [...car, cdr];
+      }
+    }, []);
 
     if (this.events.message.length < 1) {
       this.#killOverseer();
@@ -77,17 +83,31 @@ class Subscription {
 
   _register(subscriber, options) {
     this.on("message", subscriber, options);
-    if (!this.overseerId) {
-      this.#spawnOverseer();
-    }
-    return () => this._unregister(subscriber);
+    // if (!this.overseerId) {
+    //   this.#spawnOverseer();
+    // }
+    return () => this._unregister(options.id || subscriber);
   }
   _unregister(subscriber) {
     this.flush("message", subscriber);
   }
+  _unsubscribe() {
+    return new Promise((resolve, reject) => {
+      try {
+        this.subscriptionId && this.subscriptionId();
+        resolve();
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
   _subscribe() {
     return this.client
-      .subscribe(this.topic, this.options, this.#handleMessage.bind(this))
+      .subscribe(
+        this.topic,
+        { mode: this.options.mode },
+        this.#handleMessage.bind(this)
+      )
       .then((unsubscribe) => {
         this.subscriptionId = unsubscribe;
         this.changeState(this.states.up);
@@ -99,13 +119,10 @@ class Subscription {
       });
   }
   #handleMessage(err, msg) {
-    console.log("MESSAGE ARRIVED");
     this.emit("message", err, msg);
   }
 
   subscribe() {
-    console.log("SUBSCRIBE FROM STATE");
-    console.log(this.getState());
     return new Promise((resolve, reject) =>
       this.state.subscribe(resolve, reject)
     );
@@ -154,50 +171,41 @@ class Pending extends State {
     super(subscription);
   }
   subscribe(resolve, reject) {
-    const onSuccess = () => resolve();
-    const onError = (err) => reject(err);
     this.subscription.on(
       "connected",
       () => {
-        console.log("SUCCESS PENDING");
-        this.subscription.flush("error", onError);
-        onSuccess();
+        this.subscription.flush("*", "pending");
+        resolve();
       },
-      { persist: false }
+      {
+        id: "pending",
+      }
     );
     this.subscription.on(
       "error",
       (err) => {
-        this.subscription.flush("connected", onSuccess);
-        onError(err);
+        this.subscription.flush("*", "pending");
+        reject(err);
       },
-      { persist: false }
+      { id: "pending" }
     );
   }
   unsubscribe(resolve, reject) {
-    const onSuccess = () =>
-      this.subscription._unsubscribe().then(resolve).catch(reject);
-    const onError = (err) => resolve(err);
-    const handleConnection = () => {
-      this.subscription.flush("error", handleError);
-      this.subscription._unsubscribe().then(resolve).catch(reject);
-    };
     this.subscription.on(
       "connected",
       () => {
-        console.log("SUCCESS PENDING");
-        this.subscription.flush("error", onError);
-        onSuccess();
+        this.subscription.flush("*", "pending");
+        this.subscription._unsubscribe().then(resolve).catch(reject);
       },
-      { persistent: false, id: "tmp" }
+      { id: "pending" }
     );
     this.subscription.on(
       "error",
       (err) => {
-        this.subscription.flush("connected", onSuccess);
-        onError(err);
+        this.subscription.flush("*", "pending");
+        reject(err);
       },
-      { persistent: false }
+      { id: "pending" }
     );
   }
   register(subscriber, options) {
@@ -221,16 +229,4 @@ class Up extends State {
   }
 }
 
-const as = new Subscription(Afmachine, "/wristband/scan");
-as.subscribe().then(() => {
-  console.log("SUBSCRIBED FROM DOWN");
-  console.log(as);
-});
-as.subscribe().then(() => {
-  console.log(as);
-  console.log("SUBSCRIBED FROM PENDING");
-});
-as.subscribe().then(() => {
-  console.log(as);
-  console.log("SUBSCRIBED FROM PENDING");
-});
+export { Subscription };

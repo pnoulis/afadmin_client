@@ -20,16 +20,25 @@ function on(event, listener, options) {
   return this;
 }
 
-function flush(event, listener) {
+function flush(event, listener, clause) {
+  if (/^\*$/.test(event)) {
+    return Object.keys(this.events).forEach((event) =>
+      this.flush(event, listener, clause)
+    );
+  }
   this.ensureEvent(event);
-  console.log("FLUSHING");
-  console.log(event);
-  console.log(this.events[event]);
-  console.log(this.events[event][0].listener === listener);
-  console.log(this.events[event][1].listener === listener);
-  if (listener) {
+  if (typeof listener === "function") {
     this.events[event] = this.events[event].filter(
-      (packagedListener) => packagedListener.listener !== listener
+      (subscriber) => subscriber.listener !== listener
+    );
+  } else if (typeof listener === "string") {
+    this.events[event] = this.events[event].filter(
+      (subscriber) => subscriber.id !== listener
+    );
+  } else if (typeof clause === "function") {
+    this.events[event] = this.events[event].reduce(
+      (car, cdr) => (clause(cdr) ? car : [...car, cdr]),
+      []
     );
   } else {
     this.events[event] = [];
@@ -39,12 +48,9 @@ function flush(event, listener) {
 
 function emit(event, ...args) {
   this.ensureEvent(event);
-  console.log("EMIT");
-  console.log(event);
-  console.log(this.events[event]);
   this.events[event] = this.events[event].filter(({ listener, persistent }) => {
     listener && listener(...args);
-    return persistent;
+    return persistent === true;
   });
   return this;
 }

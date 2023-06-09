@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Outlet } from "react-router-dom";
-// import "agent_factory.shared/ui/reset.css";
+import "agent_factory.shared/ui/reset.css";
 import "agent_factory.shared/ui/design_system.css";
 import "agent_factory.shared/ui/fonts.css";
 import "agent_factory.shared/ui/wristband.css";

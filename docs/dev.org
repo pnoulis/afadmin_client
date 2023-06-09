@@ -441,3 +441,11 @@ could be allowed to specify his own custom testing clause.
 CLOSED: [2023-06-08 Thu 21:09]
 ** DONE ensure flush to accept a clause function
 CLOSED: [2023-06-08 Thu 21:09]
+
+* log 09-06-2023
+AsyncAction class
+The AsyncAction class is a promise wrapper.
+
+action.fire()
+action.fire()
+action.fire();

@@ -20,6 +20,12 @@ function on(event, listener, options) {
   return this;
 }
 
+function once(event, listener, options) {
+  this.ensureEvent(event);
+  this.events[event].push(this.packageListener(listener, { persist: false }));
+  return this;
+}
+
 function flush(event, listener, clause) {
   if (/^\*$/.test(event)) {
     return Object.keys(this.events).forEach((event) =>
@@ -48,9 +54,11 @@ function flush(event, listener, clause) {
 
 function emit(event, ...args) {
   this.ensureEvent(event);
+  [...this.events[event]].forEach(
+    (subscriber) => subscriber.listener && subscriber.listener(...args, this)
+  );
   this.events[event] = this.events[event].filter(({ listener, persistent }) => {
-    listener && listener(...args, this);
-    return persistent === true;
+    return persistent;
   });
   return this;
 }
@@ -69,6 +77,7 @@ function eventful(events = {}, options = {}) {
     packageListener: this.packageListener || packageListener.bind(this),
     ensureEvent: ensureEvent.bind(this),
     on: on.bind(this),
+    once: once.bind(this),
     flush: flush.bind(this),
     emit: emit.bind(this),
   };

@@ -6,12 +6,15 @@ class Idle extends State {
   }
 
   fire(...args) {
-    this.tminus0(this.action.options.fireDelay);
-    this.actions.startCountdown(this.action.options.fireDelay, () => {
+    console.log('will FIRE at ');
+    console.log(this.action.options.fireDelay);
+    this.action.tminus0 = this.action.options.fireDelay;
+    this.action.startCountdown(this.action.options.fireDelay, () => {
       this.action.changeState(this.action.getPendingState);
-      this._fire(...args);
+      this.action._fire(...args);
     });
   }
+
 }
 
 export { Idle };

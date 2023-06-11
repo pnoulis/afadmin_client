@@ -6,21 +6,21 @@ class Pending extends State {
   }
 
   init() {
-    this.tminus0(this.action.options.minTimePending);
+    console.log('PENDING STATE');
+    this.action.tminus0 = this.action.options.minTimePending;
   }
 
   fire(...args) {
     return undefined;
   }
 
-  resolve(rr, reject) {
-    return new Promise((resolve, reject) => {
-      this.action.startCountdown(this.actions.options.minTimePending, () => {
-        this.action.changeState(this.actions.getResolvedState);
-        return resolve(this.action.resolved());
-      });
+  resolve(response) {
+    this.action.startCountdown(this.action.options.minTimePending, () => {
+      this.action.changeState(this.action.getResolvedState);
+      this.action.state.resolve(response);
     });
   }
+  reject() {};
 }
 
 export { Pending };

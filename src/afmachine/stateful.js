@@ -5,12 +5,14 @@ function stateful(states = {}, options = {}) {
   const stateInstances = Object.values(states);
 
   // define a states array in the CALLING CONTEXT
-  Object.defineProperty(this.constructor, "states", {
-    enumerable: true,
-    configurable: false,
-    writable: false,
-    value: stateNames,
-  });
+  if (!Object.hasOwn(this.constructor, "states")) {
+    Object.defineProperty(this.constructor, "states", {
+      enumerable: true,
+      configurable: false,
+      writable: false,
+      value: stateNames,
+    });
+  }
 
   stateInstances.forEach((state, i) => {
     // define a name property in each STATE INSTANCE
@@ -53,7 +55,7 @@ function stateful(states = {}, options = {}) {
   };
 }
 function getState() {
-  return this.state;
+  return this.state.name;
 }
 function setState(state, cb) {
   this.state = state;

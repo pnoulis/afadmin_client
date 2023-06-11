@@ -449,3 +449,10 @@ The AsyncAction class is a promise wrapper.
 action.fire()
 action.fire()
 action.fire();
+
+* log 11-06-2023
+** AsyncAction
+An asyncAction is a wrapper to a promise. It's purpose is to provide a mechanism
+for attaching listeners to the states of a Promise object.
+
+Demonstrate that asyncaction works.

@@ -5,10 +5,8 @@ import { Pending } from "./StatePending.js";
 import { Resolved } from "./StateResolved.js";
 import { Rejected } from "./StateRejected.js";
 
-/*
-  An async action must complete before it is fired again.
- */
 class AsyncAction {
+  #tminus0 = 0;
   constructor(
     action,
     {
@@ -16,7 +14,7 @@ class AsyncAction {
       minTimePending = 1000,
       minTimeResolving = 1500,
       minTimeRejecting = 1500,
-    }
+    } = {}
   ) {
     Object.assign(
       this,
@@ -45,17 +43,25 @@ class AsyncAction {
       minTimeRejecting,
     });
 
-    this.tminus0;
-    this.timeoutId;
+    this.timeoutId = undefined;
     this.action = action;
+    this.setState(this.getIdleState);
+  }
+
+  changeState(state, cb) {
+    const previousState = this.state.name;
+    this.setState(state, () => {
+      this.emit("stateChange", previousState, this.state.name);
+      cb && cb();
+    });
   }
 
   set tminus0(count) {
-    this.tminus0 = Date.now() + count;
+    this.#tminus0 = Date.now() + count;
   }
 
   isT0() {
-    return Date.now() >= this.tminus0;
+    return Date.now() >= this.#tminus0;
   }
 
   startCountdown(event, cb) {
@@ -64,11 +70,10 @@ class AsyncAction {
   }
 
   _fire(...args) {
-    this.event(...args)
-      .then(this.state.resolve)
-      .catch((err) => {});
+    this.action(...args)
+      .then(this.state.resolve.bind(this.state))
+      .catch(this.state.reject.bind(this.state));
   }
-
   fire(...args) {
     return new Promise((resolve, reject) => {
       this.resolve = resolve;

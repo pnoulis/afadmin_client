@@ -456,3 +456,7 @@ An asyncAction is a wrapper to a promise. It's purpose is to provide a mechanism
 for attaching listeners to the states of a Promise object.
 
 Demonstrate that asyncaction works.
+
+* log 12-06-2023
+** Afmachine architecture
+backend request - response -> parsing it -> logging -> Afmachine, or client side code

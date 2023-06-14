@@ -1,0 +1,29 @@
+VERSION=0.0.1
+afadmin_client at:
+commit 54034b4a952b499b0dd88e5f456b3dffa3bc16da (HEAD -> release, master)
+Author: pnoul <pavlos.noulis@gmail.com>
+Date:   Mon May 22 14:34:04 2023 +0300
+
+    Refactor roadmap
+
+react utils at:
+commit fa7bfd105c12a1d462c109b66f133749fbc604d2 (HEAD)
+Author: pnoul <pavlos.noulis@gmail.com>
+Date:   Fri May 19 17:06:42 2023 +0300
+
+    SelectOnlyCombobox default value
+
+mqtt_proxy at:
+commit 5ed10e16927d2f776fb6dca52b2a45b60e470506
+Author: pavlos noulis <pavlos.noulis@gmail.com>
+Date:   Thu May 11 00:29:09 2023 +0300
+
+    git ignores emacs hidden temporary files
+
+
+js_utils at:
+commit ffa84ae2c5165ecce9bcebac3d9495c2441151d9
+Author: pnoul <pavlos.noulis@gmail.com>
+Date:   Tue May 23 17:10:31 2023 +0300
+
+    [fix] ConsoloLogger was failing to instantiate if no arguments provided

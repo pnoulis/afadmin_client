@@ -7,7 +7,7 @@ Date:   Mon May 22 14:34:04 2023 +0300
     Refactor roadmap
 
 react utils at:
-commit fa7bfd105c12a1d462c109b66f133749fbc604d2 (HEAD)
+commit fa7bfd105c12a1d462c109b66f133749fbc604d2
 Author: pnoul <pavlos.noulis@gmail.com>
 Date:   Fri May 19 17:06:42 2023 +0300
 

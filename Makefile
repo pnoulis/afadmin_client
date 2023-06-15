@@ -1,5 +1,8 @@
 #!/usr/bin/make
 
+# include package information
+include ./PACKAGE
+
 # Make and Shell behavior
 SHELL = /usr/bin/bash
 .DELETE_ON_ERROR:
@@ -23,6 +26,18 @@ MAKE_ENV = ./scripts/dotenv.sh --pkgdir=. --envdir=./config/env
 
 .PHONY: all
 all: build
+# ------------------------------ RELEASE ------------------------------ #
+.PHONY: release
+release: $(PKG_DISTNAME).tar.gz
+	@echo released $(PKG_DISTNAME)!
+
+$(PKG_DISTNAME).tar.gz: dist
+	source ./PACKAGE; \
+	tar -cvaf $${PKG_DISTNAME}.tar.gz --show-transformed-names \
+	--transform=s/dist/administration/ dist
+
+dist: src
+	make build-dev
 
 # ------------------------------ RUN ------------------------------ #
 .PHONY: run scratch run-build

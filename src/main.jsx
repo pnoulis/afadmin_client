@@ -4,13 +4,18 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { routesApp } from "./site/index.js";
 import { routesScratch } from "./scratch/routes.jsx";
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      children: routesApp,
+    },
+    ...routesScratch,
+  ],
   {
-    path: "/",
-    children: routesApp,
-  },
-  ...routesScratch,
-]);
+    basename: "/administration",
+  }
+);
 
 ReactDOM.createRoot(document.getElementById("app-react-root")).render(
   <React.StrictMode>

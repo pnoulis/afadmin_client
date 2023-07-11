@@ -64,7 +64,13 @@ run-build:
 mode ?= 'development'
 dev: env
 	set -a; source ./.env && \
-	$(BUNDLER) server --mode=$(mode)
+	$(BUNDLER) serve --mode=$(mode)
+
+# ------------------------------ PREVIEW ------------------------------ #
+.PHONY: preview
+preview: mode := 'production'
+preview: env
+	$(BUNDLER) preview --mode=$(mode)
 
 # ------------------------------ BUILD ------------------------------ #
 .PHONY: build

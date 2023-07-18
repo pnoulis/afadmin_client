@@ -77,6 +77,84 @@ All top level routes share the same layout. Which is the
 **** Route and Resource protection
 Authorize({level: "", children})
 
+** Friday 27/10/23
+*** Refactoring
+**** TODO Route structure should documented and cleanly structured
+**** TODO Remove unnecessary code from afmachine_interface
+**** TODO Remove unnecessary code from app/
+**** TODO Providing a store and its controllers should be standardized
+**** TODO Actions which trigger asynchronous state changes must be carefully designed.
+**** TODO Extract common components such as PlayerWidget, PlayerCard, etc etc
+**** TODO Tooltip component
+**** TODO Comboboxes empty listbox Component
+**** TODO Comboboxes option abstraction
+**** TODO Comboboxes positioning and dimensions.
+**** TODO Initial capability for protected routes and resources
+**** TODO Error states must be handled client side.
+**** TODO Handle unkwown errors and control their end state and visualization.
+**** TODO Sync UI with backend state changes.
+**** Common entities from which components are derived across afadmin_client
+***** Team
+***** Roster
+***** Package | pkg
+***** Roster member | member
+***** Wristband
+***** Player
+***** Cashier
+***** Admin
+***** Manager
+***** Root
+***** Afmachine
+***** Panel
+***** Layout
+***** Route
+renders store
+renders the layout
+each layout renders a panel.
+***** Store
+***** Context | ctx
+***** Site
+- Responsible for rendering the site according to display size etc.
+- Hosting of outlet.
+- It is itself a layout component
+***** App
+Instantiates the connection to afmachine.
+Instantiates stores, controllers
+Instantiates subscriptions.
+Responsible for redirecting user to authentication page.
+***** Authorize
+**** Routes structure
+/ -> renders App
+The App Component
+
+Registration -> render Navigate to=/register/player
+layout -> registration -> render navigate to
+
+All top level routes share the same layout. Which is the
+#+begin_src js
+    <App>
+    <Site>
+    <Layout/>
+    <Outlet/>
+    </Layout>
+    </Site>
+    </App>
+
+#+end_src
+**** Route and Resource protection
+Authorize({level: "", children})
+
+*** src/routes.jsx
+The Router.jsx file is used to instantiate the client side router Component
+provided by react-router-dom.
+
+The fact that it is used to declare routes and the component's they render
+for the whole app makes it a natural point of centralization.
+
+** DONE REMOVING PLAYERS FROM QUEUE OR TEAM CALLS WRONG TOGGLEWRISTBAND
+CLOSED: [2023-06-02 Fri 12:14]
+** DONE Table comboboxes should not interpret click and keyboard selections as input
+CLOSED: [2023-06-02 Fri 12:14]
 * Log
 ** Integrate development work, from afadmin_core to afadmin_client
 *** DONE Flash Messages
@@ -295,9 +373,90 @@ function Descendant() {
 const context = React.useContext(Context);
 }
 
+** 24/10/23 May Wednesday
+**** DONE Route structure should documented and cleanly structured
+CLOSED: [2023-05-24 Wed 13:52]
+**** DONE Remove unnecessary code from afmachine_interface
+CLOSED: [2023-05-24 Wed 13:52]
+**** DONE Remove unnecessary code from app/
+CLOSED: [2023-05-24 Wed 13:52]
+**** DONE Providing a store and its controllers should be standardized
+CLOSED: [2023-05-24 Wed 15:23]
+** 04/06/23 June Sunday
+*** Finish the group party page.
+Each team shall have a context and a store of its own.
+At initialization the team is composed of the standard team schema from agent
+factory.shared using the fuction structuredClone();
 * Dealing with wristband subscriptions
 
 user toggles pairing mode.
 * How'tos
 ** How to contain any element within the app boundaries.
 position: absolute;
+
+* log 07-06-2023
+an event triggers a statefull action.
+
+* log 08-06-2023
+** flush() increase flexibility
+Right now flush(event, listener) accepts an event identifier and a listener
+function. The listener function is presumed to be equal to one among the
+registered functions.
+
+Flush then proceeds to iterate over the registered listeners to the event with
+the goal of removing the match if any.
+An error is thrown in the case that a match is not found with the intention of
+helping the user identify bugs.
+
+I think that the flush procedure is too inflexible at the moment.
+
+*1st inflexibility:*
+_function references do not lend themselves as a means of identification_
+
+In particular the use of functions as a means of testing equality is
+problematic. Many times users want to register a function using an anonymous
+function expression. Which means that a reference to the function is not kept
+anywhere. As a result the user is forced to not use anonymous function
+expression's. His only option is to define a function either through a function
+declaration or function expression.
+
+One possible solution to the problem is the use of ids. Each registered function
+could be identified with an ID provided at the time of registration. The string
+ID could then be provided as the second argument to flush(event, stringId). That
+would allow for anonymous function expressions.
+
+*2nd inflexibility:*
+_lack of custom search functions_
+
+Currently the search procedure is a simple iteration that uses the equality
+operator to compare the argument function to the registered functions. If the
+argument function is strictly equal (===) to a registered function , the
+matching registered function is removed(flushed) from the event listeners array.
+The fact that the equality test is fixed creates an overall inflexibility.
+
+One possible solution to the problem is the use of function callbacks. The user
+could be allowed to specify his own custom testing clause.
+
+** DONE allow flush to accept an id
+CLOSED: [2023-06-08 Thu 21:09]
+** DONE ensure flush to accept a clause function
+CLOSED: [2023-06-08 Thu 21:09]
+
+* log 09-06-2023
+AsyncAction class
+The AsyncAction class is a promise wrapper.
+
+action.fire()
+action.fire()
+action.fire();
+
+* log 11-06-2023
+** AsyncAction
+An asyncAction is a wrapper to a promise. It's purpose is to provide a mechanism
+for attaching listeners to the states of a Promise object.
+
+Demonstrate that asyncaction works.
+
+* log 12-06-2023
+** Afmachine architecture
+backend request - response -> parsing it -> logging -> Afmachine, or client side code

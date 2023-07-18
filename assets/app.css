@@ -25,6 +25,8 @@ body {
   height: 100%;
   overflow: auto;
   z-index: 1;
+  background-color: white;
+  color: black;
 }
 
 #flash-messages-react-root {

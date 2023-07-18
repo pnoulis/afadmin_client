@@ -37,6 +37,7 @@ const StyleMain = styled.div`
   height: 100%;
   background-color: white;
   display: flex;
+  flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
 `;

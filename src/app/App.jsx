@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Outlet } from "react-router-dom";
-import { StoreProvideApp } from "./StoreApp.jsx";
+import { StoreProvideApp } from "../stores/StoreApp.jsx";
 
 function App() {
   return (

@@ -10,6 +10,10 @@ import { Scratch } from "./scratch/Scratch.jsx";
 /* ------------------------------ ROUTES ------------------------------ */
 import { RouteHome } from "./site/route_home/RouteHome.jsx";
 import { RouteLogin } from "./site/route_login/RouteLogin.jsx";
+import { RouteRegistration } from "./site/route_registration/RouteRegistration.jsx";
+import { RouteMerge } from "./site/route_merge/RouteMerge.jsx";
+import { RouteGroupParty } from "./site/route_group_party/RouteGroupParty.jsx";
+import { RouteLiveView } from "./site/route_live_view/RouteLiveView.jsx";
 
 function Routes(props) {
   return (
@@ -25,6 +29,26 @@ function Routes(props) {
                 {
                   index: true,
                   element: <RouteHome />,
+                },
+                /* --------------- REGISTRATION --------------- */
+                {
+                  path: links.registration.path,
+                  element: <RouteRegistration />,
+                },
+                /* --------------- MERGE --------------- */
+                {
+                  path: links.merge.path,
+                  element: <RouteMerge />,
+                },
+                /* --------------- GROUP PARTY --------------- */
+                {
+                  path: links.groupParty.path,
+                  element: <RouteGroupParty />,
+                },
+                /* --------------- LIVE VIEW --------------- */
+                {
+                  path: links.liveView.path,
+                  element: <RouteLiveView />,
                 },
               ],
             },

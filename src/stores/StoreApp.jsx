@@ -1,40 +1,18 @@
 import * as React from "react";
 import { ContextProvideApp } from "./ContextApp";
-import { Afmachine } from "/src/app/afmachine.js";
+import {
+  Afmachine,
+  persistSession,
+  getSession,
+  persistClient,
+  getClient,
+} from "/src/app/afmachine.js";
+import { useNavigate } from "react-router-dom";
+import { catchAferrs as __catchAferrs } from "/src/err_handling/index.js";
 
 function StoreProvideApp({ children }) {
   const store = useStoreApp();
   return <ContextProvideApp value={store}>{children}</ContextProvideApp>;
-}
-
-function persistSession(k, v) {
-  Afmachine.services.storage.session.set(function (store) {
-    store = {
-      ...store,
-      [k]: v,
-    };
-    return store;
-  });
-}
-function getSession(k) {
-  return Afmachine.services.storage.session.get(k) || {};
-}
-function persistClient(k, v) {
-  Afmachine.services.storage.client.set(function (store) {
-    store = {
-      ...store,
-      client: {
-        ...store.client,
-        [k]: v,
-      },
-    };
-    return store;
-  });
-}
-function getClient(k) {
-  return k
-    ? Afmachine.services.storage.client.get("client")?.[k] || {}
-    : Afmachine.services.storage.client.get() || {};
 }
 
 function useStoreApp() {
@@ -46,6 +24,8 @@ function useStoreApp() {
       storid: "",
     };
   });
+  const navigate = useNavigate();
+  const catchAferrs = React.useCallback(__catchAferrs.bind(null, navigate), []);
 
   return {
     ...store,
@@ -55,6 +35,7 @@ function useStoreApp() {
     getSession,
     persistClient,
     getClient,
+    catchAferrs,
   };
 }
 

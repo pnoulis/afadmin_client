@@ -19,10 +19,10 @@ const TextInput = styled(TextInput_0)`
 
 const StyleIconButton = styled(IconButton)`
   box-sizing: content-box;
-  font-size: var(--tx-sm);
-  text-transform: lowercase;
-  width: 50px;
-  height: 50px;
+  font-size: var(--tx-nl);
+  text-transform: uppercase;
+  width: 70px;
+  height: 70px;
   padding: 10px;
 `;
 

@@ -5,7 +5,7 @@ function displayFlashMessageMiddleware(context, next, err) {
   if (err instanceof aferrs.ERR_BACKEND_MODEL) {
     fmAgent.warn({ message: err.message });
   } else if (context.res.message) {
-    fmAgent.info({ message: context.res.message });
+    fmAgent.success({ message: context.res.message });
   }
   next(err);
 }

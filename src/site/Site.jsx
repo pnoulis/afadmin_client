@@ -2,7 +2,6 @@ import * as React from "react";
 import { Outlet } from "react-router-dom";
 import { SiteHeader } from "./site_header/SiteHeader.jsx";
 import { SiteSidebar } from "./site_sidebar/SiteSidebar.jsx";
-import "./Site.css";
 
 function Site() {
   return (

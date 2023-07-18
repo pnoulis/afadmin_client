@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Afmachine } from "afmachine";
-import { useAfmachineEntity } from "../afmachine/useAfmachineEntity.jsx";
+import { useAfmachineEntity } from "../hooks/useAfmachineEntity.jsx";
 import { capitalize } from "js_utils/misc";
 
 const p = Afmachine.createPlayer();

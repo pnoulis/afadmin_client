@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Afmachine } from "afmachine";
-import { useAsyncAction } from "../afmachine/useAsyncAction";
-import { useAfmachineEntity } from "../afmachine/useAfmachineEntity.jsx";
+import { useAsyncAction } from "../hooks/useAsyncAction";
+import { useAfmachineEntity } from "../hooks/useAfmachineEntity.jsx";
 import { randomPlayer } from "agent_factory.shared/scripts/randomPlayer.js";
 
 const p = Afmachine.createPlayer(randomPlayer());

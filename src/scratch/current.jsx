@@ -1,2 +1,2 @@
 // export default null;
-export { default } from "./scratchStorage.jsx";
+export { default } from "./scratchFlashMessages.jsx";

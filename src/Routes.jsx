@@ -3,6 +3,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { App } from "./app/App.jsx";
 import { Site } from "./site/Site.jsx";
 import * as links from "./links.jsx";
+import { CatchAllError } from "./CatchAllError.jsx";
 
 /* ------------------------------ SCRATCH ------------------------------ */
 import { Scratch } from "./scratch/Scratch.jsx";
@@ -11,6 +12,7 @@ import { Scratch } from "./scratch/Scratch.jsx";
 import { RouteHome } from "./site/route_home/RouteHome.jsx";
 import { RouteLogin } from "./site/route_login/RouteLogin.jsx";
 import { RouteRegistration } from "./site/route_registration/RouteRegistration.jsx";
+import { RouteRegistrationPlayer } from "./site/route_registration/route_register_player/RouteRegistrationPlayer.jsx";
 import { RouteMerge } from "./site/route_merge/RouteMerge.jsx";
 import { RouteGroupParty } from "./site/route_group_party/RouteGroupParty.jsx";
 import { RouteLiveView } from "./site/route_live_view/RouteLiveView.jsx";
@@ -21,6 +23,7 @@ function Routes(props) {
       router={createBrowserRouter([
         {
           element: <App />,
+          errorElement: <CatchAllError />,
           children: [
             {
               path: "/",
@@ -34,6 +37,12 @@ function Routes(props) {
                 {
                   path: links.registration.path,
                   element: <RouteRegistration />,
+                  children: [
+                    {
+                      index: true,
+                      element: <RouteRegistrationPlayer />,
+                    },
+                  ],
                 },
                 /* --------------- MERGE --------------- */
                 {

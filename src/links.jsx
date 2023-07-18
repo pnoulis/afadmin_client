@@ -101,6 +101,16 @@ const liveViewTeams = {
   ),
 };
 
+const notFound = {
+  path: "/*/404",
+  label: "notFound",
+  asComponent: ({ children, ...props }) => (
+    <NavLink to="404" {...props}>
+      {children}
+    </NavLink>
+  ),
+};
+
 export {
   home,
   login,

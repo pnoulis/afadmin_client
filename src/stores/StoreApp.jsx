@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ContextProvideApp } from "./ContextApp";
-import { Afmachine } from "afmachine";
+import { Afmachine } from "/src/app/afmachine.js";
 
 function StoreProvideApp({ children }) {
   const store = useStoreApp();

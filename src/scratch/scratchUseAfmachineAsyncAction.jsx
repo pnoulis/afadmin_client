@@ -1,13 +1,13 @@
 import * as React from "react";
 import { Afmachine } from "afmachine";
-import { useAsyncAction } from "../hooks/useAsyncAction";
-import { useAfmachineEntity } from "../hooks/useAfmachineEntity.jsx";
+import { useAfmachineAsyncAction } from "../hooks/index.js";
+import { useAfmachineEntity } from "../hooks/index.js";
 import { randomPlayer } from "agent_factory.shared/scripts/randomPlayer.js";
 
 const p = Afmachine.createPlayer(randomPlayer());
 
 function Listing() {
-  const [state, run] = useAsyncAction(() => Afmachine.listPackages(), {
+  const [state, run] = useAfmachineAsyncAction(() => Afmachine.listPackages(), {
     timePending: 5000,
   });
 

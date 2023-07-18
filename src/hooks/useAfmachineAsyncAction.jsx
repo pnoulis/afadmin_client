@@ -16,7 +16,7 @@ function Listing() {
   );
 }
  */
-function useAsyncAction(action, options) {
+function useAfmachineAsyncAction(action, options) {
   const aRef = React.useRef();
   if (aRef.current == null) {
     aRef.current = new AsyncAction(action, options);
@@ -26,4 +26,4 @@ function useAsyncAction(action, options) {
   return [state, aRef.current.run.bind(aRef.current)];
 }
 
-export { useAsyncAction };
+export { useAfmachineAsyncAction };

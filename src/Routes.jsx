@@ -3,7 +3,10 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { App } from "./app/App.jsx";
 import { Site } from "./site/Site.jsx";
 import * as links from "./links.jsx";
-import { CatchReactRouterErr } from "./err_handling/CatchReactRouterErr.jsx";
+import {
+  CatchReactRouterErr,
+  HandleUnmatchedRoute,
+} from "./err_handling/index.js";
 
 /* ------------------------------ SCRATCH ------------------------------ */
 import { Scratch } from "./scratch/Scratch.jsx";
@@ -96,7 +99,7 @@ function Routes(props) {
         },
         {
           path: "*",
-          element: <RouteErrs.Route404 />,
+          element: <HandleUnmatchedRoute />,
         },
       ])}
       {...props}

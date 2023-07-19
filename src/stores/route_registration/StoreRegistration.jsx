@@ -2,7 +2,7 @@ import * as React from "react";
 import { ContextProvideRegistration } from "./ContextRegistration";
 import { useContextApp } from "/src/stores/index.js";
 import { registration } from "/src/links.jsx";
-import { Afmachine } from "afmachine";
+import { Afmachine } from '/src/app/afmachine.js'
 
 function StoreProvideRegistration({ children }) {
   const store = useStoreRegistration();

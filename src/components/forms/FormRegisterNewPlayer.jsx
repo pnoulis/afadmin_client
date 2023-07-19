@@ -26,7 +26,7 @@ const StyleIconButton = styled(IconButton)`
   padding: 10px;
 `;
 
-function FormRegisterNewPlayer({ registerPlayer, className, ...props }) {
+function FormRegisterNewPlayer({ onSubmit, className, ...props }) {
   const [form, setForm] = useForm({
     submitting: false,
     fields: {
@@ -40,17 +40,26 @@ function FormRegisterNewPlayer({ registerPlayer, className, ...props }) {
 
   React.useEffect(() => {
     if (!form.submitting) return;
-    registerPlayer(form.fields)
+    onSubmit(form.fields)
       .then((res) => {
         setForm("reset");
         document.activeElement.blur();
       })
-      .catch(({ validationErrors, modelError }) => {
-        if (validationErrors) {
-          setForm("setErrors", validationErrors);
-        }
+      .catch((err) => {
+        console.log('there has been an error');
       })
       .finally(() => setForm("setSubmit", false));
+    // registerPlayer(form.fields)
+    //   .then((res) => {
+    //     setForm("reset");
+    //     document.activeElement.blur();
+    //   })
+    //   .catch(({ validationErrors, modelError }) => {
+    //     if (validationErrors) {
+    //       setForm("setErrors", validationErrors);
+    //     }
+    //   })
+    //   .finally(() => setForm("setSubmit", false));
   }, [form.submitting]);
 
   return (

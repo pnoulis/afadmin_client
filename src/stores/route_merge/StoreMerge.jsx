@@ -2,7 +2,7 @@ import * as React from "react";
 import { ContextProvideMerge } from "./ContextMerge";
 import { useContextApp } from "/src/stores/index.js";
 import { merge } from "/src/links.jsx";
-import { Afmachine } from "afmachine";
+import { Afmachine } from '/src/app/afmachine.js'
 
 function StoreProvideMerge({ children }) {
   const store = useStoreMerge();

@@ -2,7 +2,7 @@ import * as React from "react";
 import { ContextProvideLiveView } from "./ContextLiveView";
 import { useContextApp } from "/src/stores/index.js";
 import { liveView } from "/src/links.jsx";
-import { Afmachine } from "afmachine";
+import { Afmachine } from '/src/app/afmachine.js'
 
 function StoreProvideLiveView({ children }) {
   const store = useStoreLiveView();

@@ -1,5 +1,5 @@
 import { displayFlashMessageMiddleware } from "./displayFlashMessageMiddleware";
-import { Afmachine } from "afmachine";
+import { Afmachine } from "afmachine/src/index.js";
 
 Afmachine.pipeline.setAfterAll(displayFlashMessageMiddleware);
 

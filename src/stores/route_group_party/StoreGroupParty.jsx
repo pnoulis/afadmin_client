@@ -2,7 +2,7 @@ import * as React from "react";
 import { ContextProvideGroupParty } from "./ContextGroupParty";
 import { useContextApp } from "/src/stores/index.js";
 import { groupParty } from "/src/links.jsx";
-import { Afmachine } from "afmachine";
+import { Afmachine } from '/src/app/afmachine.js'
 
 function StoreProvideGroupParty({ children }) {
   const store = useStoreGroupParty();

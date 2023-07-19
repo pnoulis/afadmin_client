@@ -1,10 +1,10 @@
-import * as React from 'react';
+import * as React from "react";
 import { LinkDefault } from "/src/components/links/index.js";
 import { useLocation } from "react-router-dom";
 import { home } from "/src/links.jsx";
 
 function Route401() {
-  const location = useLocation();
+  const { from, err } = useLocation();
   return (
     <div>
       <p>code: 401</p>

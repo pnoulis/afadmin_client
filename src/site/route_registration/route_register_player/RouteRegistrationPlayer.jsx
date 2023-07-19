@@ -1,11 +1,13 @@
 import * as React from "react";
 import styled from "styled-components";
-import { FormRegisterNewPlayer } from "/src/components/forms/index.js";
+import { FormPlayer } from "/src/components/forms/index.js";
+import { useContextRegistration } from "/src/stores/index.js";
 
 function RouteRegistrationPlayer() {
+  const { handleFormPlayerSubmit } = useContextRegistration();
   return (
     <StyleRouteRegistrationPlayer>
-      <StyleFormRegisterNewPlayer />
+      <StyleFormPlayer onSubmit={handleFormPlayerSubmit} />
     </StyleRouteRegistrationPlayer>
   );
 }
@@ -18,7 +20,7 @@ const StyleRouteRegistrationPlayer = styled.div`
   align-items: center;
 `;
 
-const StyleFormRegisterNewPlayer = styled(FormRegisterNewPlayer)`
+const StyleFormPlayer = styled(FormPlayer)`
   unset: all;
   display: flex;
   flex-flow: column nowrap;

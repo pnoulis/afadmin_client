@@ -1,5 +1,5 @@
-import { displayFlashMessageMiddleware } from "./displayFlashMessageMiddleware";
 import { Afmachine } from "afmachine/src/index.js";
+import { displayFlashMessageMiddleware } from "./displayFlashMessageMiddleware";
 
 Afmachine.pipeline.setAfterAll(displayFlashMessageMiddleware);
 
@@ -32,5 +32,25 @@ function getClient(k) {
     ? Afmachine.services.storage.client.get("client")?.[k] || {}
     : Afmachine.services.storage.client.get() || {};
 }
+function persistPage(page, k, v) {
+  Afmachine.services.storage.client.set(function (store) {
+    store[page] = {
+      ...store[page],
+      [k]: v,
+    };
+    return store;
+  });
+}
+function getPage(page) {
+  return Afmachine.services.storage.client.get(page) || {};
+}
 
-export { Afmachine, persistSession, getSession, persistClient, getClient };
+export {
+  Afmachine,
+  persistSession,
+  getSession,
+  persistClient,
+  getClient,
+  persistPage,
+  getPage,
+};

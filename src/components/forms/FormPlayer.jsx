@@ -26,7 +26,7 @@ const StyleIconButton = styled(IconButton)`
   padding: 10px;
 `;
 
-function FormRegisterNewPlayer({ onSubmit, className, ...props }) {
+function FormPlayer({ onSubmit, className, ...props }) {
   const [form, setForm] = useForm({
     submitting: false,
     fields: {
@@ -46,27 +46,18 @@ function FormRegisterNewPlayer({ onSubmit, className, ...props }) {
         document.activeElement.blur();
       })
       .catch((err) => {
-        console.log('there has been an error');
+        if (err.validationErrors) {
+          setForm("setErrors", err.validationErrors);
+        }
       })
       .finally(() => setForm("setSubmit", false));
-    // registerPlayer(form.fields)
-    //   .then((res) => {
-    //     setForm("reset");
-    //     document.activeElement.blur();
-    //   })
-    //   .catch(({ validationErrors, modelError }) => {
-    //     if (validationErrors) {
-    //       setForm("setErrors", validationErrors);
-    //     }
-    //   })
-    //   .finally(() => setForm("setSubmit", false));
   }, [form.submitting]);
 
   return (
     <FormProvider value={{ ...form, setForm }}>
       <form
         className={className}
-        id="form-register-new-player"
+        id="form-player"
         onSubmit={(e) => {
           e.preventDefault();
           setForm("setSubmit", true);
@@ -80,7 +71,7 @@ function FormRegisterNewPlayer({ onSubmit, className, ...props }) {
         <TextInput name="username" />
         <TextInput optional name="password" type="password" />
         <StyleIconButton
-          form="form-register-new-player"
+          form="form-player"
           type="submit"
           disabled={form.submitting}
         >
@@ -94,4 +85,4 @@ function FormRegisterNewPlayer({ onSubmit, className, ...props }) {
   );
 }
 
-export { FormRegisterNewPlayer };
+export { FormPlayer };

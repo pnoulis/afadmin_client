@@ -4,10 +4,10 @@ import { FormPlayer } from "/src/components/forms/index.js";
 import { useContextRegistration } from "/src/stores/index.js";
 
 function RouteRegistrationPlayer() {
-  const { handleFormPlayerSubmit } = useContextRegistration();
+  const { handlePlayerRegistration } = useContextRegistration();
   return (
     <StyleRouteRegistrationPlayer>
-      <StyleFormPlayer onSubmit={handleFormPlayerSubmit} />
+      <StyleFormPlayer onSubmit={handlePlayerRegistration} />
     </StyleRouteRegistrationPlayer>
   );
 }

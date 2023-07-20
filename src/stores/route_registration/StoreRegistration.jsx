@@ -12,18 +12,29 @@ function StoreProvideRegistration({ children }) {
   );
 }
 
+function handlePlayerRegistration(form) {
+  return Afmachine.registerPlayer(form).catch(catchAferrs());
+}
+
+function searchPlayer(searchTerm) {
+  return Afmachine.searchPlayer({ searchTerm }).catch(catchAferrs());
+}
+
 function useStoreRegistration() {
   const [store, setStore] = React.useState({});
 
-  const handleFormPlayerSubmit = function (form) {
-    return Afmachine.registerPlayer(form).catch(catchAferrs());
-  };
+  const handlePlayerSelection = function () {};
+
+  const handlePlayerRemoval = function () {};
 
   return {
     ...store,
     registrationStore: store,
     setRegistrationStore: setStore,
-    handleFormPlayerSubmit,
+    handlePlayerRegistration,
+    searchPlayer,
+    handlePlayerSelection,
+    handlePlayerRemoval,
   };
 }
 

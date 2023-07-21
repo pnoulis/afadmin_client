@@ -1,5 +1,5 @@
 import * as React from "react";
-import { AsyncAction } from "afmachine";
+import { AsyncAction } from "afmachine/src/index.js";
 import { useAfmachineEntity } from "./useAfmachineEntity";
 
 /*

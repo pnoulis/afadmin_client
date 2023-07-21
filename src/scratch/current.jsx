@@ -1,2 +1,2 @@
 // export default null;
-export { default } from "./ScratchForm";
+export { default } from "./scratchPlayer";

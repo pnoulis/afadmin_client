@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { ReactComponent as WristbandIcon } from "agent_factory.shared/ui/icons/wristband_image.svg";
 import { useContextRegistration } from "/src/stores/index.js";
 import { ComboboxSearchPlayer } from "/src/components/comboboxes/index.js";
+import { ComboboxOptionPlayer } from "./ComboboxOptionPlayer";
 
 function RouteRegistrationPlayerWristband({ className, ...props }) {
   const { searchPlayer, handlePlayerSelection } = useContextRegistration();
@@ -13,6 +14,7 @@ function RouteRegistrationPlayerWristband({ className, ...props }) {
         <ComboboxSearchPlayer
           searchPlayer={searchPlayer}
           onSelect={handlePlayerSelection}
+          Option={ComboboxOptionPlayer}
         />
       </StyleSelectPlayer>
       <StylePairWristband id="ancestor-pair-wristband">

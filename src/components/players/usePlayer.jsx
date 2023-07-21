@@ -16,4 +16,12 @@ function usePlayer(player, options) {
   };
 }
 
-export { usePlayer };
+function useLivePlayer(player, options) {
+  const playerRef = React.useRef(player);
+
+  return {
+    player: playerRef.current,
+  };
+}
+
+export { usePlayer, useLivePlayer };

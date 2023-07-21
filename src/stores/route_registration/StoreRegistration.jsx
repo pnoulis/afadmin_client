@@ -21,9 +21,15 @@ function searchPlayer(searchTerm) {
 }
 
 function useStoreRegistration() {
-  const [store, setStore] = React.useState({});
+  const [store, setStore] = React.useState({
+    registrationQueue: [],
+  });
 
-  const handlePlayerSelection = function () {};
+  const handlePlayerSelection = function (player) {
+    alert(`${player.username} selected`)
+    // check player is not already in queue
+    // check player is not part of a team
+  };
 
   const handlePlayerRemoval = function () {};
 

@@ -13,6 +13,7 @@ const CssInfoCardPlayerLayout = css`
   column-gap: 30px;
   min-width: 200px;
   align-items: start;
+  width: 100%;
 `;
 
 const StyleInfoCardPlayerLayout = styled.article`

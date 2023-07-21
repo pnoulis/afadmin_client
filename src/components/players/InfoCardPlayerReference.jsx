@@ -28,6 +28,7 @@ function InfoCardPlayerReference({ className, ...props }) {
           gridRow: "2 / 4",
           gridColumn: "2 / 3",
           backgroundColor: "white",
+          justifySelf: "end",
         }}
       />
     </InfoCardPlayerLayout>

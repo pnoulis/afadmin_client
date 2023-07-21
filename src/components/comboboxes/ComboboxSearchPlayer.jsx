@@ -15,7 +15,7 @@ import { ReactComponent as FailIcon } from "agent_factory.shared/ui/icons/warnin
 function ComboboxSearchPlayer({ searchPlayer, onSelect, Option }) {
   const remoteData = useRemoteData({
     getRemoteData: searchPlayer,
-    parseRes: function ({ res: { data: players } }) {
+    parseRes: function (players) {
       const options = new Map();
       const lnPlayers = players.length;
       for (let i = 0; i < lnPlayers; i++) {
@@ -150,7 +150,7 @@ const StyleListbox = styled(Combobox.Listbox)`
     padding: 20px 15px;
   }
   max-height: ${({ $height }) => `${$height ? $height - 10 : 0}px`};
-  width: 560px;
+  // width: 560px;
 `;
 
 const StyleOption = styled(Combobox.Option)`

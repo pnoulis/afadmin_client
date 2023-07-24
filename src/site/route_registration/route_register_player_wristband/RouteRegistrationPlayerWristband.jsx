@@ -1,19 +1,20 @@
 import * as React from "react";
 import styled from "styled-components";
 import { ReactComponent as WristbandIcon } from "agent_factory.shared/ui/icons/wristband_image.svg";
-import { useContextRegistration } from "/src/stores/index.js";
 import { ComboboxSearchPlayer } from "/src/components/comboboxes/index.js";
 import { ComboboxOptionPlayer } from "./ComboboxOptionPlayer";
+import { useContextApp } from "/src/contexts/index.js";
+import { ListRegistrationQueue } from "./ListRegistrationQueue.jsx";
 
 function RouteRegistrationPlayerWristband({ className, ...props }) {
-  const { searchPlayer, handlePlayerSelection } = useContextRegistration();
+  const { searchPlayer, addPlayerRegistrationQueue } = useContextApp();
 
   return (
     <StyleRouteRegistrationWristband className={className} {...props}>
       <StyleSelectPlayer>
         <ComboboxSearchPlayer
           searchPlayer={searchPlayer}
-          onSelect={handlePlayerSelection}
+          onSelect={addPlayerRegistrationQueue}
           Option={ComboboxOptionPlayer}
         />
       </StyleSelectPlayer>

@@ -1,12 +1,14 @@
 import * as React from "react";
 import { Outlet } from "react-router-dom";
-import { StoreProvideApp } from "../stores/StoreApp.jsx";
+import { ContextProvideApp } from "/src/contexts/index.js";
+import { useApp } from "./useApp.jsx";
 
 function App() {
+  const app = useApp();
   return (
-    <StoreProvideApp>
+    <ContextProvideApp ctx={app}>
       <Outlet />
-    </StoreProvideApp>
+    </ContextProvideApp>
   );
 }
 

@@ -7,7 +7,7 @@ function PlayerTuple({ name = "", label = "", value = "" }) {
   return (
     <>
       <span className="key">{label || name}</span>
-      <span className="value">{value || player[name]}</span>
+      <span className="value">{value || player[name] || '-'}</span>
     </>
   );
 }

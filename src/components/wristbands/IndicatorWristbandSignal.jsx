@@ -6,12 +6,11 @@ import { useContextWristband } from "/src/contexts/index.js";
 
 function IndicatorWristbandSignal({ size, className, ...props }) {
   const { wristband, handleWristbandToggle } = useContextWristband();
-
   return (
     <StyleSignalIcon
       {...handleWristbandToggle()}
       $pairing={wristband.inState("pairing")}
-      $wristbandColor={wristband.color}
+      $wristbandColor={wristband.getColor()}
       size={size}
       className={className || ""}
       {...props}

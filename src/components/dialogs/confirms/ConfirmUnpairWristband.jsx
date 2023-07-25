@@ -11,7 +11,7 @@ function ConfirmUnpairPlayerWristband({ player, handleClose }) {
     <ConfirmationDialog initialOpen onClose={handleClose}>
       <ConfirmationDialogHeading>Wristband</ConfirmationDialogHeading>
       <ConfirmationDialogDescription>
-        Unpair {player}'s wristband?
+        Unpair {player.username}'s wristband?
       </ConfirmationDialogDescription>
       <ConfirmationDialogClose tabIndex={0}>cancel</ConfirmationDialogClose>
       <ConfirmationDialogConfirm>unpair</ConfirmationDialogConfirm>

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { AsyncAction } from "afmachine/src/index.js";
 import { useAfmachineEntity } from "./useAfmachineEntity";
+import { Afmachine } from "/src/app/afmachine.js";
 
 /*
   Example:
@@ -19,11 +20,28 @@ function Listing() {
 function useAfmachineAsyncAction(action, options) {
   const aRef = React.useRef();
   if (aRef.current == null) {
-    aRef.current = new AsyncAction(action, options);
+    aRef.current =
+      action instanceof AsyncAction
+        ? action
+        : new AsyncAction(action.bind(Afmachine), options);
   }
   const [state] = useAfmachineEntity(aRef.current);
+  const [data, setData] = React.useState(null);
 
-  return [state, aRef.current.run.bind(aRef.current)];
+  return [
+    state,
+    () =>
+      aRef.current
+        .run(options)
+        .then((res) => {
+          setData(res);
+        })
+        .catch((err) => {
+          setData(err);
+        }),
+    data,
+    setData,
+  ];
 }
 
 export { useAfmachineAsyncAction };

@@ -8,7 +8,7 @@ function InfoCardWristbandReference({ className, ...props }) {
     <InfoCardWristbandLayout className={className || ""} {...props}>
       <StyledWristbandTuple
         style={{ gridRow: "1 / 2", gridColumn: "1 / 2" }}
-        name="number"
+        name="id"
         label="rfid"
       />
       <StyledWristbandTupleState

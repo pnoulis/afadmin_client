@@ -10,7 +10,7 @@ import { useWristband } from "./useWristband.jsx";
  * @param {function} options.onWristbandToggle
  */
 
-function Wristband({ wristband: entity, children, ...options }) {
+function Wristband({ wristband: entity, children, ...options } = {}) {
   const wristband = useWristband(entity, options);
   return (
     <ContextProvideWristband ctx={wristband}>

@@ -3,16 +3,35 @@ import { Afmachine } from "/src/app/afmachine.js";
 import { Player } from "/src/components/players/index.js";
 import { Wristband } from "/src/components/wristbands/index.js";
 import { useContextPlayer } from "/src/contexts/index.js";
-import { InfoCardPlayerReference } from "../components/players";
+import {
+  InfoCardPlayerLayout,
+  InfoCardPlayerReference,
+  StyledPlayerTuple,
+  StyledPlayerTupleState,
+} from "../components/players";
 import {
   InfoCardWristbandLayout,
   StyleInfoCardWristbandLayout,
+  InfoCardWristbandReference,
+  IndicatorWristbandSignal,
 } from "../components/wristbands/index.js";
 import "./scratch.css";
 
+function InfoCardNew({ className, ...props }) {
+  return (
+    <InfoCardPlayerLayout>
+      <IndicatorWristbandSignal />
+      <StyledPlayerTuple name="username" />
+      <StyledPlayerTupleState />
+    </InfoCardPlayerLayout>
+  );
+}
+
 const players = new Array(3)
   .fill(null)
-      .map((p) => Afmachine.createPlayer().fill(null, true));
+  .map((p) => Afmachine.createPlayer().fill(undefined, true));
+
+console.log(players);
 
 function PlayerConsume() {
   const p = useContextPlayer();
@@ -40,7 +59,7 @@ export default function ScratchPlayer() {
         {players.map((p, i) => (
           <Player player={p} key={i}>
             <Wristband wristband={p.wristband}>
-              <InfoCard />
+              <InfoCardNew />
             </Wristband>
             <PlayerConsume />
           </Player>

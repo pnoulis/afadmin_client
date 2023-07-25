@@ -41,15 +41,9 @@ function useApp(services, options) {
 
   function addPlayerRegistrationQueue(player) {
     const queue = registrationQueue;
-    const setQueue = setRegistrationQueue;
+    const addQueue = setRegistrationQueue;
     const lnQueue = registrationQueue.length;
 
-    player = Afmachine.createPersistentPlayer(player);
-    console.log(player);
-    player.wristband.toggle();
-
-    return;
-    // Prevent duplicate players in the registration queue
     for (let i = 0; i < lnQueue; i++) {
       if (queue[i].username === player.username) {
         return renderDialog(null, AlertDuplicatePlayerRegistrationQueue, {
@@ -63,7 +57,7 @@ function useApp(services, options) {
         return current >= states.inTeam;
       })
     ) {
-      return renderDialog(null, AlertPlayerNoWristbandPairing, { player });
+      renderDialog(null, AlertPlayerNoWristbandPairing, { player });
     } else if (
       player.wristband.compareStates(function (states, current) {
         return current >= states.paired;
@@ -72,57 +66,22 @@ function useApp(services, options) {
       renderDialog(null, ConfirmUnpairPlayerWristband, { player }, (yes) => {
         if (!yes) return;
         player = Afmachine.createPersistentPlayer(player);
-        player.wristband.toggle((err) => {
-          logPlayer(player);
-        });
-        // logPlayer(player);
-        // renderDialog(
-        //   null,
-        //   PopoverAsyncAction,
-        //   {
-        //     action: () =>
-        //       new Promise((resolve, reject) => {
-        //         player.wristband.toggle((err) => {
-        //           if (err) reject(err);
-        //           else resolve(player);
-        //         });
-        //       }),
-        //     timeResolving: 2000,
-        //     timePending: 2000,
-        //     timeRejecting: 2000,
-        //   },
-        //   (response) => {
-        //     console.log(response);
-        //   },
-        // );
+        renderDialog(
+          null,
+          PopoverAsyncAction,
+          {
+            action: player.unpairWristband.bind(player),
+          },
+          function (unpaired) {
+            if (player.inState("unpaired")) {
+              addQueue(player);
+            }
+          },
+        );
       });
+    } else {
+      addQueue(Afmachine.createPersistentPlayer(player));
     }
-
-    // Is this actually needed?
-    // if (player.inState("inTeam")) {
-    //   // Prevent players from entering the wristband registration process if
-    //   // they are part of a team.
-    //   return renderDialog(null, AlertPlayerPartOfTeamRegistrationQueue, {
-    //     player: player.username,
-    //   });
-    // }
-
-    // If player is already paired to a wristband, the admin is allowed to
-    // choose between canceling the procedure or unpairing the current wristband
-    // so that a new one may be paired.
-    // if (player.wristband.inState("paired")) {
-    //   renderDialog(
-    //     null,
-    //     ConfirmUnpairPlayerWristband,
-    //     { player: player.username },
-    //     (yes) => {
-    //       if (!yes) return;
-    //     },
-    //   );
-    // }
-
-    // player already has a registered wristband
-    // renderDialog(null, AlertDuplicatePlayerRegistrationQueue);
   }
 
   function removePlayerRegistrationQueue() {}

@@ -24,7 +24,7 @@ function PopoverAsyncAction({ action, className, handleClose, ...options }) {
 
   return (
     <BasicDialog.Provider initialOpen>
-      <BasicDialog.Content className={className}>
+      <StyleDialogContent className={className}>
         <RenderStates
           state={state}
           renderPending={<StyleMoonLoader />}
@@ -39,10 +39,29 @@ function PopoverAsyncAction({ action, className, handleClose, ...options }) {
             </StyleFailIcon>
           }
         />
-      </BasicDialog.Content>
+      </StyleDialogContent>
     </BasicDialog.Provider>
   );
 }
+
+/* --------------- DIALOG ------------------------------ */
+const StyleDialogContent = styled(BasicDialog.Content)`
+  background-color: rgba(255, 255, 255, 0.8);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  ::backdrop {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+`;
 
 /* --------------- REMOTE DATA STATES --------------- */
 const StyleSuccessIcon = styled(Svg)`

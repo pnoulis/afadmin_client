@@ -3,19 +3,12 @@ import styled from "styled-components";
 import { AncestorDimensions } from "react_utils";
 import { ComboboxOptionPlayer } from "./ComboboxOptionPlayer.jsx";
 
-function ListRegistrationQueue({
-  players = [],
-  onWristbandPairToggle,
-  onPlayerRemove,
-}) {
+function ListRegistrationQueue({ players = [], onPlayerRemove }) {
   return (
     <AncestorDimensions ancestor="#ancestor-pair-wristband">
       <StyleListPlayers>
         {players.map((player, i) => (
-          <ComboboxOptionPlayer
-            key={player?.username || i}
-            option={player || {}}
-          />
+          <ComboboxOptionPlayer key={player?.username || i} option={player} />
         ))}
       </StyleListPlayers>
     </AncestorDimensions>

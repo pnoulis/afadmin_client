@@ -33,11 +33,9 @@ function useApp(services, options) {
     return Afmachine.registerPlayer(form).catch(catchAferrs());
   }
 
-  // React.useCallback in not called in this specific occasion just for show.
-  // It is actually neeeded, DON'T TOUCH
-  const searchPlayer = React.useCallback(function (searchTerm) {
+  function searchPlayer(searchTerm) {
     return Afmachine.searchPlayer({ searchTerm }).catch(catchAferrs());
-  }, []);
+  }
 
   function addPlayerRegistrationQueue(player) {
     const queue = registrationQueue;
@@ -74,13 +72,13 @@ function useApp(services, options) {
           },
           function (unpaired) {
             if (player.inState("unpaired")) {
-              addQueue(player);
+              addQueue(queue.concat(player));
             }
           },
         );
       });
     } else {
-      addQueue(Afmachine.createPersistentPlayer(player));
+      addQueue(queue.concat(Afmachine.createPersistentPlayer(player)));
     }
   }
 
@@ -90,6 +88,7 @@ function useApp(services, options) {
     app,
     setApp,
     catchAferrs,
+    registrationQueue,
     addPlayerRegistrationQueue,
     removePlayerRegistrationQueue,
     registerPlayer,

@@ -5,9 +5,28 @@ import { ComboboxSearchPlayer } from "/src/components/comboboxes/index.js";
 import { ComboboxOptionPlayer } from "./ComboboxOptionPlayer";
 import { useContextApp } from "/src/contexts/index.js";
 import { ListRegistrationQueue } from "./ListRegistrationQueue.jsx";
+import { useAfmachineSubscription } from "/src/hooks/index.js";
 
 function RouteRegistrationPlayerWristband({ className, ...props }) {
-  const { searchPlayer, addPlayerRegistrationQueue } = useContextApp();
+  const {
+    searchPlayer,
+    registrationQueue,
+    addPlayerRegistrationQueue,
+    removePlayerRegistrationQueue,
+  } = useContextApp();
+  const [msg, subscribed] = useAfmachineSubscription("onWristbandRegistration");
+
+  React.useEffect(() => {
+    if (subscribed) {
+      if (msg) {
+
+      }
+    } else {
+      if (msg instanceof Error) {
+
+      }
+    }
+  }, [msg, subscribed]);
 
   return (
     <StyleRouteRegistrationWristband className={className} {...props}>
@@ -19,6 +38,10 @@ function RouteRegistrationPlayerWristband({ className, ...props }) {
         />
       </StyleSelectPlayer>
       <StylePairWristband id="ancestor-pair-wristband">
+        <ListRegistrationQueue
+          players={registrationQueue}
+          onPlayerRemove={removePlayerRegistrationQueue}
+        />
         <StyleWristbandIcon>
           <WristbandIcon />
         </StyleWristbandIcon>

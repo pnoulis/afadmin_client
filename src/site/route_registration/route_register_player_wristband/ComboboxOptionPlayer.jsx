@@ -10,6 +10,7 @@ import {
 
 const InfoCardPlayer = styled(InfoCardPlayerReference)`
   background-color: white;
+  z-index: 2;
 
   ${StyleInfoCardWristbandLayout} {
     background-color: var(--grey-subtle) !important;

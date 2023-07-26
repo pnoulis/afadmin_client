@@ -9,7 +9,7 @@ async function displayFlashMessageMiddleware(context, next, err) {
     throw err;
   }
   if (context.res.msg) {
-    fmAgent.success({ message: context.res.msg });
+    fmAgent.success({ message: context.res.msg}, { timeout: 3000});
   }
   await next();
 }

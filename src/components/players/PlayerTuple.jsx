@@ -2,12 +2,12 @@ import * as React from "react";
 import styled, { css } from "styled-components";
 import { useContextPlayer } from "/src/contexts/index.js";
 
-function PlayerTuple({ name = "", label = "", value = "" }) {
+function PlayerTuple({ name = "", label = "", value = "", nok = false }) {
   const { player } = useContextPlayer();
   return (
     <>
-      <span className="key">{label || name}</span>
-      <span className="value">{value || player[name] || '-'}</span>
+      {!nok && <span className="key">{label || name}</span>}
+      <span className="value">{value || player[name] || "-"}</span>
     </>
   );
 }
@@ -15,8 +15,6 @@ function PlayerTuple({ name = "", label = "", value = "" }) {
 const CssPlayerTuple = css`
   color: black;
   box-sizing: border-box;
-  width: max-content;
-  height: max-content;
   padding: 0 5px;
   font-family: NoirPro-Light;
   letter-spacing: 1px;
@@ -32,7 +30,10 @@ const CssPlayerTuple = css`
   }
 
   .value {
+    display: inline-block;
     font-size: var(--tx-xs);
+    word-break: break-all;
+    overflow-wrap: anywhere;
   }
 `;
 
@@ -40,10 +41,11 @@ const StylePlayerTuple = styled.div`
   ${CssPlayerTuple}
 `;
 
-function StyledPlayerTuple({ name, label, value, className, ...props }) {
+function StyledPlayerTuple({ name, label, value, nok, className, ...props }) {
   return (
     <StylePlayerTuple className={className || ""} {...props}>
       <PlayerTuple
+        nok={nok}
         name={name}
         label={label}
         value={value}

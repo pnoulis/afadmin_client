@@ -25,7 +25,7 @@ function useAfmachineSubscription(route, onMsg) {
       unsubRef.current = null;
       setSubscribed(false);
     }
-    setMsg(err || msg);
+    setMsg(err || { ...msg });
   };
 
   React.useEffect(

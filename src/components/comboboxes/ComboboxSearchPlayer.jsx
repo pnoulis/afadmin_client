@@ -26,6 +26,7 @@ function ComboboxSearchPlayer({ searchPlayer, onSelect, Option }) {
     fetchDelay: 500,
     successDelay: 100,
   });
+
   return (
     <StyleComboboxSearchPlayer>
       <h1 id="combobox-search-player-label">search player</h1>
@@ -76,6 +77,7 @@ function ComboboxSearchPlayer({ searchPlayer, onSelect, Option }) {
                     ) : (
                       <StyleOption {...props}>
                         <p>{props.option.username}</p>
+                        <p>{props.option.wristband.id}</p>
                       </StyleOption>
                     )
                   }

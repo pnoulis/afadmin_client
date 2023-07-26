@@ -3,20 +3,26 @@ import styled, { css, keyframes } from "styled-components";
 import { ReactComponent as SignalIcon } from "agent_factory.shared/ui/icons/signal_1.svg";
 import { Svg } from "react_utils/svgs";
 import { useContextWristband } from "/src/contexts/index.js";
+import { TooltipDefault } from "/src/components/tooltips/index.js";
 
 function IndicatorWristbandSignal({ size, className, ...props }) {
   const { wristband, handleWristbandToggle } = useContextWristband();
   return (
-    <StyleSignalIcon
-      {...handleWristbandToggle()}
-      $pairing={wristband.inState("pairing")}
-      $wristbandColor={wristband.getColor()}
-      size={size}
-      className={className || ""}
-      {...props}
-    >
-      <SignalIcon />
-    </StyleSignalIcon>
+    <TooltipDefault
+      content="toggle pairing"
+      trigger={
+        <StyleSignalIcon
+          {...handleWristbandToggle()}
+          $pairing={wristband.inState("pairing")}
+          $wristbandColor={wristband.getColor()}
+          size={size}
+          className={className || ""}
+          {...props}
+        >
+          <SignalIcon />
+        </StyleSignalIcon>
+      }
+    />
   );
 }
 
@@ -54,10 +60,13 @@ const StyleSignalIcon = styled(Svg)`
   align-items: center;
   width: ${({ size }) => size || "25px"};
   height: ${({ size }) => size || "25px"};
-  margin-left: auto;
-  padding: 5px;
+  padding: 8px;
   border-radius: 50%;
   border: 3px solid transparent;
+  &:hover {
+    opacity: 0.8;
+  }
+
   ${wristbandColor}
   ${({ $pairing }) => $pairing && animatePairing}
 `;

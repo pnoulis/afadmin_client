@@ -1,18 +1,15 @@
+import { logPlayer } from "afmachine/src/misc/log.js";
 import * as React from "react";
 import { Afmachine } from "/src/app/afmachine.js";
 import { useAfmachineEntity } from "/src/hooks/index.js";
 
 function usePlayer(player, options) {
-  const playerRef = React.useRef(player);
-  if (playerRef.current == null) {
-    playerRef.current = Afmachine.createPlayer();
-  }
-  const [state, id] = useAfmachineEntity(playerRef.current);
+  const [state, id] = useAfmachineEntity(player);
 
   return {
     state,
     id,
-    player: playerRef.current,
+    player: player
   };
 }
 

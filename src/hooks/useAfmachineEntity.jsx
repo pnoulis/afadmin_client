@@ -3,7 +3,7 @@ import * as React from "react";
 
 function useAfmachineEntity(entity) {
   const [state, setState] = React.useState(entity.getState?.()?.name || "");
-  const [id, setId] = React.useState(smallid());
+  const [id, setId] = React.useState();
 
   React.useEffect(() => {
     let unsubChange = undefined;
@@ -21,6 +21,7 @@ function useAfmachineEntity(entity) {
       });
     }
 
+    setId(smallid());
     return function () {
       unsubStateChange && unsubStateChange();
       unsubChange && unsubChange();

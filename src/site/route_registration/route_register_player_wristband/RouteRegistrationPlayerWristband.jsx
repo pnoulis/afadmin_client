@@ -14,25 +14,23 @@ function RouteRegistrationPlayerWristband({ className, ...props }) {
     addPlayerRegistrationQueue,
     removePlayerRegistrationQueue,
   } = useContextApp();
-  const [msg, subscribed] = useAfmachineSubscription("onWristbandRegistration");
+  const [registered] = useAfmachineSubscription("onRegisterWristband");
+  const [unregistered] = useAfmachineSubscription("onUnregisterWristband");
 
-  React.useEffect(() => {
-    if (subscribed) {
-      if (msg) {
-
-      }
-    } else {
-      if (msg instanceof Error) {
-
-      }
-    }
-  }, [msg, subscribed]);
+  // If the comboboxes data source changes, it asks for
+  // new data and rerenders the result. The ComboboxSearchPlayer's
+  // data source is the __searchPlayer function, which is redefined
+  // each time a wristband is registered on unregistered.
+  const __searchPlayer = React.useCallback(
+    (searchTerm) => searchPlayer(searchTerm),
+    [registered, unregistered],
+  );
 
   return (
     <StyleRouteRegistrationWristband className={className} {...props}>
       <StyleSelectPlayer>
         <ComboboxSearchPlayer
-          searchPlayer={searchPlayer}
+          searchPlayer={__searchPlayer}
           onSelect={addPlayerRegistrationQueue}
           Option={ComboboxOptionPlayer}
         />

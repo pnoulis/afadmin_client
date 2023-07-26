@@ -14,10 +14,15 @@ function PopoverAsyncAction({ action, className, handleClose, ...options }) {
     timeRejecting: options.timeRejecting ?? 500,
   });
 
+  // god damn double react strict mode rendering will run() twice.
+  const runRef = React.useRef(run);
+
   React.useEffect(() => {
-    if (state === "idle") {
-      run();
-    } else {
+    if (runRef.current) {
+      runRef.current();
+      runRef.current = null;
+    }
+    if (data) {
       handleClose(data);
     }
   }, [data]);

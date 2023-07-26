@@ -71,7 +71,7 @@ function useApp(services, options) {
             action: player.unpairWristband.bind(player),
           },
           function (unpaired) {
-            if (player.inState("unpaired")) {
+            if (player.wristband.inState("unpaired")) {
               addQueue(queue.concat(player));
             }
           },

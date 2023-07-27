@@ -2,9 +2,20 @@ import * as React from "react";
 import styled from "styled-components";
 import { FormPlayer } from "/src/components/forms/index.js";
 import { useContextRegistration } from "/src/stores/index.js";
+import { afmachine } from "/src/services/afmachine.js";
 
 function RouteRegistrationPlayer() {
   const { handlePlayerRegistration } = useContextRegistration();
+
+  React.useEffect(() => {
+    afmachine.services.backend
+      .searchPlayer({ searchTerm: "yo" })
+      .then((res) => {
+        console.log(res);
+      });
+    console.log(afmachine);
+  }, []);
+
   return (
     <StyleRouteRegistrationPlayer>
       <StyleFormPlayer onSubmit={handlePlayerRegistration} />

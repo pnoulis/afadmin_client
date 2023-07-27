@@ -1,8 +1,8 @@
 import * as React from "react";
 import { ContextProvideLiveView } from "./ContextLiveView";
-import { useContextApp } from "/src/stores/index.js";
+import { useContextApp } from "/src/contexts/index.js";
 import { liveView } from "/src/links.jsx";
-import { Afmachine } from '/src/app/afmachine.js'
+import { afmachine } from "/src/services/afmachine.js";
 
 function StoreProvideLiveView({ children }) {
   const store = useStoreLiveView();
@@ -12,7 +12,7 @@ function StoreProvideLiveView({ children }) {
 }
 
 function persistPage(k, v) {
-  Afmachine.services.storage.client.set(function (store) {
+  afmachine.services.storage.client.set((store) => {
     store[liveView.path] = {
       ...store[liveView.path],
       [k]: v,
@@ -22,16 +22,14 @@ function persistPage(k, v) {
 }
 
 function getPage() {
-  return Afmachine.services.storage.client.get(liveView.path) || {};
+  return afmachine.services.storage.client.get(liveView.path) || {};
 }
 
 function useStoreLiveView() {
   const app = useContextApp();
-  const [store, setStore] = React.useState(function () {
-    return {
+  const [store, setStore] = React.useState(() => ({
       ...getPage(),
-    };
-  });
+    }));
 
   return {
     app,

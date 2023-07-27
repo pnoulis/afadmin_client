@@ -24,7 +24,7 @@ export default function scratchErrors() {
       <div>
         <h1>scratch errors</h1>
         <div>
-          <Compo/>
+          <Compo />
         </div>
       </div>
     </StoreProvideApp>

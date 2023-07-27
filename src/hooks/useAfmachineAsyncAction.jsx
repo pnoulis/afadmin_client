@@ -1,12 +1,12 @@
 import * as React from "react";
-import { AsyncAction } from "afmachine/src/index.js";
+import { AsyncAction } from "/src/services/afmachine.js";
 import { useAfmachineEntity } from "./useAfmachineEntity";
-import { Afmachine } from "/src/app/afmachine.js";
+import { afmachine } from "/src/services/afmachine.js";
 
 /*
   Example:
 function Listing() {
-  const [state, run] = useAsyncAction(() => Afmachine.listPackages(), {
+  const [state, run] = useAsyncAction(() => afmachine.listPackages(), {
     timePending: 5000,
   });
 
@@ -23,7 +23,7 @@ function useAfmachineAsyncAction(action, options) {
     aRef.current =
       action instanceof AsyncAction
         ? action
-        : new AsyncAction(action.bind(Afmachine), options);
+        : new AsyncAction(action.bind(afmachine), options);
   }
   const [state] = useAfmachineEntity(aRef.current);
   const [data, setData] = React.useState(null);

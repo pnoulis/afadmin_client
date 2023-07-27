@@ -1,6 +1,6 @@
-import { logPlayer } from "afmachine/src/misc/log.js";
+import { logPlayer } from "/src/services/afmachine.js";
 import * as React from "react";
-import { Afmachine } from "/src/app/afmachine.js";
+import { afmachine } from "/src/services/afmachine.js";
 import { useAfmachineEntity } from "/src/hooks/index.js";
 
 function usePlayer(player, options) {
@@ -9,7 +9,7 @@ function usePlayer(player, options) {
   return {
     state,
     id,
-    player: player
+    player: player,
   };
 }
 
@@ -17,7 +17,7 @@ function useLivePlayer(player, options) {
   const playerRef = React.useRef(player);
 
   return {
-    player: playerRef.current,
+    player,
   };
 }
 

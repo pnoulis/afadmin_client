@@ -6,17 +6,17 @@ function useAfmachineEntity(entity) {
   const [id, setId] = React.useState();
 
   React.useEffect(() => {
-    let unsubChange = undefined;
-    let unsubStateChange = undefined;
+    let unsubChange;
+    let unsubStateChange;
 
     if (entity.hasEvent("stateChange")) {
-      unsubStateChange = entity.on("stateChange", function (state) {
+      unsubStateChange = entity.on("stateChange", (state) => {
         setState(state);
       });
     }
 
     if (entity.hasEvent("change")) {
-      unsubChange = entity.on("change", function () {
+      unsubChange = entity.on("change", () => {
         setId(smallid());
       });
     }

@@ -10,7 +10,8 @@ function AlertPlayerNoWristbandPairing({ player, handleClose }) {
     <AlertDialog initialOpen onClose={handleClose}>
       <AlertDialogHeading>Register wristband</AlertDialogHeading>
       <AlertDialogDescription>
-        {player.getState().name} player {player.username} cannot pair a new wristband.
+        {player.getState().name} player {player.username} cannot pair a new
+        wristband.
       </AlertDialogDescription>
     </AlertDialog>
   );

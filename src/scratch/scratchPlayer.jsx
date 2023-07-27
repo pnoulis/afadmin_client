@@ -1,22 +1,20 @@
 import styled from "styled-components";
-import { Afmachine } from "/src/app/afmachine.js";
+import { afmachine } from "/src/services/afmachine.js";
 import { Player } from "/src/components/players/index.js";
 import { Wristband } from "/src/components/wristbands/index.js";
 import { useContextPlayer } from "/src/contexts/index.js";
 import { WidgetTrash } from "/src/components/widgets/index.js";
-import {
-  ActionCardPlayerReference,
-} from "../components/players";
+import { ActionCardPlayerReference } from "../components/players";
 import "./scratch.css";
 
 const StyledActionCardPlayerLayout = styled.article`
-display: grid;
-width: 50px;
-background-color: red;
-.text {
-word-wrap: break-word;
-overflow-wrap: anywhere;
-}
+  display: grid;
+  width: 50px;
+  background-color: red;
+  .text {
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+  }
 `;
 
 function InfoCardNew({ className, ...props }) {
@@ -27,7 +25,7 @@ function InfoCardNew({ className, ...props }) {
   //     </span>
   //   </StyledActionCardPlayerLayout>
   // );
-  return <ActionCardPlayerReference/>;
+  return <ActionCardPlayerReference />;
   // return (
   //   <StyledActionCardPlayerLayout>
   //     <IndicatorWristbandSignal
@@ -53,8 +51,7 @@ export default function ScratchPlayer() {
   return (
     <div>
       <h1>Scratch player</h1>
-      <div>
-      </div>
+      <div />
     </div>
   );
 }

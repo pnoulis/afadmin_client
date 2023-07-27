@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Afmachine } from "/src/app/afmachine.js";
+import { afmachine } from "/src/services/afmachine.js";
 
 function useAfmachineSubscription(route, onMsg) {
   const [subscribed, setSubscribed] = React.useState(false);
@@ -29,11 +29,11 @@ function useAfmachineSubscription(route, onMsg) {
   };
 
   React.useEffect(
-    function () {
-      if (!(route in Afmachine)) {
-        throw new Error(`Subscription topic ${route} missing from Afmachine`);
+    () => {
+      if (!(route in afmachine)) {
+        throw new Error(`Subscription topic ${route} missing from afmachine`);
       }
-      Afmachine[route]({ listener })
+      afmachine[route]({ listener })
         .then(subscribe.bind(null))
         .catch(listener.bind(null, false));
       return unsubscribe;
@@ -42,7 +42,7 @@ function useAfmachineSubscription(route, onMsg) {
   );
 
   React.useEffect(
-    function () {
+    () => {
       if (msg && typeof onMsg === "function") {
         onMsg(msg);
       }

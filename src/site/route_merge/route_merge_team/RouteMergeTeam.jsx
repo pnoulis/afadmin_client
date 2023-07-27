@@ -1,12 +1,14 @@
 import * as React from "react";
 import styled from "styled-components";
-import { ComboboxSearchPlayer } from "/src/components/comboboxes/index.js";
-import { ComboboxOptionPlayer } from "./ComboboxOptionPlayer";
 import { useContextApp } from "/src/contexts/index.js";
 import { useAfmachineSubscription } from "/src/hooks/index.js";
 import { RegistrationQueue } from "/src/components/registration_queue/index.js";
+import { useLoaderData, Await } from "react-router-dom";
+import { MoonLoader } from "react-spinners";
+import { ComboboxSelectPlayer } from "/src/components/comboboxes/index.js";
 
-function RouteRegistrationPlayerWristband({ className, ...props }) {
+function RouteMergeTeam({ className, ...props }) {
+  const loadPlayers = useLoaderData();
   const {
     searchPlayer,
     registrationQueue,
@@ -24,32 +26,39 @@ function RouteRegistrationPlayerWristband({ className, ...props }) {
     (searchTerm) => searchPlayer(searchTerm),
     [registered, unregistered],
   );
-
   return (
-    <StyleRouteRegistrationWristband className={className} {...props}>
+    <StyleRouteMergeTeam className={className} {...props}>
       <StyleSelectPlayer>
-        <ComboboxSearchPlayer
-          searchPlayer={__searchPlayer}
-          onSelect={addPlayerRegistrationQueue}
-          Option={ComboboxOptionPlayer}
-        />
+        <React.Suspense fallback={<StyleMoonLoader />}>
+          <Await resolve={loadPlayers.players}>
+            {function (loadedPlayers = []) {
+              return (
+                <ul>
+                  {loadedPlayers.map((l) => {
+                    return (
+                      <li key={l.username}>
+                        <p>{l.username}</p>
+                      </li>
+                    );
+                  })}
+                </ul>
+              );
+            }}
+          </Await>
+        </React.Suspense>
       </StyleSelectPlayer>
-      <RegistrationQueue
-        style={{ gridArea: "pair_wristband" }}
-        players={registrationQueue}
-        onPlayerRemove={removePlayerRegistrationQueue}
-      />
-    </StyleRouteRegistrationWristband>
+      <RegistrationQueue style={{ gridArea: "merge_team" }} players={[]} />
+    </StyleRouteMergeTeam>
   );
 }
 
-const StyleRouteRegistrationWristband = styled.div`
+const StyleRouteMergeTeam = styled.div`
   width: 100%;
   height: 100%;
   display: grid;
   grid-template-columns: 45% 55%;
   grid-template-rows: 1fr;
-  grid-template-areas: "select_player pair_wristband";
+  grid-template-areas: "select_player merge_team";
   justify-items: end;
   align-items: start;
 `;
@@ -61,4 +70,8 @@ const StyleSelectPlayer = styled.section`
   padding: 15px 0 0 15px;
 `;
 
-export { RouteRegistrationPlayerWristband };
+function StyleMoonLoader() {
+  return <MoonLoader loading color="var(--info-strong)" size={100} />;
+}
+
+export { RouteMergeTeam };

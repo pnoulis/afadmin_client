@@ -1,5 +1,5 @@
 import Button from "@mui/material/Button";
-import { Afmachine } from "/src/app/afmachine.js";
+import { afmachine } from "/src/services/afmachine.js";
 import { useNavigate } from "react-router-dom";
 
 function RegisterPlayer() {
@@ -7,9 +7,10 @@ function RegisterPlayer() {
   return (
     <Button
       onClick={() => {
-        const p = Afmachine.Player.random();
+        const p = afmachine.Player.random();
         console.log(p);
-        Afmachine.registerPlayer(p)
+        afmachine
+          .registerPlayer(p)
           .then((res) => {
             throw new Response("Not Found", { status: 404 });
           })

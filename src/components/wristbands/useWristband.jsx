@@ -1,22 +1,20 @@
 import * as React from "react";
-import { Afmachine } from "/src/app/afmachine.js";
+import { afmachine } from "/src/services/afmachine.js";
 import { useAfmachineEntity } from "/src/hooks/index.js";
 
 function useWristband(wristband, options) {
   const [state, id] = useAfmachineEntity(wristband);
 
   const handleWristbandToggle = React.useCallback(
-    function () {
-      return {
-        onClick: function (e) {
+    () => ({
+        onClick (e) {
           e.preventDefault();
           wristband.toggle();
           if (typeof options.onWristbandToggle === "function") {
             options.onWristbandToggle();
           }
         },
-      };
-    },
+      }),
     [options.onWristbandToggle],
   );
 
@@ -27,7 +25,7 @@ function useWristband(wristband, options) {
   return {
     state,
     id,
-    wristband: wristband,
+    wristband,
     handleWristbandToggle,
   };
 }

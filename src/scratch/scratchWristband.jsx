@@ -1,4 +1,4 @@
-import { Afmachine } from '/src/app/afmachine.js';
+import { afmachine } from "/src/services/afmachine.js";
 import {
   Wristband,
   InfoCardWristbandReference,
@@ -7,12 +7,12 @@ import {
 } from "/src/components/wristbands/index.js";
 import { useContextWristband } from "/src/contexts/index";
 
-const w = Afmachine.createWristband().fill();
+const w = afmachine.createWristband().fill();
 console.log(w);
 function WristbandConsume() {
   return (
     <div>
-      <StyledWristbandTuple name="id" label="rfid"/>
+      <StyledWristbandTuple name="id" label="rfid" />
       {/* <InfoCardWristbandReference /> */}
       {/* <button onClick={() => w.wristband.fill()}> fill</button> */}
       {/* <button {...w.handleWristbandToggle()}> if clicked</button> */}

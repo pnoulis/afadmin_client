@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Button } from "@mui/material";
-import { Afmachine } from "/src/app/afmachine.js";
+import { afmachine } from "/src/services/afmachine.js";
 
 function useSubscription(topic, onMsg) {
   const [subscribed, setSubscribed] = React.useState(false);
@@ -30,11 +30,11 @@ function useSubscription(topic, onMsg) {
   };
 
   React.useEffect(
-    function () {
-      if (!(topic in Afmachine)) {
-        throw new Error(`Subscription topic ${topic} missing from Afmachine`);
+    () => {
+      if (!(topic in afmachine)) {
+        throw new Error(`Subscription topic ${topic} missing from afmachine`);
       }
-      Afmachine[topic]({ listener })
+      afmachine[topic]({ listener })
         .then(subscribe.bind(null))
         .catch(listener.bind(null, false));
       return unsubscribe;

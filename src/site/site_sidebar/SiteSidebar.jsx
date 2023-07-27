@@ -1,10 +1,10 @@
 import * as React from "react";
 import styled from "styled-components";
+import sidebarBackground from "agent_factory.shared/ui/backgrounds/sidebar.png";
 import { Header } from "./Header.jsx";
 import { Navbar } from "./Navbar.jsx";
 import { LangWidget } from "./LangWidget.jsx";
 import { TimeWidget } from "./TimeWidget.jsx";
-import sidebarBackground from "agent_factory.shared/ui/backgrounds/sidebar.png";
 
 const StyleAppSidebar = styled.div`
   all: unset;

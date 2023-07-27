@@ -1,1 +1,1 @@
-export * from './FormPlayer.jsx';
+export * from "./FormPlayer.jsx";

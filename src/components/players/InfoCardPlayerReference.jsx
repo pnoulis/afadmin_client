@@ -21,7 +21,12 @@ function InfoCardPlayerReference({ className, ...props }) {
       />
       <StyledPlayerTupleState
         label="status"
-        style={{ gridRow: "1 / 2", gridColumn: "2 / 3", justifySelf: "end", textAlign: "right"}}
+        style={{
+          gridRow: "1 / 2",
+          gridColumn: "2 / 3",
+          justifySelf: "end",
+          textAlign: "right",
+        }}
       />
       <InfoCardWristbandReference
         style={{

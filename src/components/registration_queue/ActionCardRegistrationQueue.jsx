@@ -5,19 +5,17 @@ import {
 } from "/src/components/players/index.js";
 import { Wristband } from "/src/components/wristbands/index.js";
 
-const ActionCardPlayer = styled(ActionCardPlayerReference)`
-  background-color: white;
-  z-index: 2;
-`;
-
-function RegistrationQueuePlayer({ player }) {
+function ActionCardRegistrationQueue({ player, onPlayerRemove }) {
   return (
     <Player player={player}>
       <Wristband wristband={player.wristband}>
-        <ActionCardPlayer />
+        <ActionCardPlayerReference
+          style={{ backgroundColor: "white", zIndex: 2 }}
+          onPlayerRemove={onPlayerRemove}
+        />
       </Wristband>
     </Player>
   );
 }
 
-export { RegistrationQueuePlayer };
+export { ActionCardRegistrationQueue };

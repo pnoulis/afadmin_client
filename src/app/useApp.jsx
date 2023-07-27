@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Afmachine } from "/src/app/afmachine.js";
+import { afmachine } from "/src/services/afmachine.js";
 import { catchAferrs as __catchAferrs } from "/src/err_handling/index.js";
 import { useNavigate } from "react-router-dom";
 import { renderDialog } from "/src/components/dialogs/index.js";
-import { logPlayer } from "afmachine/src/misc/log.js";
+import { logPlayer } from "/src/services/afmachine.js";
 
 // ------------------------------ ALERTS ------------------------------ //
 import {
@@ -18,7 +18,7 @@ import { ConfirmUnpairPlayerWristband } from "/src/components/dialogs/confirms/i
 
 /**
  * @param {Object} services
- * @param {Object} services.Afmachine
+ * @param {Object} services.afmachine
  */
 function useApp(services, options) {
   const [app, setApp] = React.useState({
@@ -30,11 +30,11 @@ function useApp(services, options) {
   const catchAferrs = React.useCallback(__catchAferrs.bind(null, navigate), []);
 
   function registerPlayer(form) {
-    return Afmachine.registerPlayer(form).catch(catchAferrs());
+    return afmachine.registerPlayer(form).catch(catchAferrs());
   }
 
   function searchPlayer(searchTerm) {
-    return Afmachine.searchPlayer({ searchTerm }).catch(catchAferrs());
+    return afmachine.searchPlayer({ searchTerm }).catch(catchAferrs());
   }
 
   function addPlayerRegistrationQueue(player) {
@@ -63,7 +63,7 @@ function useApp(services, options) {
     ) {
       renderDialog(null, ConfirmUnpairPlayerWristband, { player }, (yes) => {
         if (!yes) return;
-        player = Afmachine.createPersistentPlayer(player);
+        player = afmachine.createPersistentPlayer(player);
         renderDialog(
           null,
           PopoverAsyncAction,
@@ -78,14 +78,29 @@ function useApp(services, options) {
         );
       });
     } else {
-      addQueue(queue.concat(Afmachine.createPersistentPlayer(player)));
+      addQueue(queue.concat(afmachine.createPersistentPlayer(player)));
     }
   }
 
-  function removePlayerRegistrationQueue() {}
+  function removePlayerRegistrationQueue(player) {
+    const queue = registrationQueue;
+    const addQueue = setRegistrationQueue;
+    const lnQueue = registrationQueue.length;
+    const newQueue = [];
+
+    for (let i = 0; i < lnQueue; i++) {
+      if (queue[i].username === player.username) {
+        continue;
+      } else {
+        newQueue.push(queue[i]);
+      }
+    }
+    setRegistrationQueue(newQueue);
+  }
 
   return {
     app,
+    afmachine,
     setApp,
     catchAferrs,
     registrationQueue,

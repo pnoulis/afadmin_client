@@ -3,15 +3,15 @@ import { useContextApp, StoreProvideApp } from "/src/stores/index.js";
 import { FormPlayer as __FormPlayer } from "../components/forms/index.js";
 
 function FormRegisterNewPlayer() {
-  const { Afmachine, catchAferrs } = useContextApp();
-  const Player = Afmachine.Player;
+  const { afmachine, catchAferrs } = useContextApp();
+  const {Player} = afmachine;
   return (
     <div>
       <h1>form register new player</h1>
       <div>
         {/* <button */}
         {/*   onClick={() => { */}
-        {/*     Afmachine.registerPlayer(Player.random({ password: "" })).catch( */}
+        {/*     afmachine.registerPlayer(Player.random({ password: "" })).catch( */}
         {/*       catchAferrs(false), */}
         {/*     ); */}
         {/*   }} */}
@@ -19,9 +19,7 @@ function FormRegisterNewPlayer() {
         {/*   register player */}
         {/* </button> */}
         <__FormPlayer
-          onSubmit={(form) => {
-            return Afmachine.registerPlayer(form).catch(catchAferrs());
-          }}
+          onSubmit={(form) => afmachine.registerPlayer(form).catch(catchAferrs())}
         />
       </div>
     </div>

@@ -83,9 +83,9 @@ const StyleFailIcon = styled(Svg)`
   width: 40px;
 `;
 
-const StyleMoonLoader = () => (
-  <MoonLoader loading color="var(--info-strong)" size={40} />
-);
+function StyleMoonLoader() {
+  return <MoonLoader loading color="var(--info-strong)" size={40} />
+}
 
 function RenderStates({
   state,

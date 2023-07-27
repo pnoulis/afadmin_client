@@ -1,8 +1,8 @@
 import * as React from "react";
 import styled from "styled-components";
-import { FormLogin } from "./FormLogin.jsx";
 import { Svg } from "react_utils/svgs";
 import { ReactComponent as LogoIcon } from "agent_factory.shared/ui/brand/maze_logo.svg";
+import { FormLogin } from "./FormLogin.jsx";
 
 function RouteLogin() {
   return (

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { ContextProvideGroupParty } from "./ContextGroupParty";
-import { useContextApp } from "/src/stores/index.js";
+import { useContextApp } from "/src/contexts/index.js";
 import { groupParty } from "/src/links.jsx";
-import { Afmachine } from '/src/app/afmachine.js'
+import { afmachine } from "/src/services/afmachine.js";
 
 function StoreProvideGroupParty({ children }) {
   const store = useStoreGroupParty();
@@ -14,7 +14,7 @@ function StoreProvideGroupParty({ children }) {
 }
 
 function persistPage(k, v) {
-  Afmachine.services.storage.client.set(function (store) {
+  afmachine.services.storage.client.set((store) => {
     store[groupParty.path] = {
       ...store[groupParty.path],
       [k]: v,
@@ -24,16 +24,14 @@ function persistPage(k, v) {
 }
 
 function getPage() {
-  return Afmachine.services.storage.client.get(groupParty.path) || {};
+  return afmachine.services.storage.client.get(groupParty.path) || {};
 }
 
 function useStoreGroupParty() {
   const app = useContextApp();
-  const [store, setStore] = React.useState(function () {
-    return {
+  const [store, setStore] = React.useState(() => ({
       ...getPage(),
-    };
-  });
+    }));
 
   return {
     app,

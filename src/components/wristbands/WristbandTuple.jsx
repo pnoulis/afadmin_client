@@ -7,7 +7,7 @@ function WristbandTuple({ name = "", label = "", value = "" }) {
   return (
     <>
       <span className="key">{label || name}</span>
-      <span className="value">{value || wristband[name] || '-'}</span>
+      <span className="value">{value || wristband[name] || "-"}</span>
     </>
   );
 }

@@ -26,7 +26,7 @@ const StyleLayoutTimeWidgetItemTime = styled.p`
   /* Dimensions */
   /* Position */
   /* Fonts */
-position: relative;
+  position: relative;
   left: 5px;
   font-size: 1.7em;
   letter-spacing: 3px;

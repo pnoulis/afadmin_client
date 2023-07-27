@@ -1,1 +1,1 @@
-export * from './WidgetTrash.jsx';
+export * from "./WidgetTrash.jsx";

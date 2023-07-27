@@ -1,1 +1,1 @@
-export * from './ConfirmUnpairWristband.jsx';
+export * from "./ConfirmUnpairWristband.jsx";

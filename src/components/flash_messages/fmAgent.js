@@ -11,7 +11,7 @@ const fmAgent = new FlashMessages({
   Warn: WarnFm,
   Error: ErrorFm,
   Success: SuccessFm,
-  FmRoot: FmRoot,
+  FmRoot,
 });
 
 export { fmAgent };

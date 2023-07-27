@@ -1,3 +1,3 @@
-export * from './CatchReactRouterErr';
-export * from './catchAferrs';
-export * from './HandleUnmatchedRoute'
+export * from "./CatchReactRouterErr";
+export * from "./catchAferrs";
+export * from "./HandleUnmatchedRoute";

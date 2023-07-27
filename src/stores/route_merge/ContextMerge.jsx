@@ -4,9 +4,7 @@ const ContextMerge = React.createContext(null);
 
 function ContextProvideMerge({ value, children }) {
   return (
-    <ContextMerge.Provider value={value}>
-      {children}
-    </ContextMerge.Provider>
+    <ContextMerge.Provider value={value}>{children}</ContextMerge.Provider>
   );
 }
 

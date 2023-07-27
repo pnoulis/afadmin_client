@@ -1,8 +1,8 @@
-import * as React from 'react';
+import * as React from "react";
 import { Button } from "@mui/material";
 import { Svg } from "react_utils";
 import styled from "styled-components";
-import { Afmachine } from "/src/app/afmachine.js";
+import { afmachine } from "/src/services/afmachine.js";
 import { useAfmachineAsyncAction } from "/src/hooks/index.js";
 import { BasicDialog } from "react_utils/dialogs";
 import { MoonLoader } from "react-spinners";
@@ -10,7 +10,7 @@ import { ReactComponent as SuccessIcon } from "agent_factory.shared/ui/icons/suc
 import { ReactComponent as FailIcon } from "agent_factory.shared/ui/icons/warning_icon_filled.svg";
 
 function useListing() {
-  const [state, exec, data] = useAfmachineAsyncAction(Afmachine.listPackages, {
+  const [state, exec, data] = useAfmachineAsyncAction(afmachine.listPackages, {
     timeResolving: 3000,
   });
   return [state, exec, data];
@@ -92,9 +92,9 @@ const StyleFailIcon = styled(Svg)`
   width: 40px;
 `;
 
-const StyleMoonLoader = () => (
-  <MoonLoader loading color="var(--info-strong)" size={40} />
-);
+function StyleMoonLoader() {
+  return <MoonLoader loading color="var(--info-strong)" size={40} />
+}
 
 export default function ScratchAsyncBackdrop() {
   return (

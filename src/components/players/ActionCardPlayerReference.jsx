@@ -6,8 +6,15 @@ import {
   StyledPlayerTupleState,
 } from "./index.js";
 import { IndicatorWristbandSignal } from "/src/components/wristbands/index.js";
+import { useContextPlayer } from "/src/contexts/index.js";
 
-function ActionCardPlayerReference({ onRemove, className, ...props }) {
+function ActionCardPlayerReference({
+  onPlayerRemove: handlePlayerRemove,
+  className,
+  ...props
+}) {
+  const { player } = useContextPlayer();
+
   return (
     <StyleActionCardPlayerLayout className={className} {...props}>
       <IndicatorWristbandSignal style={{ gridRow: "1 / 2" }} />
@@ -30,6 +37,7 @@ function ActionCardPlayerReference({ onRemove, className, ...props }) {
         }}
       />
       <WidgetTrash
+        onClick={handlePlayerRemove.bind(null, player)}
         tooltipContent="remove player"
         style={{ gridRow: "4 / 5" }}
       />

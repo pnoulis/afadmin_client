@@ -12,11 +12,7 @@ import { usePlayer } from "./usePlayer.jsx";
 
 function Player({ player: entity, children, ...options }) {
   const player = usePlayer(entity, options);
-  return (
-    <ContextProvidePlayer ctx={player}>
-      {children}
-    </ContextProvidePlayer>
-  );
+  return <ContextProvidePlayer ctx={player}>{children}</ContextProvidePlayer>;
 }
 
 export { Player };

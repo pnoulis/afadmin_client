@@ -1,2 +1,2 @@
 // export default null;
-export { default } from "./scratchAfmachine";
+export { default } from "./scratchTeam.jsx";

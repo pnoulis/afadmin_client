@@ -7,14 +7,16 @@ function useWristband(wristband, options) {
 
   const handleWristbandToggle = React.useCallback(
     () => ({
-        onClick (e) {
-          e.preventDefault();
+      onClick(e) {
+        e.preventDefault();
+        if ("toggle" in wristband) {
           wristband.toggle();
           if (typeof options.onWristbandToggle === "function") {
             options.onWristbandToggle();
           }
-        },
-      }),
+        }
+      },
+    }),
     [options.onWristbandToggle],
   );
 

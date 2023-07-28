@@ -9,7 +9,7 @@ const getLabels = function (players = []) {
   const __labels = [];
   const lnPlayers = players.length;
   for (let i = 0; i < lnPlayers; i++) {
-    __labels.push(players[i]);
+    __labels.push(players[i].username);
   }
   return __labels;
 };
@@ -71,12 +71,11 @@ const StyleTrigger = styled(Combobox.Trigger)`
   pointer-events: auto;
   text-transform: uppercase;
   width: 100%;
-  max-width: 465px;
   height: 55px;
   padding: 0 15px;
   border-radius: var(--br-lg);
   border: 2px solid var(--black-base);
-  font-size: var(--tx-sm);
+  font-size: var(--tx-nl);
   letter-spacing: 1.5px;
   outline: none;
   color: black;
@@ -92,7 +91,7 @@ const StyleTrigger = styled(Combobox.Trigger)`
 `;
 
 const StyleListbox = styled(Combobox.Listbox)`
-  margin-top: 10px;
+  margin-top: 40px;
   border-radius: var(--br-lg);
   background-color: var(--grey-light);
   outline: none;
@@ -103,8 +102,8 @@ const StyleListbox = styled(Combobox.Listbox)`
   &:not(:empty) {
     padding: 20px 15px;
   }
-  max-height: ${({ $height }) => `${$height ? $height - 10 : 0}px`};
-  width: 560px;
+  max-height: ${({ $height }) => `${$height ? $height - 40 : 0}px`};
+max-width: 680px;
 `;
 
 const StyleOption = styled(Combobox.Option)`
@@ -118,18 +117,18 @@ const StyleOption = styled(Combobox.Option)`
 border-color: var(--primary-light);
 cursor: pointer;
 `;
-    } if (selected) {
+    }
+    if (selected) {
       return `
 border-color: var(--success-base);
 `;
-    } 
-      return `
+    }
+    return `
   &:hover {
     cursor: pointer;
     border-color: var(--primary-light);
   }
 `;
-    
   }}
 `;
 
@@ -178,6 +177,7 @@ const StyleComboboxSelectPlayer = styled.div`
     }
 
     .combobox-select-player-listbox-wrapper {
+      width: 100%;
       box-sizing: border-box;
       flex: 1;
     }

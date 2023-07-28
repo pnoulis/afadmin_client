@@ -15,7 +15,21 @@ function ActionCardPlayerReference({
 }) {
   const { player } = useContextPlayer();
 
-  return (
+  return player.seat ? (
+    <StyleActionCardPlayerLayout className={className} {...props}>
+      <StyledPlayerTuple
+        name="username"
+        nok
+        style={{
+          gridRow: "2 / 3",
+          fontSize: "var(--tx-nl)",
+          fontFamily: "NoirPro-Medium",
+          justifySelf: "center",
+          textAlign: "center",
+        }}
+      />
+    </StyleActionCardPlayerLayout>
+  ) : (
     <StyleActionCardPlayerLayout className={className} {...props}>
       <IndicatorWristbandSignal style={{ gridRow: "1 / 2" }} />
       <StyledPlayerTuple

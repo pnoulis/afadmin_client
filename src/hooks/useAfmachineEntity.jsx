@@ -2,7 +2,7 @@ import { smallid } from "js_utils/uuid";
 import * as React from "react";
 
 function useAfmachineEntity(entity) {
-  const [state, setState] = React.useState(entity.getState?.()?.name || "");
+  const [state, setState] = React.useState(entity?.getState?.()?.name || "");
   const [id, setId] = React.useState();
 
   React.useEffect(() => {

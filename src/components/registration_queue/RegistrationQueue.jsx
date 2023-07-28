@@ -6,7 +6,7 @@ import { ActionCardRegistrationQueue } from "./ActionCardRegistrationQueue";
 
 function RegistrationQueue({
   players = [],
-  onPlayerRemove,
+  onPlayerRemove = () => {},
   className,
   ...props
 }) {
@@ -18,9 +18,9 @@ function RegistrationQueue({
     >
       <AncestorDimensions ancestor="#registration-queue">
         <StyleListPlayers>
-          {players.map((player) => (
+          {players.map((player, i) => (
             <ActionCardRegistrationQueue
-              key={player.username}
+              key={player.username + i}
               player={player}
               onPlayerRemove={onPlayerRemove}
             />
@@ -54,7 +54,7 @@ const StyleRegistrationQueue = styled.div`
   height: 100%;
   max-width: 700px;
   position: relative;
-  background-color: var(--grey-base);
+  background-color: var(--grey-light);
   padding: 15px 0 15px 15px;
   border-radius: var(--br-lg);
 `;

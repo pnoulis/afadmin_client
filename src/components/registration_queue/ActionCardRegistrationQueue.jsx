@@ -10,7 +10,11 @@ function ActionCardRegistrationQueue({ player, onPlayerRemove }) {
     <Player player={player}>
       <Wristband wristband={player.wristband}>
         <ActionCardPlayerReference
-          style={{ backgroundColor: "white", zIndex: 2 }}
+          style={{
+            opacity: player.seat ? 0.7 : 1,
+            backgroundColor: "white",
+            zIndex: 2,
+          }}
           onPlayerRemove={onPlayerRemove}
         />
       </Wristband>

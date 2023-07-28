@@ -4,6 +4,8 @@ import {
   logPlayer,
   logStateChange,
   logWristband,
+  logTeam,
+  logRoster,
 } from "afmachine/src/index.js";
 import { displayFlashMessageMiddleware } from "./displayFlashMessageMiddleware";
 
@@ -51,4 +53,12 @@ afmachine.pipeline.setAfterAll(displayFlashMessageMiddleware);
 //   return Afmachine.services.storage.client.get(page) || {};
 // }
 
-export { afmachine, AsyncAction, logPlayer, logStateChange, logWristband };
+export {
+  afmachine,
+  AsyncAction,
+  logPlayer,
+  logStateChange,
+  logWristband,
+  logTeam,
+  logRoster,
+};

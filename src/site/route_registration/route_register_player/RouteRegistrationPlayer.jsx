@@ -7,15 +7,6 @@ import { afmachine } from "/src/services/afmachine.js";
 function RouteRegistrationPlayer() {
   const { handlePlayerRegistration } = useContextRegistration();
 
-  React.useEffect(() => {
-    afmachine.services.backend
-      .searchPlayer({ searchTerm: "yo" })
-      .then((res) => {
-        console.log(res);
-      });
-    console.log(afmachine);
-  }, []);
-
   return (
     <StyleRouteRegistrationPlayer>
       <StyleFormPlayer onSubmit={handlePlayerRegistration} />

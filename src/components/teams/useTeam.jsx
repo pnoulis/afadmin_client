@@ -1,5 +1,5 @@
 import * as React from "react";
-import { afmachine, logTeam } from "/src/services/afmachine.js";
+import { afmachine, logTeam, logRoster } from "/src/services/afmachine.js";
 import { useAfmachineEntity } from "/src/hooks/index.js";
 import { MAX_TEAM_SIZE } from "agent_factory.shared/constants.js";
 import {
@@ -8,7 +8,11 @@ import {
   AlertDialogDescription,
   renderDialog,
 } from "/src/components/dialogs/index.js";
-import { PopoverAsyncAction } from "/src/components/async/PopoverAsyncAction.jsx";
+import {
+  PopoverAsyncAction,
+  PopoverAsyncState,
+} from "/src/components/async/index.js";
+import { useAfmachineAsyncAction } from "/src/hooks/index.js";
 
 function AlertMerge({ message, handleClose }) {
   return (
@@ -36,7 +40,10 @@ function useTeam(
     return __team;
   }, [team]);
 
-  const [state, id] = useAfmachineEntity(teamRef.current);
+  const [state, id, entity] = useAfmachineEntity(teamRef.current);
+  const [merging, run, data, mergingAction] = useAfmachineAsyncAction(
+    teamRef.current.merging,
+  );
 
   const [roster] = React.useMemo(
     function () {
@@ -48,6 +55,7 @@ function useTeam(
           });
           __roster[i].seat = true;
         }
+        logRoster(__roster);
       }
       return [__roster];
     },
@@ -66,23 +74,24 @@ function useTeam(
   };
 
   const mergeTeam = function (e) {
-    try {
-      teamRef.current.merge();
-      renderDialog(
-        null,
-        PopoverAsyncAction,
-        {
-          action: () => teamRef.current.__merge(),
-        },
-        function (merged) {
-          if (merged?.inState('unregistered')) {
-            teamRef.current.setState('registered');
-          }
-        },
-      );
-    } catch (err) {
-      renderDialog(null, AlertMerge, { message: err.message });
-    }
+    mergingAction.run();
+    // try {
+    //   renderDialog(
+    //     null,
+    //     PopoverAsyncAction,
+    //     {
+    //       action: aa,
+    //     },
+    //     function (err, merged) {
+    //       if (err) {
+    //         // catch affers
+    //       } else if (merged) {
+    //       }
+    //     },
+    //   );
+    // } catch (err) {
+    //   renderDialog(null, AlertMerge, { message: err.message });
+    // }
   };
 
   return {
@@ -94,6 +103,7 @@ function useTeam(
     addTeamPlayer,
     changeTeamName,
     mergeTeam,
+    mergingAction,
   };
 }
 

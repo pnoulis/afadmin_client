@@ -70,10 +70,9 @@ function useApp(services, options) {
           {
             action: player.unpairWristband.bind(player),
           },
-          function (unpaired) {
-            if (player.wristband.inState("unpaired")) {
-              addQueue(queue.concat(player));
-            }
+          function (err, unpaired) {
+            if (err) catchAferrs()(err);
+            else if (unpaired) addQueue(queue.concat(player));
           },
         );
       });

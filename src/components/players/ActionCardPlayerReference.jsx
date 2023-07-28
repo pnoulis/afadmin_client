@@ -62,7 +62,7 @@ function ActionCardPlayerReference({
 const StyleActionCardPlayerLayout = styled.article`
   ${CssInfoCardPlayerLayout}
   width: 100%;
-  height: 250px;
+  height: 230px;
   background-color: var(--grey-light);
   grid-template-columns: 1fr;
   grid-template-rows: 1fr min-content min-content 1fr;

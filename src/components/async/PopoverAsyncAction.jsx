@@ -10,7 +10,7 @@ import { ReactComponent as FailIcon } from "agent_factory.shared/ui/icons/warnin
 function PopoverAsyncAction({ action, className, handleClose, ...options }) {
   const [state, run, data] = useAfmachineAsyncAction(action, {
     timeResolving: options.timeResolving ?? 500,
-    timePending: options.timePending ?? 500,
+    timePending: options.timePending ?? 0,
     timeRejecting: options.timeRejecting ?? 500,
   });
 
@@ -22,9 +22,7 @@ function PopoverAsyncAction({ action, className, handleClose, ...options }) {
       runRef.current();
       runRef.current = null;
     }
-    if (data) {
-      handleClose(data);
-    }
+    data((err, data) => handleClose(err, data));
   }, [data]);
 
   return (
@@ -84,7 +82,7 @@ const StyleFailIcon = styled(Svg)`
 `;
 
 function StyleMoonLoader() {
-  return <MoonLoader loading color="var(--info-strong)" size={40} />
+  return <MoonLoader loading color="var(--info-strong)" size={40} />;
 }
 
 function RenderStates({

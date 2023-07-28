@@ -10,6 +10,7 @@ import { useContextApp } from "/src/contexts/index.js";
 import { ComboboxOptionPlayer } from "../../route_registration/route_register_player_wristband/ComboboxOptionPlayer";
 import { StyledFormTeamName } from "/src/components/forms/index.js";
 import { StyledTeamTupleState } from "/src/components/teams/index.js";
+import { PopoverAsyncState } from "/src/components/async/index.js";
 
 function RouteMergeTeam({ className, ...props }) {
   const {
@@ -20,9 +21,10 @@ function RouteMergeTeam({ className, ...props }) {
     addTeamPlayer,
     removeTeamPlayer,
     changeTeamName,
+    mergingAction,
   } = useContextTeam();
   const loadPlayers = useLoaderData();
-  const { searchPlayer, mergingQueue } = useContextApp();
+  const { searchPlayer } = useContextApp();
 
   // If the comboboxes data source changes, it asks for
   // new data and rerenders the result. The ComboboxSearchPlayer's
@@ -37,6 +39,7 @@ function RouteMergeTeam({ className, ...props }) {
     <StyleRouteMergeTeam className={className} {...props}>
       <div style={{ gridArea: "select_player" }}></div>
       <StyleSelectPlayer>
+        <PopoverAsyncState action={mergingAction} />
         <React.Suspense fallback={<StyleMoonLoader />}>
           <Await resolve={loadPlayers.players}>
             {(loadedPlayers = []) => (
@@ -63,11 +66,12 @@ function RouteMergeTeam({ className, ...props }) {
 }
 
 const StyledTeamInfo = styled.div`
-display: flex;
-flex-flow: column nowrap;
-align-items: flex-end;
-width: 100%;
-gap: 5px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-end;
+  width: 100%;
+  position: relative;
+  top: -5px;
 `;
 
 const StyleRouteMergeTeam = styled.div`

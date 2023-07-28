@@ -23,11 +23,11 @@ function renderDialog(target, Dialog, props = {}, handleClose = () => {}) {
     <React.StrictMode>
       <>
         <Dialog
-          handleClose={function (confirmed) {
+          handleClose={function (...args) {
             setTimeout(() => {
               root.unmount();
               document.getElementById(id).remove();
-              handleClose(confirmed);
+              handleClose(...args);
             }, 1);
           }}
           {...props}

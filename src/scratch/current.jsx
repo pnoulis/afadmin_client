@@ -1,2 +1,2 @@
 // export default null;
-export { default } from "./scratchUseAfmachineAsyncAction.jsx";
+export { default } from "./scratchUseAfmachineEntity";

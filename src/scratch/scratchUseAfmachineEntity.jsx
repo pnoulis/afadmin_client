@@ -1,14 +1,32 @@
 import * as React from "react";
-import { afmachine } from "afmachine";
+import { afmachine } from "/src/services/afmachine.js";
 import { capitalize } from "js_utils/misc";
-import { useAfmachineEntity } from "../hooks/index.js";
+import { useAfmachineEntity2 } from "../hooks/index.js";
 
 const p = afmachine.createPlayer();
 
 function Player() {
-  const [state, player] = useAfmachineEntity(p);
+  const {
+    entity: player,
+    state,
+    id,
+    newEntity,
+  } = useAfmachineEntity2(p, afmachine.createPlayer.bind(afmachine));
 
-  return <div>state is: {state}</div>;
+  console.log(state);
+  console.log(id);
+  return (
+    <div>
+      state is {state}
+      <div
+        onClick={() => {
+          newEntity();
+        }}
+      >
+        new entity
+      </div>
+    </div>
+  );
 }
 
 function SelectState() {
@@ -16,12 +34,13 @@ function SelectState() {
     <form
       action="#"
       onChange={(e) => {
+        e.preventDefault();
         p.setState(p[`get${capitalize(e.target.value)}State`]);
       }}
     >
       <label htmlFor="states">states</label>
       <select name="state" id="states">
-        {p.getStates().map((state, i) => (
+        {afmachine.Player.states.map((state, i) => (
           <option key={i} value={state}>
             {state}
           </option>

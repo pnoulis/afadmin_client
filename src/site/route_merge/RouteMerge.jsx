@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Outlet } from "react-router-dom";
-import { StoreProvideMerge } from "/src/stores/index.js";
 import { PanelMerge } from "./PanelMerge.jsx";
 import { useTeam } from "/src/components/teams/index.js";
 import { ContextProvideTeam } from "/src/contexts/index.js";

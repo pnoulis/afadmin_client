@@ -5,17 +5,26 @@ import { BasicDialog } from "react_utils/dialogs";
 import { MoonLoader } from "react-spinners";
 import { ReactComponent as SuccessIcon } from "agent_factory.shared/ui/icons/success_icon_filled.svg";
 import { ReactComponent as FailIcon } from "agent_factory.shared/ui/icons/warning_icon_filled.svg";
-import { useAfmachineAsyncAction } from "../../hooks";
+import { useAfmachineStatefulAA } from "/src/hooks/index.js";
 
-function PopoverAsyncState({ action, className, ...options }) {
-  const [state] = useAfmachineAsyncAction(action, options);
+function PopoverAsyncState({
+  action,
+  className,
+  timePending = 0,
+  timeResolving = 1000,
+  timeRejecting = 1000,
+}) {
+  const state = useAfmachineStatefulAA(action, {
+    timePending,
+    timeResolving,
+    timeRejecting,
+  });
   const [open, setIsOpen] = React.useState(false);
 
   React.useEffect(() => {
     if (state === "pending") setIsOpen(true);
     else if (open && state === "idle") {
       setIsOpen(false);
-      // handleClose && handleClose();
     }
   }, [state]);
 

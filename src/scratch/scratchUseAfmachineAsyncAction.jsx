@@ -1,55 +1,30 @@
+import { Button } from "@mui/material";
 import * as React from "react";
 import { afmachine } from "afmachine/src/index.js";
-import { randomPlayer } from "agent_factory.shared/scripts/randomPlayer.js";
-import { useAfmachineAsyncAction, useAfmachineEntity } from "../hooks/index.js";
+import { useAfmachineStatefulAA } from "../hooks/index.js";
 import { PopoverAsyncState } from "/src/components/async/index.js";
 
-const p = afmachine.createPlayer(randomPlayer());
+const t = afmachine.createTeam().fill();
 
-function Listing() {
-  const [state, run, data, aa] = useAfmachineAsyncAction(
-    afmachine.listPackages,
-  );
-
-  React.useEffect(() => {
-    console.log(
-      data((err, data) => {
-        console.log(err);
-        console.log(data);
-      }),
-    );
-  }, [state]);
-
+function SomeAsyncAction() {
+  const state = useAfmachineStatefulAA(t.__merge, {
+    timePending: 2000,
+    timeResolving: 2000,
+  });
   return (
     <div>
-      {state === "idle" ? (
-        <button onClick={() => run()}>list packages</button>
-      ) : (
-        <p>loading....</p>
-      )}
-      <PopoverAsyncState action={aa} />
+      <div>{t.name}</div>
+      <Button
+        variant="contained"
+        onClick={() => {
+          t.__merge();
+        }}
+      >
+        run __merge
+      </Button>
+      <div>state: {state} </div>
+      <PopoverAsyncState action={t.__merge} />
     </div>
-  );
-}
-
-function Registration() {
-  const [state] = useAfmachineEntity(p.registration);
-  return state === "idle" ? (
-    <button onClick={() => p.register()}>register</button>
-  ) : (
-    <p>registering....</p>
-  );
-}
-
-function Player() {
-  const [state] = useAfmachineEntity(p);
-
-  return (
-    <>
-      <div>name is: {p.username}</div>
-      <div>email is: {p.email}</div>
-      <div>state is: {state}</div>
-    </>
   );
 }
 
@@ -59,7 +34,7 @@ export default function scratchUseAsyncAction() {
       <h1>scratch useAfmachineState</h1>
       <div>
         <div>
-          <Listing />
+          <SomeAsyncAction />
         </div>
       </div>
     </div>

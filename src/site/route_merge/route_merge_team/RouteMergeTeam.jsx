@@ -14,14 +14,11 @@ import { PopoverAsyncState } from "/src/components/async/index.js";
 
 function RouteMergeTeam({ className, ...props }) {
   const {
-    state,
-    id,
     team,
     roster,
     addTeamPlayer,
     removeTeamPlayer,
     changeTeamName,
-    mergingAction,
   } = useContextTeam();
   const loadPlayers = useLoaderData();
   const { searchPlayer } = useContextApp();
@@ -37,9 +34,9 @@ function RouteMergeTeam({ className, ...props }) {
 
   return (
     <StyleRouteMergeTeam className={className} {...props}>
+      <PopoverAsyncState action={team.__merge} />
       <div style={{ gridArea: "select_player" }}></div>
       <StyleSelectPlayer>
-        <PopoverAsyncState action={mergingAction} />
         <React.Suspense fallback={<StyleMoonLoader />}>
           <Await resolve={loadPlayers.players}>
             {(loadedPlayers = []) => (

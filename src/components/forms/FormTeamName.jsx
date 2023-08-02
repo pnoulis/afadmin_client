@@ -8,6 +8,7 @@ import {
 import { generateRandomName } from "js_utils";
 
 function Form({
+  fields = {},
   onChange = (form, setForm) => {},
   onSubmit = (form, cb) => {},
   className,
@@ -20,6 +21,7 @@ function Form({
     submitting: false,
     fields: {
       teamName: "",
+      ...fields,
     },
   });
 
@@ -34,7 +36,6 @@ function Form({
         className={className}
         onSubmit={(e) => {
           e.preventDefault();
-          alert("to submit");
         }}
         {...props}
       >
@@ -63,7 +64,7 @@ function ButtonSubmit({ renderSubmit, className, children, ...props }) {
     renderSubmit({ type: "submit", form: formId })
   ) : (
     <button type="submit" form={formId} className={className} {...props}>
-      {children || 'submit'}
+      {children || "submit"}
     </button>
   );
 }

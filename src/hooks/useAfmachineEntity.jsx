@@ -1,81 +1,76 @@
-import { smallid } from "js_utils/uuid";
 import * as React from "react";
+import { smallid } from "js_utils/uuid";
 
-function useAfmachineEntity2(
+/**
+ * @example
+ * Where options:
+ *```
+ * options.fill: boolean
+ * options.depth: Number
+ * options.state: String
+ *`
+ */
+function useAfmachineEntity(
   entity,
   createEntity = (source) => source,
-  { fill = false, state: targetState = "", depth = 0 } = {},
+  { fill = false, depth = 0, state: targetState = "" } = {},
 ) {
   const entityRef = React.useRef(null);
-  entityRef.current = React.useMemo(() => {
-    const team = entity ? entity : createEntity(entity);
-    if (fill) {
-      team.fill(entity, { state: targetState, depth });
-    }
-    return team;
-  }, [entity]);
   const [state, setState] = React.useState("");
   const [id, setId] = React.useState("");
+  const [force, setForce] = React.useState(false);
 
-  function newEntity(source) {
-    entityRef.current = source ? source : createEntity(source);
-    if (fill) {
-      entityRef.current.fill(source, { state: targetState, depth });
-    }
-    setId(smallid());
-  }
+  const newEntity = (function () {
+    let __source = entity;
+    let __options = {
+      fill,
+      depth,
+      state: targetState,
+    };
+    let __constructor = createEntity().constructor;
 
-  React.useEffect(() => {
-    entityRef.current.on("stateChange", (state) => {
-      setState(state);
-    });
-    entityRef.current.on("change", () => {
+    return (fromMemo, source, options) => {
+      if (!fromMemo) {
+        __source = source;
+        __options = options ?? {
+          fill,
+          depth,
+          state: targetState,
+        };
+        setForce((prev) => !prev);
+      }
+      const t = createEntity(__source);
+      const __entity =
+        __source instanceof __constructor ? __source : createEntity(__source);
+      if (__options.fill) {
+        __entity.fill(null, options);
+      }
+      __entity.on("stateChange", (state) => {
+        setState(state);
+      });
+
+      if (__entity.hasEvent("change")) {
+        __entity.on("change", () => {
+          setId(smallid());
+        });
+      }
+      setState(__entity.getState().name);
       setId(smallid());
-    });
-    setState(entityRef.current.getState().name);
-  }, [entityRef.current]);
+      return __entity;
+    };
+  })();
+
+  entityRef.current = React.useMemo(newEntity.bind(null, true), [
+    entity,
+    force,
+  ]);
 
   return {
     entity: entityRef.current,
     state,
     id,
-    newEntity,
+    create: newEntity.bind(null, false),
   };
 }
 
-function useAfmachineEntity(entity, createEntity = (source) => source) {
-  const entityRef = React.useRef(null);
-  entityRef.current = React.useMemo(() => {
-    return entity ? entity : createEntity(entity);
-  }, [entity, createEntity]);
-
-  const [state, setState] = React.useState(entity?.getState?.()?.name || "");
-  const [id, setId] = React.useState();
-
-  React.useEffect(() => {
-    let unsubChange;
-    let unsubStateChange;
-
-    if (entity.hasEvent("stateChange")) {
-      unsubStateChange = entity.on("stateChange", (state) => {
-        setState(state);
-      });
-    }
-
-    if (entity.hasEvent("change")) {
-      unsubChange = entity.on("change", () => {
-        setId(smallid());
-      });
-    }
-
-    setId(smallid());
-    return function () {
-      unsubStateChange && unsubStateChange();
-      unsubChange && unsubChange();
-    };
-  }, [entity]);
-
-  return [state, id, entity];
-}
-
-export { useAfmachineEntity, useAfmachineEntity2 };
+export { useAfmachineEntity };

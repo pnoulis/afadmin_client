@@ -1,24 +1,30 @@
-import { logPlayer } from "/src/services/afmachine.js";
 import * as React from "react";
 import { afmachine } from "/src/services/afmachine.js";
 import { useAfmachineEntity } from "/src/hooks/index.js";
 
-function usePlayer(player, options) {
-  const [state, id] = useAfmachineEntity(player);
+function __createPlayer(source) {
+  return afmachine.createPersistentPlayer(source);
+}
+
+function usePlayer(
+  source,
+  { fill = false, depth = 0, createPlayer = __createPlayer } = {},
+) {
+  const {
+    entity: player,
+    state,
+    id,
+    create,
+  } = useAfmachineEntity(source, createPlayer, {
+    fill,
+    depth,
+  });
 
   return {
     state,
-    id,
-    player: player,
-  };
-}
-
-function useLivePlayer(player, options) {
-  const playerRef = React.useRef(player);
-
-  return {
     player,
+    id,
   };
 }
 
-export { usePlayer, useLivePlayer };
+export { usePlayer };

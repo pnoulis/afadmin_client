@@ -16,6 +16,7 @@ function Wristband({ wristband: entity, children, ...options } = {}) {
     <ContextProvideWristband ctx={wristband}>
       {children}
     </ContextProvideWristband>
+
   );
 }
 

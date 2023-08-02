@@ -2,32 +2,54 @@ import * as React from "react";
 import { afmachine } from "/src/services/afmachine.js";
 import { useAfmachineEntity } from "/src/hooks/index.js";
 
-function useWristband(wristband, options) {
-  const [state, id] = useAfmachineEntity(wristband);
+function __createWristband(source) {
+  return afmachine.createRegistableWristband(source);
+}
+
+function useWristband(
+  source,
+  {
+    fill = false,
+    depth = 0,
+    createWristband = __createWristband,
+    onWristbandToggle,
+  } = {},
+) {
+  const {
+    entity: wristband,
+    state,
+    id,
+    create,
+  } = useAfmachineEntity(source, createWristband, {
+    fill,
+    depth,
+  });
 
   const handleWristbandToggle = React.useCallback(
     () => ({
       onClick(e) {
         e.preventDefault();
         if ("toggle" in wristband) {
-          wristband.toggle();
-          if (typeof options.onWristbandToggle === "function") {
-            options.onWristbandToggle();
+          wristband.toggle((err) => {
+            console.log(err);
+          });
+          if (typeof onWristbandToggle === "function") {
+            onWristbandToggle();
           }
         }
       },
     }),
-    [options.onWristbandToggle],
+    [onWristbandToggle],
   );
 
   React.useEffect(() => {
-    () => wristband.inState("pairing") && wristband.toggle();
+    return () => wristband.inState("pairing") && wristband.toggle();
   }, []);
 
   return {
     state,
-    id,
     wristband,
+    id,
     handleWristbandToggle,
   };
 }

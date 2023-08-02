@@ -42,6 +42,8 @@ function useApp(services, options) {
     const addQueue = setRegistrationQueue;
     const lnQueue = registrationQueue.length;
 
+    player = afmachine.createPersistentPlayer(player);
+
     for (let i = 0; i < lnQueue; i++) {
       if (queue[i].username === player.username) {
         return renderDialog(null, AlertDuplicatePlayerRegistrationQueue, {
@@ -97,6 +99,10 @@ function useApp(services, options) {
     setRegistrationQueue(newQueue);
   }
 
+  function flushRegistrationQueue() {
+    setRegistrationQueue([]);
+  }
+
   return {
     app,
     afmachine,
@@ -105,6 +111,7 @@ function useApp(services, options) {
     registrationQueue,
     addPlayerRegistrationQueue,
     removePlayerRegistrationQueue,
+    flushRegistrationQueue,
     registerPlayer,
     searchPlayer,
   };

@@ -8,7 +8,7 @@ import { ReactComponent as SuccessIcon } from "agent_factory.shared/ui/icons/suc
 import { ReactComponent as FailIcon } from "agent_factory.shared/ui/icons/warning_icon_filled.svg";
 
 function PopoverAsyncAction({ action, className, handleClose, ...options }) {
-  const [state, run, data] = useAfmachineAsyncAction(action, {
+  const [state, run, onData, aa] = useAfmachineAsyncAction(action, {
     timeResolving: options.timeResolving ?? 500,
     timePending: options.timePending ?? 0,
     timeRejecting: options.timeRejecting ?? 500,
@@ -22,8 +22,8 @@ function PopoverAsyncAction({ action, className, handleClose, ...options }) {
       runRef.current();
       runRef.current = null;
     }
-    data((err, data) => handleClose(err, data));
-  }, [data]);
+    onData((err, data) => handleClose(err, data));
+  }, [onData, run]);
 
   return (
     <BasicDialog.Provider initialOpen>
@@ -92,10 +92,12 @@ function RenderStates({
   renderError,
   renderSuccess,
 }) {
+  console.log(state);
   switch (state) {
     case "pending":
       return <>{renderPending}</>;
     case "resolved":
+      console.log("RESOLVED");
       return <>{renderSuccess}</>;
     case "rejected":
       return <>{renderError}</>;

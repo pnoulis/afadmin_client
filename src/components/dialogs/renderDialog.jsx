@@ -20,40 +20,19 @@ function renderDialog(target, Dialog, props = {}, handleClose = () => {}) {
 
   const root = ReactClient.createRoot(document.getElementById(id));
   root.render(
-    <React.StrictMode>
-      <>
-        <Dialog
-          handleClose={function (...args) {
-            setTimeout(() => {
-              root.unmount();
-              document.getElementById(id).remove();
-              handleClose(...args);
-            }, 1);
-          }}
-          {...props}
-        />
-      </>
-    </React.StrictMode>,
+    <>
+      <Dialog
+        handleClose={function (...args) {
+          setTimeout(() => {
+            root.unmount();
+            document.getElementById(id).remove();
+            handleClose(...args);
+          }, 1);
+        }}
+        {...props}
+      />
+    </>,
   );
-
-  // setTimeout(() => {
-  //   ReactClient.createRoot(document.getElementById("dialog-render")).render(
-  //     <React.StrictMode>
-  //       <>
-  //         <Dialog
-  //           handleClose={(confirmed) => {
-  //             setTimeout(() => {
-  //               console.log(document.getElementById('dialog-render'))
-  //               /* document.getElementById("dialog-render").remove(); */
-  //               /* handleClose(confirmed); */
-  //             }, 0);
-  //           }}
-  //           {...props}
-  //         />
-  //       </>
-  //     </React.StrictMode>
-  //   );
-  // }, 1);
 }
 
 export { renderDialog };

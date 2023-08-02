@@ -1,8 +1,10 @@
 import * as React from "react";
 import { AsyncAction } from "/src/services/afmachine.js";
 import { useAfmachineEntity } from "./useAfmachineEntity";
-import { afmachine } from "/src/services/afmachine.js";
 
+function __createAsyncAction(source) {
+  return new AsyncAction(source);
+}
 /*
   Example:
 function Listing() {
@@ -21,33 +23,27 @@ function useAfmachineAsyncAction(
   action, // must be memoized, or it must not be a function creation expression
   { timePending = 0, timeResolving = 1000, timeRejecting = 1000 } = {},
 ) {
-  const aRef = React.useRef(null);
-  aRef.current = React.useMemo(
-    () =>
-      action instanceof AsyncAction
-        ? action
-        : new AsyncAction(action.bind(afmachine)),
-    [action],
-  );
-  const [state] = useAfmachineEntity(aRef.current);
+  const {
+    entity: aa,
+    state,
+    id,
+  } = useAfmachineEntity(action, __createAsyncAction);
   const [data, setData] = React.useState(null);
 
-  return [
-    state,
-    function (...args) {
-      return aRef.current
-        .run(...args, { timePending, timeResolving, timeRejecting })
-        .then(setData)
-        .catch(setData);
-    },
-    function (dataCb) {
-      if (!data) return null;
-      else if (data instanceof Error) dataCb(data);
-      else if (data) dataCb(null, data);
-      setData(null);
-    },
-    aRef.current,
-  ];
+  function run(...args) {
+    return aa
+      .run(...args, { timePending, timeResolving, timeRejecting })
+      .then(setData)
+      .catch(setData);
+  }
+  function onData(callback) {
+    if (!data) return null;
+    else if (data instanceof Error) callback(data);
+    else if (data) callback(null, data);
+    setData(null);
+  }
+
+  return [state, run, onData, aa];
 }
 
 export { useAfmachineAsyncAction };

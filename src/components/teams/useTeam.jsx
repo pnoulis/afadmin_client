@@ -1,6 +1,6 @@
 import * as React from "react";
 import { afmachine, logTeam, logRoster } from "/src/services/afmachine.js";
-import { useAfmachineEntity2 } from "/src/hooks/index.js";
+import { useAfmachineEntity } from "/src/hooks/index.js";
 import { MAX_TEAM_SIZE } from "agent_factory.shared/constants.js";
 import {
   AlertDialog,
@@ -18,39 +18,36 @@ function AlertMerge({ message, handleClose }) {
   );
 }
 
-function __createTeam(team) {
-  return afmachine.createTeam(team);
+function __createTeam(source) {
+  return afmachine.createPersistentTeam(source);
 }
 
 function useTeam(
-  sourceTeam,
+  source,
   { fill = false, depth = 0, createTeam = __createTeam } = {},
 ) {
   const {
     entity: team,
     state,
     id,
-  } = useAfmachineEntity2(sourceTeam, createTeam, {
+    create,
+  } = useAfmachineEntity(source, createTeam, {
     fill,
     depth,
   });
 
-  const [roster] = React.useMemo(
-    function () {
-      const __roster = team.roster.asArray(false);
-      for (let i = 0; i < MAX_TEAM_SIZE; i++) {
-        if (!__roster[i]) {
-          __roster[i] = afmachine.createPlayer({
-            username: "player_#" + (i + 1),
-          });
-          __roster[i].seat = true;
-        }
-        logRoster(__roster);
+  const roster = React.useMemo(() => {
+    const __roster = team.roster.get();
+    for (let i = 0; i < MAX_TEAM_SIZE; i++) {
+      if (!__roster[i]) {
+        __roster[i] = afmachine.createPlayer({
+          username: "player_#" + (i + 1),
+        });
+        __roster[i].seat = true;
       }
-      return [__roster];
-    },
-    [team, state, id],
-  );
+    }
+    return __roster;
+  }, [id, state]);
 
   const removeTeamPlayer = function (player) {
     team.removePlayer(player);
@@ -65,9 +62,9 @@ function useTeam(
 
   const mergeTeam = function (e) {
     team
-      .__merge()
-      .then((res) => {
-        console.log(res);
+      .merge()
+      .then(() => {
+        create(null, { fill, depth });
       })
       .catch((err) => {
         renderDialog(null, AlertMerge, { message: err.message });

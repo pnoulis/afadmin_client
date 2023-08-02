@@ -8,15 +8,14 @@ import { smallid } from "js_utils/uuid";
 import { StyledFormTeamName } from "/src/components/forms/index.js";
 
 function createTeam(team) {
-  return afmachine.createRegularTeam(team);
+  return afmachine.createPersistentTeam(team);
 }
 
 function Team() {
   const ctx = useTeam(null, { createTeam });
   const { team, roster } = ctx;
 
-  React.useEffect(() => {
-  }, []);
+  React.useEffect(() => {}, []);
   return (
     <ContextProvideTeam ctx={ctx}>
       <p>{team.name}</p>
@@ -30,7 +29,7 @@ export default function ScratchTeam() {
     <div>
       <h1>scratch team</h1>
       <div>
-        <Team/>
+        <Team />
       </div>
     </div>
   );

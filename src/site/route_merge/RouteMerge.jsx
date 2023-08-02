@@ -6,7 +6,7 @@ import { ContextProvideTeam } from "/src/contexts/index.js";
 import { afmachine } from "/src/services/afmachine.js";
 
 function createTeam(team) {
-  return afmachine.createRegularTeam(team);
+  return afmachine.createPersistentTeam(team);
 }
 
 function RouteMerge() {

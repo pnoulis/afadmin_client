@@ -3,7 +3,7 @@ import { ContextProvideTeam } from "/src/contexts/index.js";
 import { useTeam } from "./useTeam.jsx";
 
 function Team({ team: entity, children, ...options }) {
-  const team = useTeam(entity, options);
+  const team = useTeam(entity, null, options);
   return <ContextProvideTeam ctx={team}>{children}</ContextProvideTeam>;
 }
 

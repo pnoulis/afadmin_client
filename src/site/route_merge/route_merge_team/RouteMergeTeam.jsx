@@ -11,10 +11,12 @@ import { ComboboxOptionPlayer } from "../../route_registration/route_register_pl
 import { StyledFormTeamName } from "/src/components/forms/index.js";
 import { StyledTeamTupleState } from "/src/components/teams/index.js";
 import { PopoverAsyncState } from "/src/components/async/index.js";
+import { useRevalidator } from "react-router-dom";
 
 function RouteMergeTeam({ className, ...props }) {
   const {
     team,
+    state,
     roster,
     addTeamPlayer,
     removeTeamPlayer,
@@ -22,19 +24,19 @@ function RouteMergeTeam({ className, ...props }) {
   } = useContextTeam();
   const loadPlayers = useLoaderData();
   const { searchPlayer } = useContextApp();
+  const revalidator = useRevalidator();
 
-  // If the comboboxes data source changes, it asks for
-  // new data and rerenders the result. The ComboboxSearchPlayer's
-  // data source is the __searchPlayer function, which is redefined
-  // each time a wristband is registered on unregistered.
-  const __searchPlayer = React.useCallback(
-    (searchTerm) => searchPlayer(searchTerm),
-    [],
+  const [teamMerged] = useAfmachineSubscription("onMergeTeam", () =>
+    revalidator.revalidate(),
+  );
+  const [wristbandUnregistered] = useAfmachineSubscription(
+    "onUnregisterWristband",
+    () => revalidator.revalidate(),
   );
 
   return (
     <StyleRouteMergeTeam className={className} {...props}>
-      <PopoverAsyncState action={team.__merge} />
+      <PopoverAsyncState action={team.merge} />
       <div style={{ gridArea: "select_player" }}></div>
       <StyleSelectPlayer>
         <React.Suspense fallback={<StyleMoonLoader />}>
@@ -51,7 +53,11 @@ function RouteMergeTeam({ className, ...props }) {
       </StyleSelectPlayer>
       <StyledTeamInfo style={{ gridArea: "team_name" }}>
         <StyledTeamTupleState nok />
-        <StyledFormTeamName onChange={changeTeamName} />
+        <StyledFormTeamName
+          key={team.name}
+          fields={{ teamName: team.name }}
+          onChange={changeTeamName}
+        />
       </StyledTeamInfo>
       <RegistrationQueue
         style={{ gridArea: "merge_team" }}

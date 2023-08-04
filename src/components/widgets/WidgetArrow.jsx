@@ -2,9 +2,9 @@ import * as React from "react";
 import styled from "styled-components";
 import { Svg } from "react_utils/svgs";
 import { TooltipDefault } from "/src/components/tooltips/index.js";
-import { ReactComponent as StartIcon } from "agent_factory.shared/ui/icons/play_fill.svg";
+import { ReactComponent as ArrowIcon } from "agent_factory.shared/ui/icons/arrow_back.svg";
 
-function WidgetStart({
+function WidgetArrow({
   onClick: handleClick,
   size,
   tooltipContent,
@@ -15,22 +15,22 @@ function WidgetStart({
     <TooltipDefault
       content={tooltipContent}
       trigger={
-        <StyleWidgetStart
+        <StyleWidgetArrow
           size={size}
           onClick={handleClick}
           className={className}
           {...props}
         >
           <Svg>
-            <StartIcon />
+            <ArrowIcon />
           </Svg>
-        </StyleWidgetStart>
+        </StyleWidgetArrow>
       }
     />
   );
 }
 
-const StyleWidgetStart = styled.div`
+const StyleWidgetArrow = styled.div`
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -47,9 +47,7 @@ const StyleWidgetStart = styled.div`
   }
   svg {
     fill: white;
-    position: relative;
-    left: 3px;
   }
 `;
 
-export { WidgetStart };
+export { WidgetArrow };

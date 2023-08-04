@@ -16,7 +16,7 @@ function __createGroupParty(source, options) {
 function AlertMerge({ message, handleClose }) {
   return (
     <AlertDialog initialOpen onClose={handleClose}>
-      <AlertDialogHeading>merge team</AlertDialogHeading>
+      <AlertDialogHeading>group party</AlertDialogHeading>
       <AlertDialogDescription>{message}</AlertDialogDescription>
     </AlertDialog>
   );

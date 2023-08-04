@@ -7,7 +7,11 @@ function PackageTuple({ name = "", label = "", value = "", nok = false }) {
   return (
     <>
       {!nok && <span className="key">{label || name}</span>}
-      <span className="value">{value || pkg[name] || "-"}</span>
+      <span className="value">
+        {(typeof value === "function" ? value(pkg[name]) : value) ||
+          pkg[name] ||
+          "-"}
+      </span>
     </>
   );
 }
@@ -21,17 +25,22 @@ const CssPackageTuple = css`
   font-size: var(--tx-sm);
 
   .key {
+    display: inline-block;
+    min-width: 100px;
+    text-align: left;
     font-family: NoirPro-Regular;
   }
 
   .key::after {
+    font-family: NoirPro-SemiBold;
     content: ":";
-    margin: 0 5px 0 2px;
+    margin: 0 6px 0 2px;
   }
 
   .value {
     // max-width: 180px;
     display: inline-block;
+    width: max-content;
     word-break: break-all;
     overflow-wrap: anywhere;
   }

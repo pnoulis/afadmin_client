@@ -129,7 +129,7 @@ const getTime = (() => {
   let locale;
   const time = new Map();
   return (timestamp, lang = "en-uS") => {
-    const date = new Date(time || Date.now());
+    const date = new Date(timestamp || Date.now());
     if (typeof locale === "undefined" || lang !== currentLang) {
       locale = new Intl.DateTimeFormat(lang, {
         month: "short",

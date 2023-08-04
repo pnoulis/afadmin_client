@@ -1,61 +1,161 @@
 import * as React from "react";
 import { afmachine } from "/src/services/afmachine.js";
 import { useAfmachineEntity } from "/src/hooks/index.js";
+import {
+  AlertDialog,
+  AlertDialogHeading,
+  AlertDialogDescription,
+  renderDialog,
+} from "/src/components/dialogs/index.js";
+
+function AlertMerge({ message, handleClose }) {
+  return (
+    <AlertDialog initialOpen onClose={handleClose}>
+      <AlertDialogHeading>team packages</AlertDialogHeading>
+      <AlertDialogDescription>{message}</AlertDialogDescription>
+    </AlertDialog>
+  );
+}
 
 function __createPkg(source, options) {
-  return afmachine.createPkg(source, options);
+  return afmachine.createPkg(source, null, options);
 }
 
 function usePackage(
   source,
-  { fill = false, depth = 0, createPkg = __createPkg } = {},
+  { team = {}, fill = false, depth = 0, createPkg } = {},
 ) {
-  const [pkg, setPkg] = React.useState(source);
-  // const {
-  //   entity: team,
-  //   state,
-  //   id,
-  //   create,
-  // } = useAfmachineEntity(source, createPkg, {
-  //   fill,
-  //   depth,
-  // });
-  // const [afpkg, setAfpkg] = React.useState(pkg);
-  // const [AFPkg, setAFPkg] = React.useState();
+  createPkg ||= function (pkg, options) {
+    return afmachine.createPkg(pkg, team, options);
+  };
+  const {
+    entity: pkg,
+    state,
+    id,
+    create,
+  } = useAfmachineEntity(source, createPkg, {
+    fill,
+    depth,
+  });
+
+  const [AFPkg, setAFPkg] = React.useState();
+  const [pickedPkg, setPickedPkg] = React.useState(null);
+  const [newpkg, setnewpkg] = React.useState(
+    team.packages.length > 0 ? false : true,
+  );
+
+  React.useEffect(() => {
+    setPickedPkg(null);
+  }, [newpkg]);
 
   const selectPkg = function (afpkg) {
-    // setAFPkg(afpkg);
+    setAFPkg(afpkg);
   };
 
   const uploadPkg = function () {
-    console.log("add pkg");
-    // onAddPackage(AFPkg);
+    let _pkg;
+    if (pickedPkg !== null) {
+      _pkg = team.packages[pickedPkg];
+    } else {
+      _pkg = AFPkg;
+    }
+    if (!_pkg?.name) {
+      return renderDialog(null, AlertMerge, {
+        message: "No package has been selected",
+      });
+    }
+    team
+      .registerPackage(createPkg(_pkg))
+      .catch((err) => {
+        renderDialog(null, AlertMerge, { message: err.message });
+      })
+      .finally(() => {
+        setPickedPkg(null);
+        setAFPkg(null);
+        setnewpkg(false);
+      });
   };
 
   const addNewPkg = function () {
-    alert("add new pkg");
+    if (newpkg) {
+      renderDialog(null, AlertMerge, {
+        message: "Already configuring a new package",
+      });
+    } else {
+      setnewpkg(true);
+    }
   };
 
   const removePkg = function () {
-    alert("removepkg");
+    let _pkg;
+    if (pickedPkg !== null) {
+      _pkg = team.packages[pickedPkg];
+    } else {
+      _pkg = AFPkg;
+      if (_pkg?.name) {
+        setAFPkg(null);
+        setnewpkg(false);
+        return;
+      }
+    }
+    if (!_pkg?.name) {
+      return renderDialog(null, AlertMerge, {
+        message: "No package has been selected",
+      });
+    }
+    team
+      .removePackage(createPkg(_pkg))
+      .catch((err) => {
+        renderDialog(null, AlertMerge, { message: err.message });
+      })
+      .finally(() => {
+        setPickedPkg(null);
+        setAFPkg(null);
+        if (!team.packages.length) {
+          setnewpkg(true);
+        }
+      });
   };
 
   const startPkg = function () {
-    alert("start pkg");
+    team
+      .activate()
+      .catch((err) => renderDialog(null, AlertMerge, { message: err.message }));
   };
 
   const stopPkg = function () {
     alert("stop pkg");
   };
 
+  const delpkg = function () {
+    if (team.packages.length >= 1) {
+      setAFPkg(null);
+      setnewpkg(false);
+    } else {
+      renderDialog(null, AlertMerge, {
+        message: "Team does not have any packages",
+      });
+    }
+  };
+
+  const pickpkg = function (id) {
+    setPickedPkg(id);
+  };
+
   return {
     pkg,
+    AFPkg,
+    newpkg,
+    setnewpkg,
     selectPkg,
     uploadPkg,
     addNewPkg,
     removePkg,
     startPkg,
     stopPkg,
+    delpkg,
+    pickpkg,
+    pickedPkg,
   };
 }
 

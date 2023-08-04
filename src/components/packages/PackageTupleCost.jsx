@@ -8,21 +8,18 @@ function PackageTupleCost({ label, nok = false }) {
   return (
     <>
       {!nok && <span className="key">{label || "cost"}</span>}
-      <span className="value">{`${pkg.cost}\u20AC`}</span>
+      <span className="value">{pkg.cost ?? "0"}</span>
     </>
   );
 }
 
 const CssPackageTupleCost = css`
   ${CssPackageTuple}
-  width: 185px;
-  .value {
+  .value::after {
     font-size: var(--tx-nl);
-    font-family: NoirPro-Medium;
-    text-transform: initial;
-    color: var(--info-base);
-    word-break: keep-all;
-    overflow-wrap: normal;
+    font-family: NoirPro-Regular;
+    content: "\u20AC";
+    margin: 0 6px 0 2px;
   }
 `;
 

@@ -103,7 +103,7 @@ const StyleListbox = styled(Combobox.Listbox)`
     padding: 20px 15px;
   }
   max-height: ${({ $height }) => `${$height ? $height - 40 : 0}px`};
-max-width: 680px;
+  max-width: 680px;
 `;
 
 const StyleOption = styled(Combobox.Option)`

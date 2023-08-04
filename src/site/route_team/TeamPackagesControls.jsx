@@ -10,7 +10,7 @@ import {
 } from "/src/components/widgets/index.js";
 
 function TeamPackagesControls({ className, ...props }) {
-  const { uploadPkg, addNewPkg, removePkg, startPkg, stopPkg } =
+  const { uploadPkg, addNewPkg, removePkg, startPkg, stopPkg} =
     useContextPackage();
   return (
     <StyleTeamPackagesControls className={className} {...props}>
@@ -32,8 +32,8 @@ const StyledDeletePackage = styled(WidgetTrash)`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  width: ${({ size }) => size || "60px"};
-  height: ${({ size }) => size || "60px"};
+  width: ${({ size }) => size || "50px"};
+  height: ${({ size }) => size || "50px"};
   border: 3px solid transparent;
   padding: 12px;
   border-radius: 50%;
@@ -52,8 +52,8 @@ const StyledWidgetPlus = styled(WidgetPlus)`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  width: ${({ size }) => size || "60px"};
-  height: ${({ size }) => size || "60px"};
+  width: ${({ size }) => size || "50px"};
+  height: ${({ size }) => size || "50px"};
   border: 3px solid transparent;
   padding: 12px;
   border-radius: 50%;

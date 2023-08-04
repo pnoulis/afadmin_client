@@ -5,6 +5,7 @@ import { CssPackageTuple } from "./PackageTuple.jsx";
 
 function PackageTupleState({ label, nok = false }) {
   const { pkg } = useContextPackage();
+
   return (
     <>
       {!nok && <span className="key">{label || "status"}</span>}
@@ -15,7 +16,6 @@ function PackageTupleState({ label, nok = false }) {
 
 const CssPackageTupleState = css`
   ${CssPackageTuple}
-  width: 185px;
   .value {
     font-size: var(--tx-nl);
     font-family: NoirPro-Medium;

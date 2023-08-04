@@ -36,8 +36,8 @@ const StyleWidgetStop = styled.div`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  width: ${({ size }) => size || "60px"};
-  height: ${({ size }) => size || "60px"};
+  width: ${({ size }) => size || "50px"};
+  height: ${({ size }) => size || "50px"};
   border: 3px solid transparent;
   padding: 12px;
   border-radius: 50%;

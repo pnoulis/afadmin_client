@@ -44,7 +44,7 @@ function CardPackageSelector({
 
 const StyleCardPackageSelector = styled.article`
   width: 350px;
-  height: 225px;
+  height: 200px;
   border: 4px solid
     ${({ selected }) => (selected ? "var(--primary-medium)" : "transparent")};
   box-shadow: var(--sd-14);
@@ -72,7 +72,7 @@ const StyleCardPackageSelector = styled.article`
   }
 
   .pkg-catalogue {
-    margin-top: 30px;
+    margin-top: 20px;
   }
 
   pointer-events: ${({ lock }) => (lock ? "none" : "iniital")};

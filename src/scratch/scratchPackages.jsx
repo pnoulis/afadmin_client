@@ -12,19 +12,42 @@ import {
   InfoCardPackageLayout,
   StyledPackageTupleState,
   StyledPackageTupleCost,
+  StyledPackageTupleTime,
+  StyledPackageTupleAmount,
+  StyledPackageTupleRemainder,
+  InfoCardPackageReference,
 } from "/src/components/packages/index.js";
 import { TeamPackagesControls } from "/src/site/route_team/TeamPackagesControls.jsx";
 
+const getTime = (() => {
+  let currentLang;
+  let locale;
+  const time = new Map();
+  return (timestamp, lang = "en-uS") => {
+    const date = new Date(timestamp || Date.now());
+    if (typeof locale === "undefined" || lang !== currentLang) {
+      locale = new Intl.DateTimeFormat(lang, {
+        month: "short",
+        weekday: "short",
+        day: "numeric",
+        hour: "2-digit",
+        second: "2-digit",
+        minute: "2-digit",
+        hourCycle: "h24",
+      });
+    }
+    locale
+      .formatToParts(timestamp)
+      .forEach((el) => time.set(el.type, el.value));
+    return Object.fromEntries(time);
+  };
+})();
+
 function SomeComponent() {
   const ctx = useContextPackage();
-  console.log(ctx);
   return (
-    <div>
-      <InfoCardPackageLayout>
-        <StyledPackageTuple name="type" />
-        <StyledPackageTupleState/>
-        <StyledPackageTupleCost />
-      </InfoCardPackageLayout>
+    <div style={{ marginBottom: "20px" }}>
+      <InfoCardPackageReference/>
     </div>
   );
 }
@@ -39,19 +62,7 @@ export default function scratchPackages() {
           <Await resolve={loadPackages.packages}>
             {(packages = []) =>
               packages.map((p, i) => (
-                <Package
-                  pkg={{
-                    id: 3,
-                    name: "Per Time 60",
-                    cost: 50,
-                    started: null,
-                    ended: null,
-                    duration: 3600,
-                    paused: false,
-                    active: false,
-                  }}
-                  key={i}
-                >
+                <Package pkg={afmachine.Package.random()} key={i}>
                   <SomeComponent />
                 </Package>
               ))

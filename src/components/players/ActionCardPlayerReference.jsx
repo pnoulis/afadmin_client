@@ -9,13 +9,14 @@ import { IndicatorWristbandSignal } from "/src/components/wristbands/index.js";
 import { useContextPlayer } from "/src/contexts/index.js";
 
 function ActionCardPlayerReference({
-  onPlayerRemove: handlePlayerRemove,
+  seat,
+  onPlayerRemove: handlePlayerRemove = () => {},
   className,
   ...props
 }) {
   const { player } = useContextPlayer();
 
-  return player.seat ? (
+  return seat ? (
     <StyleActionCardPlayerLayout className={className} {...props}>
       <StyledPlayerTuple
         name="username"
@@ -62,7 +63,8 @@ function ActionCardPlayerReference({
 const StyleActionCardPlayerLayout = styled.article`
   ${CssInfoCardPlayerLayout}
   width: 100%;
-  height: 230px;
+  // height: 190px;
+  min-height: 210px;
   background-color: var(--grey-light);
   grid-template-columns: 1fr;
   grid-template-rows: 1fr min-content min-content 1fr;

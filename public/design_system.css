@@ -184,7 +184,7 @@
   --sc-xxh: calc(var(--sc-xh) * var(--sc-ratio));
   /* Border radius */
   --br-ratio: 1.3;
-  --br: 6px;
+  --br: 8px;
   --br-nl: var(--br);
   --br-sm: calc(var(--br-nl) / var(--br-ratio));
   --br-xs: calc(var(--br-sm) / var(--br-ratio));
@@ -243,4 +243,13 @@
   --tx-hg: calc(var(--tx-xxl) * var(--tx-ratio));
   --tx-xh: calc(var(--tx-hg) * var(--tx-ratio));
   --tx-xxh: calc(var(--tx-xh) * var(--tx-ratio));
+}
+
+.centerfull {
+  display: flex;
+  flex-flow: column nowap;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 }

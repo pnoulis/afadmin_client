@@ -47,6 +47,8 @@ const StyleLayoutFmMessage = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
+  word-break: break-all;
+  overflow-wrap: anywhere;
 `;
 
 const StyleLayoutFmRoot = styled.div`
@@ -56,7 +58,7 @@ const StyleLayoutFmRoot = styled.div`
   display: grid;
   grid-auto-columns: 1fr;
   grid-auto-rows: 1fr;
-  gap: 20px;
+  column-gap: 20px;
   padding-bottom: 30px;
   justify-items: end;
   padding-right: 70px;

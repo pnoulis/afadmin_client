@@ -2,9 +2,9 @@ import * as React from "react";
 import { ContextProvideTeam } from "/src/contexts/index.js";
 import { useTeam } from "./useTeam.jsx";
 
-function Team({ team: entity, children, ...options }) {
-  const team = useTeam(entity, null, options);
-  return <ContextProvideTeam ctx={team}>{children}</ContextProvideTeam>;
+function Team({ team, children, ...options }) {
+  const ctx = useTeam(team, options);
+  return <ContextProvideTeam ctx={ctx}>{children}</ContextProvideTeam>;
 }
 
 export { Team };

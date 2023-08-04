@@ -92,12 +92,10 @@ function RenderStates({
   renderError,
   renderSuccess,
 }) {
-  console.log(state);
   switch (state) {
     case "pending":
       return <>{renderPending}</>;
     case "resolved":
-      console.log("RESOLVED");
       return <>{renderSuccess}</>;
     case "rejected":
       return <>{renderError}</>;

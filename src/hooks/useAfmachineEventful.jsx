@@ -1,22 +1,12 @@
 import * as React from "react";
 import { smallid } from "js_utils/uuid";
 
-/**
- * @example
- * Where options:
- *```
- * options.fill: boolean
- * options.depth: Number
- * options.state: String
- *`
- */
-function useAfmachineEntity(
+function useAfmachineEventful(
   entity,
   createEntity = (source) => source,
-  { fill = false, depth = 0, state: targetState = "" } = {},
+  { fill = false, depth = 0, state: targetState = "", ...config } = {},
 ) {
   const entityRef = React.useRef(null);
-  const [state, setState] = React.useState("");
   const [id, setId] = React.useState("");
   const [force, setForce] = React.useState(false);
 
@@ -26,36 +16,26 @@ function useAfmachineEntity(
       fill,
       depth,
       state: targetState,
+      ...config,
     };
     let __constructor = createEntity().constructor;
 
     return (fromMemo, source, options) => {
       if (!fromMemo) {
         __source = source;
-        __options = options ?? {
-          fill,
-          depth,
-          state: targetState,
-        };
+        if (options) {
+          __options = options;
+        }
         setForce((prev) => !prev);
       }
-
       const __entity =
         __source instanceof __constructor ? __source : createEntity(__source);
       if (__options.fill) {
-        __entity.fill(null, options);
+        __entity.fill(null, __options);
       }
-      __entity.on("stateChange", (state) => {
-        setState(state);
+      __entity.on("change", () => {
+        setId(smallid());
       });
-
-      if (__entity.hasEvent("change")) {
-        __entity.on("change", () => {
-          setId(smallid());
-        });
-      }
-
-      setState(__entity.getState().name);
       setId(smallid());
       return __entity;
     };
@@ -68,10 +48,9 @@ function useAfmachineEntity(
 
   return {
     entity: entityRef.current,
-    state,
     id,
     create: newEntity.bind(null, false),
   };
 }
 
-export { useAfmachineEntity };
+export { useAfmachineEventful };

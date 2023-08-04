@@ -5,11 +5,12 @@ import {
 } from "/src/components/players/index.js";
 import { Wristband } from "/src/components/wristbands/index.js";
 
-function ActionCardRegistrationQueue({ player, onPlayerRemove }) {
+function ActionCardRegistrationQueue({ player, seat, onPlayerRemove }) {
   return (
     <Player player={player}>
       <Wristband wristband={player.wristband}>
         <ActionCardPlayerReference
+          seat={seat}
           style={{
             opacity: player.seat ? 0.7 : 1,
             backgroundColor: "white",

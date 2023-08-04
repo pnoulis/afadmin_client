@@ -11,7 +11,11 @@ import {
 /* ------------------------------ SCRATCH ------------------------------ */
 import { Scratch } from "./scratch/Scratch.jsx";
 
-import { loadRegisteredWristbandPlayers } from "/src/loaders/loadRegisteredWristbandPlayers.js";
+import {
+  loadRegisteredWristbandPlayers,
+  loadPackages,
+  loadTeams,
+} from "/src/loaders/index.js";
 
 /* ------------------------------ ROUTES ------------------------------ */
 import { RouteHome } from "./site/route_home/RouteHome.jsx";
@@ -23,6 +27,8 @@ import { RouteMerge } from "./site/route_merge/RouteMerge.jsx";
 import { RouteMergeTeam } from "./site/route_merge/route_merge_team/RouteMergeTeam.jsx";
 import { RouteGroupParty } from "./site/route_group_party/RouteGroupParty.jsx";
 import { RouteLiveView } from "./site/route_live_view/RouteLiveView.jsx";
+import { RouteLiveViewTeams } from "./site/route_live_view/route_live_view_teams/RouteLiveViewTeams.jsx";
+import { RouteTeam } from "/src/site/route_team/RouteTeam.jsx";
 
 /* ------------------------------ ERROR ROUTES ------------------------------ */
 import * as RouteErrs from "./site/route_errors/index.js";
@@ -79,6 +85,18 @@ function Routes(props) {
                 {
                   path: links.liveView.path,
                   element: <RouteLiveView />,
+                  children: [
+                    {
+                      index: true,
+                      loader: loadTeams,
+                      element: <RouteLiveViewTeams />,
+                    },
+                    {
+                      path: links.liveView.path + "/:teamId",
+                      loader: loadPackages,
+                      element: <RouteTeam />,
+                    },
+                  ],
                 },
               ],
             },
@@ -110,6 +128,7 @@ function Routes(props) {
         },
         {
           path: "/scratch",
+          loader: loadPackages,
           element: <Scratch />,
         },
         {

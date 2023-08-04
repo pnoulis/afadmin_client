@@ -8,6 +8,7 @@ import {
   AlertDialogDescription,
   renderDialog,
 } from "/src/components/dialogs/index.js";
+import { useLocation } from "react-router-dom";
 
 function AlertMerge({ message, handleClose }) {
   return (
@@ -35,9 +36,11 @@ function useTeam(
     fill,
     depth,
   });
+  const location = useLocation();
 
   const roster = React.useMemo(() => {
     const __roster = team.roster.get();
+    if (location.pathname === "/groupParty") return __roster;
     for (let i = 0; i < MAX_TEAM_SIZE; i++) {
       if (!__roster[i]) {
         __roster[i] = afmachine.createPlayer({
@@ -47,13 +50,14 @@ function useTeam(
       }
     }
     return __roster;
-  }, [id, state]);
+  }, [id, state, location]);
 
   const removeTeamPlayer = function (player) {
     team.removePlayer(player);
   };
   const addTeamPlayer = function (player) {
     team.addPlayer(player);
+    console.log(team);
   };
 
   const changeTeamName = function (form, setForm) {
@@ -71,6 +75,17 @@ function useTeam(
       });
   };
 
+  const addPackage = function (pkg) {
+    team
+      .registerPackage(pkg)
+      .then(() => {
+        alert("done");
+      })
+      .catch((err) => {
+        renderDialog(null, AlertMerge, { message: err.message });
+      });
+  };
+
   return {
     state,
     team,
@@ -79,6 +94,7 @@ function useTeam(
     addTeamPlayer,
     changeTeamName,
     mergeTeam,
+    addPackage,
   };
 }
 

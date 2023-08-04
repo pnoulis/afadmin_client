@@ -15,7 +15,7 @@ import { ReactComponent as FailIcon } from "agent_factory.shared/ui/icons/warnin
 function ComboboxSearchPlayer({ searchPlayer, onSelect, Option }) {
   const remoteData = useRemoteData({
     getRemoteData: searchPlayer,
-    parseRes (players) {
+    parseRes(players) {
       const options = new Map();
       const lnPlayers = players.length;
       for (let i = 0; i < lnPlayers; i++) {
@@ -107,7 +107,7 @@ const StyleFailIcon = styled(Svg)`
 `;
 
 function StyleMoonLoader() {
-  return <MoonLoader loading color="var(--info-strong)" size={40} />
+  return <MoonLoader loading color="var(--info-strong)" size={40} />;
 }
 
 /* --------------- COMBOBOX --------------- */
@@ -166,18 +166,18 @@ const StyleOption = styled(Combobox.Option)`
 border-color: var(--primary-light);
 cursor: pointer;
 `;
-    } if (selected) {
+    }
+    if (selected) {
       return `
 border-color: var(--success-base);
 `;
-    } 
-      return `
+    }
+    return `
   &:hover {
     cursor: pointer;
     border-color: var(--primary-light);
   }
 `;
-    
   }}
 `;
 

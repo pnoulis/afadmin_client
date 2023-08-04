@@ -101,6 +101,16 @@ const liveViewTeams = {
   ),
 };
 
+const teamPackages = (teamId) => ({
+  path: `${teamId}`,
+  label: "team packages",
+  asComponent: ({ children, ...props }) => (
+    <Navlink to={`/${teamId}`} {...props}>
+      {children}
+    </Navlink>
+  ),
+});
+
 export {
   home,
   login,
@@ -112,4 +122,5 @@ export {
   groupParty,
   liveView,
   liveViewTeams,
+  teamPackages,
 };

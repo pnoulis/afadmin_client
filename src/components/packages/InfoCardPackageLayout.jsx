@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled, { css } from "styled-components";
 
-const CssInfoCardPlayerLayout = css`
+const CssInfoCardPackageLayout = css`
   display: grid;
   grid-template-columns: max-content 1fr;
   grid-auto-rows: 1fr;
@@ -12,24 +12,24 @@ const CssInfoCardPlayerLayout = css`
   align-items: start;
 `;
 
-const StyleInfoCardPlayerLayout = styled.article`
-  ${CssInfoCardPlayerLayout}
+const StyleInfoCardPackageLayout = styled.article`
+  ${CssInfoCardPackageLayout}
 `;
 
-function InfoCardPlayerLayout({ className, children, ...props }) {
+function InfoCardPackageLayout({ className, children, ...props }) {
   return (
-    <StyleInfoCardPlayerLayout
+    <StyleInfoCardPackageLayout
       tabIndex={0}
       className={className || ""}
       {...props}
     >
       {children}
-    </StyleInfoCardPlayerLayout>
+    </StyleInfoCardPackageLayout>
   );
 }
 
 export {
-  CssInfoCardPlayerLayout,
-  StyleInfoCardPlayerLayout,
-  InfoCardPlayerLayout,
+  CssInfoCardPackageLayout,
+  StyleInfoCardPackageLayout,
+  InfoCardPackageLayout,
 };

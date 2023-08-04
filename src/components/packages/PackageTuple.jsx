@@ -1,18 +1,18 @@
 import * as React from "react";
 import styled, { css } from "styled-components";
-import { useContextPlayer } from "/src/contexts/index.js";
+import { useContextPackage } from "/src/contexts/index.js";
 
-function PlayerTuple({ name = "", label = "", value = "", nok = false }) {
-  const { player } = useContextPlayer();
+function PackageTuple({ name = "", label = "", value = "", nok = false }) {
+  const { pkg } = useContextPackage();
   return (
     <>
       {!nok && <span className="key">{label || name}</span>}
-      <span className="value">{value || player[name] || "-"}</span>
+      <span className="value">{value || pkg[name] || "-"}</span>
     </>
   );
 }
 
-const CssPlayerTuple = css`
+const CssPackageTuple = css`
   color: black;
   box-sizing: border-box;
   padding: 0 5px;
@@ -37,14 +37,14 @@ const CssPlayerTuple = css`
   }
 `;
 
-const StylePlayerTuple = styled.div`
-  ${CssPlayerTuple}
+const StylePackageTuple = styled.div`
+  ${CssPackageTuple}
 `;
 
-function StyledPlayerTuple({ name, label, value, nok, className, ...props }) {
+function StyledPackageTuple({ name, label, value, nok, className, ...props }) {
   return (
-    <StylePlayerTuple className={className || ""} {...props}>
-      <PlayerTuple
+    <StylePackageTuple className={className || ""} {...props}>
+      <PackageTuple
         nok={nok}
         name={name}
         label={label}
@@ -52,8 +52,8 @@ function StyledPlayerTuple({ name, label, value, nok, className, ...props }) {
         className={className || ""}
         {...props}
       />
-    </StylePlayerTuple>
+    </StylePackageTuple>
   );
 }
 
-export { PlayerTuple, CssPlayerTuple, StylePlayerTuple, StyledPlayerTuple };
+export { PackageTuple, CssPackageTuple, StylePackageTuple, StyledPackageTuple };

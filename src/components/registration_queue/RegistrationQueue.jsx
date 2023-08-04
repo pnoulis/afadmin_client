@@ -22,6 +22,7 @@ function RegistrationQueue({
             <ActionCardRegistrationQueue
               key={player.username + i}
               player={player}
+              seat={player.seat}
               onPlayerRemove={onPlayerRemove}
             />
           ))}

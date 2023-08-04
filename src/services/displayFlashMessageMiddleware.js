@@ -3,9 +3,11 @@ import * as aferrs from "agent_factory.shared/errors.js";
 
 async function displayFlashMessageMiddleware(context, next, err) {
   if (err) {
-    console.log(err);
     if (context.res.msg) {
       fmAgent.warn({ message: context.res.msg });
+    }
+    if (context.res.reason) {
+      fmAgent.warn({ message: context.res.reason });
     }
     throw err;
   }

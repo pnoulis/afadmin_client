@@ -27,7 +27,7 @@ function Form({
 
   React.useEffect(() => {
     onChange(form, setForm);
-  }, [form, setForm, onChange]);
+  }, [form.fields.teamName, setForm]);
 
   return (
     <FormProvider value={{ ...form, setForm }}>

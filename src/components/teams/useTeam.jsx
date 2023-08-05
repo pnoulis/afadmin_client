@@ -40,7 +40,7 @@ function useTeam(
 
   const roster = React.useMemo(() => {
     const __roster = team.roster.get();
-    if (location.pathname === "/groupParty") return __roster;
+    if (location.pathname !== "/merge") return __roster;
     for (let i = 0; i < MAX_TEAM_SIZE; i++) {
       if (!__roster[i]) {
         __roster[i] = afmachine.createPlayer({

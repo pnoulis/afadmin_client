@@ -34,6 +34,7 @@ import {
 } from "/src/components/packages/index.js";
 import { WidgetArrow } from "/src/components/widgets/index.js";
 import { InfoCardPackageReference } from "/src/components/packages/InfoCardPackageReference.jsx";
+import { RouteTeamInfoCardPlayer } from "./RouteTeamInfoCardPlayer.jsx";
 
 function RouteTeam() {
   const { state } = useLocation();
@@ -132,11 +133,7 @@ function RouteTeam() {
             style={{ gridRow: "3 / 5", gridColumn: "2 / 3" }}
           >
             {ctx.roster.map((p, i) => (
-              <Player key={i} player={p}>
-                <Wristband wristband={p.wristband}>
-                  <InfoCardPlayerReference key={i} player={p} />
-                </Wristband>
-              </Player>
+              <RouteTeamInfoCardPlayer key={i} player={p} />
             ))}
           </ListPackages>
         </StyleRouteTeamPackages>
@@ -172,13 +169,13 @@ const RouteInfoCardPackageReference = styled(InfoCardPackageReference)`
     selected &&
     css`
       background-color: var(--primary-medium);
-  .key {
-    color: white;
-  };
-  .value {
-    font-size: var(--tx-lg);
-    color: white;
-  }
+      .key {
+        color: white;
+      }
+      .value {
+        font-size: var(--tx-lg);
+        color: white;
+      }
     `}
 `;
 const RouteTeamWidgetArrow = styled(WidgetArrow)`

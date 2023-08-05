@@ -7,6 +7,7 @@ import {
   AlertDialogDescription,
   renderDialog,
 } from "/src/components/dialogs/index.js";
+import { useNavigate } from "react-router-dom";
 
 function AlertMerge({ message, handleClose }) {
   return (
@@ -43,6 +44,7 @@ function usePackage(
   const [newpkg, setnewpkg] = React.useState(
     team.packages.length > 0 ? false : true,
   );
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     setPickedPkg(null);
@@ -120,11 +122,10 @@ function usePackage(
   const startPkg = function () {
     team
       .activate()
+      .then(() => {
+        navigate("/liveView", { replace: true });
+      })
       .catch((err) => renderDialog(null, AlertMerge, { message: err.message }));
-  };
-
-  const stopPkg = function () {
-    alert("stop pkg");
   };
 
   const delpkg = function () {
@@ -152,7 +153,6 @@ function usePackage(
     addNewPkg,
     removePkg,
     startPkg,
-    stopPkg,
     delpkg,
     pickpkg,
     pickedPkg,

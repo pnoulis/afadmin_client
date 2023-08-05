@@ -10,7 +10,7 @@ import {
 } from "/src/components/widgets/index.js";
 
 function TeamPackagesControls({ className, ...props }) {
-  const { uploadPkg, addNewPkg, removePkg, startPkg, stopPkg} =
+  const { uploadPkg, addNewPkg, removePkg, startPkg} =
     useContextPackage();
   return (
     <StyleTeamPackagesControls className={className} {...props}>
@@ -21,7 +21,6 @@ function TeamPackagesControls({ className, ...props }) {
         tooltipContent="remove package"
       />
       <WidgetStart onClick={startPkg} tooltipContent="activate package" />
-      <WidgetStop onClick={stopPkg} tooltipContent="pause package" />
     </StyleTeamPackagesControls>
   );
 }

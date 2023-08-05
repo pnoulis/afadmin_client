@@ -5,7 +5,7 @@ import { AncestorDimensions } from "react_utils/misc";
 function ListPackages({ id, className, children, ...props }) {
   return (
     <StyleListPackages id={id} className={className} {...props}>
-    <AncestorDimensions ancestor={`#${id}`}>
+      <AncestorDimensions ancestor={`#${id}`}>
         <StyleScrollableList>{children}</StyleScrollableList>
       </AncestorDimensions>
     </StyleListPackages>
@@ -26,8 +26,8 @@ const StyleScrollableList = styled.ul`
   scrollbar-color: rgb(48, 25, 52) grey;
   scrollbar-gutter: stable both-edges;
   display: flex;
-  flex-flow: column nowrap;
-padding: 0 20px;
+  flex-flow: row wrap;
+  padding: 0 20px;
   gap: 20px;
 `;
 

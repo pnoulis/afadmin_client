@@ -1,6 +1,12 @@
 import * as React from "react";
 import styled from "styled-components";
-import { registration, merge, liveView, groupParty } from "/src/links.jsx";
+import {
+  registration,
+  merge,
+  liveView,
+  groupParty,
+  administrator,
+} from "/src/links.jsx";
 
 const StyleLayoutNavbar = styled.ul`
   all: unset;
@@ -60,6 +66,9 @@ function Navbar() {
       <StyleNavbarLink to={merge.path}>{merge.label}</StyleNavbarLink>
       <StyleNavbarLink to={groupParty.path}>{groupParty.label}</StyleNavbarLink>
       <StyleNavbarLink to={liveView.path}>{liveView.label}</StyleNavbarLink>
+      <StyleNavbarLink to={administrator.path}>
+        {administrator.label}
+      </StyleNavbarLink>
     </StyleLayoutNavbar>
   );
 }

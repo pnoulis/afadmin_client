@@ -111,6 +111,56 @@ const teamPackages = (teamId) => ({
   ),
 });
 
+const administrator = {
+  path: "/administrator",
+  label: "administrator",
+  asComponent: ({ children, ...props }) => (
+    <NavLink to="/administrator" {...props}>
+      {children}
+    </NavLink>
+  ),
+};
+
+const administratorCashout = {
+  path: "/administrator/cashout",
+  label: "cash out",
+  asComponent: ({ children, ...props }) => (
+    <NavLink to="/administrator/cashout" {...props}>
+      {children}
+    </NavLink>
+  ),
+};
+
+const administratorHistory = {
+  path: "/administrator/history",
+  label: "history",
+  asComponent: ({ children, ...props }) => (
+    <NavLink to="administrator/history" {...props}>
+      {children}
+    </NavLink>
+  ),
+};
+
+const administratorMissions = {
+  path: "/administrator/missions",
+  label: "missions",
+  asComponent: ({ children, ...props }) => (
+    <NavLink to="administrator/missions" {...props}>
+      {children}
+    </NavLink>
+  ),
+};
+
+const administratorRooms = {
+  path: "/administrator/rooms",
+  label: "rooms",
+  asComponent: ({ children, ...props }) => (
+    <NavLink to="administrator/rooms" {...props}>
+      {children}
+    </NavLink>
+  ),
+};
+
 export {
   home,
   login,
@@ -123,4 +173,9 @@ export {
   liveView,
   liveViewTeams,
   teamPackages,
+  administrator,
+  administratorCashout,
+  administratorRooms,
+  administratorMissions,
+  administratorHistory,
 };

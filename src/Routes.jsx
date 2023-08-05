@@ -29,6 +29,9 @@ import { RouteGroupParty } from "./site/route_group_party/RouteGroupParty.jsx";
 import { RouteLiveView } from "./site/route_live_view/RouteLiveView.jsx";
 import { RouteLiveViewTeams } from "./site/route_live_view/route_live_view_teams/RouteLiveViewTeams.jsx";
 import { RouteTeam } from "/src/site/route_team/RouteTeam.jsx";
+import { RouteAdministrator } from "/src/site/route_administrator/RouteAdministrator.jsx";
+import { RouteCashOut } from "/src/site/route_administrator/route_cash_out/RouteCashOut.jsx";
+import { RouteAdministratorStats } from "/src/site/route_administrator/route_stats/RouteAdministratorStats.jsx";
 
 /* ------------------------------ ERROR ROUTES ------------------------------ */
 import * as RouteErrs from "./site/route_errors/index.js";
@@ -95,6 +98,21 @@ function Routes(props) {
                       path: links.liveView.path + "/:teamId",
                       loader: loadPackages,
                       element: <RouteTeam />,
+                    },
+                  ],
+                },
+                /* ------------------------------ ADMINISTRATOR ------------------------------ */
+                {
+                  path: links.administrator.path,
+                  element: <RouteAdministrator />,
+                  children: [
+                    {
+                      index: true,
+                      element: <RouteAdministratorStats />,
+                    },
+                    {
+                      path: links.administratorCashout.path,
+                      element: <RouteCashOut />,
                     },
                   ],
                 },

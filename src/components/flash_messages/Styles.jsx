@@ -59,6 +59,7 @@ const StyleLayoutFmRoot = styled.div`
   grid-auto-columns: 1fr;
   grid-auto-rows: 1fr;
   column-gap: 20px;
+  row-gap: 20px;
   padding-bottom: 30px;
   justify-items: end;
   padding-right: 70px;

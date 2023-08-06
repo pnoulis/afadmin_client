@@ -34,18 +34,18 @@ function PanelAdministrator({ children }) {
             </StyleItemIcon>
             <StyleItemText>{administratorCashout.label}</StyleItemText>
           </StyleNavbarLink>
-          <StyleNavbarLink end to={administratorRooms.path}>
-            <StyleItemIcon size="70px">
-              <TeamsIcon />
-            </StyleItemIcon>
-            <StyleItemText>{administratorRooms.label}</StyleItemText>
-          </StyleNavbarLink>
-          <StyleNavbarLink end to={administratorMissions.path}>
-            <StyleItemIcon size="70px">
-              <TeamsIcon />
-            </StyleItemIcon>
-            <StyleItemText>{administratorMissions.label}</StyleItemText>
-          </StyleNavbarLink>
+          {/* <StyleNavbarLink end to={administratorRooms.path}> */}
+          {/*   <StyleItemIcon size="70px"> */}
+          {/*     <TeamsIcon /> */}
+          {/*   </StyleItemIcon> */}
+          {/*   <StyleItemText>{administratorRooms.label}</StyleItemText> */}
+          {/* </StyleNavbarLink> */}
+          {/* <StyleNavbarLink end to={administratorMissions.path}> */}
+          {/*   <StyleItemIcon size="70px"> */}
+          {/*     <TeamsIcon /> */}
+          {/*   </StyleItemIcon> */}
+          {/*   <StyleItemText>{administratorMissions.label}</StyleItemText> */}
+          {/* </StyleNavbarLink> */}
           <StyleNavbarLink end to={administratorHistory.path}>
             <StyleItemIcon size="70px">
               <TeamsIcon />

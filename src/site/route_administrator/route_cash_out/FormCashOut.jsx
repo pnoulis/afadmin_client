@@ -6,6 +6,7 @@ import {
   SimpleInput,
   TextArea,
 } from "react_utils";
+import { session } from "/src/services/session.js";
 
 function FormCashOut({
   fields: initialValues = {},
@@ -22,12 +23,29 @@ function FormCashOut({
       cashierName: "",
       comment: "",
       npkgs: 0,
+      ...initialValues,
     },
   });
 
+  const commentRef = React.useRef(null);
+  commentRef.current = form.fields.comment;
+
   React.useEffect(() => {
-    onChange(form, setForm);
-  }, [form.fields]);
+    if (!form.submitting) return;
+    onSubmit(form.fields, (err) => {
+      if (!err) {
+        setForm("reset");
+      }
+    });
+  }, [form.submitting]);
+
+  React.useEffect(() => {
+    return () => {
+      if (session.loggedIn) {
+        session.set("comment", commentRef.current);
+      }
+    };
+  }, []);
 
   return (
     <FormProvider value={{ ...form, setForm }}>
@@ -37,6 +55,7 @@ function FormCashOut({
         className={className || ""}
         onSubmit={(e) => {
           e.preventDefault();
+          setForm("setSubmit", true);
         }}
         {...props}
       >

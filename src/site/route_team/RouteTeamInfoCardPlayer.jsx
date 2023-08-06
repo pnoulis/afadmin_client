@@ -23,6 +23,7 @@ function RouteTeamInfoCardPlayer({ player, className, ...props }) {
 }
 
 const StyledLayout = styled.article`
+  pointer-events: none;
   display: grid;
   grid-auto-columns: max-content;
   grid-auto-rows: max-content;
@@ -38,6 +39,8 @@ const StyledLayout = styled.article`
 
 const StyledWristbandSignal = styled(IndicatorWristbandSignal)``;
 const StyledTuple = styled(StyledPlayerTuple)`
+  font-size: var(--tx-nl);
+  font-family: NoirPro-Regular;
   height: max-content;
 `;
 

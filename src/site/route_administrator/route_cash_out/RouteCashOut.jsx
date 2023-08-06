@@ -5,10 +5,30 @@ import { CommentArea } from "./CommentArea.jsx";
 import { ButtonCashOut } from "./ButtonCashout.jsx";
 import { CashiersName } from "./CashiersName.jsx";
 import { NumberOfPkgs } from "./NumberOfPkgs.jsx";
+import { useSession } from "/src/hooks/index.js";
+import { PopoverAsyncState } from "/src/components/async/index.js";
+import { afmachine } from "/src/services/afmachine.js";
 
 function RouteCashOut() {
+  const {
+    user,
+    stats: { activatedPkgs } = {},
+    comment,
+    cashout,
+  } = useSession();
+
   return (
-    <FormCashOut>
+    <FormCashOut
+      fields={{
+        cashierName: user.name,
+        npkgs: activatedPkgs,
+        comment,
+      }}
+      onSubmit={(form) => {
+        cashout(form);
+      }}
+    >
+      <PopoverAsyncState action={cashout} />
       <StyledRouteCashOut>
         <ButtonCashOut
           style={{ justifySelf: "end", gridRow: "1 / 2", gridColumn: "2 / 3" }}

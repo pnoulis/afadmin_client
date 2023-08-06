@@ -7,6 +7,7 @@ import { TooltipDefault } from "/src/components/tooltips/index.js";
 
 function IndicatorWristbandSignal({ size, className, ...props }) {
   const { wristband, handleWristbandToggle } = useContextWristband();
+
   return (
     <TooltipDefault
       content="toggle pairing"

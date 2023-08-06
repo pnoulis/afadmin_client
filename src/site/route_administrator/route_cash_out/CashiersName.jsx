@@ -13,8 +13,9 @@ const StyledSimpleInput = styled(SimpleInput)`
   height: 60px;
   pointer-events: none;
   position: relative;
-  font-family: Roboto-SemiBold;
+  font-family: Roboto-Bold;
   text-transform: uppercase;
+  letter-spacing: 2px;
   color: var(--info-medium);
 
   .input {

@@ -93,8 +93,7 @@ function usePackage(
     if (pickedPkg !== null) {
       _pkg = team.packages[pickedPkg];
     } else {
-      _pkg = AFPkg;
-      if (_pkg?.name) {
+      if (team.packages.length >= 1) {
         setAFPkg(null);
         setnewpkg(false);
         return;
@@ -111,10 +110,11 @@ function usePackage(
         renderDialog(null, AlertMerge, { message: err.message });
       })
       .finally(() => {
-        setPickedPkg(null);
         setAFPkg(null);
         if (!team.packages.length) {
           setnewpkg(true);
+        } else {
+          setPickedPkg(0);
         }
       });
   };

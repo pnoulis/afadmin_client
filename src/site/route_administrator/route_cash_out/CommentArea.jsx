@@ -38,7 +38,7 @@ function CommentArea({ placeholder = "comments...", ...props }) {
   const {
     fields: { comment },
   } = useFormContext();
-  const [tx, setTx] = React.useState(false);
+  const [tx, setTx] = React.useState(comment?.length > 1 ? true : false);
 
   React.useEffect(() => {
     if (!comment) {

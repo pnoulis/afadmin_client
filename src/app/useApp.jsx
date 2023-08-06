@@ -66,6 +66,7 @@ function useApp(services, options) {
       renderDialog(null, ConfirmUnpairPlayerWristband, { player }, (yes) => {
         if (!yes) return;
         player = afmachine.createPersistentPlayer(player);
+        player.wristband.setState(player.wristband.getRegisteredState);
         renderDialog(
           null,
           PopoverAsyncAction,

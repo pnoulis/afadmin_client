@@ -33,6 +33,10 @@ import { RouteAdministrator } from "/src/site/route_administrator/RouteAdministr
 import { RouteCashOut } from "/src/site/route_administrator/route_cash_out/RouteCashOut.jsx";
 import { RouteAdministratorStats } from "/src/site/route_administrator/route_stats/RouteAdministratorStats.jsx";
 
+/* ------------------------------ VARIOUS ------------------------------ */
+import { Authorize } from "/src/components/auth/index.js";
+import { Navigate } from "react-router-dom";
+
 /* ------------------------------ ERROR ROUTES ------------------------------ */
 import * as RouteErrs from "./site/route_errors/index.js";
 
@@ -46,7 +50,13 @@ function Routes(props) {
           children: [
             {
               path: "/",
-              element: <Site />,
+              element: (
+                <Authorize>
+                  {(loggedIn) =>
+                    loggedIn ? <Site /> : <Navigate to="/login" />
+                  }
+                </Authorize>
+              ),
               children: [
                 {
                   index: true,

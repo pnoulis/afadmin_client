@@ -19,7 +19,10 @@ function PopoverAsyncAction({ action, className, handleClose, ...options }) {
 
   React.useEffect(() => {
     if (runRef.current) {
-      runRef.current();
+      runRef
+        .current()
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
       runRef.current = null;
     }
     onData((err, data) => handleClose(err, data));

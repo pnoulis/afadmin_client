@@ -13,11 +13,14 @@ function PopoverAsyncState({
   timePending = 0,
   timeResolving = 1000,
   timeRejecting = 1000,
+  onSettled = () => {},
+  children,
 }) {
   const state = useAfmachineStatefulAA(action, {
     timePending,
     timeResolving,
     timeRejecting,
+    onSettled,
   });
   const [open, setIsOpen] = React.useState(false);
 
@@ -48,7 +51,7 @@ function PopoverAsyncState({
       </StyleDialogContent>
     </BasicDialog.Provider>
   ) : (
-    <></>
+    children
   );
 }
 

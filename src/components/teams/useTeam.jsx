@@ -65,6 +65,7 @@ function useTeam(
   };
 
   const mergeTeam = function (e) {
+    console.log(e);
     team
       .merge()
       .then(() => {

@@ -8,7 +8,7 @@ import {
   IconButtonText,
 } from "react_utils";
 
-function FormLogin({ className, ...props }) {
+function FormLogin({ onSubmit, className, ...props }) {
   const [form, setForm] = useForm({
     submitting: false,
     fields: {
@@ -19,6 +19,7 @@ function FormLogin({ className, ...props }) {
 
   React.useEffect(() => {
     if (!form.submitting) return;
+    onSubmit(form.fields, () => setForm("reset"));
     //  login player
   }, [form.submitting]);
 
@@ -50,7 +51,7 @@ function FormLogin({ className, ...props }) {
 const StyleForm = styled.form`
   z-index: 2;
   display: flex;
-  width: 350px;
+  width: 400px;
   flex-flow: column nowrap;
   row-gap: 15px;
 

@@ -3,7 +3,7 @@ import { delay } from "js_utils/misc";
 
 function useAfmachineStatefulAA(
   aa,
-  { timePending = 0, timeResolving = 500, timeRejecting = 500 } = {},
+  { onSettled, timePending = 0, timeResolving = 500, timeRejecting = 500 } = {},
 ) {
   const [state, setState] = React.useState(aa.getState().name);
   const tRef = React.useRef(0);
@@ -22,13 +22,15 @@ function useAfmachineStatefulAA(
           delay(T > 0 ? T : 0)
             .then(setState.bind(null, "resolved"))
             .then(delay.bind(null, timeResolving))
-            .then(setState.bind(null, "idle"));
+            .then(setState.bind(null, "idle"))
+            .finally(onSettled.bind(null, true));
           break;
         case "rejected":
           delay(T > 0 ? T : 0)
             .then(setState.bind(null, "rejected"))
             .then(delay.bind(null, timeRejecting))
-            .then(setState.bind(null, "idle"));
+            .then(setState.bind(null, "idle"))
+            .finally(onSettled.bind(null, true));
           break;
       }
     });

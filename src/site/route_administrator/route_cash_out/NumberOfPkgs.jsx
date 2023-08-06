@@ -6,7 +6,7 @@ function NumberOfPkgs({ label, className, ...props }) {
   return (
     <StyledNumberOfPkgs className={className} {...props}>
       <label htmlFor="npkgs">{label || "number of packages"}</label>
-      <StyledSimpleInput name="npkgs" />
+      <StyledSimpleInput name="npkgs" placeholder='0'/>
     </StyledNumberOfPkgs>
   );
 }

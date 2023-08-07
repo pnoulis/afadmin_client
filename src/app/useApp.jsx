@@ -3,7 +3,6 @@ import { afmachine } from "/src/services/afmachine.js";
 import { catchAferrs as __catchAferrs } from "/src/err_handling/index.js";
 import { useNavigate } from "react-router-dom";
 import { renderDialog } from "/src/components/dialogs/index.js";
-import { logPlayer } from "/src/services/afmachine.js";
 
 // ------------------------------ ALERTS ------------------------------ //
 import {

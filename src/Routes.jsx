@@ -43,127 +43,130 @@ import * as RouteErrs from "./site/route_errors/index.js";
 function Routes(props) {
   return (
     <RouterProvider
-      router={createBrowserRouter([
-        {
-          element: <App />,
-          errorElement: <CatchReactRouterErr />,
-          children: [
-            {
-              path: "/",
-              element: (
-                <Authorize>
-                  {(loggedIn) =>
-                    loggedIn ? <Site /> : <Navigate to="/login" />
-                  }
-                </Authorize>
-              ),
-              children: [
-                {
-                  index: true,
-                  element: <RouteHome />,
-                },
-                /* --------------- REGISTRATION --------------- */
-                {
-                  path: links.registration.path,
-                  element: <RouteRegistration />,
-                  children: [
-                    {
-                      index: true,
-                      element: <RouteRegistrationPlayer />,
-                    },
-                    {
-                      path: links.registrationWristband.path,
-                      element: <RouteRegistrationPlayerWristband />,
-                    },
-                  ],
-                },
-                /* --------------- MERGE --------------- */
-                {
-                  path: links.merge.path,
-                  element: <RouteMerge />,
-                  children: [
-                    {
-                      index: true,
-                      loader: loadRegisteredWristbandPlayers,
-                      element: <RouteMergeTeam />,
-                    },
-                  ],
-                },
-                /* --------------- GROUP PARTY --------------- */
-                {
-                  path: links.groupParty.path,
-                  element: <RouteGroupParty />,
-                },
-                /* --------------- LIVE VIEW --------------- */
-                {
-                  path: links.liveView.path,
-                  element: <RouteLiveView />,
-                  children: [
-                    {
-                      index: true,
-                      loader: loadTeams,
-                      element: <RouteLiveViewTeams />,
-                    },
-                    {
-                      path: links.liveView.path + "/:teamId",
-                      loader: loadPackages,
-                      element: <RouteTeam />,
-                    },
-                  ],
-                },
-                /* ------------------------------ ADMINISTRATOR ------------------------------ */
-                {
-                  path: links.administrator.path,
-                  element: <RouteAdministrator />,
-                  children: [
-                    {
-                      index: true,
-                      element: <RouteAdministratorStats />,
-                    },
-                    {
-                      path: links.administratorCashout.path,
-                      element: <RouteCashOut />,
-                    },
-                  ],
-                },
-              ],
-            },
+      router={createBrowserRouter(
+        [
+          {
+            element: <App />,
+            errorElement: <CatchReactRouterErr />,
+            children: [
+              {
+                path: "/",
+                element: (
+                  <Authorize>
+                    {(loggedIn) =>
+                      loggedIn ? <Site /> : <Navigate to="/login" />
+                    }
+                  </Authorize>
+                ),
+                children: [
+                  {
+                    index: true,
+                    element: <RouteHome />,
+                  },
+                  /* --------------- REGISTRATION --------------- */
+                  {
+                    path: links.registration.path,
+                    element: <RouteRegistration />,
+                    children: [
+                      {
+                        index: true,
+                        element: <RouteRegistrationPlayer />,
+                      },
+                      {
+                        path: links.registrationWristband.path,
+                        element: <RouteRegistrationPlayerWristband />,
+                      },
+                    ],
+                  },
+                  /* --------------- MERGE --------------- */
+                  {
+                    path: links.merge.path,
+                    element: <RouteMerge />,
+                    children: [
+                      {
+                        index: true,
+                        loader: loadRegisteredWristbandPlayers,
+                        element: <RouteMergeTeam />,
+                      },
+                    ],
+                  },
+                  /* --------------- GROUP PARTY --------------- */
+                  {
+                    path: links.groupParty.path,
+                    element: <RouteGroupParty />,
+                  },
+                  /* --------------- LIVE VIEW --------------- */
+                  {
+                    path: links.liveView.path,
+                    element: <RouteLiveView />,
+                    children: [
+                      {
+                        index: true,
+                        loader: loadTeams,
+                        element: <RouteLiveViewTeams />,
+                      },
+                      {
+                        path: links.liveView.path + "/:teamId",
+                        loader: loadPackages,
+                        element: <RouteTeam />,
+                      },
+                    ],
+                  },
+                  /* ------------------------------ ADMINISTRATOR ------------------------------ */
+                  {
+                    path: links.administrator.path,
+                    element: <RouteAdministrator />,
+                    children: [
+                      {
+                        index: true,
+                        element: <RouteAdministratorStats />,
+                      },
+                      {
+                        path: links.administratorCashout.path,
+                        element: <RouteCashOut />,
+                      },
+                    ],
+                  },
+                ],
+              },
 
-            /* ----------------- LOGIN ------------------- */
-            {
-              path: links.login.path,
-              element: <RouteLogin />,
-            },
+              /* ----------------- LOGIN ------------------- */
+              {
+                path: links.login.path,
+                element: <RouteLogin />,
+              },
 
-            /* --------------- ERRORS --------------- */
-            {
-              path: "/401",
-              element: <RouteErrs.Route401 />,
-            },
-            {
-              path: "/404",
-              element: <RouteErrs.Route404 />,
-            },
-            {
-              path: "/408",
-              element: <RouteErrs.Route408 />,
-            },
-            {
-              path: "/500",
-              element: <RouteErrs.Route500 />,
-            },
-          ],
-        },
-        {
-          path: "/scratch",
-          loader: loadPackages,
-          element: <Scratch />,
-        },
-        {
-          path: "*",
-          element: <HandleUnmatchedRoute />,
-        },
-      ])}
+              /* --------------- ERRORS --------------- */
+              {
+                path: "/401",
+                element: <RouteErrs.Route401 />,
+              },
+              {
+                path: "/404",
+                element: <RouteErrs.Route404 />,
+              },
+              {
+                path: "/408",
+                element: <RouteErrs.Route408 />,
+              },
+              {
+                path: "/500",
+                element: <RouteErrs.Route500 />,
+              },
+            ],
+          },
+          {
+            path: "/scratch",
+            loader: loadPackages,
+            element: <Scratch />,
+          },
+          {
+            path: "*",
+            element: <HandleUnmatchedRoute />,
+          },
+        ],
+        { basename: "/administration" },
+      )}
       {...props}
     />
   );

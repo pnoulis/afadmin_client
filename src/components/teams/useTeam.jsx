@@ -1,5 +1,5 @@
 import * as React from "react";
-import { afmachine, logTeam, logRoster } from "/src/services/afmachine.js";
+import { afmachine } from "/src/services/afmachine.js";
 import { useAfmachineEntity } from "/src/hooks/index.js";
 import { MAX_TEAM_SIZE } from "agent_factory.shared/constants.js";
 import {

@@ -54,15 +54,15 @@ dist: src
 
 # ------------------------------ RUN ------------------------------ #
 .PHONY: run
-mode ?= 'development'
-file ?= '$(SRCDIR)/tmp/scratch.js'
+run: mode ?= 'development'
+run: file ?= '$(SRCDIR)/tmp/scratch.js'
 run: env
 	set -a; source ./.env && \
 	$(INTERPRETER) $(file) \
 	| $(PRETTY_OUTPUT)
 
 .PHONY: scratch
-mode ?= 'development'
+scratch: mode ?= 'development'
 scratch: env
 	set -a; source ./.env && \
 	$(INTERPRETER) ./tmp/scratch.js \
@@ -76,7 +76,7 @@ run-build:
 
 # ------------------------------ DEV ------------------------------ #
 .PHONY: dev
-mode ?= 'development'
+dev: mode ?= 'development'
 dev: env
 	set -a; source ./.env && \
 	$(BUNDLER) serve --mode=$(mode) --force
@@ -89,38 +89,40 @@ preview: env
 
 # ------------------------------ BUILD ------------------------------ #
 .PHONY: build
-mode ?= 'production'
-build: env
+build: mode ?= 'production'
+build:
+	$(DOTENV) --mode=$(mode) --environment="HOST=browser" \
+	$(ENVDIRS) | $(SORT) > $(SRCDIR)/.env
 	set -a; source ./.env && \
 	$(BUNDLER) build --mode=$(mode)
 
 # ------------------------------ TEST ------------------------------ #
 .PHONY: test
-mode ?= 'testing'
-suite ?= '*'
+test: mode ?= 'testing'
+test: suite ?= '*'
 test: env
 	set -a; source ./.env && \
 	$(TESTER) run --reporter verbose --mode=$(mode) $(suite)
 
 # ------------------------------ LINT ------------------------------ #
 .PHONY: lint
-file ?= '.'
+lint: file ?= '.'
 lint:
 	$(LINTER) --ext js,jsx --fix $(file)
 
 .PHONY: lint-check
-file ?= '.'
+lint-check: file ?= '.'
 lint-check:
 	$(LINTER) --ext js,jsx $(file)
 
 # ------------------------------ FORMAT ------------------------------ #
 .PHONY: fmt
-file ?= '.'
+fmt: file ?= '.'
 fmt:
 	$(FORMATER) --write $(file)
 
 .PHONY: fmt-check
-file ?= '.'
+fmt-check: file ?= '.'
 fmt-check:
 	$(FORMATER) --check $(file)
 
@@ -134,7 +136,7 @@ distclean: clean
 
 # ------------------------------ ENV ------------------------------#
 .PHONY: env
-mode ?= 'production'
+env: mode ?= 'production'
 env:
 	$(DOTENV) --mode=$(mode) $(ENVDIRS) | $(SORT) > $(SRCDIR)/.env
 

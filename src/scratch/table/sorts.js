@@ -26,9 +26,16 @@ function descendingComparator(a, b, key) {
 }
 
 function getComparator(order, key) {
-  return order === "desc"
-    ? (a, b) => descendingComparator(a, b, key)
-    : (a, b) => -descendingComparator(a, b, key);
+  switch (key) {
+    case "state":
+      return order === "desc"
+        ? (a, b) => stateComparator(a, b)
+        : (a, b) => -stateComparator(a, b, key);
+    default:
+      return order === "desc"
+        ? (a, b) => descendingComparator(a, b, key)
+        : (a, b) => -descendingComparator(a, b, key);
+  }
 }
 
 function stableSort(ar, compareFn) {

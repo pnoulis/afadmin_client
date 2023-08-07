@@ -57,7 +57,6 @@ function useTeam(
   };
   const addTeamPlayer = function (player) {
     team.addPlayer(player);
-    console.log(team);
   };
 
   const changeTeamName = function (form, setForm) {
@@ -65,7 +64,6 @@ function useTeam(
   };
 
   const mergeTeam = function (e) {
-    console.log(e);
     team
       .merge()
       .then(() => {

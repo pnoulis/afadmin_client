@@ -1,2 +1,2 @@
 // export default null;
-export { default } from "./scratchSession.jsx";
+export { default } from "./scratchTable.jsx";

@@ -9,6 +9,7 @@ const CssInfoCardPlayerLayout = css`
   border-radius: var(--br-lg);
   padding: 10px 12px;
   column-gap: 30px;
+max-width: 500px;
   align-items: start;
 `;
 

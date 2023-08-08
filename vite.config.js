@@ -4,16 +4,16 @@ import { configDefaults } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 import { loadenv } from "js_utils/node/loadenv";
-const ENVIRONMENT = loadenv(".", {});
 import { createHtmlPlugin } from "vite-plugin-html";
+
+const ENVIRONMENT = loadenv(".", {});
 
 // https:vitejs.dev/config/
 export default defineConfig({
-  base: "/administration/",
+  base: ENVIRONMENT.BASENAME,
   define: {
     __STATIC_ENV__: ENVIRONMENT,
-    __MQTT_CLIENT_LIB__:
-      ENVIRONMENT.HOST === "browser" ? "precompiled-mqtt" : "mqtt",
+    __MQTT_CLIENT_LIB__: JSON.stringify("precompiled-mqtt"),
   },
   plugins: [
     react({
@@ -24,12 +24,12 @@ export default defineConfig({
     svgr(),
     createHtmlPlugin({
       minify: false,
-      entry: "src/index.jsx",
-      template: "index.html",
+      entry: ENVIRONMENT.SCRATCH ? "src/index.scratch.jsx" : "src/index.jsx",
+      template: ENVIRONMENT.SCRATCH ? "index.scratch.html" : "index.html",
       inject: {
         data: {
           title: "agent factory",
-          BASEPATH: "/administration",
+          BASENAME: ENVIRONMENT.BASENAME,
         },
       },
     }),

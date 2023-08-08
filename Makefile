@@ -8,9 +8,6 @@ SHELL = /usr/bin/bash
 .DELETE_ON_ERROR:
 .DEFAULT_GOAL := all
 
-# Include package information
-include ./PACKAGE
-
 # Critical Paths
 SRCDIR := .
 LOGDIR := var/log
@@ -50,7 +47,7 @@ $(PKG_DISTNAME).tar.gz: dist
 	--transform=s/dist/administration/ dist
 
 dist: src
-	make build-dev
+	make build
 
 # ------------------------------ RUN ------------------------------ #
 .PHONY: run
@@ -61,18 +58,36 @@ run: env
 	$(INTERPRETER) $(file) \
 	| $(PRETTY_OUTPUT)
 
-.PHONY: scratch
+.PHONY: run-build
+run-build:
+	@set -a; source ./.env && \
+	$(INTERPRETER) ./dist/index.js \
+	| $(PRETTY_OUTPUT)
+
+# ------------------------------ SCRATCH ------------------------------ #
+.PHONY: scratch scratch-dev scratch-build
+
 scratch: mode ?= 'development'
 scratch: env
 	set -a; source ./.env && \
 	$(INTERPRETER) ./tmp/scratch.js \
 	| $(PRETTY_OUTPUT)
 
-.PHONY: run-build
-run-build:
-	@set -a; source ./.env && \
-	$(INTERPRETER) ./dist/index.js \
-	| $(PRETTY_OUTPUT)
+scratch-dev: mode ?= 'development'
+scratch-dev: envars ?= "SCRATCH=true;"
+scratch-dev:
+	$(DOTENV) --mode=$(mode) --environment=$(envars) \
+	$(ENVDIRS) | $(SORT) > $(SRCDIR)/.env
+	set -a; source ./.env && \
+	$(BUNDLER) serve --mode=$(mode) --force
+
+scratch-build: mode ?= 'development'
+scratch-build: envars ?= "SCRATCH=true;BUNDLED=true;RUNTIME=browser;"
+scratch-build:
+	$(DOTENV) --mode=$(mode) --environment=$(envars) \
+	$(ENVDIRS) | $(SORT) > $(SRCDIR)/.env
+	set -a; source ./.env && \
+	$(BUNDLER) build --mode=$(mode)
 
 # ------------------------------ DEV ------------------------------ #
 .PHONY: dev
@@ -81,17 +96,19 @@ dev: env
 	set -a; source ./.env && \
 	$(BUNDLER) serve --mode=$(mode) --force
 
+
 # ------------------------------ PREVIEW ------------------------------ #
 .PHONY: preview
-preview: mode := 'production'
+preview: mode ?= 'production'
 preview: env
 	$(BUNDLER) preview --mode=$(mode)
 
 # ------------------------------ BUILD ------------------------------ #
 .PHONY: build
 build: mode ?= 'production'
+build: envars ?= "BUNDLED=true;RUNTIME=browser;"
 build:
-	$(DOTENV) --mode=$(mode) --environment="HOST=browser" \
+	$(DOTENV) --mode=$(mode) --environment=$(envars) \
 	$(ENVDIRS) | $(SORT) > $(SRCDIR)/.env
 	set -a; source ./.env && \
 	$(BUNDLER) build --mode=$(mode)
@@ -136,8 +153,13 @@ distclean: clean
 
 # ------------------------------ ENV ------------------------------#
 .PHONY: env
-env: mode ?= 'production'
+mode ?= 'production'
 env:
 	$(DOTENV) --mode=$(mode) $(ENVDIRS) | $(SORT) > $(SRCDIR)/.env
+
+env-dry: mode ?= 'production'
+env-dry:
+	$(DOTENV) --mode=$(mode) $(ENVDIRS) | $(SORT)
+
 
 # ------------------------------ VARIOUS ------------------------------ #

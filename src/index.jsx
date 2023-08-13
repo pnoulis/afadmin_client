@@ -3,26 +3,10 @@ import * as ReactDOM from "react-dom/client";
 import routes from "./routes2.jsx";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ENVIRONMENT } from "agent_factory.shared/config.js";
-// import { Scratch } from './scratch/Scratch.jsx';
-
-// ReactDOM.createRoot(document.getElementById("app-react-root")).render(
-//   <React.StrictMode>
-//     <Routes />
-//   </React.StrictMode>,
-// );
+import { Routes } from "./Routes.jsx";
 
 ReactDOM.createRoot(document.getElementById("app-react-root")).render(
   <React.StrictMode>
-    <RouterProvider
-      router={createBrowserRouter(routes, {
-        basename: ENVIRONMENT.BASENAME,
-      })}
-    />
+    <Routes basename={ENVIRONMENT.BASENAME} />
   </React.StrictMode>,
 );
-
-// ReactDOM.createRoot(document.getElementById("app-react-root")).render(
-//   <React.StrictMode>
-//     <Scratch/>
-//   </React.StrictMode>,
-// );

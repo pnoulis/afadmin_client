@@ -40,7 +40,7 @@ import { Navigate } from "react-router-dom";
 /* ------------------------------ ERROR ROUTES ------------------------------ */
 import * as RouteErrs from "./site/route_errors/index.js";
 
-function Routes(props) {
+function Routes({ basename, ...props }) {
   return (
     <RouterProvider
       router={createBrowserRouter(
@@ -165,7 +165,7 @@ function Routes(props) {
             element: <HandleUnmatchedRoute />,
           },
         ],
-        { basename: "/administration" },
+        { basename },
       )}
       {...props}
     />

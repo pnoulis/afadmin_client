@@ -52,8 +52,9 @@ dist: src
 # ------------------------------ RUN ------------------------------ #
 .PHONY: run
 run: mode ?= 'development'
+run: RUNTIME ?= 'node'
 run: file ?= '$(SRCDIR)/tmp/scratch.js'
-run: env
+run: env mqtt
 	set -a; source ./.env && \
 	$(INTERPRETER) $(file) \
 	| $(PRETTY_OUTPUT)
@@ -68,13 +69,15 @@ run-build:
 .PHONY: scratch scratch-dev scratch-build
 
 scratch: mode ?= 'development'
-scratch: env
+scratch: RUNTIME ?= 'node'
+scratch: env mqtt
 	set -a; source ./.env && \
 	$(INTERPRETER) ./tmp/scratch.js \
 	| $(PRETTY_OUTPUT)
 
 scratch-dev: mode ?= 'development'
-scratch-dev: envars ?= "SCRATCH=true;"
+scratch-dev: RUNTIME ?= 'browser'
+scratch-dev: envars ?= "SCRATCH=true;RUNTIME=browser"
 scratch-dev:
 	$(DOTENV) --mode=$(mode) --environment=$(envars) \
 	$(ENVDIRS) | $(SORT) > $(SRCDIR)/.env
@@ -92,7 +95,11 @@ scratch-build:
 # ------------------------------ DEV ------------------------------ #
 .PHONY: dev
 dev: mode ?= 'development'
-dev: env
+dev: RUNTIME ?= 'browser'
+dev: envars ?= 'BUNDLED=false;RUNTIME=browser'
+dev: mqtt
+	$(DOTENV) --mode=$(mode) --environment=$(envars) \
+	$(ENVDIRS) | $(SORT) > $(SRCDIR)/.env
 	set -a; source ./.env && \
 	$(BUNDLER) serve --mode=$(mode) --force
 
@@ -106,8 +113,9 @@ preview: env
 # ------------------------------ BUILD ------------------------------ #
 .PHONY: build
 build: mode ?= 'production'
-build: envars ?= "BUNDLED=true;RUNTIME=browser;"
-build:
+build: RUNTIME=browser
+build: envars ?= "BUNDLED=true;RUNTIME=browser"
+build: mqtt
 	$(DOTENV) --mode=$(mode) --environment=$(envars) \
 	$(ENVDIRS) | $(SORT) > $(SRCDIR)/.env
 	set -a; source ./.env && \
@@ -163,3 +171,6 @@ env-dry:
 
 
 # ------------------------------ VARIOUS ------------------------------ #
+
+mqtt:
+	m4 -D RUNTIME=$(RUNTIME) $(SHARED)/utils/macros.m4 $(SHARED)/clients/mqtt.js.m4 > $(SHARED)/clients/mqtt.js

@@ -9,7 +9,7 @@ import { DateWidget } from "/src/components/widgets/index.js";
 const SiteDateWidget = styled(DateWidget)`
   margin-right: auto;
   font-size: var(--tx-nl);
-  font-weight: 500;
+  font-weight: 600;
 
   .separator {
     margin: 0 5px 0 2px;

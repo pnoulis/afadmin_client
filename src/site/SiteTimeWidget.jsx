@@ -8,7 +8,7 @@ import { TimeWidget } from "/src/components/widgets/index.js";
 
 const SiteTimeWidget = styled(TimeWidget)`
   font-size: var(--tx-nl);
-  font-weight: 500;
+  font-weight: 600;
   text-align: center;
 
   .hour,

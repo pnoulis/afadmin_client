@@ -26,7 +26,6 @@ function Site() {
         <SiteDateWidget separator="," />
         <SiteTimeWidget />
         <AccountWidget />
-        <UiThemeWidget />
       </Header>
       <Sidebar>
         <SidebarLogo />

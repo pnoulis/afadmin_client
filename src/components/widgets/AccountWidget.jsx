@@ -8,6 +8,7 @@ import { Svg } from "react_utils/svgs";
 // ------------------------------ project  ------------------------------- //
 import { ReactComponent as PersonIcon } from "agent_factory.shared/ui/icons/person-filled.svg";
 import { useHover } from "/src/hooks/index.js";
+import { Logout } from "/src/components/widgets/AccountWidgetButtons.jsx";
 
 /**
  * AccountWidget
@@ -19,11 +20,14 @@ function AccountWidget() {
   return (
     <Dropdown>
       <DropdownTrigger {...onHover}>
-        <Svg size="20">
+        <p>username</p>
+        <Svg>
           <PersonIcon />
         </Svg>
-        <DropdownList open={true}>
-          <DropdownOption>yolo</DropdownOption>
+        <DropdownList open={hovering}>
+          <DropdownOption>
+            <Logout />
+          </DropdownOption>
         </DropdownList>
       </DropdownTrigger>
     </Dropdown>
@@ -37,32 +41,45 @@ const Dropdown = styled("ul")`
 
 const DropdownTrigger = styled("li")`
   cursor: pointer;
-  display: flex;
-  align-items: center;
+  position: relative;
   box-sizing: border-box;
-  background-color: black;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 10px;
   padding: 5px;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  &:hover {
-    opacity: 0.8;
+  p {
+    font-size: var(--tx-md);
+    font-weight: 550;
+    letter-spacing: 0.5px;
   }
-  svg {
+  & > svg {
+    box-sizing: border-box;
+    padding: 4px 3px 0 3px;
+    width: 30px;
+    height: 30px;
+    background-color: black;
+    border-radius: 50%;
     fill: white;
   }
-
-  position: relative;
 `;
 
 const DropdownList = styled("ul")`
   display: ${({ open }) => (open ? "flex" : "none")};
   position: absolute;
-  background-color: red;
-  left: 0;
-  transform: translateX(-50%);
-  top: 40px;
+  top: 35px;
+  padding-top: 10px;
+  right: 0;
+  flex-flow: column nowrap;
+  background-color: transparent;
+  min-width: 200px;
 `;
-const DropdownOption = styled("li")``;
+const DropdownOption = styled("li")`
+  background-color: var(--grey-base);
+  border-radius: var(--br-nl);
+  &:hover {
+    opacity: 0.7;
+  }
+`;
 
 export { AccountWidget };

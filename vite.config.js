@@ -13,7 +13,6 @@ export default defineConfig({
   base: ENVIRONMENT.BASENAME,
   define: {
     __STATIC_ENV__: ENVIRONMENT,
-    __MQTT_CLIENT_LIB__: JSON.stringify("precompiled-mqtt"),
   },
   plugins: [
     react({

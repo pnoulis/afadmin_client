@@ -4,23 +4,16 @@ import * as React from "react";
 import styled from "styled-components";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
-import background from "agent_factory.shared/ui/new-icons/sidebar-250x1080px.png";
+import { WidgetDate } from "/src/components/widgets/index.js";
 
-/**
- * Sidebar
- * @example
- *
- */
+const SiteWidgetDate = styled(WidgetDate)`
+  margin-right: auto;
+  font-size: var(--tx-nl);
+  font-weight: 400;
 
-const Sidebar = styled("aside")`
-  box-sizing: border-box;
-  grid-area: sidebar;
-  background-image: url(${background});
-  background-size: fill;
-  padding: 40px 10px;
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 50px;
+  .separator {
+    margin: 0 5px 0 2px;
+  }
 `;
 
-export { Sidebar };
+export { SiteWidgetDate };

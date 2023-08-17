@@ -16,6 +16,8 @@ const SidebarNavigation = styled("nav")`
   flex-flow: column nowrap;
   gap: 10px;
   width: 100%;
+  margin-top: 40px;
+  padding: 0 10px;
 `;
 
 export { SidebarNavigation };

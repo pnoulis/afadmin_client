@@ -6,21 +6,21 @@ import * as React from "react";
 import { useTime } from "/src/hooks/index.js";
 
 /**
- * TimeWidget
+ * WidgetDate
  * @example
  *
  */
-function TimeWidget({ separator, className }) {
-  const { hour, minute, second, literal } = useTime({ eachSec: true });
+function WidgetDate({ separator, className }) {
+  const { weekday, day, month, literal } = useTime();
   return (
     <p className={className}>
-      <span className="hour">{hour}</span>
+      <span className="weekday">{weekday}</span>
       <span className="separator">{separator || literal}</span>
-      <span className="minute">{minute}</span>
+      <span className="day">{day}</span>
       <span className="separator">{separator || literal}</span>
-      <span className="second">{second}</span>
+      <span className="month">{month}</span>
     </p>
   );
 }
 
-export { TimeWidget };
+export { WidgetDate };

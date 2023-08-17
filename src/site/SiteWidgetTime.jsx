@@ -4,11 +4,11 @@ import * as React from "react";
 import styled from "styled-components";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
-import { TimeWidget } from "/src/components/widgets/index.js";
+import { WidgetTime } from "/src/components/widgets/index.js";
 
-const SiteTimeWidget = styled(TimeWidget)`
+const SiteWidgetTime = styled(WidgetTime)`
   font-size: var(--tx-nl);
-  font-weight: 600;
+  font-weight: 400;
   text-align: center;
 
   .hour,
@@ -19,4 +19,4 @@ const SiteTimeWidget = styled(TimeWidget)`
   }
 `;
 
-export { SiteTimeWidget };
+export { SiteWidgetTime };

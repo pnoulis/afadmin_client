@@ -4,15 +4,11 @@ import { Outlet } from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
 import * as links from "/src/links.jsx";
-import {
-  DateWidget,
-  TimeWidget,
-  AccountWidget,
-  UiThemeWidget,
-} from "/src/components/widgets/index.js";
+import { WidgetAccount } from "/src/components/widgets/index.js";
 import { Header } from "/src/site/Header.jsx";
-import { SiteDateWidget } from "/src/site/SiteDateWidget.jsx";
-import { SiteTimeWidget } from "/src/site/SiteTimeWidget.jsx";
+import { SiteWidgetDate } from "/src/site/SiteWidgetDate.jsx";
+import { SiteWidgetTime } from "/src/site/SiteWidgetTime.jsx";
+import { SiteWidgetUITheme } from "/src/site/SiteWidgetUITheme.jsx";
 import { Sidebar } from "/src/site/Sidebar.jsx";
 import { SidebarLogo } from "./SidebarLogo.jsx";
 import { SidebarNavigation } from "/src/site/SidebarNavigation.jsx";
@@ -23,9 +19,10 @@ function Site() {
   return (
     <div className="site-layout">
       <Header>
-        <SiteDateWidget separator="," />
-        <SiteTimeWidget />
-        <AccountWidget />
+        <SiteWidgetDate separator="," />
+        <SiteWidgetTime />
+        <WidgetAccount />
+        <SiteWidgetUITheme />
       </Header>
       <Sidebar>
         <SidebarLogo />

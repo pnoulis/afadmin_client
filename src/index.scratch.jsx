@@ -6,13 +6,14 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
 import { Site } from "/src/site/Site.jsx";
+// import ScratchImages from "/src/scratch/ScratchImages.jsx";
 
 ReactDOM.createRoot(document.getElementById("app-react-root")).render(
   <React.StrictMode>
     <RouterProvider
       router={createBrowserRouter([
         {
-          element: <Site />,
+          element: <Site/>,
           path: "/",
         },
       ])}

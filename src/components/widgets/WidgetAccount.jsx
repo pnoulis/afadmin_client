@@ -8,20 +8,20 @@ import { Svg } from "react_utils/svgs";
 // ------------------------------ project  ------------------------------- //
 import { ReactComponent as PersonIcon } from "agent_factory.shared/ui/icons/person-filled.svg";
 import { useHover } from "/src/hooks/index.js";
-import { Logout } from "/src/components/widgets/AccountWidgetButtons.jsx";
+import { Logout } from "/src/components/widgets/WidgetAccountButtons.jsx";
 
 /**
- * AccountWidget
+ * WidgetAccount
  * @example
  *
  */
-function AccountWidget() {
+function WidgetAccount() {
   const [hovering, onHover] = useHover();
   return (
     <Dropdown>
       <DropdownTrigger {...onHover}>
         <p>username</p>
-        <Svg>
+        <Svg size="25">
           <PersonIcon />
         </Svg>
         <DropdownList open={hovering}>
@@ -50,14 +50,12 @@ const DropdownTrigger = styled("li")`
   padding: 5px;
   p {
     font-size: var(--tx-md);
-    font-weight: 550;
+    font-weight: 400;
     letter-spacing: 0.5px;
   }
   & > svg {
     box-sizing: border-box;
     padding: 4px 3px 0 3px;
-    width: 30px;
-    height: 30px;
     background-color: black;
     border-radius: 50%;
     fill: white;
@@ -82,4 +80,4 @@ const DropdownOption = styled("li")`
   }
 `;
 
-export { AccountWidget };
+export { WidgetAccount };

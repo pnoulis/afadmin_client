@@ -3,34 +3,32 @@
 import * as React from "react";
 import styled from "styled-components";
 // ------------------------------ own libs ------------------------------- //
+import { Svg } from "react_utils/svgs";
 // ------------------------------ project  ------------------------------- //
-import { home } from "/src/links.jsx";
-import SiteLogo from "agent_factory.shared/ui/brand/logo_1.png";
+import { ReactComponent as DarkModeIcon } from "agent_factory.shared/ui/icons/dark-mode-icon.svg";
 
 /**
- * SidebarLogo
+ * WidgetUITheme
  * @example
  *
  */
-
-function SidebarLogo({ className }) {
+function WidgetUITheme({ size, className }) {
   return (
-    <section className={className}>
-      <StyleHomeNavLink>
-        <img src={SiteLogo} alt="agent-factory-logo" />
-      </StyleHomeNavLink>
-    </section>
+    <StyleContainerSvg className={className}>
+      <Svg size={size}>
+        <DarkModeIcon />
+      </Svg>
+    </StyleContainerSvg>
   );
 }
 
-const StyleHomeNavLink = styled(home.asComponent)`
+const StyleContainerSvg = styled("div")`
   display: flex;
-  margin: auto;
   justify-content: center;
   align-items: center;
-  img {
-    margin-left: -2.5px;
-  }
+  height: 100%;
+  padding: 0 15px;
+  cursor: pointer;
 `;
 
-export { SidebarLogo };
+export { WidgetUITheme };

@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 // ------------------------------ project  ------------------------------- //
 
 const SidebarNavLink = styled(NavLink)`
-  background-color: hsl(var(--base-primary), 53%, 0.5);
+  background-color: hsl(var(--base-primary), 53%, .6);
   padding: 20px 15px;
   border-radius: var(--br-md);
   text-align: center;

@@ -1,7 +1,7 @@
 // ------------------------------ std libs ------------------------------- //
 // ------------------------------ 3rd libs ------------------------------- //
 // ------------------------------ own libs ------------------------------- //
-import { evlogin, evlogout } from "/src/services/afmachine/eventfulActions.js";
+import { evlogin, evlogout } from "/src/services/afmachine/statefulActions.js";
 // ------------------------------ project  ------------------------------- //
 import { LocalStorageService } from "agent_factory.shared/services/client_storage/local_storage/index.js";
 import { CLIENT_STORAGE_GLOBAL_SESSION_ID } from "agent_factory.shared/constants.js";
@@ -22,9 +22,6 @@ function Session() {
   }
 
   this.sessionlogin = function (login) {
-    if (this.loggedIn) {
-      this.logout();
-    }
     this.user = new LocalStorageService(login.sessionId);
     const __session = { user: login };
     const prevSession = this.global.get(login.username);
@@ -59,12 +56,19 @@ function Session() {
   };
 
   this.login = function (cashier) {
-    return evlogin(cashier).then(this.sessionlogin.bind(this));
+    return this.loggedIn
+      ? evlogout(this.user.get("user"))
+          .then(() => this.sessionlogout(false))
+          .then(() => evlogin(cashier))
+          .then((res) => this.sessionlogin(res))
+      : evlogin(cashier).then((res) => this.sessionlogin(res));
   };
+  this.login.states = evlogin;
 
   this.logout = function (drop) {
-    return evlogout(this.user).then(this.sessionlogout.bind(this, drop));
+    return evlogout(this.user.get("user")).then(() => this.sessionlogout(drop));
   };
+  this.logout.states = evlogout;
 
   this.get = function (key) {
     return this.loggedIn ? this.user.get(key) : null;

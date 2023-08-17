@@ -3,10 +3,7 @@ import styled from "styled-components";
 const StyleLayoutFm = styled.div`
   pointer-events: none;
   padding: 10px 20px;
-  width: 100%;
-  min-width: 400px;
-  max-width: 600px;
-  width: max-content;
+  width: 600px;
   margin: auto;
   border-radius: var(--br-nl);
   font-size: var(--tx-md);

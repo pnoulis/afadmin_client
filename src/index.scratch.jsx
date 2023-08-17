@@ -5,8 +5,9 @@ import * as ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
-import { PageLogin } from '/src/pages/index.js';
+import { PageLogin } from "/src/pages/index.js";
 import ScratchAfmachine from "/src/scratch/ScratchAfmachine.jsx";
+import ScratchAsync from "/src/scratch/ScratchAsync.jsx";
 import { Page401, Page404, Page408, Page500 } from "/src/pages/index.js";
 
 ReactDOM.createRoot(document.getElementById("app-react-root")).render(

@@ -9,22 +9,26 @@ import { AFLogo2, AFLogo3 } from "/src/components/logos/index.js";
 import { FormLoginAdministrator } from "/src/pages/login/FormLoginAdministrator.jsx";
 import background from "agent_factory.shared/ui/backgrounds/homepage-background-1920x1080px.png";
 import { useApp } from "/src/app/useApp.jsx";
+import { PopoverAsyncState } from "/src/components/async/index.js";
+
 
 function PageLogin() {
   const { session } = useApp();
   const navigate = useNavigate();
 
   function handleFormLoginSubmit(form, cb) {
-    session
-      .login(form)
-      .then(() => {
-        setTimeout(() => navigate("/"), 2000);
-      })
-      .finally(cb);
+    session.login(form).finally(cb);
   }
-
   return (
     <StylePageLogin>
+      <PopoverAsyncState
+        action={session.login.states}
+        onSettled={(loggedIn) => {
+          if (loggedIn) {
+            navigate("/");
+          }
+        }}
+      />
       <header>
         <AFLogo2 />
       </header>

@@ -4,15 +4,25 @@
 import { afmachine, Scheduler } from "/src/services/afmachine/afmachine.js";
 // ------------------------------ project  ------------------------------- //
 
+// LOGIN
 const loginScheduler = new Scheduler();
 const evlogin = function (cashier) {
   return loginScheduler.run(afmachine.loginCashier.bind(afmachine, cashier));
 };
 Object.setPrototypeOf(evlogin, loginScheduler);
+
+// LOGOUT
 const logoutScheduler = new Scheduler();
 const evlogout = function (cashier) {
   return logoutScheduler.run(afmachine.logoutCashier.bind(afmachine, cashier));
 };
 Object.setPrototypeOf(evlogout, logoutScheduler);
 
-export { evlogin, evlogout };
+// TEST
+const testScheduler = new Scheduler();
+const sftest = function () {
+  return testScheduler.run(afmachine.test.bind(afmachine));
+};
+Object.setPrototypeOf(sftest, testScheduler);
+
+export { evlogin, evlogout, sftest };

@@ -2,32 +2,42 @@
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
 import { AFLogo2, AFLogo3 } from "/src/components/logos/index.js";
 import { FormLoginAdministrator } from "/src/pages/login/FormLoginAdministrator.jsx";
 import background from "agent_factory.shared/ui/backgrounds/homepage-background-1920x1080px.png";
+import { useApp } from "/src/app/useApp.jsx";
 
 function PageLogin() {
+  const { session } = useApp();
+  const navigate = useNavigate();
+
+  function handleFormLoginSubmit(form, cb) {
+    session
+      .login(form)
+      .then(() => {
+        setTimeout(() => navigate("/"), 2000);
+      })
+      .finally(cb);
+  }
+
   return (
     <StylePageLogin>
       <header>
-        <StyleAFLogo2 />
+        <AFLogo2 />
       </header>
       <section>
-        <FormLoginAdministrator />
+        <FormLoginAdministrator onSubmit={handleFormLoginSubmit} />
       </section>
       <VerticalRule />
       <section>
-        <StyleAFLogo3 />
+        <AFLogo3 />
       </section>
     </StylePageLogin>
   );
 }
-
-const StyleAFLogo2 = styled(AFLogo2)``;
-
-const StyleAFLogo3 = styled(AFLogo3)``;
 
 const StylePageLogin = styled("div")`
   background-image: url(${background});

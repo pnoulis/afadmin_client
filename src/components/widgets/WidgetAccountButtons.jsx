@@ -28,9 +28,9 @@ const StyleButtonIconText = styled(ButtonIconText.Button)`
   }
 `;
 
-function Logout() {
+function Logout({ onLogout, className }) {
   return (
-    <StyleButtonIconText>
+    <StyleButtonIconText className={className} onClick={onLogout}>
       <ButtonIconText.Icon>
         <LogoutIcon />
       </ButtonIconText.Icon>

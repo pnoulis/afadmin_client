@@ -8,6 +8,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { PageLogin } from "/src/pages/index.js";
 import ScratchAfmachine from "/src/scratch/ScratchAfmachine.jsx";
 import ScratchAsync from "/src/scratch/ScratchAsync.jsx";
+import { Authorize } from "/src/components/auth/index.js";
 import { Page401, Page404, Page408, Page500 } from "/src/pages/index.js";
 
 ReactDOM.createRoot(document.getElementById("app-react-root")).render(
@@ -15,7 +16,11 @@ ReactDOM.createRoot(document.getElementById("app-react-root")).render(
     <RouterProvider
       router={createBrowserRouter([
         {
-          element: <PageLogin />,
+          element: (
+            <Authorize>
+              {(loggedIn) => (loggedIn ? <Page401 /> : <PageLogin />)}
+            </Authorize>
+          ),
           path: "/",
           children: [
             {

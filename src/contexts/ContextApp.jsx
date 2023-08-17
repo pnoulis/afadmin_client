@@ -11,7 +11,7 @@ function ContextProvideApp({ ctx, children }) {
 }
 
 function useContextApp() {
-  const ctx = React.useContext(ContextTeam);
+  const ctx = React.useContext(ContextApp);
   if (ctx == null) {
     throw new Error("<ContextProvideApp/> missing");
   }

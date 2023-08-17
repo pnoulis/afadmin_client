@@ -19,7 +19,7 @@ const Header = styled("header")`
   flex-flow: row nowrap;
   align-items: center;
   padding: 0 15px;
-  gap: 15px;
+  gap: 5px;
 `;
 
 export { Header };

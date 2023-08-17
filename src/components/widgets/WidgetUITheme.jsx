@@ -12,9 +12,9 @@ import { ReactComponent as DarkModeIcon } from "agent_factory.shared/ui/icons/da
  * @example
  *
  */
-function WidgetUITheme({ size, className }) {
+function WidgetUITheme({ size, className, style }) {
   return (
-    <StyleContainerSvg className={className}>
+    <StyleContainerSvg className={className} style={style}>
       <Svg size={size}>
         <DarkModeIcon />
       </Svg>

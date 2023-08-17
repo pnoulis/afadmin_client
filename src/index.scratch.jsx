@@ -5,15 +5,14 @@ import * as ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
-import { Site } from "/src/site/Site.jsx";
-// import ScratchImages from "/src/scratch/ScratchImages.jsx";
+import { PageLogin } from "/src/pages/index.js";
 
 ReactDOM.createRoot(document.getElementById("app-react-root")).render(
   <React.StrictMode>
     <RouterProvider
       router={createBrowserRouter([
         {
-          element: <Site/>,
+          element: <PageLogin />,
           path: "/",
         },
       ])}

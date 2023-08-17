@@ -126,7 +126,7 @@
   --grey-medium: hsl(var(--base-grey), 70%);
   --grey-strong: hsl(var(--base-grey), 60%);
 
-  --primary-subtler: hsl(var(--base-primary), 94%);
+  --primary-subtler: hsl(var(--base-primary), 85%);
   --primary-subtle: hsl(var(--base-primary), 73%);
   --primary-light: hsl(var(--base-primary), 63%);
   --primary-base: hsl(var(--base-primary), 53%);

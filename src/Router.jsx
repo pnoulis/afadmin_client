@@ -18,6 +18,11 @@ import {
   Page500,
   PageLogin,
   PageHome,
+  PageRegistration,
+  PageMerge,
+  PageGroupParty,
+  PageLiveView,
+  PageAdministrator,
 } from "/src/pages/index.js";
 
 /**
@@ -47,6 +52,26 @@ function Router({ basename }) {
                   {
                     index: true,
                     element: <PageHome />,
+                  },
+                  {
+                    path: links.registration.path,
+                    element: <PageRegistration />,
+                  },
+                  {
+                    path: links.merge.path,
+                    element: <PageMerge />,
+                  },
+                  {
+                    path: links.groupParty.path,
+                    element: <PageGroupParty />,
+                  },
+                  {
+                    path: links.liveView.path,
+                    element: <PageLiveView />,
+                  },
+                  {
+                    path: links.administrator.path,
+                    element: <PageAdministrator />,
                   },
                 ],
               },

@@ -4,3 +4,8 @@ export * from "/src/pages/errors/Page404.jsx";
 export * from "/src/pages/errors/Page408.jsx";
 export * from "/src/pages/errors/Page500.jsx";
 export * from '/src/pages/home/PageHome.jsx';
+export * from '/src/pages/live-view/PageLiveView.jsx';
+export * from '/src/pages/group-party/PageGroupParty.jsx';
+export * from '/src/pages/merge/PageMerge.jsx';
+export * from '/src/pages/registration/PageRegistration.jsx';
+export * from '/src/pages/administrator/PageAdministrator.jsx';

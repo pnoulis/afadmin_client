@@ -4,7 +4,7 @@ import * as React from "react";
 import styled from "styled-components";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
-import background from "agent_factory.shared/ui/new-icons/sidebar-250x1080px.png";
+import background from "agent_factory.shared/ui/backgrounds/sidebar-background-250x1080px.png";
 
 /**
  * Sidebar

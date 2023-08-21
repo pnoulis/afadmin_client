@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
 import { AFLogo2, AFLogo3 } from "/src/components/logos/index.js";
-import { FormLoginAdministrator } from "/src/pages/login/FormLoginAdministrator.jsx";
+import { FormLoginAdministrator } from "/src/pages/page-login/FormLoginAdministrator.jsx";
 import background from "agent_factory.shared/ui/backgrounds/homepage-background-1920x1080px.png";
 import { useContextApp } from "/src/contexts/index.js";
 import { PopoverAsyncState } from "/src/components/async/index.js";

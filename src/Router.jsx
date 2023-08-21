@@ -19,11 +19,15 @@ import {
   PageLogin,
   PageHome,
   PageRegistration,
+  PageRegistrationPlayer,
+  PageRegistrationWristband,
+  PageRegistrationHistory,
   PageMerge,
   PageGroupParty,
   PageLiveView,
   PageAdministrator,
 } from "/src/pages/index.js";
+import { ENVIRONMENT } from "agent_factory.shared/config.js";
 
 /**
  * component
@@ -31,78 +35,88 @@ import {
  *
  */
 
-function Router({ basename }) {
-  return (
-    <RouterProvider
-      router={createBrowserRouter(
-        [
-          {
-            element: <App />,
-            children: [
-              {
-                path: "/",
-                element: (
-                  <Authorize>
-                    {(loggedIn) =>
-                      loggedIn ? <Site /> : <Navigate to="/login" />
-                    }
-                  </Authorize>
-                ),
-                children: [
-                  {
-                    index: true,
-                    element: <PageHome />,
-                  },
-                  {
-                    path: links.registration.path,
-                    element: <PageRegistration />,
-                  },
-                  {
-                    path: links.merge.path,
-                    element: <PageMerge />,
-                  },
-                  {
-                    path: links.groupParty.path,
-                    element: <PageGroupParty />,
-                  },
-                  {
-                    path: links.liveView.path,
-                    element: <PageLiveView />,
-                  },
-                  {
-                    path: links.administrator.path,
-                    element: <PageAdministrator />,
-                  },
-                ],
-              },
-              {
-                path: links.login.path,
-                element: <PageLogin />,
-              },
-              {
-                path: "/401",
-                element: <Page401 />,
-              },
-              {
-                path: "/404",
-                element: <Page404 />,
-              },
-              ,
-              {
-                path: "/408",
-                element: <Page408 />,
-              },
-              {
-                path: "/500",
-                element: <Page500 />,
-              },
-            ],
-          },
-        ],
-        { basename },
-      )}
-    />
-  );
+const router = createBrowserRouter(
+  [
+    {
+      element: <App />,
+      children: [
+        {
+          path: "/",
+          element: (
+            <Authorize>
+              {(loggedIn) => (loggedIn ? <Site /> : <Navigate to="/login" />)}
+            </Authorize>
+          ),
+          children: [
+            {
+              index: true,
+              element: <PageHome />,
+            },
+            {
+              path: links.registration.path,
+              element: <PageRegistration />,
+              children: [
+                {
+                  index: true,
+                  element: <PageRegistrationPlayer />,
+                },
+                {
+                  path: links.registrationWristband.path,
+                  element: <PageRegistrationWristband />,
+                },
+                {
+                  path: links.registrationHistory.path,
+                  element: <PageRegistrationHistory />,
+                },
+              ],
+            },
+            {
+              path: links.merge.path,
+              element: <PageMerge />,
+            },
+            {
+              path: links.groupParty.path,
+              element: <PageGroupParty />,
+            },
+            {
+              path: links.liveView.path,
+              element: <PageLiveView />,
+            },
+            {
+              path: links.administrator.path,
+              element: <PageAdministrator />,
+            },
+          ],
+        },
+        {
+          path: links.login.path,
+          element: <PageLogin />,
+        },
+        {
+          path: "/401",
+          element: <Page401 />,
+        },
+        {
+          path: "/404",
+          element: <Page404 />,
+        },
+        ,
+        {
+          path: "/408",
+          element: <Page408 />,
+        },
+        {
+          path: "/500",
+          element: <Page500 />,
+        },
+      ],
+    },
+  ],
+  { basename: ENVIRONMENT.BASENAME },
+);
+
+function Router() {
+  return <RouterProvider router={router} />;
 }
 
 export { Router };

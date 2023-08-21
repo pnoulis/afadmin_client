@@ -1,12 +1,11 @@
 // ------------------------------ std libs ------------------------------- //
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
-import styled from "styled-components";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
 
-function PageRegistration() {
-  return <div>page registration</div>;
+function PageRegistrationHistory() {
+  return <div>page registration history</div>;
 }
 
-export { PageRegistration };
+export { PageRegistrationHistory };

@@ -23,8 +23,8 @@ export default defineConfig({
     svgr(),
     createHtmlPlugin({
       minify: false,
-      entry: ENVIRONMENT.SCRATCH ? "src/index.scratch.jsx" : "src/index.jsx",
-      template: ENVIRONMENT.SCRATCH ? "index.scratch.html" : "index.html",
+      entry: ENVIRONMENT.SCRATCH ? "/src/index.scratch.jsx" : "/src/index.jsx",
+      template: ENVIRONMENT.SCRATCH ? "/index.scratch.html" : "/index.html",
       inject: {
         data: {
           title: "agent factory",

@@ -35,7 +35,7 @@ const registrationPlayer = {
   path: "/registration/player",
   label: "register player",
   asComponent: ({ children, ...props }) => (
-    <NavLink to="/registration" {...props}>
+    <NavLink to="/registration/player" {...props}>
       {children}
     </NavLink>
   ),

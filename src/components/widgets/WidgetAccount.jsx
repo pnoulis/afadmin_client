@@ -94,7 +94,7 @@ const DropdownList = styled("ul")`
   min-width: 200px;
 `;
 const DropdownOption = styled("li")`
-  background-color: var(--grey-base);
+  background-color: var(--grey-light);
   border-radius: var(--br-nl);
   &:hover {
     opacity: 0.7;

@@ -25,4 +25,13 @@ const sftest = function () {
 };
 Object.setPrototypeOf(sftest, testScheduler);
 
-export { evlogin, evlogout, sftest };
+// REGISTER PLAYER
+const registerPlayerScheduler = new Scheduler();
+const sRegisterPlayer = function (player) {
+  return registerPlayerScheduler.run(
+    afmachine.registerPlayer.bind(afmachine, player),
+  );
+};
+Object.setPrototypeOf(sRegisterPlayer, registerPlayerScheduler);
+
+export { evlogin, evlogout, sftest, sRegisterPlayer };

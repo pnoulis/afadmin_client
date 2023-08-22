@@ -78,7 +78,7 @@ scratch: env mqtt
 scratch-dev: mode ?= 'development'
 scratch-dev: RUNTIME ?= 'browser'
 scratch-dev: envars ?= "SCRATCH=true;RUNTIME=browser"
-scratch-dev:
+scratch-dev: mqtt
 	$(DOTENV) --mode=$(mode) --environment=$(envars) \
 	$(ENVDIRS) | $(SORT) > $(SRCDIR)/.env
 	set -a; source ./.env && \

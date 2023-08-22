@@ -50,7 +50,7 @@ const router = createBrowserRouter(
           children: [
             {
               index: true,
-              element: <PageHome />,
+              element: <Navigate to="/registration/player" />,
             },
             {
               path: links.registration.path,

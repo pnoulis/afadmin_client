@@ -20,9 +20,8 @@ const StylePanel = styled.div`
   grid-template-areas: "header" "main";
   grid-template-rows: max-content 1fr;
   grid-template-columns: 1fr;
-  padding: 15px;
+  padding: 25px;
   row-gap: 50px;
-  background-color: white;
   border-radius: var(--br-xl);
 `;
 

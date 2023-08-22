@@ -8,6 +8,7 @@ import { afmachine } from "/src/services/afmachine/afmachine.js";
 import { getCatchAffersMiddleware } from "/src/services/afmachine/getCatchAffersMiddleware.js";
 import { displayFlashMessageMiddleware } from "/src/services/afmachine/displayFlashMessageMiddleware.js";
 import { session } from "/src/services/session.js";
+import { sRegisterPlayer } from "/src/services/afmachine/statefulActions.js";
 
 const setMiddleware = (function () {
   let set = false;
@@ -30,6 +31,7 @@ function useApp() {
   return {
     afmachine,
     session,
+    sRegisterPlayer,
   };
 }
 

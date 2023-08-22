@@ -1,25 +1,14 @@
 // ------------------------------ std libs ------------------------------- //
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
-import styled from "styled-components";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
+import { ContextProvidePlayer } from "/src/contexts/index.js";
+import { usePlayer } from "/src/components/players/usePlayer.jsx";
 
-/**
- * Header
- * @example
- *
- */
+function Player({ player, children, fill, depth }) {
+  const ctx = usePlayer(player, { fill, depth });
+  return <ContextProvidePlayer ctx={ctx}>{children}</ContextProvidePlayer>;
+}
 
-const Header = styled("header")`
-  box-sizing: border-box;
-  grid-area: header;
-  background-color: var(--grey-light);
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-  padding: 0 15px;
-  gap: 5px;
-`;
-
-export { Header };
+export { Player };

@@ -40,7 +40,6 @@ function useRegistrationQueue(players = [], { fill = false } = {}) {
       newQueue.push(persistentPlayer);
     }
 
-    console.log(player);
     setQueue(newQueue.concat(queue));
   }
 

@@ -65,7 +65,7 @@ const StyleButton = styled("button")`
   gap: 10px;
   padding: 10px 10px 5px 10px;
   cursor: pointer;
-  background-color: var(--primary-light);
+  background-color: var(--primary-base);
   border-radius: var(--br-md);
   color: white;
 

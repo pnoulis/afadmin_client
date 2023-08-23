@@ -14,12 +14,8 @@ import WristbandBackground from "agent_factory.shared/ui/new-icons/wristband-gea
 function RegistrationQueue({ className, style }) {
   const { queue } = useContextRegistrationQueue();
   return (
-    <StyledRegistrationQueue
-      className={className}
-      style={style}
-      id="registration-queue"
-    >
-      <AncestorDimensions ancestor="#registration-queue">
+    <AncestorDimensions ancestor="#ancestor-scrollarea">
+      <StyledRegistrationQueue className={className} style={style}>
         <StyledListPlayers>
           {queue.map((p, i) => (
             <PersistentPlayer key={p.username + i} player={p}>
@@ -29,8 +25,8 @@ function RegistrationQueue({ className, style }) {
             </PersistentPlayer>
           ))}
         </StyledListPlayers>
-      </AncestorDimensions>
-    </StyledRegistrationQueue>
+      </StyledRegistrationQueue>
+    </AncestorDimensions>
   );
 }
 
@@ -38,21 +34,22 @@ const StyledRegistrationQueue = styled("section")`
   position: relative;
   width: 100%;
   height: 100%;
+  max-width: 650px;
   border-radius: var(--br-lg);
   background-color: white;
   background-image: url(${WristbandBackground});
   background-repeat: no-repeat;
   background-size: 50%;
   background-position: center;
+  max-height: ${({ $height }) => `${$height - 35 || 0}px`};
 `;
 
 const StyledListPlayers = styled("ul")`
   margin: auto;
+  max-width: 590px;
   overflow-y: auto;
   overflow-x: none;
-  width: 590px;
   height: 100%;
-  max-height: ${({ $height }) => `${$height || 0}px`};
   display: grid;
   grid-template-columns: repeat(3, 170px);
   grid-auto-rows: max-content;

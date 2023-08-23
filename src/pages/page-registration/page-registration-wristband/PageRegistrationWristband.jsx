@@ -3,6 +3,7 @@
 import * as React from "react";
 import styled from "styled-components";
 // ------------------------------ own libs ------------------------------- //
+import { AncestorDimensions } from "react_utils";
 // ------------------------------ project  ------------------------------- //
 import {
   RegistrationQueue,
@@ -30,7 +31,7 @@ function PageRegistrationWristband() {
         Option={ComboboxOptionPlayer}
       />
       <ContextProvideRegistrationQueue ctx={ctx}>
-        <RegistrationQueue />
+    <RegistrationQueue style={{alignSelf: "end"}}/>
       </ContextProvideRegistrationQueue>
     </StyledPageRegistrationWristband>
   );
@@ -46,11 +47,6 @@ const StyledPageRegistrationWristband = styled("div")`
   justify-items: end;
   align-items: start;
   column-gap: 120px;
-
-  #registration-queue {
-    height: 505px;
-    align-self: end;
-  }
 `;
 
 export { PageRegistrationWristband };

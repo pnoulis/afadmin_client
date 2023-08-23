@@ -3,7 +3,6 @@
 import * as React from "react";
 import styled from "styled-components";
 // ------------------------------ own libs ------------------------------- //
-import { Svg } from "react_utils/svgs";
 import { BasicDialog } from "react_utils/dialogs";
 // ------------------------------ project  ------------------------------- //
 import { useAfmachineStatefulAction } from "/src/hooks/index.js";

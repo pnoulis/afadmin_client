@@ -35,14 +35,17 @@ const CssWristbandTuple = css`
   font-size: var(--tx-xs);
   font-family: Saira;
 
+  .key {
+    font-weight: 600;
+  }
+
   .key::after {
     content: ":";
-    font-weight: 550;
     margin: 0 5px 0 3px;
   }
 
   .value {
-    display: inline-block;
+    font-size: var(--tx-xxs);
     word-break: break-all;
     overflow-wrap: anywhere;
   }

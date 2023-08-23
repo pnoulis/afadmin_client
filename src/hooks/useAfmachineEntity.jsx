@@ -13,7 +13,8 @@ function useAfmachineEntity(
   const [state, setState] = React.useState("");
   const [id, setId] = React.useState("");
   const constructorRef = React.useRef(createEntity?.().constructor);
-  const entityRef = React.useRef();
+  const subsRef = React.useRef(null);
+  const entityRef = React.useRef(source);
 
   if (constructorRef.current == null) {
     throw new Error("useAfmachineEntity missing constructor");
@@ -26,7 +27,9 @@ function useAfmachineEntity(
         })
       : createEntity(source);
     console.log(`created ${constructorRef.current.name} entity`);
+  }
 
+  if (subsRef.current === null) {
     if ("on" in entityRef.current) {
       console.log(`${constructorRef.current.name} entity is eventful`);
       entityRef.current.on("stateChange", function (state) {
@@ -46,9 +49,9 @@ function useAfmachineEntity(
         ? entityRef.current.getState().name
         : entityRef.current.state,
     );
+    subsRef.current = true;
   }
 
-  console.log(entityRef.current);
   return {
     state,
     id,

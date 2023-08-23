@@ -13,20 +13,18 @@ function scannableWristband(source) {
   return afmachine.createScanableWristband(source);
 }
 
-function useWristband(source, { fill, depth, create = baseWristband } = {}) {
+function useWristband(
+  source,
+  { fill, depth, create = baseWristband } = {},
+) {
   const { entity: wristband, state } = useAfmachineEntity(source, create, {
     fill,
     depth,
   });
 
-  function handleWristbandToggle(e) {
-    wristband.toggle((err) => console.log(err));
-  }
-
   return {
     state,
     wristband,
-    handleWristbandToggle,
   };
 }
 

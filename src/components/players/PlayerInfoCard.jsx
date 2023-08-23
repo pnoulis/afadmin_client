@@ -9,9 +9,9 @@ import { PlayerTupleFullname } from "/src/components/players/PlayerTupleFullname
 import { PlayerTupleState } from "/src/components/players/PlayerTupleState.jsx";
 import { WristbandInfoCard } from "/src/components/wristbands/index.js";
 
-function PlayerInfoCard({ className }) {
+function PlayerInfoCard({ className, style }) {
   return (
-    <PlayerInfoCardContainer className={className}>
+    <PlayerInfoCardContainer className={className} style={style}>
       <StyledPlayerTuple
         style={{ gridRow: "1 / 2", gridColumn: "1 / 2", alignSelf: "center" }}
       >
@@ -57,14 +57,16 @@ const CssPlayerTuple = css`
   font-size: var(--tx-xs);
   font-family: Saira;
 
+  .key {
+    font-weight: 600;
+  }
   .key::after {
     content: ":";
-    font-weight: 550;
     margin: 0 5px 0 3px;
   }
 
   .value {
-    display: inline-block;
+    font-size: var(--tx-xxs);
     word-break: break-all;
     overflow-wrap: anywhere;
   }
@@ -84,9 +86,9 @@ const StyledPlayerTupleState = styled("p")`
 
 const PlayerInfoCardContainer = styled("article")`
   display: grid;
-  grid-template-columns: max-content 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-auto-rows: 1fr;
-  background-color: var(--grey-subtle);
+  background-color: var(--grey-light);
   border-radius: var(--br-lg);
   padding: 15px 20px 20px 20px;
   column-gap: 30px;
@@ -95,4 +97,4 @@ const PlayerInfoCardContainer = styled("article")`
   width: 600px;
 `;
 
-export { PlayerInfoCard };
+export { PlayerInfoCard, StyledPlayerTuple, StyledPlayerTupleState };

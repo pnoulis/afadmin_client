@@ -21,6 +21,7 @@ const StyleTooltipContent = styled(TooltipContent)`
   text-transform: lowercase;
   text-align: center;
   z-index: 100;
+  background-color: white;
   box-shadow: var(--sd-0);
 `;
 

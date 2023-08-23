@@ -13,13 +13,16 @@ import {
 import { ComboboxSearchPlayer } from "/src/pages/page-registration/page-registration-wristband/ComboboxSearchPlayer.jsx";
 import { ComboboxOptionPlayer } from "/src/pages/page-registration/page-registration-wristband/ComboboxOptionPlayer.jsx";
 import { afmachine } from "/src/services/afmachine/afmachine.js";
+import { useAfmachineSubscription } from "/src/hooks/index.js";
 
 function PageRegistrationWristband() {
   const ctx = useRegistrationQueue([]);
+  const [registered] = useAfmachineSubscription("onRegisterWristband");
+  const [unregistered] = useAfmachineSubscription("onUnregisterWristband");
 
   const searchPlayer = React.useCallback(
     (searchTerm) => afmachine.searchPlayer({ searchTerm }),
-    [],
+    [registered, unregistered],
   );
 
   return (
@@ -31,7 +34,7 @@ function PageRegistrationWristband() {
         Option={ComboboxOptionPlayer}
       />
       <ContextProvideRegistrationQueue ctx={ctx}>
-    <RegistrationQueue style={{alignSelf: "end"}}/>
+        <RegistrationQueue style={{ alignSelf: "end" }} />
       </ContextProvideRegistrationQueue>
     </StyledPageRegistrationWristband>
   );

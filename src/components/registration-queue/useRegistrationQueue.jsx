@@ -3,6 +3,8 @@
 import * as React from "react";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
+import { Wristband } from "afmachine/src/entities/wristband/index.js";
+import { Player } from "afmachine/src/entities/player/index.js";
 import { MAX_TEAM_SIZE } from "agent_factory.shared/constants.js";
 import { afmachine } from "/src/services/afmachine/afmachine.js";
 import { renderDialog } from "/src/components/dialogs/index.js";
@@ -11,13 +13,13 @@ import {
   AlertPlayerNoWristbandPairing,
   ConfirmUnpairPlayerWristband,
 } from "/src/components/dialogs/index.js";
+import { PopoverAsyncAction } from "/src/components/async/index.js";
 
 function useRegistrationQueue(players = [], { fill = false } = {}) {
   const [queue, setQueue] = React.useState([...players]);
 
   function addQueue(player) {
     const lnQueue = queue.length;
-    const newQueue = [];
     for (let i = 0; i < lnQueue; i++) {
       if (queue[i].username === player.username) {
         renderDialog(null, AlertDuplicatePlayerRegistrationQueue, {
@@ -32,15 +34,24 @@ function useRegistrationQueue(players = [], { fill = false } = {}) {
       )
     ) {
       renderDialog(null, AlertPlayerNoWristbandPairing, { player });
-    } else if (persistentPlayer.wristband.inState("paired")) {
+    } else if (persistentPlayer.wristband.inState("registered")) {
       renderDialog(null, ConfirmUnpairPlayerWristband, { player }, (yes) => {
         if (!yes) return;
+        renderDialog(null, PopoverAsyncAction, {
+          run: true,
+          action: function () {
+            return persistentPlayer.unpairWristband();
+          },
+          onSettled: function (resolved) {
+            if (resolved) {
+              setQueue([...queue, persistentPlayer]);
+            }
+          },
+        });
       });
     } else {
-      newQueue.push(persistentPlayer);
+      setQueue([...queue, persistentPlayer]);
     }
-
-    setQueue(newQueue.concat(queue));
   }
 
   function rmQueue(player) {

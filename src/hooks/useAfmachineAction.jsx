@@ -2,27 +2,36 @@
 import * as React from "react";
 // ------------------------------ own libs ------------------------------- //
 import { smallid } from "js_utils/uuid";
-import { isObject } from "js_utils/misc";
+import { isObject, delay } from "js_utils/misc";
 // ------------------------------ project  ------------------------------- //
 import { Scheduler } from "/src/services/afmachine/afmachine.js";
 
 function useAfmachineAction(
   source,
-  { onSettled, timePending = 0, timeResolving = 500, timeRejecting = 500 },
+  {
+    run = false,
+    onSettled,
+    timePending = 0,
+    timeResolving = 500,
+    timeRejecting = 500,
+  } = {},
 ) {
   const [state, setState] = React.useState("");
   const actionRef = React.useRef(null);
   const tRef = React.useRef(0);
-  const listenerRef = React.useRef(null);
+  const resRef = React.useRef(null);
 
   if (actionRef.current == null) {
     if (!(source instanceof Scheduler)) {
-      conosle.log(`action is not a Scheduler entity`);
+      console.log(`action is not a Scheduler entity`);
       actionRef.current = new Scheduler();
       console.log("Created scheduled action");
     }
+    setState(actionRef.current.getState().name);
+  }
 
-    listenerRef.current = actionRef.current.on(
+  React.useEffect(() => {
+    const removeListener = actionRef.current.on(
       "stateChange",
       function (currentState) {
         const T = tRef.current - Date.now();
@@ -49,11 +58,10 @@ function useAfmachineAction(
       },
     );
     console.log("subscribed to stateChange event");
-    setState(actionRef.current.getState().name);
-  }
-
-  React.useEffect(() => {
-    return () => listenerRef.current();
+    if (run) {
+      actionRef.current.run(source);
+    }
+    return () => removeListener();
   }, []);
 
   return {

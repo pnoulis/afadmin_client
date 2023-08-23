@@ -23,18 +23,22 @@ import {
   AlertPlayerNoWristbandPairing,
   ConfirmUnpairPlayerWristband,
 } from "/src/components/dialogs/index.js";
-import { useAfmachineEntity } from "./hooks/useAfmachineEntity";
+import { useAfmachineEntity, useAfmachineAction } from "./hooks/index.js";
 import { Scheduler } from "/src/services/afmachine/afmachine.js";
+import { PopoverAsyncAction } from "./components/async/PopoverAsyncAction.jsx";
 
 const t = afmachine.createPersistentTeam().fill(null, { depth: 2 });
 
 function StatefulAction() {
-  const { entity: asyncAction } = useAfmachineEntity(
-    null,
-    () => new Scheduler(),
+  return (
+    <div>
+      <p>stateful action</p>
+      <PopoverAsyncAction
+        run
+        action={() => afmachine.searchPlayer({ searchTerm: "y" })}
+      />
+    </div>
   );
-
-  return <div>stateful action</div>;
 }
 function PageRegistrationWristband() {
   const ctx = useRegistrationQueue(t.roster.get().slice(0, 3), {

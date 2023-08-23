@@ -13,44 +13,42 @@ function useAfmachineEntity(
   const [state, setState] = React.useState("");
   const [id, setId] = React.useState("");
   const constructorRef = React.useRef(createEntity?.().constructor);
-  const subsRef = React.useRef(null);
-  const entityRef = React.useRef(source);
+  const entityRef = React.useRef(createEntity(source));
 
   if (constructorRef.current == null) {
     throw new Error("useAfmachineEntity missing constructor");
-  } else if (!(entityRef.current instanceof constructorRef.current)) {
-    console.log(`entity is not a ${constructorRef.current.name} entity`);
-    entityRef.current = fill
-      ? createEntity(source).fill(null, {
-          depth,
-          state: targetState,
-        })
-      : createEntity(source);
-    console.log(`created ${constructorRef.current.name} entity`);
   }
 
-  if (subsRef.current === null) {
-    if ("on" in entityRef.current) {
-      console.log(`${constructorRef.current.name} entity is eventful`);
-      entityRef.current.on("stateChange", function (state) {
-        setState(state);
-      });
-      console.log("subscribed to stateChange event");
-      entityRef.current.on("change", function () {
-        setId(smallid());
-      });
-      console.log("subscribed to change event");
-    } else {
-      console.log(`${constructorRef.current.name} entity is not eventful`);
-    }
-
+  React.useEffect(() => {
+    console.log(entityRef);
+    console.log(source);
+    console.log("SOURCE CHANGE");
+    // if (fill) {
+    //   entityRef.current.fill(null, { depth, state: targetState });
+    // }
+    // if ("on" in entityRef.current) {
+    //   var stateChangeListener = entityRef.current.on(
+    //     "stateChange",
+    //     function (currentState) {
+    //       setState(currentState);
+    //     },
+    //   );
+    //   var changeListener = entityRef.current.on("change", function () {
+    //     setId(smallid());
+    //   });
+    // }
     setState(
       isObject(entityRef.current.state)
         ? entityRef.current.getState().name
         : entityRef.current.state,
     );
-    subsRef.current = true;
-  }
+    // setId(smallid());
+
+    // return () => {
+    //   stateChangeListener && stateChangeListener();
+    //   changeListener && changeListener();
+    // };
+  }, [source]);
 
   return {
     state,

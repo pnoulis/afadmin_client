@@ -13,15 +13,19 @@ function scannableWristband(source) {
   return afmachine.createScanableWristband(source);
 }
 
-function useWristband(
-  source,
-  { fill, depth, create = baseWristband } = {},
-) {
+function useWristband(source, { fill, depth, create = baseWristband } = {}) {
   const { entity: wristband, state } = useAfmachineEntity(source, create, {
     fill,
     depth,
   });
 
+  console.log(wristband);
+  console.log(state);
+  console.log('USE WRISTBAND');
+  React.useEffect(() => {
+    console.log(state);
+    console.log("WRISTBAND STATE CHANGED");
+  }, [state]);
   return {
     state,
     wristband,

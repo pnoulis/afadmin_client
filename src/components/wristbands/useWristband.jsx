@@ -19,13 +19,6 @@ function useWristband(source, { fill, depth, create = baseWristband } = {}) {
     depth,
   });
 
-  console.log(wristband);
-  console.log(state);
-  console.log('USE WRISTBAND');
-  React.useEffect(() => {
-    console.log(state);
-    console.log("WRISTBAND STATE CHANGED");
-  }, [state]);
   return {
     state,
     wristband,

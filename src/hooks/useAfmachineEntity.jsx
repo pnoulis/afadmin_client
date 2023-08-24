@@ -20,34 +20,33 @@ function useAfmachineEntity(
   }
 
   React.useEffect(() => {
-    console.log(entityRef);
     console.log(source);
+    console.log(isObject(source.state) ? source.getState().name : source.state);
     console.log("SOURCE CHANGE");
-    // if (fill) {
-    //   entityRef.current.fill(null, { depth, state: targetState });
-    // }
-    // if ("on" in entityRef.current) {
-    //   var stateChangeListener = entityRef.current.on(
-    //     "stateChange",
-    //     function (currentState) {
-    //       setState(currentState);
-    //     },
-    //   );
-    //   var changeListener = entityRef.current.on("change", function () {
-    //     setId(smallid());
-    //   });
-    // }
+    entityRef.current = fill
+      ? createEntity(constructorRef.current.normalize(source)).fill(null, {
+          depth,
+          state: targetState,
+        })
+      : createEntity(constructorRef.current.normalize(source));
+
     setState(
       isObject(entityRef.current.state)
         ? entityRef.current.getState().name
         : entityRef.current.state,
     );
-    // setId(smallid());
 
-    // return () => {
-    //   stateChangeListener && stateChangeListener();
-    //   changeListener && changeListener();
-    // };
+    if (!("on" in entityRef.current)) return;
+
+    const unsubStateChange = entityRef.current.on("stateChange", (cstate) => {
+      setState(cstate);
+    });
+    const unsubChange = entityRef.current.on("change", () => setId(smallid()));
+
+    return () => {
+      unsubStateChange();
+      unsubChange();
+    };
   }, [source]);
 
   return {

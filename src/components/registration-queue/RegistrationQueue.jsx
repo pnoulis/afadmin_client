@@ -8,7 +8,6 @@ import { AncestorDimensions } from "react_utils";
 import { useContextRegistrationQueue } from "./ContextRegistrationQueue.jsx";
 import { PlayerActionCard } from "./PlayerActionCard.jsx";
 import { PersistentPlayer } from "/src/components/players/index.js";
-import { RegistableWristband } from "/src/components/wristbands/index.js";
 import WristbandBackground from "agent_factory.shared/ui/new-icons/wristband-gear.svg";
 
 function RegistrationQueue({ className, style }) {
@@ -19,9 +18,7 @@ function RegistrationQueue({ className, style }) {
         <StyledListPlayers>
           {queue.map((p, i) => (
             <PersistentPlayer key={p.username + i} player={p}>
-              <RegistableWristband wristband={p.wristband}>
-                <PlayerActionCard player={p} />
-              </RegistableWristband>
+              <PlayerActionCard player={p} />
             </PersistentPlayer>
           ))}
         </StyledListPlayers>

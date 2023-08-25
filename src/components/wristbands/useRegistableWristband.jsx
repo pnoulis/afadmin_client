@@ -2,23 +2,35 @@
 import * as React from "react";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
-import { useContextPlayer } from "/src/contexts/index.js";
 import { useAfmachineEntity } from "/src/hooks/index.js";
 import { afmachine } from "/src/services/afmachine/afmachine.js";
+import { displayfmerr } from "/src/utils/index.js";
 
-function useRegistableWristband(source, { fill = false } = {}) {
-  const { player } = useContextPlayer();
-  const { entity: wristband, state } = useAfmachineEntity(
-    source,
-    function registableWristband(source) {
-      return afmachine.createRegistableWristband(source, player);
-    },
+function registableWristband(player, wristband, options) {
+  return afmachine.createRegistableWristband(wristband, player, options);
+}
+
+function useRegistableWristband(player, { fill = false } = {}) {
+  const {
+    entity: wristband,
+    state,
+    id,
+  } = useAfmachineEntity(
+    player.wristband,
+    registableWristband.bind(null, player),
     { fill },
   );
+  player.wristband = wristband;
 
   function handleWristbandToggle(e) {
-    wristband.toggle((err) => console.log(err));
+    player.wristband.toggle((err) => displayfmerr(err, "warn"));
   }
+
+  React.useEffect(() => {
+    return () => {
+      if (player.wristband.inState("pairing")) player.wristband.toggle();
+    };
+  }, [player]);
 
   return {
     state,

@@ -2,7 +2,7 @@
 import * as React from "react";
 // ------------------------------ own libs ------------------------------- //
 import { smallid } from "js_utils/uuid";
-import { isObject } from "js_utils/misc";
+import { isObject, isFunction } from "js_utils/misc";
 // ------------------------------ project  ------------------------------- //
 
 function useAfmachineEntity(
@@ -12,8 +12,13 @@ function useAfmachineEntity(
 ) {
   const [state, setState] = React.useState("");
   const [id, setId] = React.useState("");
-  const constructorRef = React.useRef(createEntity?.().constructor);
-  const entityRef = React.useRef(createEntity(source));
+  const constructorRef = React.useRef(
+    createEntity?.().constructor || createEntity.constructor,
+  );
+  const entityRef = React.useRef(null);
+  if (entityRef.current === null) {
+    entityRef.current = new constructorRef.current(source);
+  }
 
   if (constructorRef.current == null) {
     throw new Error("useAfmachineEntity missing constructor");
@@ -22,7 +27,7 @@ function useAfmachineEntity(
   React.useEffect(() => {
     console.log(source);
     console.log(isObject(source.state) ? source.getState().name : source.state);
-    console.log("SOURCE CHANGE");
+    console.log(`SOURCE CHANGED ${constructorRef.current.name}`);
     entityRef.current = fill
       ? createEntity(constructorRef.current.normalize(source)).fill(null, {
           depth,

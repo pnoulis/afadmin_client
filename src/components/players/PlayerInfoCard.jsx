@@ -94,6 +94,7 @@ const PlayerInfoCardContainer = styled("article")`
   column-gap: 30px;
   align-items: start;
   row-gap: 5px;
+  min-width: 580px;
 `;
 
 export { PlayerInfoCard, StyledPlayerTuple, StyledPlayerTupleState };

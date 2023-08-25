@@ -71,10 +71,12 @@ const StyleForm = styled("form")`
   display: flex;
   width: 330px;
   flex-flow: column nowrap;
+  font-family: Saira;
+  font-weight: 500;
+
   row-gap: 40px;
 `;
 const TextInput = styled(TextInput_0)`
-  background-color: white;
   text-transform: uppercase !important;
   & > * {
     font-size: var(--tx-sm) !important;
@@ -86,8 +88,22 @@ const TextInput = styled(TextInput_0)`
     transform: translate(-50%, -50%);
   }
   & input {
+    background-color: white;
     border-color: white !important;
     border-radius: var(--br-lg);
+  }
+
+  .input:focus ~ label,
+  input:not(:placeholder-shown) ~ label {
+    background-color: white;
+    left: 0;
+    transform: translate(1px, -50%);
+  }
+
+  .input:focus ~ .optional,
+  input:not(:placeholder-shown) ~ .optional {
+    right: 1px;
+    background-color: white;
   }
 `;
 

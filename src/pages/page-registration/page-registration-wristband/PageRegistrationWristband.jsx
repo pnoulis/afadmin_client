@@ -19,7 +19,6 @@ function PageRegistrationWristband() {
   const ctx = useRegistrationQueue([]);
   const [registered] = useAfmachineSubscription("onRegisterWristband");
   const [unregistered] = useAfmachineSubscription("onUnregisterWristband");
-  console.log(unregistered);
 
   const searchPlayer = React.useCallback(
     (searchTerm) => afmachine.searchPlayer({ searchTerm }),

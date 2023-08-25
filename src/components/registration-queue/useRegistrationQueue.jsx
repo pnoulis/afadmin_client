@@ -22,7 +22,7 @@ function useRegistrationQueue(players = [], { fill = false } = {}) {
     const lnQueue = queue.length;
     for (let i = 0; i < lnQueue; i++) {
       if (queue[i].username === player.username) {
-        renderDialog(null, AlertDuplicatePlayerRegistrationQueue, {
+        return renderDialog(null, AlertDuplicatePlayerRegistrationQueue, {
           player: player.username,
         });
       }

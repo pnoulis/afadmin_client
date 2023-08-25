@@ -3,27 +3,30 @@
 import * as React from "react";
 import styled from "styled-components";
 // ------------------------------ own libs ------------------------------- //
-import { AncestorDimensions } from "react_utils";
 // ------------------------------ project  ------------------------------- //
 import { useContextRegistrationQueue } from "./ContextRegistrationQueue.jsx";
 import { PlayerActionCard } from "./PlayerActionCard.jsx";
 import { PersistentPlayer } from "/src/components/players/index.js";
 import WristbandBackground from "agent_factory.shared/ui/new-icons/wristband-gear.svg";
 
-function RegistrationQueue({ className, style }) {
+function RegistrationQueue({ className, style, $height }) {
   const { queue } = useContextRegistrationQueue();
+  console.log(queue);
+  console.log('FROM WITHIN REGISTRATION QUEUE');
   return (
-    <AncestorDimensions ancestor="#ancestor-scrollarea">
-      <StyledRegistrationQueue className={className} style={style}>
-        <StyledListPlayers>
-          {queue.map((p, i) => (
-            <PersistentPlayer key={p.username + i} player={p}>
-              <PlayerActionCard player={p} />
-            </PersistentPlayer>
-          ))}
-        </StyledListPlayers>
-      </StyledRegistrationQueue>
-    </AncestorDimensions>
+    <StyledRegistrationQueue
+      className={className}
+      style={style}
+      $height={$height}
+    >
+      <StyledListPlayers>
+        {queue.map((p, i) => (
+          <PersistentPlayer key={p.username + i} player={p}>
+            <PlayerActionCard player={p} />
+          </PersistentPlayer>
+        ))}
+      </StyledListPlayers>
+    </StyledRegistrationQueue>
   );
 }
 
@@ -34,11 +37,12 @@ const StyledRegistrationQueue = styled("section")`
   max-width: 650px;
   border-radius: var(--br-lg);
   background-color: white;
+  box-shadow: var(--sd-4);
   background-image: url(${WristbandBackground});
   background-repeat: no-repeat;
   background-size: 50%;
   background-position: center;
-  max-height: ${({ $height }) => `${$height - 35 || 0}px`};
+  max-height: ${({ $height }) => ($height ? `${$height - 35}px` : "auto")};
 `;
 
 const StyledListPlayers = styled("ul")`

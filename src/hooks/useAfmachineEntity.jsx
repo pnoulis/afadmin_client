@@ -17,7 +17,7 @@ function useAfmachineEntity(
   );
   const entityRef = React.useRef(null);
   if (entityRef.current === null) {
-    entityRef.current = new constructorRef.current(source);
+    entityRef.current = createEntity(source);
   }
 
   if (constructorRef.current == null) {
@@ -25,6 +25,7 @@ function useAfmachineEntity(
   }
 
   React.useEffect(() => {
+    source ??= {};
     console.log(source);
     console.log(isObject(source.state) ? source.getState().name : source.state);
     console.log(`SOURCE CHANGED ${constructorRef.current.name}`);
@@ -44,9 +45,13 @@ function useAfmachineEntity(
     if (!("on" in entityRef.current)) return;
 
     const unsubStateChange = entityRef.current.on("stateChange", (cstate) => {
+      console.log("state changed");
       setState(cstate);
     });
-    const unsubChange = entityRef.current.on("change", () => setId(smallid()));
+    const unsubChange = entityRef.current.on("change", () => {
+      console.log("ENTITY CHANGED");
+      setId(smallid());
+    });
 
     return () => {
       unsubStateChange();

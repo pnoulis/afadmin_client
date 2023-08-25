@@ -39,7 +39,7 @@ function ComboboxSearchPlayer({
 
   return (
     <StyleComboboxSearchPlayer className={className} style={style}>
-      <h1 id="combobox-search-player-label">search player</h1>
+      <h1 id="combobox-search-player-label">add players</h1>
       <div className="combobox-search-player-wrapper">
         <RemoteDataProvider value={remoteData}>
           <Combobox.Provider
@@ -51,7 +51,7 @@ function ComboboxSearchPlayer({
             options={remoteData.startFetching}
           >
             <section className="combobox-search-player-trigger-wrapper">
-              <StyleTrigger placeholder="username or email" />
+              <StyleTrigger placeholder="search" />
               <div className="combobox-search-player-search-state">
                 <RemoteDataStates
                   RenderPending={<StyleMoonLoader />}
@@ -139,11 +139,6 @@ const StyleTrigger = styled(Combobox.Trigger)`
   outline: none;
   color: black;
 
-  &::placeholder {
-    color: black;
-    opacity: 1;
-  }
-
   &:hover {
     cursor: pointer;
   }
@@ -211,7 +206,7 @@ const StyleComboboxSearchPlayer = styled.div`
 
   #combobox-search-player-label {
     color: var(--primary-base);
-    font-size: 1.8rem;
+    font-size: var(--tx-xxh);
     font-weight: 550;
     text-transform: capitalize;
     letter-spacing: 2px;

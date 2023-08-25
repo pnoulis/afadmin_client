@@ -16,6 +16,7 @@ function usePersistentPlayer(source, { fill = false, depth = 0 } = {}) {
     persistentPlayer,
     { fill, depth },
   );
+
   const ctxWristband = useRegistableWristband(player);
 
   return {

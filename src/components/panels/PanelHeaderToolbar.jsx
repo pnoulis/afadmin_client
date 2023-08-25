@@ -17,9 +17,15 @@ function PanelHeaderToolbar({ className, children, ...props }) {
 
 const StyleToolbarItem = styled.li`
   ${StyleListItem}
+  color: white;
+  background-color: var(--primary-base);
 
   &:active {
     background-color: var(--primary-light);
+  }
+
+  ${StyleItemIcon} {
+    fill: white;
   }
 
   &:active ${StyleItemText} {

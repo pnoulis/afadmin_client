@@ -54,7 +54,7 @@ const StyleButton = styled(Button)`
   text-transform: uppercase;
   background-color: var(--primary-base);
   height: 60px;
-  border-radius: var(--br-sm);
+  border-radius: var(--br-nl);
   width: 100%;
   cursor: pointer;
   letter-spacing: 1px;
@@ -82,7 +82,6 @@ const TextInput = styled(TextInput_0)`
     font-size: var(--tx-sm) !important;
   }
 
-  border-radius: var(--br-sm);
   & .label {
     left: 50%;
     transform: translate(-50%, -50%);
@@ -90,7 +89,7 @@ const TextInput = styled(TextInput_0)`
   & input {
     background-color: white;
     border-color: white !important;
-    border-radius: var(--br-lg);
+    border-radius: var(--br-nl);
   }
 
   .input:focus ~ label,

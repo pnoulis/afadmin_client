@@ -4,9 +4,7 @@ import * as React from "react";
 import styled from "styled-components";
 import { MoonLoader } from "react-spinners";
 // ------------------------------ own libs ------------------------------- //
-import { Svg } from "react_utils/svgs";
 // ------------------------------ project  ------------------------------- //
-import { ReactComponent as FailIcon } from "agent_factory.shared/ui/icons/warning_icon_filled.svg";
 
 function Pending({ size, color, className }) {
   return (

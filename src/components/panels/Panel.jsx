@@ -20,8 +20,7 @@ const StylePanel = styled.div`
   grid-template-areas: "header" "main";
   grid-template-rows: max-content 1fr;
   grid-template-columns: 1fr;
-  padding: 25px;
-  row-gap: 50px;
+  row-gap: 20px;
   border-radius: var(--br-xl);
 `;
 
@@ -31,6 +30,7 @@ const StylePanelHeader = styled.header`
   height: 100%;
   display: flex;
   flex-flow: row wrap;
+  padding: 25px;
 `;
 
 const StylePanelMain = styled.div`

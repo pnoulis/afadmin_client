@@ -33,14 +33,18 @@ function PageRegistrationWristband() {
         onSelect={ctx.addQueue}
         Option={ComboboxOptionPlayer}
       />
+
       <ContextProvideRegistrationQueue ctx={ctx}>
-        <RegistrationQueue style={{ alignSelf: "end" }} />
+        <AncestorDimensions ancestor="#ancestor-scrollarea">
+          <RegistrationQueue style={{ alignSelf: "end" }} />
+        </AncestorDimensions>
       </ContextProvideRegistrationQueue>
     </StyledPageRegistrationWristband>
   );
 }
 
 const StyledPageRegistrationWristband = styled("div")`
+  padding: 25px;
   width: 100%;
   height: 100%;
   display: grid;

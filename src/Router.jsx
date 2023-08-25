@@ -17,7 +17,6 @@ import {
   Page408,
   Page500,
   PageLogin,
-  PageHome,
   PageRegistration,
   PageRegistrationPlayer,
   PageRegistrationWristband,
@@ -28,6 +27,11 @@ import {
   PageAdministrator,
 } from "/src/pages/index.js";
 import { ENVIRONMENT } from "agent_factory.shared/config.js";
+import {
+  loadRegisteredWristbandPlayers,
+  loadPackages,
+  loadTeams,
+} from "/src/loaders/index.js";
 
 /**
  * component
@@ -73,6 +77,7 @@ const router = createBrowserRouter(
             {
               path: links.merge.path,
               element: <PageMerge />,
+              loader: loadRegisteredWristbandPlayers,
             },
             {
               path: links.groupParty.path,

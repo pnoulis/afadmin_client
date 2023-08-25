@@ -3,8 +3,6 @@
 import * as React from "react";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
-import { Wristband } from "afmachine/src/entities/wristband/index.js";
-import { Player } from "afmachine/src/entities/player/index.js";
 import { MAX_TEAM_SIZE } from "agent_factory.shared/constants.js";
 import { afmachine } from "/src/services/afmachine/afmachine.js";
 import { renderDialog } from "/src/components/dialogs/index.js";
@@ -63,7 +61,6 @@ function useRegistrationQueue(players = [], { fill = false } = {}) {
     }
     setQueue(newQueue);
   }
-  function flushQueue() {}
 
   const viewingQueue = React.useMemo(() => {
     if (!fill) return queue;
@@ -84,7 +81,6 @@ function useRegistrationQueue(players = [], { fill = false } = {}) {
   return {
     addQueue,
     rmQueue,
-    flushQueue,
     queue: viewingQueue,
   };
 }

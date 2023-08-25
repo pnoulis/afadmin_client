@@ -66,7 +66,7 @@ const StyleButton = styled("button")`
   padding: 10px 10px 5px 10px;
   cursor: pointer;
   background-color: var(--primary-base);
-  border-radius: var(--br-md);
+  border-radius: var(--br-nl);
   color: white;
 
   &:hover {
@@ -105,7 +105,6 @@ const TextInput = styled(TextInput_0)`
     font-size: var(--tx-sm) !important;
   }
 
-  border-radius: var(--br-sm);
   & .label {
     left: 50%;
     transform: translate(-50%, -50%);
@@ -113,7 +112,7 @@ const TextInput = styled(TextInput_0)`
   & input {
     background-color: var(--grey-light);
     border-color: white !important;
-    border-radius: var(--br-lg);
+    border-radius: var(--br-nl);
   }
 
   .input:focus ~ label,

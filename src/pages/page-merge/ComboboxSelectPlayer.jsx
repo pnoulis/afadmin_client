@@ -132,11 +132,10 @@ function OnEmpty(props) {
 }
 
 const StyleOnEmpty = styled.li`
+  border-radius: var(--br-lg);
+  background-color: var(--grey-light);
   font-size: var(--tx-lg);
-  span {
-    margin-left: 8px;
-    color: var(--primary-medium);
-  }
+  padding: 10px 10px 10px 20px;
 `;
 
 const StyleComboboxSelectPlayer = styled.div`

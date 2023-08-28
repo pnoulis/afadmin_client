@@ -189,7 +189,10 @@ function OnEmpty({ inputValue }) {
 }
 
 const StyleOnEmpty = styled.li`
+  border-radius: var(--br-md);
+  background-color: var(--grey-light);
   font-size: var(--tx-lg);
+  padding: 10px 10px 10px 20px;
   span {
     margin-left: 8px;
     color: var(--primary-medium);

@@ -2,7 +2,7 @@
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
 import styled from "styled-components";
-import { useLoaderData, Await } from "react-router-dom";
+import { useLoaderData, Await, useRevalidator } from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
 import { PanelMerge } from "./PanelMerge.jsx";
@@ -15,10 +15,22 @@ import {
 } from "/src/components/registration-queue/index.js";
 import { Pending } from "/src/components/async/index.js";
 import { usePersistentTeam } from "/src/components/teams/index.js";
+import { useAfmachineSubscription } from "/src/hooks/index.js";
 
 function PageMerge() {
   const ctxTeam = usePersistentTeam();
   const loadPlayers = useLoaderData();
+  const revalidator = useRevalidator();
+
+  console.log(ctxTeam);
+  console.log('CONTENT TEAM');
+  function revalidate() {
+    revalidator.revalidate();
+  }
+  useAfmachineSubscription("onMergeTeam", revalidate);
+  useAfmachineSubscription("onUnregisterWristband", revalidate);
+  useAfmachineSubscription("onRegisterWristband", revalidate);
+
   return (
     <PanelMerge>
       <StyledPageMerge>

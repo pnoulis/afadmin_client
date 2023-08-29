@@ -57,4 +57,4 @@ const StyledListPlayers = styled("ul")`
   border-radius: var(--br-lg);
 `;
 
-export { RegistrationQueue };
+export { RegistrationQueue, StyledListPlayers };

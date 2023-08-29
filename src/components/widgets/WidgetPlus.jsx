@@ -6,9 +6,9 @@ import styled from "styled-components";
 import { Svg } from "react_utils/svgs";
 // ------------------------------ project  ------------------------------- //
 import { TooltipDefault } from "/src/components/tooltips/index.js";
-import { ReactComponent as TrashIcon } from "agent_factory.shared/ui/icons/trash_2.svg";
+import { ReactComponent as PlusIcon } from "agent_factory.shared/ui/icons/add_0.svg";
 
-function WidgetTrash({
+function WidgetPlus({
   onClick: handleClick,
   size,
   tooltipContent = "remove",
@@ -19,22 +19,22 @@ function WidgetTrash({
     <TooltipDefault
       content={tooltipContent}
       trigger={
-        <StyleWidgetTrash
+        <StyleWidgetPlus
           size={size}
           onClick={handleClick}
           className={className}
           {...props}
         >
           <Svg>
-            <TrashIcon />
+            <PlusIcon />
           </Svg>
-        </StyleWidgetTrash>
+        </StyleWidgetPlus>
       }
     />
   );
 }
 
-const StyleWidgetTrash = styled.div`
+const StyleWidgetPlus = styled.div`
   cursor: pointer;
   display: flex;
   box-sizing: content-box;
@@ -52,4 +52,4 @@ const StyleWidgetTrash = styled.div`
   }
 `;
 
-export { WidgetTrash, StyleWidgetTrash };
+export { WidgetPlus, StyleWidgetPlus };

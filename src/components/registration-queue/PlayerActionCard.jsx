@@ -94,4 +94,4 @@ const StyledWidgetWristband = styled(WidgetWristband)`
     !wristbandColor && !pairing && "white"};
 `;
 
-export { PlayerActionCard };
+export { PlayerActionCard, StyledPlayerActionCard };

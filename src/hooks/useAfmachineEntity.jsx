@@ -43,11 +43,13 @@ function useAfmachineEntity(
         : entityRef.current.state,
     );
 
-    if (entityRef.current && "on" in entityRef.current) {
+    if (entityRef.current.hasEvent?.("stateChange")) {
       entityRef.current.on("stateChange", (cstate) => {
         console.log("state changed");
         setState(cstate);
       });
+    }
+    if (entityRef.current.hasEvent?.("change")) {
       entityRef.current.on("change", () => {
         console.log("ENTITY CHANGED");
         setId(smallid());

@@ -9,13 +9,12 @@ import { PersistentPlayer } from "/src/components/players/index.js";
 import { PlayerActionCard } from "/src/components/registration-queue/index.js";
 import { Wristband } from "/src/components/wristbands/index.js";
 import { afmachine } from "/src/services/afmachine/afmachine.js";
+import { GroupParty } from "/src/components/group-party/index.js";
 
 function PageMerge() {
   return (
     <div>
-      <Wristband>
-        <PlayerActionCard />
-      </Wristband>
+      <GroupParty fill depth={3}/>
     </div>
   );
 }

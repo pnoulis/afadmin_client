@@ -89,11 +89,12 @@ const StyledPageMerge = styled("div")`
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 45% 1fr;
+  grid-template-columns: 45% auto;
   grid-template-rows: max-content 1fr;
   grid-template-areas: "select_player team_name" "select_player registration_queue";
   row-gap: 50px;
   column-gap: 120px;
+  justify-content: space-between;
 `;
 
 const StyledSelectPlayer = styled.section`

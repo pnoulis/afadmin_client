@@ -41,6 +41,7 @@ function GPTeamActionCard() {
   );
 }
 const StyledGPTeamActionCard = styled("article")`
+  min-height: 200px;
   border-radius: var(--br-lg);
   display: grid;
   grid-template-rows: auto auto;
@@ -50,6 +51,7 @@ const StyledGPTeamActionCard = styled("article")`
   padding: 25px 30px;
   column-gap: 50px;
   align-items: end;
+  width: max-content;
 `;
 const StyledFormTeamName = styled(FormTeamName)`
   min-width: auto;
@@ -60,19 +62,23 @@ const StyledFormTeamName = styled(FormTeamName)`
 const StyledGPRegistrationQueue = styled(RegistrationQueue)`
   background-image: none;
   background-color: transparent;
+  margin: auto;
   max-width: 100%;
+  width: 820px;
   box-shadow: none;
 
   ${StyledListPlayers} {
     display: flex;
     flex-flow: row nowrap;
+    align-items: center;
+    justify-content: start;
     max-width: 100%;
     padding: 0;
-    gap: 0 10;
   }
 
   ${StyledPlayerActionCard} {
     height: 150px;
+    width: 120px;
     aspect-ratio: initial;
     padding: 0;
   }

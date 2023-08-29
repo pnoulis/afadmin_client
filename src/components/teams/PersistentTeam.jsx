@@ -8,7 +8,6 @@ import { ContextProvideTeam } from "/src/contexts/index.js";
 
 function PersistentTeam({ team, children, fill, depth }) {
   const ctx = usePersistentTeam(team, { fill, depth });
-  console.log(ctx);
   return <ContextProvideTeam ctx={ctx}>{children}</ContextProvideTeam>;
 }
 

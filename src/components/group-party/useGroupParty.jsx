@@ -10,16 +10,34 @@ function groupParty(gp, options) {
   return afmachine.createGroupParty(gp, options);
 }
 
-function useGroupParty(source, { fill = false, size, depth = 0 } = {}) {
+function useGroupParty(source, { fill = true, size = 2, depth = 0 } = {}) {
   const { entity: gp, state } = useAfmachineEntity(source, groupParty, {
     fill,
     size,
     depth,
   });
 
+  function rmTeam(team) {
+    try {
+      gp.removeTeam(team);
+    } catch (err) {
+      displaypoperr(err);
+    }
+  }
+
+  function addTeam() {
+    try {
+      gp.addTeam();
+    } catch (err) {
+      displaypoperr(err);
+    }
+  }
+
   return {
     state,
     gp,
+    rmTeam,
+    addTeam,
   };
 }
 

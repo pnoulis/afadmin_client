@@ -17,30 +17,36 @@ import { ReactComponent as AddTeamIcon } from "agent_factory.shared/ui/new-icons
 import { ReactComponent as MergeIcon } from "agent_factory.shared/ui/new-icons/merge-icon.svg";
 import { ReactComponent as DistributeIcon } from "agent_factory.shared/ui/new-icons/merge-icon.svg";
 
-function PanelGroupParty({ children }) {
+function PanelGroupParty({
+  onTeamAdd,
+  onDistribute,
+  onNewGP,
+  onMergeGP,
+  children,
+}) {
   return (
     <StylePanel>
       <StylePanelHeader>
         <PanelHeaderToolbar>
-          <StyleToolbarItem>
+          <StyleToolbarItem onClick={onNewGP}>
             <StyleItemIcon>
               <GroupPartyTeamIcon />
             </StyleItemIcon>
             <StyleItemText>new group party</StyleItemText>
           </StyleToolbarItem>
-          <StyleToolbarItem>
+          <StyleToolbarItem onClick={onTeamAdd}>
             <StyleItemIcon>
               <AddTeamIcon />
             </StyleItemIcon>
             <StyleItemText>add team</StyleItemText>
           </StyleToolbarItem>
-          <StyleToolbarItem>
+          <StyleToolbarItem onClick={onMergeGP}>
             <StyleItemIcon>
               <MergeIcon />
             </StyleItemIcon>
             <StyleItemText>merge group party</StyleItemText>
           </StyleToolbarItem>
-          <StyleToolbarItem>
+          <StyleToolbarItem onClick={onDistribute}>
             <StyleItemIcon>
               <DistributeIcon />
             </StyleItemIcon>

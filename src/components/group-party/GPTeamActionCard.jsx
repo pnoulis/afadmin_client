@@ -25,12 +25,11 @@ function GPTeamActionCard() {
     <StyledGPTeamActionCard>
       <StyledFormTeamName style={{ gridArea: "team_name" }} />
       <StyledToolbar>
-        <WidgetPlus tooltipContent="add player" />
-        <WidgetTrash tooltipContent="remove team" />
+        <WidgetPlus onClick={ctxTeam.addPlayer} tooltipContent="add player" />
+        <WidgetTrash onClick={ctxTeam.rmGPTeam} tooltipContent="remove team" />
       </StyledToolbar>
       <ContextProvideRegistrationQueue
         ctx={{
-          addQueue: ctxTeam.addPlayer,
           rmQueue: ctxTeam.rmPlayer,
           queue: ctxTeam.roster,
         }}

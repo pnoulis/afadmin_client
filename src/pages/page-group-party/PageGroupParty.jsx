@@ -10,18 +10,24 @@ import {
   useGroupParty,
   GPTeamActionCard,
 } from "/src/components/group-party/index.js";
-import { PersistentTeam } from "/src/components/teams/index.js";
+import { GroupPartyTeam } from "/src/components/teams/index.js";
 
 function PageGroupParty() {
   const ctxgp = useGroupParty();
   return (
-    <PanelGroupParty>
+    <PanelGroupParty onTeamAdd={ctxgp.addTeam}>
       <StyledPageGroupParty id="page-group-party">
         <AncestorDimensions ancestor="#panel-groupParty-main">
           <StyledScrollableArea>
-            <PersistentTeam fill depth={2}>
-              <GPTeamActionCard />
-            </PersistentTeam>
+            {ctxgp.gp.teams.map((team) => (
+              <GroupPartyTeam
+                key={team.name}
+                team={team}
+                onRemoveGPTeam={ctxgp.rmTeam}
+              >
+                <GPTeamActionCard />
+              </GroupPartyTeam>
+            ))}
             {/* <PersistentTeam fill depth={2}> */}
             {/*   <GPTeamActionCard /> */}
             {/* </PersistentTeam> */}

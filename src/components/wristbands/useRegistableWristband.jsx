@@ -15,15 +15,12 @@ function registableWristband(player, wristband, options) {
 }
 
 function useRegistableWristband(player, { fill = false } = {}) {
-  const {
-    entity: wristband,
-    state,
-    id,
-  } = useAfmachineEntity(
+  const { entity: wristband, state } = useAfmachineEntity(
     player.wristband,
     registableWristband.bind(null, player),
     { fill },
   );
+
   player.wristband = wristband;
 
   function handleWristbandToggle(e) {

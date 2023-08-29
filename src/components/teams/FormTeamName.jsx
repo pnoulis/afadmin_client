@@ -3,19 +3,31 @@
 import * as React from "react";
 import styled from "styled-components";
 // ------------------------------ own libs ------------------------------- //
-import { generateRandomName } from "js_utils";
+import { generateRandomName, isFunction } from "js_utils";
 import { useForm, FormProvider, SimpleInput } from "react_utils";
 // ------------------------------ project  ------------------------------- //
 
-function FormTeamName({ onSubmit, legend, className, style }) {
+function FormTeamName({
+  onSubmit,
+  fields: initialValues = {},
+  onChange,
+  legend,
+  className,
+  style,
+}) {
   const [form, setForm] = useForm({
     formId: "form-team-name",
     randomName: generateRandomName(),
     submitting: false,
     fields: {
       teamName: "",
+      ...initialValues,
     },
   });
+
+  React.useEffect(() => {
+    isFunction(onChange) && onChange(form.fields.teamName);
+  }, [form.fields, onChange]);
 
   return (
     <FormProvider value={{ ...form, setForm }}>

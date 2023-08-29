@@ -11,8 +11,6 @@ import WristbandBackground from "agent_factory.shared/ui/new-icons/wristband-gea
 
 function RegistrationQueue({ className, style, $height }) {
   const { queue } = useContextRegistrationQueue();
-  console.log(queue);
-  console.log('FROM WITHIN REGISTRATION QUEUE');
   return (
     <StyledRegistrationQueue
       className={className}

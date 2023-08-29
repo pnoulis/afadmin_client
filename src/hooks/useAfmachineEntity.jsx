@@ -15,49 +15,79 @@ function useAfmachineEntity(
   const constructorRef = React.useRef(
     createEntity?.().constructor || createEntity.constructor,
   );
-  const entityRef = React.useRef(null);
-  if (entityRef.current === null) {
-    entityRef.current = createEntity(source);
-  }
-
+  const entityRef = React.useRef({});
   if (constructorRef.current == null) {
     throw new Error("useAfmachineEntity missing constructor");
   }
 
-  React.useEffect(() => {
+  entityRef.current = React.useMemo(() => {
     source ??= {};
     console.log(source);
     console.log(isObject(source.state) ? source.getState().name : source.state);
+    if (source === entityRef.current) return source;
     console.log(`SOURCE CHANGED ${constructorRef.current.name}`);
-    entityRef.current = fill
-      ? createEntity(constructorRef.current.normalize(source)).fill(null, {
+    const entity = fill
+      ? createEntity(constructorRef.current.normalize([source])).fill(null, {
           depth,
           state: targetState,
         })
-      : createEntity(constructorRef.current.normalize(source));
+      : createEntity(constructorRef.current.normalize([source]));
 
+    return entity;
+  }, [source]);
+
+  React.useEffect(() => {
     setState(
       isObject(entityRef.current.state)
         ? entityRef.current.getState().name
         : entityRef.current.state,
     );
 
-    if (!("on" in entityRef.current)) return;
+    if (entityRef.current && "on" in entityRef.current) {
+      entityRef.current.on("stateChange", (cstate) => {
+        console.log("state changed");
+        setState(cstate);
+      });
+      entityRef.current.on("change", () => {
+        console.log("ENTITY CHANGED");
+        setId(smallid());
+      });
+    }
+  }, [entityRef.current]);
 
-    const unsubStateChange = entityRef.current.on("stateChange", (cstate) => {
-      console.log("state changed");
-      setState(cstate);
-    });
-    const unsubChange = entityRef.current.on("change", () => {
-      console.log("ENTITY CHANGED");
-      setId(smallid());
-    });
+  // React.useEffect(() => {
+  //   source ??= {};
+  //   console.log(source);
+  //   console.log(isObject(source.state) ? source.getState().name : source.state);
+  //   console.log(`SOURCE CHANGED ${constructorRef.current.name}`);
+  //   entityRef.currentRef.current = fill
+  //     ? createEntity(constructorRef.current.normalize([source])).fill(null, {
+  //         depth,
+  //         state: targetState,
+  //       })
+  //     : createEntity(constructorRef.current.normalize([source]));
 
-    return () => {
-      unsubStateChange();
-      unsubChange();
-    };
-  }, [source]);
+  //   setState(
+  //     isObject(entityRef.current.state)
+  //       ? entityRef.current.getState().name
+  //       : entityRef.current.state,
+  //   );
+
+  //   if (entityRef.current && "on" in entityRef.current) {
+  //     const unsubStateChange = entityRef.current.on("stateChange", (cstate) => {
+  //       console.log("state changed");
+  //       setState(cstate);
+  //     });
+  //     const unsubChange = entityRef.current.on("change", () => {
+  //       console.log("ENTITY CHANGED");
+  //       setId(smallid());
+  //     });
+  //     return () => {
+  //       unsubStateChange();
+  //       unsubChange();
+  //     };
+  //   }
+  // }, [source]);
 
   return {
     state,

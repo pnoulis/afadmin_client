@@ -4,6 +4,7 @@ import * as React from "react";
 import styled from "styled-components";
 import { useLoaderData, Await, useRevalidator } from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
+import { generateRandomName } from "js_utils";
 // ------------------------------ project  ------------------------------- //
 import { PanelMerge } from "./PanelMerge.jsx";
 import { ComboboxSelectPlayer } from "./ComboboxSelectPlayer.jsx";
@@ -16,23 +17,36 @@ import {
 import { Pending } from "/src/components/async/index.js";
 import { usePersistentTeam } from "/src/components/teams/index.js";
 import { useAfmachineSubscription } from "/src/hooks/index.js";
+import { PopoverAsyncState } from "/src/components/async/index.js";
 
 function PageMerge() {
-  const ctxTeam = usePersistentTeam();
+  const [team, setTeam] = React.useState({
+    name: generateRandomName(),
+  });
+  const ctxTeam = usePersistentTeam(team);
   const loadPlayers = useLoaderData();
   const revalidator = useRevalidator();
 
-  console.log(ctxTeam);
-  console.log('CONTENT TEAM');
   function revalidate() {
     revalidator.revalidate();
   }
+
   useAfmachineSubscription("onMergeTeam", revalidate);
   useAfmachineSubscription("onUnregisterWristband", revalidate);
   useAfmachineSubscription("onRegisterWristband", revalidate);
 
   return (
-    <PanelMerge>
+    <PanelMerge key={ctxTeam.team.name} onMergeTeam={ctxTeam.merge}>
+      <PopoverAsyncState
+        action={ctxTeam.sMergeTeam}
+        onSettled={(merged) => {
+          if (merged) {
+            setTeam({
+              name: generateRandomName(),
+            });
+          }
+        }}
+      />
       <StyledPageMerge>
         <StyledSelectPlayer>
           <React.Suspense fallback={<Pending />}>
@@ -50,6 +64,8 @@ function PageMerge() {
           </React.Suspense>
         </StyledSelectPlayer>
         <FormTeamName
+          onChange={ctxTeam.changeTeamName}
+          fields={{ teamName: ctxTeam.team.name }}
           legend="team name"
           style={{ gridArea: "team_name", maxWidth: "500px" }}
         />

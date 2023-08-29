@@ -2,9 +2,13 @@
 import * as React from "react";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
-import { useAfmachineEntity } from "/src/hooks/index.js";
+import { useAfmachineEntity, useAfmachineAction } from "/src/hooks/index.js";
 import { afmachine } from "/src/services/afmachine/afmachine.js";
 import { displaypoperr } from "/src/utils/index.js";
+import {
+  ConfirmMergeTeam,
+  renderDialog,
+} from "/src/components/dialogs/index.js";
 
 function persistentTeam(team, options) {
   return afmachine.createPersistentTeam(team);
@@ -19,7 +23,12 @@ function usePersistentTeam(source, { fill = false, depth = 0 } = {}) {
     fill,
     depth,
   });
+  const { action: sMergeTeam } = useAfmachineAction(team.mergeTeam);
   const rosterRef = React.useRef([]);
+  rosterRef.current = React.useMemo(
+    () => team.roster.get(),
+    [team.roster.size],
+  );
 
   function addPlayer(player) {
     try {
@@ -27,7 +36,6 @@ function usePersistentTeam(source, { fill = false, depth = 0 } = {}) {
     } catch (err) {
       displaypoperr(err);
     }
-    rosterRef.current = team.roster.get();
   }
   function rmPlayer(player) {
     try {
@@ -35,18 +43,26 @@ function usePersistentTeam(source, { fill = false, depth = 0 } = {}) {
     } catch (err) {
       displaypoperr(err);
     }
-    rosterRef.current = team.roster.get();
   }
-  function merge() {}
-  function changeTeamName() {}
+  function changeTeamName(name) {
+    team.name = name;
+  }
+  function merge() {
+    renderDialog(null, ConfirmMergeTeam, { teamName: team.name }, (yes) => {
+      if (!yes) return;
+      sMergeTeam.run(() => team.mergeTeam()).catch(displaypoperr);
+    });
+  }
 
   return {
     state,
+    id,
     team,
     roster: rosterRef.current,
     addPlayer,
     rmPlayer,
     merge,
+    sMergeTeam,
     changeTeamName,
   };
 }

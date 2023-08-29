@@ -1,8 +1,7 @@
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
 // ------------------------------ own libs ------------------------------- //
-import { smallid } from "js_utils/uuid";
-import { isObject, delay } from "js_utils/misc";
+import { delay } from "js_utils/misc";
 // ------------------------------ project  ------------------------------- //
 import { Scheduler } from "/src/services/afmachine/afmachine.js";
 
@@ -10,7 +9,7 @@ function useAfmachineAction(
   source,
   {
     run = false,
-    onSettled,
+    onSettled = () => {},
     timePending = 0,
     timeResolving = 500,
     timeRejecting = 500,
@@ -19,7 +18,6 @@ function useAfmachineAction(
   const [state, setState] = React.useState("");
   const actionRef = React.useRef(null);
   const tRef = React.useRef(0);
-  const resRef = React.useRef(null);
 
   if (actionRef.current == null) {
     if (!(source instanceof Scheduler)) {
@@ -69,6 +67,7 @@ function useAfmachineAction(
     run() {
       return actionRef.current.run(source);
     },
+    action: actionRef.current,
   };
 }
 

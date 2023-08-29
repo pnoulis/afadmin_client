@@ -12,14 +12,14 @@ import {
   StyleItemText,
   StyleItemIcon,
 } from "/src/components/panels/index.js";
-import { ReactComponent as MergeTeamIcon } from "agent_factory.shared/ui/icons/merge_team.svg";
+import { ReactComponent as MergeTeamIcon } from "agent_factory.shared/ui/new-icons/merge-icon.svg";
 
-function PanelMerge({ children }) {
+function PanelMerge({ onMergeTeam, children }) {
   return (
     <StylePanel>
       <StylePanelHeader>
         <PanelHeaderToolbar>
-          <StyleToolbarItem>
+          <StyleToolbarItem onClick={onMergeTeam}>
             <StyleItemIcon>
               <MergeTeamIcon />
             </StyleItemIcon>

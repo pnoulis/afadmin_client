@@ -18,6 +18,8 @@ function useGroupPartyTeam(
   source,
   { onRemoveGPTeam, fill = false, depth = 0 } = {},
 ) {
+  console.log(source);
+  console.log("USE GROUP PARTY TEAM");
   const {
     entity: team,
     state,

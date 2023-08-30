@@ -10,11 +10,13 @@ import { PlayerActionCard } from "/src/components/registration-queue/index.js";
 import { Wristband } from "/src/components/wristbands/index.js";
 import { afmachine } from "/src/services/afmachine/afmachine.js";
 import { GroupParty } from "/src/components/group-party/index.js";
+import { FormDistributionRatio } from "/src/components/group-party/index.js";
+import { InputDialogDistributionRatio } from "/src/components/dialogs/index.js";
 
 function PageMerge() {
   return (
     <div>
-      <GroupParty fill depth={3}/>
+      <InputDialogDistributionRatio />
     </div>
   );
 }

@@ -6,21 +6,22 @@ const DialogContent = styled.div`
   display: grid;
   min-width: 400px;
   min-height: 200px;
-  grid-template-rows: auto auto auto auto;
+  grid-template-rows: auto auto auto;
   grid-template-columns: 1fr 1fr;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  grid-template-areas: "heading heading" "description description" "content content" "close confirm";
+  grid-template-areas: "heading heading" "content content" "close confirm";
   box-sizing: border-box;
   z-index: 4;
-  padding: 15px 15px;
+  padding: 25px;
   background: white;
   flex-flow: column nowrap;
   border-radius: var(--br-md);
   border: none;
   box-shadow: var(--sd-9);
+  row-gap: 40px;
 `;
 
 const InputDialogHeading = styled(Dialog.Heading)`
@@ -55,7 +56,7 @@ const InputDialogClose = styled(Dialog.Close)`
   width: 110px;
   height: 40px;
   cursor: pointer;
-  background-color: var(--primary-medium);
+  background-color: var(--primary-base);
   border-radius: var(--br-nl);
   color: white;
   font-family: NoirPro-Regular;
@@ -63,6 +64,9 @@ const InputDialogClose = styled(Dialog.Close)`
   letter-spacing: 1.5px;
   text-transform: uppercase;
   text-align: center;
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const InputDialogConfirm = styled(Dialog.Confirm)`
@@ -70,11 +74,10 @@ const InputDialogConfirm = styled(Dialog.Confirm)`
   justify-self: center;
   align-self: end;
   box-sizing: border-box;
-  padding: 5px;
   width: 110px;
   height: 40px;
   cursor: pointer;
-  background-color: var(--primary-medium);
+  background-color: var(--primary-base);
   border-radius: var(--br-nl);
   color: white;
   font-family: NoirPro-Regular;
@@ -82,6 +85,9 @@ const InputDialogConfirm = styled(Dialog.Confirm)`
   letter-spacing: 1.5px;
   text-transform: uppercase;
   text-align: center;
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 function InputDialog({

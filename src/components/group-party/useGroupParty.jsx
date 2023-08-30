@@ -5,13 +5,21 @@ import * as React from "react";
 import { afmachine } from "/src/services/afmachine/afmachine.js";
 import { useAfmachineEntity } from "/src/hooks/index.js";
 import { displaypoperr } from "/src/utils/index.js";
+import {
+  InputDialogDistributionRatio,
+  renderDialog,
+} from "/src/components/dialogs/index.js";
 
 function groupParty(gp, options) {
   return afmachine.createGroupParty(gp, options);
 }
 
-function useGroupParty(source, { fill = true, size = 2, depth = 0 } = {}) {
-  const { entity: gp, state } = useAfmachineEntity(source, groupParty, {
+function useGroupParty(source, { fill = false, size, depth = 0 } = {}) {
+  const {
+    entity: gp,
+    state,
+    changeSource,
+  } = useAfmachineEntity(source, groupParty, {
     fill,
     size,
     depth,
@@ -33,11 +41,33 @@ function useGroupParty(source, { fill = true, size = 2, depth = 0 } = {}) {
     }
   }
 
+  function newGP() {
+    changeSource();
+  }
+
+  function setGPSize(size) {
+    gp.fill(null, { size });
+  }
+
+  function distributePlayers() {
+    renderDialog(null, InputDialogDistributionRatio, (ratio) => {
+      if (!ratio) return;
+      try {
+        gp.distribute(ratio);
+      } catch (err) {
+        displaypoperr(err);
+      }
+    });
+  }
+
   return {
     state,
     gp,
     rmTeam,
     addTeam,
+    newGP,
+    setGPSize,
+    distributePlayers,
   };
 }
 

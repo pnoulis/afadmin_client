@@ -21,7 +21,9 @@ function useRegistableWristband(player, { fill = false } = {}) {
     { fill },
   );
 
-  player.wristband = wristband;
+  React.useEffect(() => {
+    player.wristband = wristband;
+  }, [wristband]);
 
   function handleWristbandToggle(e) {
     if (

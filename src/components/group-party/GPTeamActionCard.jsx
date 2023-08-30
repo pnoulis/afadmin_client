@@ -23,19 +23,23 @@ function GPTeamActionCard() {
   const ctxTeam = useContextTeam();
   return (
     <StyledGPTeamActionCard>
-      <StyledFormTeamName style={{ gridArea: "team_name" }} />
+      <StyledFormTeamName
+        onChange={ctxTeam.changeTeamName}
+        fields={{ teamName: ctxTeam.team.name }}
+        style={{ gridArea: "team_name" }}
+      />
       <StyledToolbar>
         <WidgetPlus onClick={ctxTeam.addPlayer} tooltipContent="add player" />
         <WidgetTrash onClick={ctxTeam.rmGPTeam} tooltipContent="remove team" />
       </StyledToolbar>
-      <ContextProvideRegistrationQueue
-        ctx={{
-          rmQueue: ctxTeam.rmPlayer,
-          queue: ctxTeam.roster,
-        }}
-      >
-        <StyledGPRegistrationQueue style={{ gridArea: "registration_queue" }} />
-      </ContextProvideRegistrationQueue>
+      {/* <ContextProvideRegistrationQueue */}
+      {/*   ctx={{ */}
+      {/*     rmQueue: ctxTeam.rmPlayer, */}
+      {/*     queue: ctxTeam.roster, */}
+      {/*   }} */}
+      {/* > */}
+      {/*   <StyledGPRegistrationQueue style={{ gridArea: "registration_queue" }} /> */}
+      {/* </ContextProvideRegistrationQueue> */}
     </StyledGPTeamActionCard>
   );
 }

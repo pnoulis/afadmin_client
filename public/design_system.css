@@ -122,7 +122,7 @@
 
   --grey-subtle: hsl(var(--base-grey), 95%);
   --grey-light: hsl(var(--base-grey), 90%);
-  --grey-base: hsl(var(--base-grey), 80%);
+  --grey-base: hsl(var(--base-grey), 85%);
   --grey-medium: hsl(var(--base-grey), 70%);
   --grey-strong: hsl(var(--base-grey), 60%);
 

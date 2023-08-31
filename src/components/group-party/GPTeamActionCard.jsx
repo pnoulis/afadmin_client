@@ -10,6 +10,7 @@ import {
   ContextProvideRegistrationQueue,
   StyledListPlayers,
   StyledPlayerActionCard,
+  StyledWidgetTrash,
 } from "/src/components/registration-queue/index.js";
 import { useContextTeam } from "/src/contexts/index.js";
 import {
@@ -19,11 +20,12 @@ import {
   StyleWidgetTrash,
 } from "/src/components/widgets/index.js";
 
-function GPTeamActionCard() {
+function GPTeamActionCard({ failedMerge, className, style }) {
   const ctxTeam = useContextTeam();
   return (
-    <StyledGPTeamActionCard>
+    <StyledGPTeamActionCard className={className} style={style}>
       <StyledFormTeamName
+        failedMerge={failedMerge}
         onChange={ctxTeam.changeTeamName}
         fields={{ teamName: ctxTeam.team.name }}
         style={{ gridArea: "team_name" }}
@@ -44,7 +46,7 @@ function GPTeamActionCard() {
   );
 }
 const StyledGPTeamActionCard = styled("article")`
-  min-height: 200px;
+  height: 100%;
   border-radius: var(--br-lg);
   display: grid;
   grid-template-rows: auto auto;
@@ -58,8 +60,10 @@ const StyledGPTeamActionCard = styled("article")`
 `;
 const StyledFormTeamName = styled(FormTeamName)`
   min-width: auto;
+  color: ${({ failedMerge }) => (failedMerge ? "white" : "black")};
   & input {
-    background-color: white;
+    background-color: ${({ failedMerge }) =>
+      failedMerge ? "var(--error-light)" : "white"};
   }
 `;
 const StyledGPRegistrationQueue = styled(RegistrationQueue)`
@@ -84,6 +88,10 @@ const StyledGPRegistrationQueue = styled(RegistrationQueue)`
     width: 120px;
     aspect-ratio: initial;
     padding: 0;
+  }
+
+  ${StyledWidgetTrash} {
+    background-color: var(--grey-strong);
   }
 `;
 const StyledToolbar = styled("div")`

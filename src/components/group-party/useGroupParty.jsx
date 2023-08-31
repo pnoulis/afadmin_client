@@ -2,6 +2,7 @@
 import * as React from "react";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
+import * as aferrs from "agent_factory.shared/errors.js";
 import { afmachine } from "/src/services/afmachine/afmachine.js";
 import { useAfmachineEntity } from "/src/hooks/index.js";
 import { displaypoperr } from "/src/utils/index.js";
@@ -55,10 +56,15 @@ function useGroupParty(source, { fill = false, size, depth = 0 } = {}) {
       try {
         gp.distribute(ratio);
       } catch (err) {
-        console.log(err);
         displaypoperr(err);
       }
     });
+  }
+
+  function merge() {
+    gp.register().catch(
+      (err) => err instanceof aferrs.ERR_GP_EMPTY && displaypoperr(err),
+    );
   }
 
   return {
@@ -69,6 +75,7 @@ function useGroupParty(source, { fill = false, size, depth = 0 } = {}) {
     newGP,
     setGPSize,
     distributePlayers,
+    merge,
   };
 }
 

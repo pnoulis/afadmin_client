@@ -6,12 +6,9 @@ import styled from "styled-components";
 import { AncestorDimensions } from "react_utils";
 // ------------------------------ project  ------------------------------- //
 import { PanelGroupParty } from "./PanelGroupParty.jsx";
-import {
-  useGroupParty,
-  GPTeamActionCard,
-} from "/src/components/group-party/index.js";
-import { GroupPartyTeam } from "/src/components/teams/index.js";
+import { useGroupParty } from "/src/components/group-party/index.js";
 import { FormGroupPartySize } from "./FormGroupPartySize.jsx";
+import { GPTeam } from "./GPTeam.jsx";
 
 function PageGroupParty() {
   const ctxgp = useGroupParty();
@@ -27,25 +24,14 @@ function PageGroupParty() {
       onTeamAdd={ctxgp.addTeam}
       onNewGP={ctxgp.newGP}
       onDistribute={ctxgp.distributePlayers}
+      onMergeGP={ctxgp.merge}
     >
       <StyledPageGroupParty id="page-group-party">
         {ctxgp.gp.teams.length >= 1 ? (
           <AncestorDimensions ancestor="#panel-groupParty-main">
             <StyledScrollableArea>
               {ctxgp.gp.teams.map((team, i) => (
-                /* <p> */
-                /*   {team.name}{" "} */
-                /*   <button onClick={() => ctxgp.rmTeam(team)}> */
-                /*     remove team */
-                /*   </button> */
-                /* </p> */
-                <GroupPartyTeam
-                  key={i}
-                  team={team}
-                  onRemoveGPTeam={ctxgp.rmTeam}
-                >
-                  <GPTeamActionCard />
-                </GroupPartyTeam>
+                <GPTeam key={i} team={team} onRemoveGPTeam={ctxgp.rmTeam} />
               ))}
             </StyledScrollableArea>
           </AncestorDimensions>
@@ -66,20 +52,25 @@ const StyledPageGroupParty = styled("div")`
   display: flex;
   justify-content: center;
   align-items: start;
+  scrollbar-color: var(--primary-base);
 `;
 
 const StyledScrollableArea = styled("div")`
   height: 100%;
   margin: 25px 50px 0 100px;
   padding: 25px 50px 50px 0;
-  display: flex;
-  flex-flow: column nowrap;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 200px;
   align-items: center;
+  justify-content: center;
+  justify-items: center;
   overflow-y: auto;
   overflow-x: none;
   scroll-behavior: smooth;
   max-height: ${({ $height }) => $height - 50 + "px"};
   row-gap: 40px;
+  scrollbar-color: black var(--primary-base);
 `;
 
 export { PageGroupParty };

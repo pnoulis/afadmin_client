@@ -3,16 +3,9 @@ import * as React from "react";
 // ------------------------------ own libs ------------------------------- //
 import { isFunction } from "js_utils/misc";
 // ------------------------------ project  ------------------------------- //
-import {
-  useAfmachineEntity,
-  useAfmachineAction,
-} from "/src/hooks/index.js";
+import { useAfmachineEntity, useAfmachineAction } from "/src/hooks/index.js";
 import { afmachine } from "/src/services/afmachine/afmachine.js";
 import { displaypoperr } from "/src/utils/index.js";
-import {
-  ConfirmMergeTeam,
-  renderDialog,
-} from "/src/components/dialogs/index.js";
 
 function temporaryTeam(team) {
   return afmachine.createTemporaryTeam(team);
@@ -30,13 +23,12 @@ function useGroupPartyTeam(
     fill,
     depth,
   });
-  // const { action: sMergeTeam } = useAfmachineAction(team.mergeTeam);
+  const { action: sMergeTeam } = useAfmachineAction(team.mergeTeam);
   const rosterRef = React.useRef([]);
   rosterRef.current = React.useMemo(
     () => team.roster.get(),
     [team.roster.size],
   );
-
   function addPlayer() {
     try {
       team.addPlayer(team.roster.createPlayer().fill());
@@ -54,8 +46,6 @@ function useGroupPartyTeam(
   function changeTeamName(name) {
     team.name = name;
   }
-  function merge() {}
-
   function rmGPTeam() {
     isFunction(onRemoveGPTeam) && onRemoveGPTeam(team);
   }
@@ -67,7 +57,7 @@ function useGroupPartyTeam(
     roster: rosterRef.current,
     addPlayer,
     rmPlayer,
-    merge,
+    sMergeTeam,
     changeTeamName,
     rmGPTeam,
   };

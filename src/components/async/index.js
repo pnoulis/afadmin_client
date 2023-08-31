@@ -4,3 +4,4 @@ export * from '/src/components/async/Pending.jsx';
 export * from '/src/components/async/RenderStates.jsx';
 export * from '/src/components/async/PopoverAsyncState.jsx';
 export * from '/src/components/async/PopoverAsyncAction.jsx';
+export * from './ActionReplace.jsx';

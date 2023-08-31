@@ -14,8 +14,8 @@ import {
 } from "/src/components/panels/index.js";
 import { ReactComponent as GroupPartyTeamIcon } from "agent_factory.shared/ui/new-icons/players-icon.svg";
 import { ReactComponent as AddTeamIcon } from "agent_factory.shared/ui/new-icons/add-team-2.svg";
-import { ReactComponent as MergeIcon } from "agent_factory.shared/ui/new-icons/merge-icon.svg";
-import { ReactComponent as DistributeIcon } from "agent_factory.shared/ui/new-icons/merge-icon.svg";
+import { ReactComponent as MergeIcon } from "agent_factory.shared/ui/new-icons/merge-icon-2.svg";
+import { ReactComponent as DistributeIcon } from "agent_factory.shared/ui/new-icons/merge-icon-2.svg";
 
 function PanelGroupParty({
   onTeamAdd,

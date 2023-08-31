@@ -22,7 +22,7 @@ const StyleSvgContainer = styled("div")`
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background-color: var(--primary-subtler);
+  background-color: var(--grey-light);
   padding: 33px;
   svg {
     fill: var(--success-medium);

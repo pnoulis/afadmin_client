@@ -6,7 +6,9 @@ function PanelMain({ id, className, children, ...props }) {
   return (
     <StylePanelMain id={id} className={className || ""} {...props}>
       <AncestorDimensions ancestor={`#${id}`}>
-        <StyleMainScrollarea>{children}</StyleMainScrollarea>
+        <StyleMainScrollarea id="panel-dialog-target">
+          {children}
+        </StyleMainScrollarea>
       </AncestorDimensions>
     </StylePanelMain>
   );

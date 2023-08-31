@@ -14,7 +14,7 @@ const StyleListItem = css`
   box-sizing: border-box;
   height: 110px;
   flex: 0 0 150px;
-  background-color: var(--grey-light);
+  background-color: var(--grey-base);
   border-radius: var(--br-lg);
   cursor: pointer;
   display: flex;

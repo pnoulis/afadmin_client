@@ -3,13 +3,14 @@
 import * as React from "react";
 import styled from "styled-components";
 // ------------------------------ own libs ------------------------------- //
+import { isFunction } from "js_utils/misc";
 // ------------------------------ project  ------------------------------- //
 import { useContextRegistrationQueue } from "./ContextRegistrationQueue.jsx";
 import { PlayerActionCard } from "./PlayerActionCard.jsx";
 import { PersistentPlayer } from "/src/components/players/index.js";
 import WristbandBackground from "agent_factory.shared/ui/new-icons/wristband-gear.svg";
 
-function RegistrationQueue({ className, style, $height }) {
+function RegistrationQueue({ className, style, $height, renderPlayer }) {
   const { queue } = useContextRegistrationQueue();
   return (
     <StyledRegistrationQueue
@@ -18,11 +19,15 @@ function RegistrationQueue({ className, style, $height }) {
       $height={$height}
     >
       <StyledListPlayers>
-        {queue.map((p, i) => (
-          <PersistentPlayer key={p.username + i} player={p}>
-            <PlayerActionCard player={p} />
-          </PersistentPlayer>
-        ))}
+        {queue.map((p, i) =>
+          isFunction(renderPlayer) ? (
+            renderPlayer(p, i)
+          ) : (
+            <PersistentPlayer key={p.username + i} player={p}>
+              <PlayerActionCard player={p} />
+            </PersistentPlayer>
+          ),
+        )}
       </StyledListPlayers>
     </StyledRegistrationQueue>
   );

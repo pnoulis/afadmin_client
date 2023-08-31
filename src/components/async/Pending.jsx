@@ -19,7 +19,7 @@ const StyleSvgContainer = styled("div")`
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  background-color: var(--primary-subtler);
+  background-color: var(--grey-light);
   display: flex;
   justify-content: center;
   align-items: center;

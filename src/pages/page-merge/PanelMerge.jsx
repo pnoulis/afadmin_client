@@ -12,7 +12,7 @@ import {
   StyleItemText,
   StyleItemIcon,
 } from "/src/components/panels/index.js";
-import { ReactComponent as MergeTeamIcon } from "agent_factory.shared/ui/new-icons/merge-icon.svg";
+import { ReactComponent as MergeTeamIcon } from "agent_factory.shared/ui/new-icons/merge-icon-2.svg";
 
 function PanelMerge({ onMergeTeam, children }) {
   return (

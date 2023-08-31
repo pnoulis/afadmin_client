@@ -21,9 +21,7 @@ function useAfmachineAction(
 
   if (actionRef.current == null) {
     if (!(source instanceof Scheduler)) {
-      console.log(`action is not a Scheduler entity`);
       actionRef.current = new Scheduler();
-      console.log("Created scheduled action");
     }
     setState(actionRef.current.getState().name);
   }
@@ -55,7 +53,6 @@ function useAfmachineAction(
         }
       },
     );
-    console.log("subscribed to stateChange event");
     if (run) {
       actionRef.current.run(source);
     }

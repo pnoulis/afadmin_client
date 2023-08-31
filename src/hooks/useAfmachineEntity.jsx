@@ -10,47 +10,48 @@ function useAfmachineEntity(
   createEntity,
   { fill = false, depth = 0, targetState = "" } = {},
 ) {
+  const [getSource, setSource] = React.useState(() => () => source);
   const [state, setState] = React.useState("");
   const [id, setId] = React.useState("");
   const constructorRef = React.useRef(
     createEntity?.().constructor || createEntity.constructor,
   );
-  const sourceRef = React.useRef(null);
   const entityRef = React.useRef(null);
   if (constructorRef.current == null) {
     throw new Error("useAfmachineEntity missing constructor");
   }
 
-  if (source !== sourceRef.current) {
-    sourceRef.current = source;
-    if (source instanceof constructorRef.current) {
-      entityRef.current = source;
-    } else {
-      entityRef.current = fill
-        ? createEntity().fill(source, {
-            depth,
-            state: targetState,
-          })
-        : createEntity(constructorRef.current.normalize([source]));
-    }
+  function changeSource(newSource) {
+    setSource(() => () => newSource);
   }
+
+  React.useEffect(() => {
+    if (source !== entityRef.current || source !== getSource()) {
+      setSource(() => () => source);
+    }
+  }, [source]);
+
+  entityRef.current = React.useMemo(() => {
+    if (getSource() instanceof constructorRef.current) {
+      return getSource();
+    } else if (fill) {
+      return createEntity().fill(getSource(), {
+        depth,
+        state: targetState,
+      });
+    } else {
+      return createEntity(constructorRef.current.normalize([getSource()]));
+    }
+  }, [getSource, setSource]);
 
   React.useEffect(() => {
     if (entityRef.current.hasEvent?.("stateChange")) {
       var unsubStateChange = entityRef.current.on("stateChange", (cstate) => {
-        console.log("state changed");
         setState(cstate);
       });
     }
     if (entityRef.current.hasEvent?.("change")) {
-      var unsubChange = entityRef.current.on("change", (action) => {
-        if (constructorRef.current.name === "GroupParty") {
-          console.log("group party changed");
-        }
-        if (action === "removeTeam") {
-          console.log(entityRef.current);
-          console.log("REMOVE TEAM");
-        }
+      var unsubChange = entityRef.current.on("change", () => {
         setId(smallid());
       });
     }
@@ -64,12 +65,13 @@ function useAfmachineEntity(
       isFunction(unsubStateChange) && unsubStateChange();
       isFunction(unsubChange) && unsubChange();
     };
-  }, [entityRef.current]);
+  }, [getSource, setSource]);
 
   return {
     state,
     id,
     entity: entityRef.current,
+    changeSource,
   };
 }
 

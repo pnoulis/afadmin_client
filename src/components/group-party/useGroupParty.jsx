@@ -55,6 +55,7 @@ function useGroupParty(source, { fill = false, size, depth = 0 } = {}) {
       try {
         gp.distribute(ratio);
       } catch (err) {
+        console.log(err);
         displaypoperr(err);
       }
     });

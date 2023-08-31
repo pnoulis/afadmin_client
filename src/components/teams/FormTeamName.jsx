@@ -27,13 +27,18 @@ function FormTeamName({
 
   React.useEffect(() => {
     isFunction(onChange) && onChange(form.fields.teamName);
-  }, [form.fields, onChange]);
+  }, [form.fields]);
 
   return (
     <FormProvider value={{ ...form, setForm }}>
-      <StyledForm id={form.formId} className={className} style={style} onSubmit={(e) => {
-        e.preventDefault();
-      }}>
+      <StyledForm
+        id={form.formId}
+        className={className}
+        style={style}
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         {legend && <StyledLegend className="legend">{legend}</StyledLegend>}
         <TextInput name="teamName" placeholder={form.randomName} />
       </StyledForm>

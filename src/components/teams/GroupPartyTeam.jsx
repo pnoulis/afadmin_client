@@ -8,13 +8,7 @@ import { ContextProvideTeam } from "/src/contexts/index.js";
 
 function GroupPartyTeam({ team, onRemoveGPTeam, children, fill, depth }) {
   const ctx = useGroupPartyTeam(team, { onRemoveGPTeam, fill, depth });
-  console.log(ctx);
-  console.log('GROUP PARTY TEAM');
-  return (
-    <ContextProvideTeam key={ctx.id} ctx={ctx}>
-      {children}
-    </ContextProvideTeam>
-  );
+  return <ContextProvideTeam key={ctx.id} ctx={ctx}>{children}</ContextProvideTeam>;
 }
 
 export { GroupPartyTeam };

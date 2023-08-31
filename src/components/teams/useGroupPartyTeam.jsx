@@ -1,8 +1,12 @@
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
 // ------------------------------ own libs ------------------------------- //
+import { isFunction } from "js_utils/misc";
 // ------------------------------ project  ------------------------------- //
-import { useAfmachineEntity, useAfmachineAction } from "/src/hooks/index.js";
+import {
+  useAfmachineEntity2 as useAfmachineEntity,
+  useAfmachineAction,
+} from "/src/hooks/index.js";
 import { afmachine } from "/src/services/afmachine/afmachine.js";
 import { displaypoperr } from "/src/utils/index.js";
 import {
@@ -18,8 +22,6 @@ function useGroupPartyTeam(
   source,
   { onRemoveGPTeam, fill = false, depth = 0 } = {},
 ) {
-  console.log(source);
-  console.log("USE GROUP PARTY TEAM");
   const {
     entity: team,
     state,
@@ -55,9 +57,7 @@ function useGroupPartyTeam(
   function merge() {}
 
   function rmGPTeam() {
-    if (onRemoveGPTeam) {
-      onRemoveGPTeam(team);
-    }
+    isFunction(onRemoveGPTeam) && onRemoveGPTeam(team);
   }
 
   return {

@@ -22,8 +22,6 @@ function PageGroupParty() {
     }
   }, [ctxgp]);
 
-  console.log("PAGE GROUP PARTY");
-
   return (
     <PanelGroupParty
       onTeamAdd={ctxgp.addTeam}
@@ -35,6 +33,12 @@ function PageGroupParty() {
           <AncestorDimensions ancestor="#panel-groupParty-main">
             <StyledScrollableArea>
               {ctxgp.gp.teams.map((team, i) => (
+                /* <p> */
+                /*   {team.name}{" "} */
+                /*   <button onClick={() => ctxgp.rmTeam(team)}> */
+                /*     remove team */
+                /*   </button> */
+                /* </p> */
                 <GroupPartyTeam
                   key={i}
                   team={team}

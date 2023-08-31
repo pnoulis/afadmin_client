@@ -4,7 +4,7 @@ import * as React from "react";
 import { isFunction } from "js_utils/misc";
 // ------------------------------ project  ------------------------------- //
 import {
-  useAfmachineEntity2 as useAfmachineEntity,
+  useAfmachineEntity,
   useAfmachineAction,
 } from "/src/hooks/index.js";
 import { afmachine } from "/src/services/afmachine/afmachine.js";

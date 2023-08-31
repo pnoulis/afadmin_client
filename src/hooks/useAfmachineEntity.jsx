@@ -4,72 +4,38 @@ import * as React from "react";
 import { smallid } from "js_utils/uuid";
 import { isObject, isFunction } from "js_utils/misc";
 // ------------------------------ project  ------------------------------- //
+
 function useAfmachineEntity(
   source,
   createEntity,
   { fill = false, depth = 0, targetState = "" } = {},
 ) {
-  const [getSource, setSource] = React.useState(() => () => source);
   const [state, setState] = React.useState("");
   const [id, setId] = React.useState("");
   const constructorRef = React.useRef(
     createEntity?.().constructor || createEntity.constructor,
   );
+  const sourceRef = React.useRef(null);
   const entityRef = React.useRef(null);
   if (constructorRef.current == null) {
     throw new Error("useAfmachineEntity missing constructor");
   }
 
-  React.useEffect(() => {
-    console.log(source);
-    console.log("new source");
-    console.log(getSource());
-    console.log("old source");
-    if (source === entityRef.current || source === getSource()) {
-      console.log(`SOURCE ${constructorRef.current.name} SAME`);
+  if (source !== sourceRef.current) {
+    sourceRef.current = source;
+    if (source instanceof constructorRef.current) {
+      entityRef.current = source;
     } else {
-      console.log(`SOURCE ${constructorRef.current.name} NOT SAME`);
-      setSource(() => () => source);
+      entityRef.current = fill
+        ? createEntity().fill(source, {
+            depth,
+            state: targetState,
+          })
+        : createEntity(constructorRef.current.normalize([source]));
     }
-  }, [source]);
-
-  function changeSource(newSource) {
-    setSource(() => () => newSource);
   }
 
-  entityRef.current = React.useMemo(() => {
-    console.log(getSource());
-    console.log(`GET SOURCE ${constructorRef.current.name} CHANGED`);
-    if (getSource() instanceof constructorRef.current) {
-      console.log(`GET SOURCE IS AN INSTANCEOF ${constructorRef.current.name}`);
-      console.log(getSource());
-      return getSource();
-    } else {
-      console.log(`GET SOURCE IS NOT AN INSTANCEOF ${constructorRef.current.name}`);
-    }
-    const entity = fill
-      ? createEntity().fill(getSource(), {
-          depth,
-          state: targetState,
-        })
-      : createEntity(constructorRef.current.normalize([getSource()]));
-    console.log(fill);
-    console.log(entity);
-    console.log("created entity");
-
-    return entity;
-  }, [getSource, setSource]);
-
   React.useEffect(() => {
-    console.log(entityRef.current);
-    console.log(getSource());
-    console.log(`ENTITYREF ${constructorRef.current.name} changed`);
-    setState(
-      isObject(entityRef.current.state)
-        ? entityRef.current.getState().name
-        : entityRef.current.state,
-    );
-
     if (entityRef.current.hasEvent?.("stateChange")) {
       var unsubStateChange = entityRef.current.on("stateChange", (cstate) => {
         console.log("state changed");
@@ -88,12 +54,15 @@ function useAfmachineEntity(
         setId(smallid());
       });
     }
-    console.log("SET ID");
     setId(smallid());
-
+    setState(
+      isObject(entityRef.current.state)
+        ? entityRef.current.getState().name
+        : entityRef.current.state,
+    );
     return () => {
-      unsubStateChange && unsubStateChange();
-      unsubChange && unsubChange();
+      isFunction(unsubStateChange) && unsubStateChange();
+      isFunction(unsubChange) && unsubChange();
     };
   }, [entityRef.current]);
 
@@ -101,7 +70,6 @@ function useAfmachineEntity(
     state,
     id,
     entity: entityRef.current,
-    changeSource,
   };
 }
 

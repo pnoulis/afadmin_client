@@ -6,3 +6,5 @@ export * from "/src/components/players/PlayerTuple.jsx";
 export * from "/src/components/players/PlayerTupleState.jsx";
 export * from "/src/components/players/PlayerTupleFullname.jsx";
 export * from "/src/components/players/PlayerInfoCard.jsx";
+export * from "./TemporaryPlayer.jsx";
+export * from "./useTemporaryPlayer.jsx";

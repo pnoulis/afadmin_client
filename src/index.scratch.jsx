@@ -14,13 +14,13 @@ import { GroupParty } from "/src/components/group-party/index.js";
 import { FormDistributionRatio } from "/src/components/group-party/index.js";
 import { InputDialogDistributionRatio } from "/src/components/dialogs/index.js";
 import { ReactComponent as DistributeIcon } from "agent_factory.shared/ui/new-icons/merge-icon-2.svg";
+import { VerifiableWristband } from "/src/components/wristbands/VerifiableWristband.jsx";
+import { TemporaryPlayer } from "/src/components/players/index.js";
 
 function PageMerge() {
   return (
     <div>
-      <Svg>
-        <DistributeIcon/>
-      </Svg>
+      <TemporaryPlayer />
     </div>
   );
 }

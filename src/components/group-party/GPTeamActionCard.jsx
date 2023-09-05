@@ -40,7 +40,10 @@ function GPTeamActionCard({ failedMerge, className, style }) {
           queue: ctxTeam.roster,
         }}
       >
-        <StyledGPRegistrationQueue style={{ gridArea: "registration_queue" }} />
+        <StyledGPRegistrationQueue
+          isTemporary
+          style={{ gridArea: "registration_queue" }}
+        />
       </ContextProvideRegistrationQueue>
     </StyledGPTeamActionCard>
   );

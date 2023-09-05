@@ -15,7 +15,7 @@ const AlertDialogContent = styled.div`
   z-index: 4;
   padding: 25px 35px 25px 35px;
   background: white;
-font-family: Saira;
+  font-family: Saira;
   flex-flow: column nowrap;
   border-radius: var(--br-md);
   border: none;

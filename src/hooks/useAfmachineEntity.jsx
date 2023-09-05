@@ -32,6 +32,7 @@ function useAfmachineEntity(
   }, [source]);
 
   entityRef.current = React.useMemo(() => {
+    console.log(`SOURCE CHANGED ${constructorRef.current.name}`);
     if (getSource() instanceof constructorRef.current) {
       return getSource();
     } else if (fill) {

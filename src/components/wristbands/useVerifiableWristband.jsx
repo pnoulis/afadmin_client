@@ -10,14 +10,14 @@ import {
   renderDialog,
 } from "/src/components/dialogs/index.js";
 
-function registableWristband(player, wristband, options) {
-  return afmachine.createRegistableWristband(wristband, player, options);
+function verifiableWristband(player, wristband) {
+  return afmachine.createVerifiableWristband(wristband, player);
 }
 
-function useRegistableWristband(player, { fill = false } = {}) {
+function useVerifiableWristband(player, { fill = false } = {}) {
   const { entity: wristband, state } = useAfmachineEntity(
     player.wristband,
-    registableWristband.bind(null, player),
+    verifiableWristband.bind(null, player),
     { fill },
   );
 
@@ -53,4 +53,4 @@ function useRegistableWristband(player, { fill = false } = {}) {
   };
 }
 
-export { useRegistableWristband };
+export { useVerifiableWristband };

@@ -8,6 +8,8 @@ import { useAfmachineEntity } from "/src/hooks/index.js";
 import { displaypoperr } from "/src/utils/index.js";
 import {
   InputDialogDistributionRatio,
+  AlertSuccessfulGPMerge,
+  ConfirmMergeGP,
   renderDialog,
 } from "/src/components/dialogs/index.js";
 
@@ -62,9 +64,25 @@ function useGroupParty(source, { fill = false, size, depth = 0 } = {}) {
   }
 
   function merge() {
-    gp.register().catch(
-      (err) => err instanceof aferrs.ERR_GP_EMPTY && displaypoperr(err),
-    );
+    renderDialog(null, ConfirmMergeGP, (yes) => {
+      if (!yes) return;
+      gp.register()
+        .then(() => {
+          renderDialog(
+            null,
+            AlertSuccessfulGPMerge,
+            {
+              teamNames: gp.teams.map((team) => team.name),
+            },
+            () => {
+              changeSource();
+            },
+          );
+        })
+        .catch((err) => {
+          err instanceof aferrs.ERR_GP_EMPTY && displaypoperr(err);
+        });
+    });
   }
 
   return {

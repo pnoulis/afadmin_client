@@ -1,7 +1,6 @@
 // ------------------------------ std libs ------------------------------- //
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
-import styled from "styled-components";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
 import { displaypoperr } from "/src/utils/index.js";
@@ -19,11 +18,13 @@ function GPTeam({ team, onRemoveGPTeam }) {
         action={ctx.team.merge}
         timePending={500}
         onSettled={(resolved, response) => {
-          if (!resolved) {
-            setFailedMerge(true);
+          if (response instanceof Error) {
             displaypoperr(response);
+          }
+          if (!resolved && !ctx.team.inState("merged")) {
+            setFailedMerge(true);
           } else {
-            setFailedMerged(false);
+            setFailedMerge(false);
           }
         }}
       >

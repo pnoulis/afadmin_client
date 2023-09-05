@@ -7,10 +7,13 @@ import { isFunction } from "js_utils/misc";
 // ------------------------------ project  ------------------------------- //
 import { useContextRegistrationQueue } from "./ContextRegistrationQueue.jsx";
 import { PlayerActionCard } from "./PlayerActionCard.jsx";
-import { PersistentPlayer } from "/src/components/players/index.js";
+import {
+  PersistentPlayer,
+  TemporaryPlayer,
+} from "/src/components/players/index.js";
 import WristbandBackground from "agent_factory.shared/ui/new-icons/wristband-gear.svg";
 
-function RegistrationQueue({ className, style, $height, renderPlayer }) {
+function RegistrationQueue({ className, style, $height, isTemporary }) {
   const { queue } = useContextRegistrationQueue();
   return (
     <StyledRegistrationQueue
@@ -19,15 +22,17 @@ function RegistrationQueue({ className, style, $height, renderPlayer }) {
       $height={$height}
     >
       <StyledListPlayers>
-        {queue.map((p, i) =>
-          isFunction(renderPlayer) ? (
-            renderPlayer(p, i)
-          ) : (
-            <PersistentPlayer key={p.username + i} player={p}>
-              <PlayerActionCard player={p} />
-            </PersistentPlayer>
-          ),
-        )}
+        {isTemporary
+          ? queue.map((p, i) => (
+              <TemporaryPlayer key={p.username + i} player={p}>
+                <PlayerActionCard player={p} />
+              </TemporaryPlayer>
+            ))
+          : queue.map((p, i) => (
+              <PersistentPlayer key={p.username + i} player={p}>
+                <PlayerActionCard player={p} />
+              </PersistentPlayer>
+            ))}
       </StyledListPlayers>
     </StyledRegistrationQueue>
   );

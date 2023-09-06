@@ -26,7 +26,12 @@ function FormTeamName({
   });
 
   React.useEffect(() => {
-    isFunction(onChange) && onChange(form.fields.teamName);
+    isFunction(onChange) &&
+      onChange(
+        form.fields.teamName || {
+          placeholder: form.randomName,
+        },
+      );
   }, [form.fields]);
 
   return (

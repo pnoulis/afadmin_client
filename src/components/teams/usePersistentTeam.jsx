@@ -1,6 +1,7 @@
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
 // ------------------------------ own libs ------------------------------- //
+import { isObject } from "js_utils/misc";
 // ------------------------------ project  ------------------------------- //
 import { useAfmachineEntity, useAfmachineAction } from "/src/hooks/index.js";
 import { afmachine } from "/src/services/afmachine/afmachine.js";
@@ -19,6 +20,7 @@ function usePersistentTeam(source, { fill = false, depth = 0 } = {}) {
     entity: team,
     state,
     id,
+    changeSource,
   } = useAfmachineEntity(source, persistentTeam, {
     fill,
     depth,
@@ -29,6 +31,7 @@ function usePersistentTeam(source, { fill = false, depth = 0 } = {}) {
     () => team.roster.get(),
     [team.roster, team.roster.size],
   );
+  const randomNameRef = React.useRef("");
 
   function addPlayer(player) {
     try {
@@ -45,12 +48,17 @@ function usePersistentTeam(source, { fill = false, depth = 0 } = {}) {
     }
   }
   function changeTeamName(name) {
-    team.name = name;
+    if (isObject(name)) {
+      randomNameRef.current = name.placeholder;
+    } else {
+      team.name = name;
+    }
   }
   function merge() {
+    team.name ||= randomNameRef.current;
     renderDialog(null, ConfirmMergeTeam, { teamName: team.name }, (yes) => {
       if (!yes) return;
-      sMergeTeam.run(() => team.mergeTeam()).catch(displaypoperr);
+      sMergeTeam.run(() => team.mergeTeam());
     });
   }
 
@@ -64,6 +72,7 @@ function usePersistentTeam(source, { fill = false, depth = 0 } = {}) {
     merge,
     sMergeTeam,
     changeTeamName,
+    changeSource,
   };
 }
 

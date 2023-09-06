@@ -1,7 +1,7 @@
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
 // ------------------------------ own libs ------------------------------- //
-import { isFunction } from "js_utils/misc";
+import { isFunction, isObject } from "js_utils/misc";
 // ------------------------------ project  ------------------------------- //
 import { useAfmachineEntity, useAfmachineAction } from "/src/hooks/index.js";
 import { afmachine } from "/src/services/afmachine/afmachine.js";

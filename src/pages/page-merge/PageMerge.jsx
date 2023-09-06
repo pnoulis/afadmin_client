@@ -6,6 +6,7 @@ import { useLoaderData, Await, useRevalidator } from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
 import { generateRandomName } from "js_utils";
 // ------------------------------ project  ------------------------------- //
+import { displaypoperr } from "/src/utils/index.js";
 import { PanelMerge } from "./PanelMerge.jsx";
 import { ComboboxSelectPlayer } from "./ComboboxSelectPlayer.jsx";
 import { ComboboxOptionPlayer } from "./ComboboxOptionPlayer.jsx";
@@ -18,12 +19,13 @@ import { Pending } from "/src/components/async/index.js";
 import { usePersistentTeam } from "/src/components/teams/index.js";
 import { useAfmachineSubscription } from "/src/hooks/index.js";
 import { PopoverAsyncState } from "/src/components/async/index.js";
+import {
+  AlertSuccessfulTeamMerge,
+  renderDialog,
+} from "/src/components/dialogs/index.js";
 
 function PageMerge() {
-  const [team, setTeam] = React.useState({
-    name: generateRandomName(),
-  });
-  const ctxTeam = usePersistentTeam(team);
+  const ctxTeam = usePersistentTeam();
   const loadPlayers = useLoaderData();
   const revalidator = useRevalidator();
 
@@ -39,11 +41,20 @@ function PageMerge() {
     <PanelMerge key={ctxTeam.team.name} onMergeTeam={ctxTeam.merge}>
       <PopoverAsyncState
         action={ctxTeam.sMergeTeam}
-        onSettled={(merged) => {
+        onSettled={(merged, response) => {
           if (merged) {
-            setTeam({
-              name: generateRandomName(),
-            });
+            renderDialog(
+              null,
+              AlertSuccessfulTeamMerge,
+              {
+                teamName: ctxTeam.team.name,
+              },
+              () => {
+                ctxTeam.changeSource();
+              },
+            );
+          } else {
+            displaypoperr(response);
           }
         }}
       />

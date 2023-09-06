@@ -22,8 +22,17 @@ import {
 
 function GPTeamActionCard({ failedMerge, className, style }) {
   const ctxTeam = useContextTeam();
+  React.useEffect(() => {
+    console.log(ctxTeam.roster);
+    console.log('GPTeamActionCard ID CHANGE');
+  }, [ctxTeam.id]);
+
   return (
-    <StyledGPTeamActionCard className={className} style={style}>
+    <StyledGPTeamActionCard
+      key={ctxTeam.id}
+      className={className}
+      style={style}
+    >
       <StyledFormTeamName
         failedMerge={failedMerge}
         onChange={ctxTeam.changeTeamName}
@@ -35,6 +44,7 @@ function GPTeamActionCard({ failedMerge, className, style }) {
         <WidgetTrash onClick={ctxTeam.rmGPTeam} tooltipContent="remove team" />
       </StyledToolbar>
       <ContextProvideRegistrationQueue
+        key={ctxTeam.id}
         ctx={{
           rmQueue: ctxTeam.rmPlayer,
           queue: ctxTeam.roster,

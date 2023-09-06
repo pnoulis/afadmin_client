@@ -10,6 +10,7 @@ import {
   InputDialogDistributionRatio,
   AlertSuccessfulGPMerge,
   ConfirmMergeGP,
+  ConfirmNewGP,
   renderDialog,
 } from "/src/components/dialogs/index.js";
 
@@ -45,7 +46,22 @@ function useGroupParty(source, { fill = false, size, depth = 0 } = {}) {
   }
 
   function newGP() {
-    changeSource();
+    let hasMergedTeam = false;
+    for (let i = 0; i < gp.teams.length; i++) {
+      if (gp.teams[i].inState("merged")) {
+        hasMergedTeam = true;
+        break;
+      }
+    }
+
+    if (hasMergedTeam) {
+      renderDialog(null, ConfirmNewGP, (yes) => {
+        if (!yes) return;
+        changeSource();
+      });
+    } else {
+      changeSource();
+    }
   }
 
   function setGPSize(size) {

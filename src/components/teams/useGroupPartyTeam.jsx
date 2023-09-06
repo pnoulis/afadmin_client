@@ -27,7 +27,7 @@ function useGroupPartyTeam(
   const rosterRef = React.useRef([]);
   rosterRef.current = React.useMemo(
     () => team.roster.get(),
-    [team.roster.size],
+    [team.roster, team.roster.size],
   );
   function addPlayer() {
     try {

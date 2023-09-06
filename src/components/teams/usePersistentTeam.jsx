@@ -27,7 +27,7 @@ function usePersistentTeam(source, { fill = false, depth = 0 } = {}) {
   const rosterRef = React.useRef([]);
   rosterRef.current = React.useMemo(
     () => team.roster.get(),
-    [team.roster.size],
+    [team.roster, team.roster.size],
   );
 
   function addPlayer(player) {

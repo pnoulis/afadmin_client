@@ -16,11 +16,21 @@ import { InputDialogDistributionRatio } from "/src/components/dialogs/index.js";
 import { ReactComponent as DistributeIcon } from "agent_factory.shared/ui/new-icons/merge-icon-2.svg";
 import { VerifiableWristband } from "/src/components/wristbands/VerifiableWristband.jsx";
 import { TemporaryPlayer } from "/src/components/players/index.js";
+import { AwaitPackages } from "/src/pages/page-team/AwaitPackages.jsx";
+import { loadPackages } from "/src/loaders/index.js";
 
 function PageMerge() {
   return (
     <div>
-      <TemporaryPlayer />
+      <AwaitPackages>
+        {(pkgs) => (
+          <div>
+            {pkgs.map((pkg) => (
+              <p>yolo</p>
+            ))}
+          </div>
+        )}
+      </AwaitPackages>
     </div>
   );
 }
@@ -28,6 +38,7 @@ function PageMerge() {
 const router = createBrowserRouter([
   {
     path: "/",
+    loader: loadPackages,
     element: <PageMerge />,
   },
 ]);

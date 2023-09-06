@@ -39,6 +39,9 @@ function Site() {
           <SidebarNavLink to={links.liveView.path}>
             {links.liveView.label}
           </SidebarNavLink>
+          <SidebarNavLink to={links.scoreboard.path}>
+            {links.scoreboard.label}
+          </SidebarNavLink>
           <SidebarNavLink to={links.administrator.path}>
             {links.administrator.label}
           </SidebarNavLink>

@@ -24,7 +24,9 @@ import {
   PageMerge,
   PageGroupParty,
   PageLiveView,
+  PageLiveViewIndex,
   PageAdministrator,
+  PageTeam,
 } from "/src/pages/index.js";
 import { ENVIRONMENT } from "agent_factory.shared/config.js";
 import {
@@ -86,10 +88,26 @@ const router = createBrowserRouter(
             {
               path: links.liveView.path,
               element: <PageLiveView />,
+              children: [
+                {
+                  index: true,
+                  loader: loadTeams,
+                  element: <PageLiveViewIndex />,
+                },
+                {
+                  path: links.liveView.path + links.team().path,
+                  loader: loadPackages,
+                  element: <PageTeam />,
+                },
+              ],
             },
             {
               path: links.administrator.path,
               element: <PageAdministrator />,
+            },
+            {
+              path: links.scoreboard.path,
+              element: <p>scoreboard</p>,
             },
           ],
         },

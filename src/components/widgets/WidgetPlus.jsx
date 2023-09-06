@@ -37,12 +37,11 @@ function WidgetPlus({
 const StyleWidgetPlus = styled.div`
   cursor: pointer;
   display: flex;
-  box-sizing: content-box;
+  box-sizing: border-box;
   justify-content: center;
   align-items: center;
-  box-sizing: content-box;
-  width: ${({ size }) => size || "25px"};
-  height: ${({ size }) => size || "25px"};
+  width: ${({ size }) => size || "50px"};
+  height: ${({ size }) => size || "50px"};
   border: 3px solid transparent;
   padding: 8px;
   border-radius: 50%;

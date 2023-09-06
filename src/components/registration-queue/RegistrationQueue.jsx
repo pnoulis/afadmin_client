@@ -13,30 +13,59 @@ import {
 } from "/src/components/players/index.js";
 import WristbandBackground from "agent_factory.shared/ui/new-icons/wristband-gear.svg";
 
-function RegistrationQueue({ className, style, $height, isTemporary }) {
+function RegistrationQueue({
+  className,
+  style,
+  $height,
+  disable,
+  renderPlayer,
+}) {
   const { queue } = useContextRegistrationQueue();
   return (
     <StyledRegistrationQueue
+      disable={disable}
       className={className}
       style={style}
       $height={$height}
     >
       <StyledListPlayers>
-        {isTemporary
-          ? queue.map((p, i) => (
-              <TemporaryPlayer key={p.username + i} player={p}>
-                <PlayerActionCard player={p} />
-              </TemporaryPlayer>
-            ))
-          : queue.map((p, i) => (
-              <PersistentPlayer key={p.username + i} player={p}>
-                <PlayerActionCard player={p} />
-              </PersistentPlayer>
-            ))}
+        {queue.map((player, i) => renderPlayer({ key: i, player }))}
       </StyledListPlayers>
     </StyledRegistrationQueue>
   );
 }
+
+// function RegistrationQueue({
+//   className,
+//   style,
+//   $height,
+//   isTemporary,
+//   disable,
+// }) {
+//   const { queue } = useContextRegistrationQueue();
+//   return (
+//     <StyledRegistrationQueue
+//       disable={disable}
+//       className={className}
+//       style={style}
+//       $height={$height}
+//     >
+//       <StyledListPlayers>
+//         {isTemporary
+//           ? queue.map((p, i) => (
+//               <TemporaryPlayer key={p.username + i} player={p}>
+//                 <PlayerActionCard player={p} />
+//               </TemporaryPlayer>
+//             ))
+//           : queue.map((p, i) => (
+//               <PersistentPlayer key={p.username + i} player={p}>
+//                 <PlayerActionCard player={p} />
+//               </PersistentPlayer>
+//             ))}
+//       </StyledListPlayers>
+//     </StyledRegistrationQueue>
+//   );
+// }
 
 const StyledRegistrationQueue = styled("section")`
   position: relative;
@@ -45,12 +74,13 @@ const StyledRegistrationQueue = styled("section")`
   max-width: 650px;
   border-radius: var(--br-lg);
   background-color: white;
-  box-shadow: var(--sd-4);
+  box-shadow: var(--sd-14), var(--sd-4);
   background-image: url(${WristbandBackground});
   background-repeat: no-repeat;
   background-size: 50%;
   background-position: center;
   max-height: ${({ $height }) => ($height ? `${$height - 35}px` : "auto")};
+  pointer-events: none;
 `;
 
 const StyledListPlayers = styled("ul")`

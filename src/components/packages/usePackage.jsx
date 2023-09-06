@@ -5,24 +5,25 @@ import * as React from "react";
 import { useAfmachineEntity } from "/src/hooks/index.js";
 import { afmachine } from "/src/services/afmachine/afmachine.js";
 
-function baseWristband(source) {
-  return afmachine.createWristband(source);
+function afpackage(team, pkg) {
+  // createPkg arguments: pkg, team
+  return afmachine.createPkg(pkg, team);
 }
 
-function scannableWristband(source) {
-  return afmachine.createScanableWristband(source);
-}
-
-function useWristband(source, { fill, depth, create = baseWristband } = {}) {
-  const { entity: wristband, state } = useAfmachineEntity(source, create, {
-    fill,
-    depth,
-  });
+function usePackage(source, { team = {}, fill = false, depth = 0 }) {
+  const { entity: pkg, state } = useAfmachineEntity(
+    source,
+    afpackage.bind(null, team),
+    {
+      fill,
+      depth,
+    },
+  );
 
   return {
     state,
-    wristband,
+    pkg,
   };
 }
 
-export { useWristband };
+export { usePackage };

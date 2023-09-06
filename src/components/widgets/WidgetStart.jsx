@@ -1,17 +1,13 @@
-// ------------------------------ std libs ------------------------------- //
-// ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
 import styled from "styled-components";
-// ------------------------------ own libs ------------------------------- //
 import { Svg } from "react_utils/svgs";
-// ------------------------------ project  ------------------------------- //
 import { TooltipDefault } from "/src/components/tooltips/index.js";
-import { ReactComponent as TrashIcon } from "agent_factory.shared/ui/icons/trash_2.svg";
+import { ReactComponent as StartIcon } from "agent_factory.shared/ui/icons/play_fill.svg";
 
-function WidgetTrash({
+function WidgetStart({
   onClick: handleClick,
   size,
-  tooltipContent = "remove",
+  tooltipContent,
   className,
   ...props
 }) {
@@ -19,36 +15,41 @@ function WidgetTrash({
     <TooltipDefault
       content={tooltipContent}
       trigger={
-        <StyleWidgetTrash
+        <StyleWidgetStart
           size={size}
           onClick={handleClick}
           className={className}
           {...props}
         >
           <Svg>
-            <TrashIcon />
+            <StartIcon />
           </Svg>
-        </StyleWidgetTrash>
+        </StyleWidgetStart>
       }
     />
   );
 }
 
-const StyleWidgetTrash = styled.div`
+const StyleWidgetStart = styled.div`
   cursor: pointer;
   display: flex;
-  box-sizing: border-box;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
   width: ${({ size }) => size || "50px"};
   height: ${({ size }) => size || "50px"};
   border: 3px solid transparent;
-  padding: 8px;
+  padding: 7px;
   border-radius: 50%;
-  background-color: var(--grey-base);
+  background-color: var(--primary-base);
   &:hover {
     opacity: 0.8;
   }
+  svg {
+    fill: white;
+    position: relative;
+    left: 3px;
+  }
 `;
 
-export { WidgetTrash, StyleWidgetTrash };
+export { WidgetStart };

@@ -82,7 +82,7 @@ const groupParty = {
 };
 
 const liveView = {
-  path: "/liveView",
+  path: "/live-view",
   label: "live view",
   asComponent: ({ children, ...props }) => (
     <NavLink to="/liveView" {...props}>
@@ -161,6 +161,27 @@ const administratorRooms = {
   ),
 };
 
+const scoreboard = {
+  path: "/scoreboard",
+  label: "scoreboard",
+  asComponent: ({ children, ...props }) => (
+    <NavLink to="/scoreboard" {...props}>
+      {children}
+    </NavLink>
+  ),
+};
+
+function team(teamId) {
+  return {
+    path: teamId ? `${teamId}` : "/:teamId",
+    asComponent: ({ children, ...props }) => (
+      <NavLink to={teamId ? teamId : "/:teamId"} {...props}>
+        {children}
+      </NavLink>
+    ),
+  };
+}
+
 export {
   home,
   login,
@@ -178,4 +199,6 @@ export {
   administratorRooms,
   administratorMissions,
   administratorHistory,
+  scoreboard,
+  team,
 };

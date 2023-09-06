@@ -4,7 +4,6 @@ import * as React from "react";
 import styled from "styled-components";
 import { useLoaderData, Await, useRevalidator } from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
-import { generateRandomName } from "js_utils";
 // ------------------------------ project  ------------------------------- //
 import { displaypoperr } from "/src/utils/index.js";
 import { PanelMerge } from "./PanelMerge.jsx";

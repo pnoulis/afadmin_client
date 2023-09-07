@@ -11,7 +11,8 @@ import { ReactComponent as TrashIcon } from "agent_factory.shared/ui/icons/trash
 function WidgetTrash({
   onClick: handleClick,
   size,
-  tooltipContent = "remove",
+  as,
+  tooltipContent,
   className,
   ...props
 }) {
@@ -20,6 +21,7 @@ function WidgetTrash({
       content={tooltipContent}
       trigger={
         <StyleWidgetTrash
+          as={as}
           size={size}
           onClick={handleClick}
           className={className}

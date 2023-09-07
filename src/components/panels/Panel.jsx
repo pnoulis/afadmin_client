@@ -22,7 +22,7 @@ const StylePanel = styled.div`
   grid-template-areas: "header" "main";
   grid-template-rows: max-content 1fr;
   grid-template-columns: 1fr;
-  row-gap: 20px;
+  // row-gap: 20px;
   border-radius: var(--br-xl);
 `;
 

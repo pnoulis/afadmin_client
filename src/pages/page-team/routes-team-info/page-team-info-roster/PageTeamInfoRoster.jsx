@@ -1,17 +1,16 @@
 // ------------------------------ std libs ------------------------------- //
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
-import { Outlet } from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
-import { PanelLiveView } from "./PanelLiveView.jsx";
+import { AwaitPackages } from "/src/pages/page-team/AwaitPackages.jsx";
 
-function PageLiveView() {
+function PageTeamInfoRoster() {
   return (
-    <PanelLiveView>
-      <Outlet />
-    </PanelLiveView>
+    <div>
+      <h1>page team info roster</h1>
+    </div>
   );
 }
 
-export { PageLiveView };
+export { PageTeamInfoRoster };

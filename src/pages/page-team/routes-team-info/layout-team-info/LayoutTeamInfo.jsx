@@ -4,14 +4,14 @@ import * as React from "react";
 import { Outlet } from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
-import { PanelLiveView } from "./PanelLiveView.jsx";
 
-function PageLiveView() {
+function LayoutTeamInfo() {
   return (
-    <PanelLiveView>
+    <div>
+      <h1>layout team info</h1>
       <Outlet />
-    </PanelLiveView>
+    </div>
   );
 }
 
-export { PageLiveView };
+export { LayoutTeamInfo };

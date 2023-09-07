@@ -6,6 +6,7 @@ import { ReactComponent as SaveIcon } from "agent_factory.shared/ui/icons/save_1
 
 function WidgetSave({
   onClick: handleClick,
+  as,
   size,
   tooltipContent,
   className,
@@ -16,6 +17,7 @@ function WidgetSave({
       content={tooltipContent}
       trigger={
         <StyleWidgetSave
+          as={as}
           size={size}
           onClick={handleClick}
           className={className}

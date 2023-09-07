@@ -67,7 +67,7 @@ const WristbandInfoCardContainer = styled("article")`
   display: grid;
   grid-template-columns: max-content 1fr;
   grid-auto-rows: 1fr;
-  background-color: var(--grey-subtle);
+  background-color: var(--grey-light);
   width: max-content;
   border-radius: var(--br-nl);
   display: grid;

@@ -34,6 +34,7 @@ import {
   loadPackages,
   loadTeams,
 } from "/src/loaders/index.js";
+import { PageTeamInfoRoster } from "./pages/page-team/routes-team-info/page-team-info-roster/PageTeamInfoRoster.jsx";
 
 /**
  * component
@@ -95,7 +96,7 @@ const router = createBrowserRouter(
                   element: <PageLiveViewIndex />,
                 },
                 {
-                  path: links.liveView.path + links.team().path,
+                  path: `${links.liveView.path + links.team().path}`,
                   loader: loadPackages,
                   element: <PageTeam />,
                 },

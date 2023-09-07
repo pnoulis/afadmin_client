@@ -1,17 +1,20 @@
 // ------------------------------ std libs ------------------------------- //
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
-import { Outlet } from "react-router-dom";
+import styled from "styled-components";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
-import { PanelLiveView } from "./PanelLiveView.jsx";
 
-function PageLiveView() {
+function Contents({ id, className, children }) {
   return (
-    <PanelLiveView>
-      <Outlet />
-    </PanelLiveView>
+    <StyledContents id={id} className={`contents ${className}`}>
+      {children}
+    </StyledContents>
   );
 }
 
-export { PageLiveView };
+const StyledContents = styled("div")`
+  display: contents;
+`;
+
+export { Contents };

@@ -10,7 +10,7 @@ function afpackage(team, pkg) {
   return afmachine.createPkg(pkg, team);
 }
 
-function usePackage(source, { team = {}, fill = false, depth = 0 }) {
+function usePackage(team, source, { fill = false, depth = 0 } = {}) {
   const { entity: pkg, state } = useAfmachineEntity(
     source,
     afpackage.bind(null, team),

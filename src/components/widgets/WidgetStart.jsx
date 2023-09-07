@@ -6,6 +6,7 @@ import { ReactComponent as StartIcon } from "agent_factory.shared/ui/icons/play_
 
 function WidgetStart({
   onClick: handleClick,
+  as,
   size,
   tooltipContent,
   className,
@@ -16,6 +17,7 @@ function WidgetStart({
       content={tooltipContent}
       trigger={
         <StyleWidgetStart
+          as={as}
           size={size}
           onClick={handleClick}
           className={className}

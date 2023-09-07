@@ -39,7 +39,7 @@ const StyleWidgetArrow = styled.div`
   width: ${({ size }) => size || "50px"};
   height: ${({ size }) => size || "50px"};
   border: 3px solid transparent;
-  padding: 12px;
+  padding: 8px;
   border-radius: 50%;
   background-color: var(--primary-base);
   &:hover {

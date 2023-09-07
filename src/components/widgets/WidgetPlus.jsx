@@ -10,6 +10,7 @@ import { ReactComponent as PlusIcon } from "agent_factory.shared/ui/icons/add_0.
 
 function WidgetPlus({
   onClick: handleClick,
+  as,
   size,
   tooltipContent = "remove",
   className,
@@ -20,6 +21,7 @@ function WidgetPlus({
       content={tooltipContent}
       trigger={
         <StyleWidgetPlus
+          as={as}
           size={size}
           onClick={handleClick}
           className={className}

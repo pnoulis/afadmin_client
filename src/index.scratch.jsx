@@ -2,44 +2,58 @@
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-import { RouterProvider, createBrowserRouter, Outlet } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  BrowserRouter,
+  Outlet,
+  NavLink,
+  Routes,
+  Route,
+} from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
 import { Svg } from "react_utils/svgs";
 // ------------------------------ project  ------------------------------- //
-import { PersistentPlayer } from "/src/components/players/index.js";
-import { PlayerActionCard } from "/src/components/registration-queue/index.js";
-import { Wristband } from "/src/components/wristbands/index.js";
-import { afmachine } from "/src/services/afmachine/afmachine.js";
-import { GroupParty } from "/src/components/group-party/index.js";
-import { FormDistributionRatio } from "/src/components/group-party/index.js";
-import { InputDialogDistributionRatio } from "/src/components/dialogs/index.js";
-import { ReactComponent as DistributeIcon } from "agent_factory.shared/ui/new-icons/merge-icon-2.svg";
-import { VerifiableWristband } from "/src/components/wristbands/VerifiableWristband.jsx";
-import { TemporaryPlayer } from "/src/components/players/index.js";
-import { AwaitPackages } from "/src/pages/page-team/AwaitPackages.jsx";
 import { loadPackages } from "/src/loaders/index.js";
+import { Pending } from "/src/components/async/index.js";
+import { AwaitPackages } from "/src/components/async/AwaitPackages.jsx";
 
 function PageMerge() {
+  return <div></div>;
+}
+
+function PageTeam() {
   return (
     <div>
-      <AwaitPackages>
-        {(pkgs) => (
-          <div>
-            {pkgs.map((pkg) => (
-              <p>yolo</p>
-            ))}
-          </div>
-        )}
-      </AwaitPackages>
+      <h1>page team</h1>
+      <React.Suspense fallback={<Pending />}>
+        <AwaitPackages />
+      </React.Suspense>
+    </div>
+  );
+}
+
+function PageTeamPkgs() {
+  return (
+    <div>
+      <h1>page team pkgs</h1>
+    </div>
+  );
+}
+
+function PageTeamRoster() {
+  return (
+    <div>
+      <h1>page team roster</h1>
     </div>
   );
 }
 
 const router = createBrowserRouter([
   {
-    path: "/",
     loader: loadPackages,
-    element: <PageMerge />,
+    path: "*",
+    element: <PageTeam />,
   },
 ]);
 

@@ -101,6 +101,9 @@ const StyledGPRegistrationQueue = styled(RegistrationQueue)`
   }
 
   ${StyledWidgetTrash} {
+    padding: 4px;
+    width: 28px;
+    height: 28px;
     background-color: var(--grey-strong);
   }
 `;
@@ -112,8 +115,8 @@ const StyledToolbar = styled("div")`
 
   ${StyleWidgetPlus} {
     padding: 4px;
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     background-color: var(--primary-base);
     svg {
       fill: white;
@@ -122,8 +125,8 @@ const StyledToolbar = styled("div")`
 
   ${StyleWidgetTrash} {
     padding: 4px;
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     background-color: var(--primary-base);
     svg {
       fill: white;

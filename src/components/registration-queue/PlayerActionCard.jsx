@@ -76,8 +76,8 @@ const StyledPlayerTuple = styled("p")`
 const StyledWidgetTrash = styled(WidgetTrash)`
   background-color: var(--primary-base);
   padding: 4px;
-  width: 17px;
-  height: 17px;
+  width: 28px;
+  height: 28px;
   svg {
     fill: white;
   }

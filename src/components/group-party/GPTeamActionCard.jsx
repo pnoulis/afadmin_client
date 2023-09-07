@@ -11,6 +11,7 @@ import {
   StyledListPlayers,
   StyledPlayerActionCard,
   StyledWidgetTrash,
+  PlayerActionCard,
 } from "/src/components/registration-queue/index.js";
 import { useContextTeam } from "/src/contexts/index.js";
 import {
@@ -19,6 +20,7 @@ import {
   StyleWidgetPlus,
   StyleWidgetTrash,
 } from "/src/components/widgets/index.js";
+import { TemporaryPlayer } from "/src/components/players/index.js";
 
 function GPTeamActionCard({ failedMerge, className, style }) {
   const ctxTeam = useContextTeam();
@@ -42,8 +44,12 @@ function GPTeamActionCard({ failedMerge, className, style }) {
         }}
       >
         <StyledGPRegistrationQueue
-          isTemporary
           style={{ gridArea: "registration_queue" }}
+          renderPlayer={(props) => (
+            <TemporaryPlayer {...props}>
+              <PlayerActionCard player={props.player} />
+            </TemporaryPlayer>
+          )}
         />
       </ContextProvideRegistrationQueue>
     </StyledGPTeamActionCard>

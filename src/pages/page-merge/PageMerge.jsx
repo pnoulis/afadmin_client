@@ -13,6 +13,7 @@ import { FormTeamName } from "/src/components/teams/index.js";
 import {
   RegistrationQueue,
   ContextProvideRegistrationQueue,
+  PlayerActionCard,
 } from "/src/components/registration-queue/index.js";
 import { Pending } from "/src/components/async/index.js";
 import { usePersistentTeam } from "/src/components/teams/index.js";
@@ -22,6 +23,7 @@ import {
   AlertSuccessfulTeamMerge,
   renderDialog,
 } from "/src/components/dialogs/index.js";
+import { PersistentPlayer } from "/src/components/players/index.js";
 
 function PageMerge() {
   const ctxTeam = usePersistentTeam();
@@ -87,7 +89,14 @@ function PageMerge() {
             queue: ctxTeam.roster,
           }}
         >
-          <RegistrationQueue style={{ gridArea: "registration_queue" }} />
+          <RegistrationQueue
+            style={{ gridArea: "registration_queue" }}
+            renderPlayer={(props) => (
+              <PersistentPlayer {...props}>
+                <PlayerActionCard player={props.player} />
+              </PersistentPlayer>
+            )}
+          />
         </ContextProvideRegistrationQueue>
       </StyledPageMerge>
     </PanelMerge>

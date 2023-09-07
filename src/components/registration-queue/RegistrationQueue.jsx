@@ -3,14 +3,8 @@
 import * as React from "react";
 import styled from "styled-components";
 // ------------------------------ own libs ------------------------------- //
-import { isFunction } from "js_utils/misc";
 // ------------------------------ project  ------------------------------- //
 import { useContextRegistrationQueue } from "./ContextRegistrationQueue.jsx";
-import { PlayerActionCard } from "./PlayerActionCard.jsx";
-import {
-  PersistentPlayer,
-  TemporaryPlayer,
-} from "/src/components/players/index.js";
 import WristbandBackground from "agent_factory.shared/ui/new-icons/wristband-gear.svg";
 
 function RegistrationQueue({
@@ -35,38 +29,6 @@ function RegistrationQueue({
   );
 }
 
-// function RegistrationQueue({
-//   className,
-//   style,
-//   $height,
-//   isTemporary,
-//   disable,
-// }) {
-//   const { queue } = useContextRegistrationQueue();
-//   return (
-//     <StyledRegistrationQueue
-//       disable={disable}
-//       className={className}
-//       style={style}
-//       $height={$height}
-//     >
-//       <StyledListPlayers>
-//         {isTemporary
-//           ? queue.map((p, i) => (
-//               <TemporaryPlayer key={p.username + i} player={p}>
-//                 <PlayerActionCard player={p} />
-//               </TemporaryPlayer>
-//             ))
-//           : queue.map((p, i) => (
-//               <PersistentPlayer key={p.username + i} player={p}>
-//                 <PlayerActionCard player={p} />
-//               </PersistentPlayer>
-//             ))}
-//       </StyledListPlayers>
-//     </StyledRegistrationQueue>
-//   );
-// }
-
 const StyledRegistrationQueue = styled("section")`
   position: relative;
   width: 100%;
@@ -80,7 +42,6 @@ const StyledRegistrationQueue = styled("section")`
   background-size: 50%;
   background-position: center;
   max-height: ${({ $height }) => ($height ? `${$height - 35}px` : "auto")};
-  pointer-events: none;
 `;
 
 const StyledListPlayers = styled("ul")`

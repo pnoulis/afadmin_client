@@ -9,11 +9,13 @@ import {
   RegistrationQueue,
   ContextProvideRegistrationQueue,
   useRegistrationQueue,
+  PlayerActionCard,
 } from "/src/components/registration-queue/index.js";
 import { ComboboxSearchPlayer } from "/src/pages/page-registration/page-registration-wristband/ComboboxSearchPlayer.jsx";
 import { ComboboxOptionPlayer } from "/src/pages/page-registration/page-registration-wristband/ComboboxOptionPlayer.jsx";
 import { afmachine } from "/src/services/afmachine/afmachine.js";
 import { useAfmachineSubscription } from "/src/hooks/index.js";
+import { PersistentPlayer } from "/src/components/players/index.js";
 
 function PageRegistrationWristband() {
   const ctx = useRegistrationQueue([]);
@@ -36,7 +38,14 @@ function PageRegistrationWristband() {
 
       <ContextProvideRegistrationQueue ctx={ctx}>
         <AncestorDimensions ancestor="#ancestor-scrollarea">
-          <RegistrationQueue style={{ alignSelf: "end" }} />
+          <RegistrationQueue
+            style={{ alignSelf: "end" }}
+            renderPlayer={(props) => (
+              <PersistentPlayer {...props}>
+                <PlayerActionCard player={props.player} />
+              </PersistentPlayer>
+            )}
+          ></RegistrationQueue>
         </AncestorDimensions>
       </ContextProvideRegistrationQueue>
     </StyledPageRegistrationWristband>

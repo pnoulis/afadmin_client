@@ -1,11 +1,12 @@
 // ------------------------------ std libs ------------------------------- //
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
+import styled from "styled-components";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
 
-function PageTeamInfoStats() {
-  return <div>page team info stats</div>;
+function TeamPkgs() {
+  return <div>team pkgs</div>;
 }
 
-export { PageTeamInfoStats };
+export { TeamPkgs };

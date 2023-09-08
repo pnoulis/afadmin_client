@@ -6,20 +6,20 @@ import styled from "styled-components";
 // ------------------------------ project  ------------------------------- //
 import { TeamTuple, TeamTupleState } from "/src/components/teams/index.js";
 
-function TeamInfo({ className, style }) {
+function TeamHeader({ className, style }) {
   return (
-    <StyledTeamInfo className={className} style={style}>
+    <StyledTeamHeader className={className} style={style}>
       <StyledTeamTuple>
         <TeamTuple nok name="name" />
       </StyledTeamTuple>
       <StyledTeamTupleState>
         <TeamTupleState nok />
       </StyledTeamTupleState>
-    </StyledTeamInfo>
+    </StyledTeamHeader>
   );
 }
 
-const StyledTeamInfo = styled("ul")`
+const StyledTeamHeader = styled("ul")`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -57,4 +57,4 @@ const StyledTeamTupleState = styled("li")`
   }
 `;
 
-export { TeamInfo };
+export { TeamHeader };

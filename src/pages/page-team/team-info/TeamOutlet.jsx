@@ -15,7 +15,8 @@ function TeamOutlet({ state, outlet, style, className }) {
         </StyledTeamOutlet>
       );
     default:
-      throw new Error(`Unmatched team outlet: ${outlet}`);
+      return <div>no outlet</div>;
+    // throw new Error(`Unmatched team outlet: ${outlet}`);
   }
 }
 

@@ -1,17 +1,13 @@
 // ------------------------------ std libs ------------------------------- //
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
-import { Outlet } from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
+import { useContextHistoryToolbar } from "./ContextHistoryToolbar.jsx";
 
-function LayoutTeamInfo() {
-  return (
-    <div>
-      <h1>layout team info</h1>
-      <Outlet />
-    </div>
-  );
+function HistoryToolbarCtx({ children }) {
+  const ctx = useContextHistoryToolbar();
+  return children(ctx);
 }
 
-export { LayoutTeamInfo };
+export { HistoryToolbarCtx };

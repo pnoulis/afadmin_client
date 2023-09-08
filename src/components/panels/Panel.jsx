@@ -1,15 +1,10 @@
 import * as React from "react";
 import styled from "styled-components";
-import { AncestorDimensions } from "react_utils/misc";
 
 function PanelMain({ id, className, children, ...props }) {
   return (
     <StylePanelMain id={id} className={className || ""} {...props}>
-      <AncestorDimensions ancestor={`#${id}`}>
-        <StyleMainScrollarea id="panel-dialog-target">
-          {children}
-        </StyleMainScrollarea>
-      </AncestorDimensions>
+      {children}
     </StylePanelMain>
   );
 }
@@ -28,25 +23,20 @@ const StylePanel = styled.div`
 
 const StylePanelHeader = styled.header`
   grid-area: header;
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
   display: flex;
   flex-flow: row wrap;
   padding: 25px;
+  height: 160px;
 `;
 
 const StylePanelMain = styled.div`
   all: unset;
   box-sizing: border-box;
   grid-area: main;
-`;
-const StyleMainScrollarea = styled.div`
-  all: unset;
-  box-sizing: border-box;
-  display: block;
-  width: ${({ $width }) => `${$width || 0}px`};
-  height: ${({ $height }) => `${$height || 0}px`};
-  overflow: auto;
+  overflow: scroll;
 `;
 
 export { StylePanel, PanelMain, StylePanelHeader };

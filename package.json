@@ -4,9 +4,7 @@
   "description": "afadmin_client-summary",
   "homepage": "https://github.com/pnoulis/afadmin_client#readme",
   "bugs": "https://github.com/pnoulis/afadmin_client/issues",
-  "keywords": [
-    "afadmin_client-keywords"
-  ],
+  "keywords": ["afadmin_client-keywords"],
   "repository": {
     "type": "git",
     "url": "https://github.com/pnoulis/afadmin_client.git"
@@ -31,6 +29,7 @@
     "@vitejs/plugin-react": "^4.0.4",
     "afmachine": "file:../../core/afmachine",
     "js_utils": "file:../../lib/js_utils",
+    "react-action-router": "file:../react-action-router",
     "react": "^18.2.0",
     "react_utils": "file:../react_utils",
     "react-dom": "^18.2.0",

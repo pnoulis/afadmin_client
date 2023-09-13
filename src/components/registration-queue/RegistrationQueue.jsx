@@ -6,6 +6,8 @@ import styled from "styled-components";
 // ------------------------------ project  ------------------------------- //
 import { useContextRegistrationQueue } from "./ContextRegistrationQueue.jsx";
 import WristbandBackground from "agent_factory.shared/ui/new-icons/wristband-gear.svg";
+import { MAX_TEAM_SIZE } from "agent_factory.shared/constants.js";
+import { afmachine } from "/src/services/afmachine/afmachine.js";
 
 function RegistrationQueue({
   className,
@@ -13,8 +15,26 @@ function RegistrationQueue({
   $height,
   disable,
   renderPlayer,
+  fill = false,
 }) {
   const { queue } = useContextRegistrationQueue();
+
+  const viewingQueue = React.useMemo(() => {
+    if (!fill) return queue;
+    const vqueue = new Array(MAX_TEAM_SIZE);
+    for (let i = 0; i < MAX_TEAM_SIZE; i++) {
+      if (queue[i] == null) {
+        vqueue[i] = afmachine.createPlayer({
+          username: "player_#" + (i + 1),
+        });
+        vqueue[i].filler = true;
+      } else {
+        vqueue[i] = queue[i];
+      }
+    }
+    return vqueue;
+  }, [queue]);
+
   return (
     <StyledRegistrationQueue
       disable={disable}
@@ -23,7 +43,7 @@ function RegistrationQueue({
       $height={$height}
     >
       <StyledListPlayers>
-        {queue.map((player, i) => renderPlayer({ key: i, player }))}
+        {viewingQueue.map((player, i) => renderPlayer({ key: i, player }))}
       </StyledListPlayers>
     </StyledRegistrationQueue>
   );

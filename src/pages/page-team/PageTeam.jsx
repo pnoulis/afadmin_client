@@ -34,7 +34,7 @@ function PageTeam() {
           <TeamPkgs />
         </section>
         <section className="team_info" style={{ gridArea: "team_info" }}>
-          {/* <TeamInfo /> */}
+          <TeamInfo />
         </section>
       </StyledPageTeam>
     </ContextProvideTeam>
@@ -42,7 +42,7 @@ function PageTeam() {
 }
 
 const StyledPageTeam = styled("div")`
-  padding: 0 25px 10px 25px;
+  padding: 0 25px 25px 25px;
   width: 100%;
   height: 100%;
   display: grid;

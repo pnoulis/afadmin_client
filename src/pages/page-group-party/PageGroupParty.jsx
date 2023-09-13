@@ -38,7 +38,7 @@ function PageGroupParty() {
         ) : (
           <FormGroupPartySize
             onSubmit={ctxgp.setGPSize}
-            style={{ marginTop: "200px" }}
+            style={{ alignSelf: "center" }}
           />
         )}
       </StyledPageGroupParty>

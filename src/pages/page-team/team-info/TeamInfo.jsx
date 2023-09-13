@@ -3,53 +3,50 @@
 import * as React from "react";
 import styled from "styled-components";
 // ------------------------------ own libs ------------------------------- //
-import { isFunction, isArray } from "js_utils/misc";
 // ------------------------------ project  ------------------------------- //
-import { TeamOutlet } from "./TeamOutlet.jsx";
 import {
-  HistoryToolbar,
-  HistoryToolbarPopper,
-  HistoryToolbarPusher,
-  HistoryToolbarCtx,
-} from "/src/components/history-toolbar/index.js";
+  ContextProvideTeamInfoActionRouter,
+  TeamInfoActionRouter,
+} from "./TeamInfoActionRouter.jsx";
+import { RouteTeamInfoIndex } from "./TeamInfoActionRoutes.jsx";
+import { useContextTeam } from "/src/contexts/index.js";
+import { TeamInfoToolbarIndexRoute } from "./route-team-info-index/TeamInfoToolbarIndexRoute.jsx";
+import { TeamInfoOutletIndexRoute } from "./route-team-info-index/TeamInfoOutletIndexRoute.jsx";
 
 function TeamInfo() {
+  const ctxTeam = useContextTeam();
   return (
-    <StyledTeamInfo>
-      <HistoryToolbar history={["roster"]}>
-        <TeamToolbar />
-        <HistoryToolbarCtx>
-          {({ current }) => <TeamOutlet outlet={current} />}
-        </HistoryToolbarCtx>
-      </HistoryToolbar>
-    </StyledTeamInfo>
-  );
-}
-
-function TeamToolbar() {
-  return (
-    <div className="team-toolbar">
-      team toolbar
-      <HistoryToolbarPopper />
-      <HistoryToolbarPusher next="roster" />
-    </div>
+    <TeamInfoActionRouter>
+      <StyledTeamInfo>
+        <section id="teaminfo-toolbar">
+          <RouteTeamInfoIndex>
+            <TeamInfoToolbarIndexRoute />
+          </RouteTeamInfoIndex>
+        </section>
+        <section id="teaminfo-outlet">
+          <RouteTeamInfoIndex>
+            <TeamInfoOutletIndexRoute />
+          </RouteTeamInfoIndex>
+        </section>
+      </StyledTeamInfo>
+    </TeamInfoActionRouter>
   );
 }
 
 const StyledTeamInfo = styled("div")`
   width: 100%;
   height: 100%;
-  background-color: brown;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr;
-  grid-template-areas: "team_toolbar" "team_outlet";
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: start;
+  gap: 60px;
 
-  .team-toolbar {
-    background-color: blue;
+  #teaminfo-toolbar {
+    width: 100%;
   }
-  .team-outlet {
-    background-color: pink;
+  #teaminfo-outlet {
+    flex: 1;
+    width: 100%;
   }
 `;
 

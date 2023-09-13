@@ -90,6 +90,7 @@ function PageMerge() {
           }}
         >
           <RegistrationQueue
+            className="registration-queue"
             style={{ gridArea: "registration_queue" }}
             renderPlayer={(props) => (
               <PersistentPlayer {...props}>
@@ -114,6 +115,10 @@ const StyledPageMerge = styled("div")`
   row-gap: 50px;
   column-gap: 120px;
   justify-content: space-between;
+
+  .registration-queue {
+    width: 800px;
+  }
 `;
 
 const StyledSelectPlayer = styled.section`

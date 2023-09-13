@@ -10,7 +10,7 @@ import * as React from "react";
  *
  */
 
-function useTime({ eachSec } = {}) {
+function useTime({ tmilsec = Date.now(), eachSec } = {}) {
   const [time, setTime] = React.useState(null);
   const localeRef = React.useRef(null);
   const eachSecRef = React.useRef(null);
@@ -28,7 +28,7 @@ function useTime({ eachSec } = {}) {
     });
 
     setTime(
-      localeRef.current.formatToParts(Date.now()).reduce((car, cdr) => {
+      localeRef.current.formatToParts(tmilsec).reduce((car, cdr) => {
         car[cdr.type] = cdr.value;
         return car;
       }, {}),

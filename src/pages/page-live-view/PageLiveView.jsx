@@ -5,12 +5,15 @@ import { Outlet } from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
 import { PanelLiveView } from "./PanelLiveView.jsx";
+import { PanelActionRouter } from "/src/components/panels/index.js";
 
 function PageLiveView() {
   return (
-    <PanelLiveView>
-      <Outlet />
-    </PanelLiveView>
+    <PanelActionRouter>
+      <PanelLiveView>
+        <Outlet />
+      </PanelLiveView>
+    </PanelActionRouter>
   );
 }
 

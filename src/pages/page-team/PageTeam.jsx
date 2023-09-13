@@ -2,7 +2,7 @@
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
 import styled from "styled-components";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Navigate } from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
 import { usePersistentTeam } from "/src/components/teams/index.js";
@@ -10,26 +10,25 @@ import { ContextProvideTeam } from "/src/contexts/index.js";
 import { TeamHeader } from "./TeamHeader.jsx";
 import { TeamInfo } from "./team-info/TeamInfo.jsx";
 import { TeamPkgs } from "./team-pkgs/TeamPkgs.jsx";
-import { useContextHistoryToolbar } from "/src/components/history-toolbar/index.js";
 import { PanelTeam } from "./PanelTeam.jsx";
+import { PanelActionRoute } from "/src/components/panels/index.js";
+import { liveView } from "/src/links.jsx";
 
 function PageTeam() {
-  const navigate = useNavigate();
   const { state } = useLocation();
   const ctxTeam = usePersistentTeam(state);
-  const { forward } = useContextHistoryToolbar();
+  const location = useLocation();
 
-  console.log(ctxTeam);
-  React.useLayoutEffect(() => {
-    if (!state) {
-      navigate("/404");
-    } else {
-      forward(() => <PanelTeam ctxTeam={ctxTeam} />);
-    }
-  }, [state]);
-
-  return (
+  return state == null ? (
+    <Navigate to="/404" replace={true} />
+  ) : (
     <ContextProvideTeam ctx={ctxTeam}>
+      <PanelActionRoute
+        path={location.pathname}
+        target="panel-liveview-header-mount-point"
+      >
+        <PanelTeam />
+      </PanelActionRoute>
       <StyledPageTeam>
         <section className="pkg_info" style={{ gridArea: "pkg_info" }}>
           <TeamPkgs />
@@ -44,7 +43,6 @@ function PageTeam() {
 
 const StyledPageTeam = styled("div")`
   padding: 0 25px 10px 25px;
-  background-color: yellow;
   width: 100%;
   height: 100%;
   display: grid;
@@ -53,16 +51,8 @@ const StyledPageTeam = styled("div")`
   grid-template-areas:
     "team_header team_header"
     "pkg_info team_info";
-  column-gap: 50px;
+  gap: 70px 50px;
   justify-content: space-between;
-
-  .team_info {
-    background-color: red;
-  }
-
-  .pkg_info {
-    background-color: blue;
-  }
 `;
 
 export { PageTeam };

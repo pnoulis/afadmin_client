@@ -5,54 +5,38 @@ import styled from "styled-components";
 // ------------------------------ own libs ------------------------------- //
 import { isFunction } from "js_utils/misc";
 // ------------------------------ project  ------------------------------- //
+import { t_mstom } from "agent_factory.shared/utils/misc.js";
 import { useContextPackage } from "/src/contexts/index.js";
 
-function PkgTupleCost({
-  name = "cost",
-  label = "cost",
+function PkgTupleAmount({
+  label = "amount",
+  name = "amount",
   nok = false,
   children,
 }) {
   const { pkg } = useContextPackage();
 
+  let value;
+  let suffix;
+  if (pkg.type === "mission") {
+    value = pkg[name] || "-";
+    suffix = "missions";
+  } else {
+    value = pkg[name] ? Math.ceil(t_mstom(pkg[name])) : "-";
+    suffix = "minutes";
+  }
+
   return isFunction(children) ? (
-    children(label, pkg[name])
+    children(label, value, suffix)
   ) : (
     <>
       {!nok && <span className="key">{label}</span>}
-      <span className="value">{pkg.cost || "0"}</span>
+      <span className="value">
+        {value}
+        <sub>{suffix}</sub>
+      </span>
     </>
   );
 }
 
-const StylePkgTupleCost = styled("p")`
-  color: black;
-  box-sizing: border-box;
-  line-height: 20px;
-  font-size: var(--tx-md);
-  font-family: Saira;
-  display: flex;
-  align-items: center;
-
-  .key {
-    font-weight: 600;
-  }
-  .key::after {
-    content: ":";
-    margin: 0 8px 0 3px;
-  }
-
-  .value {
-    min-width: 70px;
-    word-break: break-all;
-    overflow-wrap: anywhere;
-  }
-
-  .value::after {
-    font-size: var(--tx-xl);
-    content: "\u20AC";
-    margin: 0 0 0 2px;
-  }
-`;
-
-export { PkgTupleCost, StylePkgTupleCost };
+export { PkgTupleAmount };

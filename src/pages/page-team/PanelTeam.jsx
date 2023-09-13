@@ -7,19 +7,26 @@ import { useNavigate } from "react-router-dom";
 // ------------------------------ project  ------------------------------- //
 import { StylePanelHeader } from "/src/components/panels/index.js";
 import { TeamHeader } from "./TeamHeader.jsx";
-import { ContextProvideTeam } from "/src/contexts/index.js";
-import { HistoryToolbarPopper } from "/src/components/history-toolbar/index.js";
+import { WidgetArrow } from "/src/components/widgets/index.js";
 
-function PanelTeam({ ctxTeam }) {
+function PanelTeam() {
   const navigate = useNavigate();
   return (
-    <ContextProvideTeam ctx={ctxTeam}>
-      <StylePanelHeader>
-        <TeamHeader />
-        <HistoryToolbarPopper onBack={() => navigate(-1)} />
-      </StylePanelHeader>
-    </ContextProvideTeam>
+    <StylePanelTeam>
+      <WidgetArrow
+        tooltipContent="liveview"
+        onClick={navigate.bind(null, -1)}
+      />
+      <TeamHeader />
+    </StylePanelTeam>
   );
 }
+
+const StylePanelTeam = styled(StylePanelHeader)`
+  padding: 0;
+  height: max-content;
+  padding: 25px 25px 0 25px;
+  gap: 50px;
+`;
 
 export { PanelTeam };

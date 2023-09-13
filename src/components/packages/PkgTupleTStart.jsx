@@ -6,53 +6,29 @@ import styled from "styled-components";
 import { isFunction } from "js_utils/misc";
 // ------------------------------ project  ------------------------------- //
 import { useContextPackage } from "/src/contexts/index.js";
+import { useTime } from "/src/hooks/index.js";
 
-function PkgTupleCost({
-  name = "cost",
-  label = "cost",
+function PkgTupleTStart({
+  name = "t_start",
+  label = "started",
   nok = false,
   children,
 }) {
   const { pkg } = useContextPackage();
+  const tstart = useTime({ tmilsec: pkg[name] });
 
   return isFunction(children) ? (
-    children(label, pkg[name])
+    children(label, pkg[name] ?? tstart)
   ) : (
     <>
       {!nok && <span className="key">{label}</span>}
-      <span className="value">{pkg.cost || "0"}</span>
+      <span className="value">
+        {pkg[name]
+          ? `${tstart.hour}${tstart.literal}${tstart.minute}${tstart.literal}${tstart.second}`
+          : "-"}
+      </span>
     </>
   );
 }
 
-const StylePkgTupleCost = styled("p")`
-  color: black;
-  box-sizing: border-box;
-  line-height: 20px;
-  font-size: var(--tx-md);
-  font-family: Saira;
-  display: flex;
-  align-items: center;
-
-  .key {
-    font-weight: 600;
-  }
-  .key::after {
-    content: ":";
-    margin: 0 8px 0 3px;
-  }
-
-  .value {
-    min-width: 70px;
-    word-break: break-all;
-    overflow-wrap: anywhere;
-  }
-
-  .value::after {
-    font-size: var(--tx-xl);
-    content: "\u20AC";
-    margin: 0 0 0 2px;
-  }
-`;
-
-export { PkgTupleCost, StylePkgTupleCost };
+export { PkgTupleTStart };

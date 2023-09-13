@@ -11,18 +11,21 @@ function afpackage(team, pkg) {
 }
 
 function usePackage(team, source, { fill = false, depth = 0 } = {}) {
-  const { entity: pkg, state } = useAfmachineEntity(
-    source,
-    afpackage.bind(null, team),
-    {
-      fill,
-      depth,
-    },
-  );
+  const {
+    entity: pkg,
+    state,
+    changeSource,
+    createEntity,
+  } = useAfmachineEntity(source, afpackage.bind(null, team), {
+    fill,
+    depth,
+  });
 
   return {
     state,
     pkg,
+    changeSource,
+    createPkg: createEntity,
   };
 }
 

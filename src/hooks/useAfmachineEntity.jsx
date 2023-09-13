@@ -73,6 +73,7 @@ function useAfmachineEntity(
     id,
     entity: entityRef.current,
     changeSource,
+    createEntity,
   };
 }
 

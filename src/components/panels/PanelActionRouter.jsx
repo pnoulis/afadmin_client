@@ -6,25 +6,25 @@ import { createActionRouter } from "react-action-router";
 // ------------------------------ project  ------------------------------- //
 
 const {
-  ActionRoute: TeamActionRoute,
-  ContextProvide: TeamActionRouterContextProvide,
-  useContext: useContextTeamActionRouter,
-  useActionRouter: useTeamActionRouter,
+  ContextProvide: ContextProvidePanelActionRouter,
+  useContext: usePanelActionRouterContext,
+  MountPoint: PanelActionRouterMountPoint,
+  ActionRoute: PanelActionRoute,
+  useActionRouter: usePanelActionRouter,
 } = createActionRouter();
 
-function TeamActionRouter({ children }) {
-  const ctx = useTeamActionRouter();
+function PanelActionRouter({ children }) {
+  const ctx = usePanelActionRouter();
   return (
-    <TeamActionRouterContextProvide ctx={ctx}>
+    <ContextProvidePanelActionRouter ctx={ctx}>
       {children}
-    </TeamActionRouterContextProvide>
+    </ContextProvidePanelActionRouter>
   );
 }
 
 export {
-  TeamActionRouter,
-  TeamActionRoute,
-  TeamActionRouterContextProvide,
-  useContextTeamActionRouter,
-  useTeamActionRouter,
+  PanelActionRouter,
+  usePanelActionRouterContext,
+  PanelActionRoute,
+  PanelActionRouterMountPoint,
 };

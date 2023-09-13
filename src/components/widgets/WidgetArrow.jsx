@@ -50,4 +50,4 @@ const StyleWidgetArrow = styled.div`
   }
 `;
 
-export { WidgetArrow };
+export { WidgetArrow, StyleWidgetArrow };

@@ -26,6 +26,7 @@ function usePersistentTeam(source, { fill = false, depth = 0 } = {}) {
     depth,
   });
   const { action: sMergeTeam } = useAfmachineAction(team.mergeTeam);
+  const { action: sRegisterPackage } = useAfmachineAction(team.registerPackage);
   const rosterRef = React.useRef([]);
   rosterRef.current = React.useMemo(
     () => team.roster.get(),
@@ -62,6 +63,10 @@ function usePersistentTeam(source, { fill = false, depth = 0 } = {}) {
     });
   }
 
+  function registerPackage(pkg) {
+    sRegisterPackage.run(() => team.registerPackage(pkg));
+  }
+
   return {
     state,
     id,
@@ -71,6 +76,8 @@ function usePersistentTeam(source, { fill = false, depth = 0 } = {}) {
     rmPlayer,
     merge,
     sMergeTeam,
+    sRegisterPackage,
+    registerPackage,
     changeTeamName,
     changeSource,
   };

@@ -4,22 +4,23 @@ import * as React from "react";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
 import { StylePanel, PanelMain } from "/src/components/panels/index.js";
-import {
-  HistoryToolbar,
-  HistoryToolbarCtx,
-} from "/src/components/history-toolbar/index.js";
 import { PanelLiveViewHeader } from "./PanelLiveViewHeader.jsx";
+import {
+  PanelActionRouterMountPoint,
+  PanelActionRoute,
+} from "/src/components/panels/index.js";
+import { liveView } from "/src/links.jsx";
 
 function PanelLiveView({ children }) {
   return (
-    <HistoryToolbar>
-      <StylePanel>
-        <HistoryToolbarCtx>
-          {({ current }) => current?.() || <PanelLiveViewHeader />}
-        </HistoryToolbarCtx>
-        <PanelMain id="panel-live-view-main">{children}</PanelMain>
-      </StylePanel>
-    </HistoryToolbar>
+    <StylePanel>
+      <PanelActionRouterMountPoint id="panel-liveview-header-mount-point">
+        <PanelActionRoute path={liveView.path}>
+          <PanelLiveViewHeader />
+        </PanelActionRoute>
+      </PanelActionRouterMountPoint>
+      <PanelMain id="panel-live-view-main">{children}</PanelMain>
+    </StylePanel>
   );
 }
 

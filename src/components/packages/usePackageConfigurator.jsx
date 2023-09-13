@@ -6,7 +6,7 @@ import { usePackage } from "./usePackage.jsx";
 import { renderDialog, Alert } from "/src/components/dialogs/index.js";
 
 function usePackageConfigurator(ctxTeam, source, options) {
-  const { state, pkg, createPkg, changeSource } = usePackage(
+  const { state, pkg, id, createPkg, changeSource } = usePackage(
     ctxTeam.team,
     source,
     options,
@@ -19,6 +19,11 @@ function usePackageConfigurator(ctxTeam, source, options) {
     setSelectedPkg(pkg);
   }
 
+  function handleSelectedPkgClear() {
+    changeSource(null);
+    setSelectedPkg(null);
+  }
+
   function handlePkgRegistration() {
     if (selectedPkg === null) {
       return renderDialog(null, Alert, {
@@ -27,7 +32,7 @@ function usePackageConfigurator(ctxTeam, source, options) {
       });
     }
     debug(pkg, "handlePkgRegistration created pkg");
-    ctxTeam.registerPackage(pkg);
+    ctxTeam.registerPackage(pkg).finally(handleSelectedPkgClear);
   }
 
   function handlePkgRemoval() {
@@ -37,6 +42,7 @@ function usePackageConfigurator(ctxTeam, source, options) {
         msg: "No package has been selected!",
       });
     }
+    ctxTeam.removePackage(pkg).finally(handleSelectedPkgClear);
   }
 
   function handlePkgActivation() {
@@ -53,6 +59,7 @@ function usePackageConfigurator(ctxTeam, source, options) {
     pkg,
     selectedPkg,
     handlePkgSelection,
+    handleSelectedPkgClear,
     handlePkgRegistration,
     handlePkgRemoval,
     handlePkgActivation,

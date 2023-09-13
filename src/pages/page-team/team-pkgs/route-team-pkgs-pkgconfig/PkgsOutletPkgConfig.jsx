@@ -4,8 +4,7 @@ import * as React from "react";
 // ------------------------------ own libs ------------------------------- //
 import styled from "styled-components";
 // ------------------------------ project  ------------------------------- //
-import { useContextTeam, ContextProvidePackage } from "/src/contexts/index.js";
-import { usePackageConfigurator } from "/src/components/packages/index.js";
+import { useContextTeam, useContextPackage } from "/src/contexts/index.js";
 import { RoutePkgConfig } from "../PkgActionRoutes.jsx";
 import { AwaitPackages } from "./AwaitPackages.jsx";
 import { PkgsToolbarPkgConfig } from "./PkgsToolbarPkgConfig.jsx";
@@ -17,7 +16,7 @@ import { useContextPkgActionRouter } from "../PkgActionRouter.jsx";
 
 function PkgsOutletPkgConfig() {
   const ctxTeam = useContextTeam();
-  const ctxPkg = usePackageConfigurator(ctxTeam);
+  const ctxPkg = useContextPackage();
   const ctxRouter = useContextPkgActionRouter();
   debug(ctxPkg.pkg, "debug use package return");
   return (
@@ -32,10 +31,12 @@ function PkgsOutletPkgConfig() {
               Alert,
               {
                 title: "register new package",
-                msg: "Successfully registered new package",
+                msg: `Successfuly registered new package: ${response.name}`,
               },
               () => {
-                ctxRouter.back();
+                if (registered) {
+                  ctxRouter.back();
+                }
               },
             );
           } else {
@@ -43,28 +44,26 @@ function PkgsOutletPkgConfig() {
           }
         }}
       />
-      <ContextProvidePackage ctx={ctxPkg}>
-        <RoutePkgConfig target="pkgs-arouter-toolbar-mp">
-          <PkgsToolbarPkgConfig />
-        </RoutePkgConfig>
-        <StyledPkgsOutletPkgConfig>
-          <AwaitPackages>
-            {(pkgs) => (
-              <StyledListPackages>
-                {pkgs.map((pkg, i) => (
-                  <PackageConfiguratorCard
-                    as="li"
-                    key={i}
-                    pkg={pkg}
-                    selected={ctxPkg.selectedPkg?.type === pkg.type}
-                    onSelect={ctxPkg.handlePkgSelection}
-                  />
-                ))}
-              </StyledListPackages>
-            )}
-          </AwaitPackages>
-        </StyledPkgsOutletPkgConfig>
-      </ContextProvidePackage>
+      <RoutePkgConfig target="pkgs-arouter-toolbar-mp">
+        <PkgsToolbarPkgConfig />
+      </RoutePkgConfig>
+      <StyledPkgsOutletPkgConfig>
+        <AwaitPackages>
+          {(pkgs) => (
+            <StyledListPackages>
+              {pkgs.map((pkg, i) => (
+                <PackageConfiguratorCard
+                  as="li"
+                  key={i}
+                  pkg={pkg}
+                  selected={ctxPkg.selectedPkg?.type === pkg.type}
+                  onSelect={ctxPkg.handlePkgSelection}
+                />
+              ))}
+            </StyledListPackages>
+          )}
+        </AwaitPackages>
+      </StyledPkgsOutletPkgConfig>
     </>
   );
 }

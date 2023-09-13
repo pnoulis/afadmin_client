@@ -9,7 +9,7 @@ import { PkgActionRoute } from "./PkgActionRouter.jsx";
 function RoutePkgRoot({ children, target }) {
   const { pathname } = useLocation();
   return (
-    <PkgActionRoute path={pathname} target={target}>
+    <PkgActionRoute name="index" path={pathname} target={target}>
       {children}
     </PkgActionRoute>
   );

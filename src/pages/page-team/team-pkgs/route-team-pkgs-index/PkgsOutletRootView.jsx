@@ -2,7 +2,7 @@
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
 // ------------------------------ own libs ------------------------------- //
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 // ------------------------------ project  ------------------------------- //
 import { useContextTeam, useContextPackage } from "/src/contexts/index.js";
 import {
@@ -11,26 +11,66 @@ import {
   Package,
 } from "/src/components/packages/index.js";
 import { AncestorDimensions } from "react_utils/misc";
+import { PopoverAsyncState } from "/src/components/async/index.js";
+import { renderDialog, Alert } from "/src/components/dialogs/index.js";
+import { displaypoperr } from "/src/utils/index.js";
+import { useContextPkgActionRouter } from "../PkgActionRouter";
 
 function PkgsOutletRootView() {
+  const ctxRouter = useContextPkgActionRouter();
   const ctxTeam = useContextTeam();
   const ctxPkg = useContextPackage();
 
+  React.useLayoutEffect(() => {
+    if (
+      ctxTeam.team.packages.length < 1 &&
+      ctxRouter.current()?.name !== "pkgconfig"
+    ) {
+      ctxRouter.forward("pkgconfig");
+    }
+  }, []);
+
   return (
-    <StyledPkgsOutletRootView id="yolo">
-      <AncestorDimensions ancestor="#yolo">
-        <StyledListPkgs>
-          {ctxTeam.team.packages.map((pkg, i) => (
-            <Package pkg={pkg} key={i}>
-              <StyledListPkgsItem
-                forwardedAs="li"
-                onClick={ctxPkg.handlePkgSelection.bind(null, pkg)}
-              />
-            </Package>
-          ))}
-        </StyledListPkgs>
-      </AncestorDimensions>
-    </StyledPkgsOutletRootView>
+    <>
+      <PopoverAsyncState
+        timePending={500}
+        action={ctxTeam.sRemovePackage}
+        onSettled={(removed, response) => {
+          if (removed) {
+            renderDialog(
+              null,
+              Alert,
+              {
+                title: "remove package",
+                msg: `successfuly removed ${response.type} package ${response.name}`,
+              },
+              () => {
+                if (ctxTeam.team.packages.length < 1) {
+                  ctxRouter.forward("pkgconfig");
+                }
+              },
+            );
+          } else {
+            displaypoperr(response);
+          }
+        }}
+      />
+      <StyledPkgsOutletRootView id="scrollarea-outlet-root-view">
+        <AncestorDimensions ancestor="#scrollarea-outlet-root-view">
+          <StyledListPkgs>
+            {ctxTeam.team.packages.map((pkg, i) => (
+              <Package pkg={pkg} key={i}>
+                <StyledListPkgsItem
+                  selected={pkg.id === ctxPkg.selectedPkg?.id}
+                  forwardedAs="li"
+                  onClick={ctxPkg.handlePkgSelection.bind(null, pkg)}
+                />
+              </Package>
+            ))}
+          </StyledListPkgs>
+        </AncestorDimensions>
+      </StyledPkgsOutletRootView>
+    </>
   );
 }
 
@@ -64,6 +104,15 @@ const StyledListPkgsItem = styled(PkgInfoCard)`
   &:active {
     background-color: hsl(var(--base-info), 83%);
   }
+
+  ${({ selected }) =>
+    selected &&
+    css`
+      background-color: var(--info-medium);
+      ${StyledPkgInfoCardTuple}.state .value {
+        color: white;
+      }
+    `}
 `;
 
 export { PkgsOutletRootView };

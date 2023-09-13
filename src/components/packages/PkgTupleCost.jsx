@@ -39,10 +39,11 @@ const StylePkgTupleCost = styled("p")`
   }
   .key::after {
     content: ":";
-    margin: 0 8px 0 3px;
+    margin-left: 3px;
   }
 
   .value {
+    text-align: center;
     min-width: 70px;
     word-break: break-all;
     overflow-wrap: anywhere;

@@ -11,10 +11,11 @@ import {
   StylePkgTupleCost,
 } from "/src/components/packages/index.js";
 import { WidgetSave } from "/src/components/widgets/index.js";
-import { useContextPackage } from "/src/contexts/index.js";
+import { useContextTeam, useContextPackage } from "/src/contexts/index.js";
 
 function PkgsToolbarPkgConfig() {
-  const routerCtx = useContextPkgActionRouter();
+  const ctxRouter = useContextPkgActionRouter();
+  const ctxTeam = useContextTeam();
   const ctxPkg = useContextPackage();
   debug(ctxPkg, "debug pkgsToolbarPkgConfig");
   return (
@@ -30,7 +31,16 @@ function PkgsToolbarPkgConfig() {
         style={{ marginLeft: "auto" }}
         onClick={ctxPkg.handlePkgRegistration}
       />
-      <WidgetArrow as="li" tooltipContent="back" onClick={routerCtx.back} />
+      <WidgetArrow
+        as="li"
+        tooltipContent="back"
+        onClick={() => {
+          if (ctxTeam.team.packages.length > 0) {
+            ctxPkg.handleSelectedPkgClear();
+            ctxRouter.back();
+          }
+        }}
+      />
     </StyledPkgsToolbarPkgConfig>
   );
 }

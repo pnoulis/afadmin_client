@@ -29,7 +29,10 @@ function PkgInfoCard({ as, className, style, onClick }) {
       <StyledPkgTuple style={{ gridRow: "2 / 3", gridColumn: "1 / 2" }}>
         <PackageTuple name="type" />
       </StyledPkgTuple>
-      <StyledPkgTuple style={{ gridRow: "3 / 4", gridColumn: "1 / 2" }}>
+      <StyledPkgTuple
+        className="cost"
+        style={{ gridRow: "3 / 4", gridColumn: "1 / 2" }}
+      >
         <PkgTupleCost />
       </StyledPkgTuple>
       <StyledPkgTuple style={{ gridRow: " 4 / 5", gridColumn: "1 / 2" }}>
@@ -54,11 +57,12 @@ const CssPkgTuple = css`
   padding: 0 5px;
   font-family: Saira;
   letter-spacing: 1px;
-  font-size: var(--tx-sm);
+  font-size: var(--tx-nl);
+  font-weight: 450;
 
   .key {
     display: inline-block;
-    min-width: 100px;
+    min-width: 115px;
     text-align: left;
   }
 
@@ -72,6 +76,7 @@ const CssPkgTuple = css`
     width: max-content;
     word-break: break-all;
     overflow-wrap: anywhere;
+    font-weight: 450;
   }
 `;
 
@@ -89,12 +94,18 @@ const StyledPkgInfoCard = styled("article")`
   padding: 12px;
   column-gap: 15px;
   row-gap: 6px;
-  width: 550px;
+  width: 600px;
   justify-content: space-around;
   align-items: center;
 
   ${StyledPkgTuple}.state .value {
     color: var(--info-medium);
+  }
+
+  ${StyledPkgTuple}.cost .value::after {
+    font-size: var(--tx-md);
+    content: "\u20AC";
+    margin: 0 0 0 2px;
   }
 
   & sub {

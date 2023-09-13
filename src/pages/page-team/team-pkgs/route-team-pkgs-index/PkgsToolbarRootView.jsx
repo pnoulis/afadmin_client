@@ -20,7 +20,10 @@ function PkgsToolbarRootView({ className, style }) {
       <StyledWidgetPlus
         forwardedAs="li"
         tooltipContent="add package"
-        onClick={routerCtx.forward.bind(null, "pkgconfig")}
+        onClick={() => {
+          ctxPkg.handleSelectedPkgClear();
+          routerCtx.forward("pkgconfig");
+        }}
       />
       <StyledWidgetTrash
         forwardedAs="li"

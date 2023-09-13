@@ -5,7 +5,8 @@ import styled from "styled-components";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
 import {
-  PkgActionRouter,
+  ContextProvidePkgActionRouter,
+  usePkgActionRouter,
   PkgActionRouterMountPoint,
 } from "./PkgActionRouter.jsx";
 import { RoutePkgRoot, RoutePkgConfig } from "./PkgActionRoutes.jsx";
@@ -17,11 +18,13 @@ import { usePackageConfigurator } from "/src/components/packages/index.js";
 import { ContextProvidePackage } from "/src/contexts/index.js";
 
 function TeamPkgs() {
+  const ctxRouter = usePkgActionRouter();
   const ctxTeam = useContextTeam();
   const ctxPkg = usePackageConfigurator(ctxTeam);
+
   return (
-    <ContextProvidePackage ctx={ctxPkg}>
-      <PkgActionRouter>
+    <ContextProvidePkgActionRouter ctx={ctxRouter}>
+      <ContextProvidePackage ctx={ctxPkg}>
         <StyledTeamPkgs>
           <section className="pkgs-toolbar">
             <PkgActionRouterMountPoint id="pkgs-arouter-toolbar-mp">
@@ -39,8 +42,8 @@ function TeamPkgs() {
             </RoutePkgConfig>
           </section>
         </StyledTeamPkgs>
-      </PkgActionRouter>
-    </ContextProvidePackage>
+      </ContextProvidePackage>
+    </ContextProvidePkgActionRouter>
   );
 }
 

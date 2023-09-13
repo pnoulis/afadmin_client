@@ -27,4 +27,6 @@ export {
   PkgActionRoute,
   PkgActionRouterMountPoint,
   useContextPkgActionRouter,
+  ContextProvidePkgActionRouter,
+  usePkgActionRouter,
 };

@@ -27,6 +27,7 @@ function usePersistentTeam(source, { fill = false, depth = 0 } = {}) {
   });
   const { action: sMergeTeam } = useAfmachineAction(team.mergeTeam);
   const { action: sRegisterPackage } = useAfmachineAction(team.registerPackage);
+  const { action: sRemovePackage } = useAfmachineAction(team.removePackage);
   const rosterRef = React.useRef([]);
   rosterRef.current = React.useMemo(
     () => team.roster.get(),
@@ -64,7 +65,11 @@ function usePersistentTeam(source, { fill = false, depth = 0 } = {}) {
   }
 
   function registerPackage(pkg) {
-    sRegisterPackage.run(() => team.registerPackage(pkg));
+    return sRegisterPackage.run(() => team.registerPackage(pkg));
+  }
+
+  function removePackage(pkg) {
+    return sRemovePackage.run(() => team.removePackage(pkg));
   }
 
   return {
@@ -77,7 +82,9 @@ function usePersistentTeam(source, { fill = false, depth = 0 } = {}) {
     merge,
     sMergeTeam,
     sRegisterPackage,
+    sRemovePackage,
     registerPackage,
+    removePackage,
     changeTeamName,
     changeSource,
   };

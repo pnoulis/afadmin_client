@@ -13,20 +13,20 @@ function PanelTeam() {
   const navigate = useNavigate();
   return (
     <StylePanelTeam>
+      <TeamHeader />
       <WidgetArrow
         tooltipContent="liveview"
         onClick={navigate.bind(null, -1)}
       />
-      <TeamHeader />
     </StylePanelTeam>
   );
 }
 
 const StylePanelTeam = styled(StylePanelHeader)`
-  padding: 0;
-  height: max-content;
-  padding: 25px 25px 0 25px;
   gap: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
 `;
 
 export { PanelTeam };

@@ -9,11 +9,11 @@ import { WristbandTuple } from "/src/components/wristbands/index.js";
 import { WidgetWristband } from "/src/components/widgets/index.js";
 import { useContextWristband } from "/src/contexts/index.js";
 
-function TeamPlayerInfoCard({ className, style }) {
+function TeamPlayerInfoCard({ disable, className, style }) {
   const { wristband } = useContextWristband();
   return (
     <TeamPlayerInfoCardContainer className={className} style={style}>
-      <StyledWidgetWristband wristbandColor={wristband.getColor()} />
+      <StyledWidgetWristband disable={disable} wristbandColor={wristband.getColor()} />
       <StyledTeamPlayerTuple>
         <PlayerTuple nok name="username" />
       </StyledTeamPlayerTuple>

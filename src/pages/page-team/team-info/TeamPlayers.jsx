@@ -29,7 +29,7 @@ function TeamPlayers({ style }) {
           renderPlayer={(props) => (
             <Player {...props}>
               <Wristband wristband={props.player.wristband}>
-                <TeamPlayerInfoCard />
+                <TeamPlayerInfoCard disable/>
               </Wristband>
             </Player>
           )}

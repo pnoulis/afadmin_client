@@ -41,10 +41,8 @@ function useAfmachineEntity(
       createEntity(constructorRef.current.normalize(source).asObject() )
      */
     if (isneq(source)) {
-      debug("SOURCE IS NOT EQUAL");
       setSource(() => () => source);
     } else {
-      debug("SOURCE IS EQUAL");
     }
     // if (source !== entityRef.current || isneq(source)) {
     //   setSource(() => () => source);

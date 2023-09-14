@@ -13,7 +13,7 @@ function TeamPlayerInfoCard({ className, style }) {
   const { wristband } = useContextWristband();
   return (
     <TeamPlayerInfoCardContainer className={className} style={style}>
-      <StyledWidgetWristband disable wristbandColor={wristband.getColor()} />
+      <StyledWidgetWristband wristbandColor={wristband.getColor()} />
       <StyledTeamPlayerTuple>
         <PlayerTuple nok name="username" />
       </StyledTeamPlayerTuple>

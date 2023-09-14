@@ -16,7 +16,6 @@ function usePackageConfigurator(ctxTeam, source, options) {
   const [vid, setvid] = React.useState(smallid());
 
   function handlePkgSelection(pkg) {
-    debug(pkg, "handlePkgSelection");
     changeSource(pkg);
     setSelectedPkg(pkg);
   }
@@ -34,7 +33,6 @@ function usePackageConfigurator(ctxTeam, source, options) {
         msg: "No package has been selected!",
       });
     }
-    debug(pkg, "handlePkgRegistration created pkg");
     ctxTeam.registerPackage(pkg).finally(handleSelectedPkgClear);
   }
 

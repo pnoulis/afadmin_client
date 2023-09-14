@@ -42,7 +42,7 @@ function RegistrationQueue({
       style={style}
       $height={$height}
     >
-      <StyledListPlayers shouldEven={viewingQueue.length > 3}>
+      <StyledListPlayers $shouldEven={viewingQueue.length > 3}>
         {viewingQueue.map((player, i) => renderPlayer({ key: i, player }))}
       </StyledListPlayers>
     </StyledRegistrationQueue>
@@ -76,7 +76,7 @@ const StyledListPlayers = styled("ul")`
   gap: 20px;
   padding: 20px;
   border-radius: var(--br-lg);
-  align-content: ${({ shouldEven }) => shouldEven && "space-evenly"};
+  align-content: ${({ $shouldEven }) => $shouldEven && "space-evenly"};
 `;
 
 export { RegistrationQueue, StyledListPlayers };

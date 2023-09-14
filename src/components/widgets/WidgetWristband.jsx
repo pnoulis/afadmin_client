@@ -16,11 +16,11 @@ function WidgetWristband({ size, tooltipContent, disable, className, style }) {
 
   return disable ? (
     <StyledWidgetWristband
-      disable={disable}
+      $disable={disable}
       style={style}
       size={size}
       className={className}
-      wristbandColor={wristband.getColor()}
+      $wristbandColor={wristband.getColor()}
     >
       <Svg>
         <SignalIcon />
@@ -31,13 +31,13 @@ function WidgetWristband({ size, tooltipContent, disable, className, style }) {
       content={tooltipContent}
       trigger={
         <StyledWidgetWristband
-          disable={disable}
+          $disable={disable}
           style={style}
           onClick={handleWristbandToggle}
           size={size}
           className={className}
-          pairing={state === "pairing"}
-          wristbandColor={wristband.getColor()}
+          $pairing={state === "pairing"}
+          $wristbandColor={wristband.getColor()}
         >
           <Svg>
             <SignalIcon />
@@ -62,11 +62,11 @@ const animatePairing = css`
 `;
 
 const wristbandColor = css`
-  ${({ wristbandColor }) =>
-    wristbandColor
+  ${({ $wristbandColor }) =>
+    $wristbandColor
       ? `
-border-color: ${wristbandColor};
-background-color: ${wristbandColor};
+border-color: ${$wristbandColor};
+background-color: ${$wristbandColor};
 fill: white;
 `
       : `
@@ -84,8 +84,8 @@ const StyledWidgetWristband = styled.div`
   padding: 5px;
   border-radius: 50%;
   border: 3px solid transparent;
-  ${({ disable }) =>
-    !disable &&
+  ${({ $disable }) =>
+    !$disable &&
     css`
       cursor: pointer;
       &:hover {
@@ -93,7 +93,7 @@ const StyledWidgetWristband = styled.div`
       }
     `}
   ${wristbandColor}
-  ${({ pairing }) => pairing && animatePairing}
+  ${({ $pairing }) => $pairing && animatePairing}
 `;
 
 export { WidgetWristband };

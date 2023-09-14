@@ -22,8 +22,8 @@ function PlayerActionCard({ player }) {
   ) : (
     <StyledPlayerActionCard>
       <StyledWidgetWristband
-        wristbandColor={wristband.getColor()}
-        pairing={state === "pairing"}
+        $wristbandColor={wristband.getColor()}
+        $pairing={state === "pairing"}
       />
       <StyledPlayerTuple>
         <PlayerTuple nok name="username" />
@@ -90,8 +90,8 @@ const StyledWidgetWristband = styled(WidgetWristband)`
   svg {
     fill: var(--grey-strong);
   }
-  background-color: ${({ wristbandColor, pairing }) =>
-    !wristbandColor && !pairing && "white"};
+  background-color: ${({ $wristbandColor, $pairing }) =>
+    !$wristbandColor && !$pairing && "white"};
 `;
 
 export { PlayerActionCard, StyledPlayerActionCard, StyledWidgetTrash };

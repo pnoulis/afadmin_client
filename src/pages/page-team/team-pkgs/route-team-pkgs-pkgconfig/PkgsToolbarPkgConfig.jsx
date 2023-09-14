@@ -17,7 +17,6 @@ function PkgsToolbarPkgConfig() {
   const ctxRouter = useContextPkgActionRouter();
   const ctxTeam = useContextTeam();
   const ctxPkg = useContextPackage();
-  debug(ctxPkg, "debug pkgsToolbarPkgConfig");
   return (
     <StyledPkgsToolbarPkgConfig>
       <WidgetArrow

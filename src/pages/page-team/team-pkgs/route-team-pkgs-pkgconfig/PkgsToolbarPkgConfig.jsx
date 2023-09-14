@@ -20,6 +20,10 @@ function PkgsToolbarPkgConfig() {
   return (
     <StyledPkgsToolbarPkgConfig>
       <WidgetArrow
+        style={{
+          width: "40px",
+          height: "40px",
+        }}
         as="li"
         tooltipContent="back"
         onClick={() => {
@@ -30,6 +34,10 @@ function PkgsToolbarPkgConfig() {
         }}
       />
       <WidgetSave
+        style={{
+          width: "40px",
+          height: "40px",
+        }}
         as="li"
         tooltipContent="register package"
         onClick={ctxPkg.handlePkgRegistration}
@@ -47,7 +55,7 @@ const StyledPkgInfo = styled("li")`
   display: flex;
   flex-flow: column nowrap;
   box-sizing: border-box;
-  height: 100%;
+  height: 80%;
   min-width: 200px;
   background-color: var(--grey-light);
   width: max-content;

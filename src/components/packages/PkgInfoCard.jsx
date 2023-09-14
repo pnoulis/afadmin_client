@@ -59,6 +59,7 @@ const CssPkgTuple = css`
   letter-spacing: 1px;
   font-size: var(--tx-nl);
   font-weight: 450;
+font-weight: 550;
 
   .key {
     display: inline-block;
@@ -76,7 +77,7 @@ const CssPkgTuple = css`
     width: max-content;
     word-break: break-all;
     overflow-wrap: anywhere;
-    font-weight: 450;
+font-weight: 450;
   }
 `;
 

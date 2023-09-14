@@ -13,7 +13,10 @@ function TeamPlayerInfoCard({ disable, className, style }) {
   const { wristband } = useContextWristband();
   return (
     <TeamPlayerInfoCardContainer className={className} style={style}>
-      <StyledWidgetWristband disable={disable} wristbandColor={wristband.getColor()} />
+      <StyledWidgetWristband
+        disable={disable}
+        wristbandColor={wristband.getColor()}
+      />
       <StyledTeamPlayerTuple>
         <PlayerTuple nok name="username" />
       </StyledTeamPlayerTuple>
@@ -29,7 +32,7 @@ const StyledWidgetWristband = styled(WidgetWristband)`
   width: 40px;
   height: 40px;
   svg {
-    fill: var(--grey-strong);
+    fill: white;
   }
   background-color: ${({ wristbandColor, pairing }) =>
     !wristbandColor && !pairing && "white"};
@@ -40,10 +43,10 @@ const CssTeamPlayerTuple = css`
   box-sizing: border-box;
   padding: 0 5px;
   letter-spacing: 1px;
-  font-size: var(--tx-xs);
+  font-size: var(--tx-sm);
   font-family: Saira;
-  font-weight: 550;
   text-align: center;
+  font-weight: 550;
 
   .key::after {
     content: ":";

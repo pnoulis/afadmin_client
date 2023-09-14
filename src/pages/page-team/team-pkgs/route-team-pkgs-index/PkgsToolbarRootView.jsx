@@ -31,6 +31,10 @@ function PkgsToolbarRootView({ className, style }) {
         onClick={ctxPkg.handlePkgRemoval}
       />
       <WidgetStart
+        style={{
+          width: "40px",
+          height: "40px",
+        }}
         as="li"
         tooltipContent="activate package"
         onClick={() => {
@@ -52,12 +56,17 @@ const StyledPkgsToolbarRootView = styled("ul")`
 
 const StyledWidgetPlus = styled(WidgetPlus)`
   background-color: var(--primary-base);
+  width: 40px;
+  height: 40px;
   svg {
     fill: white;
   }
 `;
 const StyledWidgetTrash = styled(WidgetTrash)`
   background-color: var(--primary-base);
+  width: 40px;
+  height: 40px;
+
   svg {
     fill: white;
   }

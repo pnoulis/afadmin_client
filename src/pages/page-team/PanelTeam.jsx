@@ -19,7 +19,7 @@ function PanelTeam() {
     <StylePanelTeam>
       <StyleNavbarLink end to={liveView.path}>
         <StyleItemIcon>
-          <LiveTeamsIcon />
+          <LiveTeamsIcon/>
         </StyleItemIcon>
         <StyleItemText>{liveView.label}</StyleItemText>
       </StyleNavbarLink>

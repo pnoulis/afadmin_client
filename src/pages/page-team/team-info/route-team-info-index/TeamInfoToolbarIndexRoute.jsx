@@ -25,6 +25,8 @@ const StyledTeamInfoToolbarIndexRoute = styled("ul")`
 
 const StyledWidgetTrash = styled(WidgetTrash)`
   background-color: var(--primary-base);
+  width: 40px;
+  height: 40px;
   svg {
     fill: white;
   }

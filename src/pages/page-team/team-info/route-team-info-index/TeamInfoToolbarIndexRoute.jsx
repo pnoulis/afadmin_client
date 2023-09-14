@@ -4,12 +4,12 @@ import * as React from "react";
 // ------------------------------ own libs ------------------------------- //
 import styled from "styled-components";
 // ------------------------------ project  ------------------------------- //
-import { useContextTeamInfoActionRouter } from "../TeamInfoActionRouter.jsx";
+import { WidgetTrash } from "/src/components/widgets/index.js";
 
 function TeamInfoToolbarIndexRoute({ className, style }) {
   return (
     <StyledTeamInfoToolbarIndexRoute>
-      team info toolbar index route
+      <StyledWidgetTrash forwardedAs="li" tooltipContent="team roster" />
     </StyledTeamInfoToolbarIndexRoute>
   );
 }
@@ -20,6 +20,14 @@ const StyledTeamInfoToolbarIndexRoute = styled("ul")`
   align-items: center;
   gap: 20px;
   height: 70px;
+  justify-content: end;
+`;
+
+const StyledWidgetTrash = styled(WidgetTrash)`
+  background-color: var(--primary-base);
+  svg {
+    fill: white;
+  }
 `;
 
 export { TeamInfoToolbarIndexRoute };

@@ -33,6 +33,7 @@ import {
   loadRegisteredWristbandPlayers,
   loadPackages,
   loadTeams,
+  loadTeam,
 } from "/src/loaders/index.js";
 
 /**
@@ -96,7 +97,7 @@ const router = createBrowserRouter(
                 },
                 {
                   path: `${links.liveView.path + links.team().path}`,
-                  loader: loadPackages,
+                  loader: loadTeam,
                   element: <PageTeam />,
                 },
               ],

@@ -57,6 +57,7 @@ const StyledTeamPkgs = styled("div")`
 
   .pkgs-toolbar {
     width: 100%;
+    margin-bottom: 20px;
   }
   .pkgs-outlet {
     flex: 1;

@@ -210,7 +210,6 @@ function TableTeams({ rows }) {
                   onClick={() => {
                     navigate(team(row.name).path, {
                       relative: true,
-                      state: row,
                     });
                   }}
                 >

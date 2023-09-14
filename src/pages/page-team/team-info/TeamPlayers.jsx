@@ -25,7 +25,6 @@ function TeamPlayers({ style }) {
     >
       <AncestorDimensions ancestor="#teaminfo-outlet">
         <StyledRegistrationQueue
-          fill
           style={style}
           renderPlayer={(props) => (
             <Player {...props}>
@@ -43,11 +42,9 @@ function TeamPlayers({ style }) {
 const StyledRegistrationQueue = styled(RegistrationQueue)`
   height: 500px;
   max-height: ${({ $height }) => $height + "px"};
-  margin: auto;
 
   ${StyledListPlayers} {
     justify-content: space-around;
-    align-content: space-evenly;
     gap: initial;
     width: 100%;
     max-width: initial;

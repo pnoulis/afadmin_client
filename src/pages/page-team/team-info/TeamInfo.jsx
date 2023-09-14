@@ -43,6 +43,7 @@ const StyledTeamInfo = styled("div")`
 
   #teaminfo-toolbar {
     width: 100%;
+    margin-bottom: 20px;
   }
   #teaminfo-outlet {
     flex: 1;

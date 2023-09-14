@@ -5,3 +5,4 @@ export * from './useGroupPartyTeam.jsx';
 export * from './GroupPartyTeam.jsx';
 export * from './TeamTupleState.jsx';
 export * from './TeamTuple.jsx';
+export * from './useTeam.jsx';

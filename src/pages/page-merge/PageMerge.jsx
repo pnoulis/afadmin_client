@@ -90,6 +90,7 @@ function PageMerge() {
           }}
         >
           <RegistrationQueue
+            fill
             className="registration-queue"
             style={{ gridArea: "registration_queue" }}
             renderPlayer={(props) => (

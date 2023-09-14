@@ -27,8 +27,10 @@ function PkgsOutletRootView() {
       ctxRouter.current()?.name !== "pkgconfig"
     ) {
       ctxRouter.forward("pkgconfig");
+    } else if (!ctxPkg.selectedPkg && ctxTeam.team.packages.length >= 1) {
+      ctxPkg.handlePkgSelection(ctxTeam.team.packages[0]);
     }
-  }, []);
+  }, [ctxPkg.selectedPkg]);
 
   return (
     <>
@@ -42,7 +44,7 @@ function PkgsOutletRootView() {
               Alert,
               {
                 title: "remove package",
-                msg: `successfuly removed ${response.type} package ${response.name}`,
+                msg: `successfuly removed ${response.type} package: ${response.name}`,
               },
               () => {
                 if (ctxTeam.team.packages.length < 1) {
@@ -50,6 +52,21 @@ function PkgsOutletRootView() {
                 }
               },
             );
+          } else {
+            displaypoperr(response);
+          }
+        }}
+      />
+
+      <PopoverAsyncState
+        timePending={500}
+        action={ctxTeam.sActivatePackage}
+        onSettled={(activated, response) => {
+          if (activated) {
+            renderDialog(null, Alert, {
+              title: "activate package",
+              msg: `successfuly activated ${response.type} package: ${response.name}`,
+            });
           } else {
             displaypoperr(response);
           }
@@ -94,7 +111,7 @@ const StyledListPkgs = styled("ul")`
 const StyledListPkgsItem = styled(PkgInfoCard)`
   &:hover {
     cursor: pointer;
-    background-color: var(--info-subtle);
+    background-color: ${({ selected }) => !selected && "var(--info-light)"};
   }
 
   &:hover ${StyledPkgInfoCardTuple}.state .value {

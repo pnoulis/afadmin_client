@@ -3,6 +3,7 @@ import * as React from "react";
 // ------------------------------ own libs ------------------------------- //
 import { smallid } from "js_utils/uuid";
 import { isObject, isFunction } from "js_utils/misc";
+import deepEqual from "deep-equal";
 // ------------------------------ project  ------------------------------- //
 
 function useAfmachineEntity(
@@ -25,14 +26,36 @@ function useAfmachineEntity(
     setSource(() => () => newSource);
   }
 
+  // is not equal
+  function isneq(newSource) {
+    return !deepEqual(
+      entityRef.current.asObject?.(),
+      createEntity(constructorRef.current.normalize(newSource)).asObject(),
+    );
+  }
+
   React.useEffect(() => {
-    if (source !== entityRef.current || source !== getSource()) {
+    console.log(source);
+    console.log(`SOURCE CHANGED ${constructorRef.current.name}`);
+    /*
+      createEntity(constructorRef.current.normalize(source).asObject() )
+     */
+    if (isneq(source)) {
+      debug("SOURCE IS NOT EQUAL");
       setSource(() => () => source);
+    } else {
+      debug("SOURCE IS EQUAL");
     }
+    // if (source !== entityRef.current || isneq(source)) {
+    //   setSource(() => () => source);
+    // }
+    // if (source !== entityRef.current || source !== getSource()) {
+    //   setSource(() => () => source);
+    // }
   }, [source]);
 
   entityRef.current = React.useMemo(() => {
-    console.log(`SOURCE CHANGED ${constructorRef.current.name}`);
+    // console.log(`SOURCE CHANGED ${constructorRef.current.name}`);
     if (getSource() instanceof constructorRef.current) {
       return getSource();
     } else if (fill) {

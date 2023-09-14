@@ -30,7 +30,13 @@ function PkgsToolbarRootView({ className, style }) {
         tooltipContent="remove package"
         onClick={ctxPkg.handlePkgRemoval}
       />
-      <WidgetStart as="li" tooltipContent="activate package" />
+      <WidgetStart
+        as="li"
+        tooltipContent="activate package"
+        onClick={() => {
+          ctxPkg.handlePkgActivation();
+        }}
+      />
     </StyledPkgsToolbarRootView>
   );
 }
@@ -40,7 +46,7 @@ const StyledPkgsToolbarRootView = styled("ul")`
   flex-flow: row nowrap;
   gap: 20px;
   align-items: center;
-  justify-content: end;
+  justify-content: start;
   min-height: 70px;
 `;
 

@@ -18,7 +18,6 @@ function PkgsOutletPkgConfig() {
   const ctxTeam = useContextTeam();
   const ctxPkg = useContextPackage();
   const ctxRouter = useContextPkgActionRouter();
-  debug(ctxPkg.pkg, "debug use package return");
   return (
     <>
       <PopoverAsyncState
@@ -26,19 +25,11 @@ function PkgsOutletPkgConfig() {
         action={ctxTeam.sRegisterPackage}
         onSettled={(registered, response) => {
           if (registered) {
-            renderDialog(
-              null,
-              Alert,
-              {
-                title: "register new package",
-                msg: `Successfuly registered new package: ${response.name}`,
-              },
-              () => {
-                if (registered) {
-                  ctxRouter.back();
-                }
-              },
-            );
+            ctxRouter.back();
+            renderDialog(null, Alert, {
+              title: "register new package",
+              msg: `Successfuly registered new ${response.type} package: ${response.name}`,
+            });
           } else {
             displaypoperr(response);
           }
@@ -47,7 +38,7 @@ function PkgsOutletPkgConfig() {
       <RoutePkgConfig target="pkgs-arouter-toolbar-mp">
         <PkgsToolbarPkgConfig />
       </RoutePkgConfig>
-      <StyledPkgsOutletPkgConfig>
+      <StyledPkgsOutletPkgConfig key={ctxPkg.vid}>
         <AwaitPackages>
           {(pkgs) => (
             <StyledListPackages>
@@ -68,15 +59,19 @@ function PkgsOutletPkgConfig() {
   );
 }
 const StyledListPackages = styled("ul")`
+  width: 100%;
   height: 100%;
   display: flex;
-  flex-flow: column nowrap;
-  justify-content: space-around;
-  align-items: center;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: start;
 `;
 const StyledPkgsOutletPkgConfig = styled("div")`
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export { PkgsOutletPkgConfig };

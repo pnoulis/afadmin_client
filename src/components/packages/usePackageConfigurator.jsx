@@ -1,6 +1,7 @@
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
 // ------------------------------ own libs ------------------------------- //
+import { smallid } from "js_utils/uuid";
 // ------------------------------ project  ------------------------------- //
 import { usePackage } from "./usePackage.jsx";
 import { renderDialog, Alert } from "/src/components/dialogs/index.js";
@@ -12,6 +13,7 @@ function usePackageConfigurator(ctxTeam, source, options) {
     options,
   );
   const [selectedPkg, setSelectedPkg] = React.useState(null);
+  const [vid, setvid] = React.useState(smallid());
 
   function handlePkgSelection(pkg) {
     debug(pkg, "handlePkgSelection");
@@ -20,8 +22,9 @@ function usePackageConfigurator(ctxTeam, source, options) {
   }
 
   function handleSelectedPkgClear() {
-    changeSource(null);
+    changeSource();
     setSelectedPkg(null);
+    setvid(smallid());
   }
 
   function handlePkgRegistration() {
@@ -52,17 +55,23 @@ function usePackageConfigurator(ctxTeam, source, options) {
         msg: "No package has been selected!",
       });
     }
+    ctxTeam.activatePackage(
+      pkg,
+      (err, data) => !err && handleSelectedPkgClear(),
+    );
   }
 
   return {
     state,
     pkg,
+    id,
     selectedPkg,
     handlePkgSelection,
     handleSelectedPkgClear,
     handlePkgRegistration,
     handlePkgRemoval,
     handlePkgActivation,
+    vid,
   };
 }
 

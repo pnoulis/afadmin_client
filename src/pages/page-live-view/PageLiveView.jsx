@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
 import { PanelLiveView } from "./PanelLiveView.jsx";
-import { PanelActionRouter } from "/src/components/panels/index.js";
+import { PanelActionRouter } from '/src/components/panels/index.js';
 
 function PageLiveView() {
   return (

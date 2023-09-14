@@ -8,6 +8,7 @@ import { afmachine } from "/src/services/afmachine/afmachine.js";
 import { displaypoperr } from "/src/utils/index.js";
 import {
   ConfirmMergeTeam,
+  ConfirmActivatePkg,
   renderDialog,
 } from "/src/components/dialogs/index.js";
 
@@ -28,6 +29,7 @@ function usePersistentTeam(source, { fill = false, depth = 0 } = {}) {
   const { action: sMergeTeam } = useAfmachineAction(team.mergeTeam);
   const { action: sRegisterPackage } = useAfmachineAction(team.registerPackage);
   const { action: sRemovePackage } = useAfmachineAction(team.removePackage);
+  const { action: sActivatePackage } = useAfmachineAction(team.activate);
   const rosterRef = React.useRef([]);
   rosterRef.current = React.useMemo(
     () => team.roster.get(),
@@ -72,6 +74,21 @@ function usePersistentTeam(source, { fill = false, depth = 0 } = {}) {
     return sRemovePackage.run(() => team.removePackage(pkg));
   }
 
+  function activatePackage(pkg, cb) {
+    renderDialog(
+      null,
+      ConfirmActivatePkg,
+      { pkgType: pkg.type, pkgName: pkg.name },
+      (yes) => {
+        if (!yes) return;
+        sActivatePackage
+          .run(() => team.activate(pkg))
+          .then(cb.bind(null, null))
+          .catch(cb.bind(null));
+      },
+    );
+  }
+
   return {
     state,
     id,
@@ -83,6 +100,8 @@ function usePersistentTeam(source, { fill = false, depth = 0 } = {}) {
     sMergeTeam,
     sRegisterPackage,
     sRemovePackage,
+    sActivatePackage,
+    activatePackage,
     registerPackage,
     removePackage,
     changeTeamName,

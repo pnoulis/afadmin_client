@@ -16,6 +16,8 @@ function TeamInfoOutletIndexRoute({ className, style }) {
 }
 
 const StyledTeamInfoOutletIndexRoute = styled("div")`
+display: flex;
+justify-content: end;
 `;
 
 export { TeamInfoOutletIndexRoute };

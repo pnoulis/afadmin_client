@@ -20,17 +20,6 @@ function PkgsToolbarPkgConfig() {
   debug(ctxPkg, "debug pkgsToolbarPkgConfig");
   return (
     <StyledPkgsToolbarPkgConfig>
-      <StyledPkgInfo>
-        <StylePkgTupleCost>
-          <PkgTupleCost />
-        </StylePkgTupleCost>
-      </StyledPkgInfo>
-      <WidgetSave
-        as="li"
-        tooltipContent="register package"
-        style={{ marginLeft: "auto" }}
-        onClick={ctxPkg.handlePkgRegistration}
-      />
       <WidgetArrow
         as="li"
         tooltipContent="back"
@@ -41,6 +30,16 @@ function PkgsToolbarPkgConfig() {
           }
         }}
       />
+      <WidgetSave
+        as="li"
+        tooltipContent="register package"
+        onClick={ctxPkg.handlePkgRegistration}
+      />
+      <StyledPkgInfo>
+        <StylePkgTupleCost>
+          <PkgTupleCost />
+        </StylePkgTupleCost>
+      </StyledPkgInfo>
     </StyledPkgsToolbarPkgConfig>
   );
 }
@@ -58,6 +57,7 @@ const StyledPkgInfo = styled("li")`
   column-gap: 30px;
   justify-content: center;
   align-items: center;
+  margin-left: auto;
 `;
 
 const StyledPkgsToolbarPkgConfig = styled("ul")`

@@ -2,58 +2,44 @@
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-import {
-  RouterProvider,
-  createBrowserRouter,
-  BrowserRouter,
-  Outlet,
-  NavLink,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
-import { Svg } from "react_utils/svgs";
 // ------------------------------ project  ------------------------------- //
-import { loadPackages } from "/src/loaders/index.js";
-import { Pending } from "/src/components/async/index.js";
-import { AwaitPackages } from "/src/components/async/AwaitPackages.jsx";
+import { loadTeams } from "/src/loaders/index.js";
+import { AwaitTeams } from "/src/pages/page-live-view/page-live-view-index/AwaitTeams.jsx";
+import {
+  Table,
+  TableHead,
+  TableBody,
+  TableFooter,
+  TableRow,
+  TableCell,
+  TeamHead,
+  TeamRow,
+  TableLiveViewHeader,
+  TableLiveViewRow,
+} from "/src/components/tables/index.js";
 
-function PageMerge() {
-  return <div></div>;
-}
-
-function PageTeam() {
+function PageTable({ teams = [] }) {
+  console.log(teams);
   return (
-    <div>
-      <h1>page team</h1>
-      <React.Suspense fallback={<Pending />}>
-        <AwaitPackages />
-      </React.Suspense>
-    </div>
-  );
-}
-
-function PageTeamPkgs() {
-  return (
-    <div>
-      <h1>page team pkgs</h1>
-    </div>
-  );
-}
-
-function PageTeamRoster() {
-  return (
-    <div>
-      <h1>page team roster</h1>
-    </div>
+    <Table>
+      <TableLiveViewHeader />
+      {/* <TeamHead include={["name", "state", "points", "roster"]} /> */}
+      <TableBody>
+        {teams.map((team) => (
+          <TableLiveViewRow key={team.name} row={team} />
+        ))}
+      </TableBody>
+    </Table>
   );
 }
 
 const router = createBrowserRouter([
   {
-    loader: loadPackages,
+    loader: loadTeams,
     path: "*",
-    element: <PageTeam />,
+    element: <AwaitTeams>{(teams) => <PageTable teams={teams} />}</AwaitTeams>,
   },
 ]);
 

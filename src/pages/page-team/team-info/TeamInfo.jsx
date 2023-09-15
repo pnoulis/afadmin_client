@@ -39,11 +39,10 @@ const StyledTeamInfo = styled("div")`
   display: flex;
   flex-flow: column nowrap;
   align-items: start;
-  gap: 60px;
+  gap: 20px;
 
   #teaminfo-toolbar {
     width: 100%;
-    margin-bottom: 20px;
   }
   #teaminfo-outlet {
     flex: 1;

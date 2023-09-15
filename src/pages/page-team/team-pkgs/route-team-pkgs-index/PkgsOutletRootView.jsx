@@ -111,7 +111,7 @@ const StyledListPkgs = styled("ul")`
 const StyledListPkgsItem = styled(PkgInfoCard)`
   &:hover {
     cursor: pointer;
-    background-color: ${({ selected }) => !selected && "var(--info-light)"};
+    background-color: ${({ selected }) => !selected && "#6E80CB"};
   }
 
   &:hover ${StyledPkgInfoCardTuple}.state .value {
@@ -125,7 +125,7 @@ const StyledListPkgsItem = styled(PkgInfoCard)`
   ${({ selected }) =>
     selected &&
     css`
-      background-color: var(--info-medium);
+      background-color: #6E80CB;
       ${StyledPkgInfoCardTuple}.state .value {
         color: white;
       }

@@ -63,8 +63,9 @@ const StyledListPackages = styled("ul")`
   height: 100%;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-between;
+  justify-content: center;
   align-items: start;
+  gap: 40px;
 `;
 const StyledPkgsOutletPkgConfig = styled("div")`
   width: 100%;

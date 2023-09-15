@@ -6,15 +6,32 @@ import { isFunction } from "js_utils/misc";
 // ------------------------------ project  ------------------------------- //
 import { useContextTeam } from "/src/contexts/index.js";
 
-function TeamTuple({ name, label, value, nok, children }) {
-  const { team } = useContextTeam();
+function TeamTuple({
+  noc /* No context */,
+  nok /* No key */,
+  nov /* No value */,
+  team: nocTeam /* Requires noc */,
+  name,
+  label,
+  value,
+  getValue,
+  children,
+}) {
+  getValue ??= function (v) {
+    return v;
+  };
+  const { team } = noc ? { team: nocTeam } : useContextTeam();
 
   return isFunction(children) ? (
-    children(label || name, value || team[name])
+    children(label ?? name, getValue(value ?? team[name]) ?? "-")
   ) : (
     <>
-      {!nok && <span className="key">{label || name}</span>}
-      <span className="value">{value || team[name] || "-"}</span>
+      {!nok && <span className={name + " key"}>{label ?? name}</span>}
+      {!nov && (
+        <span className={name + " value"}>
+          {getValue(value ?? team[name]) ?? "-"}
+        </span>
+      )}
     </>
   );
 }

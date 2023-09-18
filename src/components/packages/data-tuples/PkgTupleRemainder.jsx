@@ -28,8 +28,7 @@ function PkgTupleRemainder({
       dval={dval}
       renderValue={(props) => (
         <>
-          <span className={props.className}>{props.value}</span>
-          <span className="suffix">{props.suffix}</span>
+          <span className={props.className}>{props.value || props.dval}</span>
         </>
       )}
     >

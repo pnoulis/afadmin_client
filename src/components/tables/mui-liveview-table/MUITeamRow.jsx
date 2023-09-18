@@ -49,8 +49,12 @@ function MUITeamRow({ team }) {
         </StyledTuple>
       </TableCell>
       <TableCell align="center">
-        <StyledTuple>
-          <TeamTupleTotalPkgsCost nok noc value={team.totalPkgsCost} />
+        <StyledTuple className='cost'>
+          <TeamTupleTotalPkgsCost
+            nok
+            noc
+            value={team.totalPkgsCost}
+          />
         </StyledTuple>
       </TableCell>
       <TableCell align="center">
@@ -64,7 +68,7 @@ function MUITeamRow({ team }) {
         </StyledTuple>
       </TableCell>
       <TableCell align="center">
-        <StyledTuple>
+        <StyledTuple className="cost">
           <PkgTupleCost
             nok
             noc
@@ -123,14 +127,22 @@ function MUITeamRow({ team }) {
 }
 
 const StyledTuple = styled("p")`
-  // padding: 20px;
   font-size: var(--tx-nl);
   font-weight: 600;
   display: flex;
   flex-flow: row wrap;
+  gap: 5px;
   justify-content: center;
   align-items: center;
   text-align: center;
+
+  & .suffix {
+    font-size: var(--tx-xs);
+  }
+
+  &.cost .suffix {
+    font-size: var(--tx-lg);
+  }
 `;
 
 export { MUITeamRow };

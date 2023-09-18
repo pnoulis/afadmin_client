@@ -130,14 +130,8 @@ function MUITeamHeaderRow() {
 }
 
 const StyledTuple = styled("p")`
-  cursor: pointer;
-  box-sizing: content-box;
   text-align: center;
-  min-width: 130px;
-  display: flex;
-  align-items: start;
-  justify-content: center;
-  font-size: var(--tx-nl);
+  font-size: var(--tx-sm);
   color: var(--primary-base);
   font-weight: 700;
   text-transform: uppercase;

@@ -5,6 +5,9 @@ import TableHead from "@mui/material/TableHead";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import TableContainer from "@mui/material/TableContainer";
 import TableFooter from "@mui/material/TableFooter";
 import { useTable } from "/src/components/tables/useTable.jsx";
 import { stableSort, getComparator } from "../table-liveview-teams/sorts.js";
@@ -12,6 +15,7 @@ import { parseTeams } from "../table-liveview-teams/parseTeams.js";
 import { MUITeamRow } from "./MUITeamRow.jsx";
 import { MUITeamHeaderRow } from "./MUITeamHeaderRow.jsx";
 import { ContextProvideTable } from "/src/components/tables/ContextTable.jsx";
+import { AncestorDimensions } from "react_utils/misc";
 
 function MUILiveViewTable({ teams = [], className, style }) {
   const rows = React.useMemo(() => parseTeams(teams), [teams]);
@@ -22,25 +26,45 @@ function MUILiveViewTable({ teams = [], className, style }) {
   });
   return (
     <ContextProvideTable ctx={ctxTable}>
-      <StyledTable className={className} style={style}>
-        <TableHead>
-          <MUITeamHeaderRow />
-        </TableHead>
-        <TableBody>
-          {ctxTable.sortedData.map(function (team) {
-            return <MUITeamRow key={team.name} team={team} />;
-          })}
-        </TableBody>
-      </StyledTable>
+      <AncestorDimensions ancestor="#panel-live-view-main">
+        <StyledTableContainer>
+          <Paper>
+            <Box
+              sx={{
+                display: "table",
+                tableLayout: "fixed",
+              }}
+            >
+              <TableContainer>
+                <Table stickyHeader={true}>
+                  <TableHead>
+                    <MUITeamHeaderRow />
+                  </TableHead>
+                  <TableBody>
+                    {ctxTable.sortedData.map(function (team) {
+                      return <MUITeamRow key={team.name} team={team} />;
+                    })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Box>
+          </Paper>
+        </StyledTableContainer>
+      </AncestorDimensions>
     </ContextProvideTable>
   );
 }
 
-const StyledTable = styled(Table)`
-  box-shadow: var(--sd-9), var(--sd-8);
-  border-radius: 10px;
-  margin: auto;
-  margin-top: 100px;
+const StyledTableContainer = styled("div")`
+  height: 100%;
+  width: 100%;
+  overflow: scroll;
+  scrollbar-color: black var(--primary-base);
+  scrollbar-gutter: stable both-edges;
+  box-shadow: var(--sd-9);
+  border-radius: var(--br-xl);
+  max-height: ${({ $height }) => $height - 50 + "px"};
 `;
+const StyledTable = styled(Table)``;
 
 export { MUILiveViewTable };

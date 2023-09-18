@@ -47,16 +47,13 @@ function TableSortButton({
     <StyledSortButton
       type="button"
       style={style}
-      className={`table-sort-button ${orderBy || ""} ${className || ""}`}
+      className={className}
       onClick={onSortButtonClick?.bind(null, orderBy)}
     >
       {children}
       {active ? (
-        <StyledSortButtonIcon
-          className="table-sort-button-icon"
-          order={active ? order : "asc"}
-        >
-          <Svg size="20">
+        <StyledSortButtonIcon order={active ? order : "asc"}>
+          <Svg>
             <ArrowDownwardIcon />
           </Svg>
         </StyledSortButtonIcon>
@@ -68,27 +65,38 @@ function TableSortButton({
 }
 
 const StyledSortButton = styled("button")`
+  margin: auto;
   cursor: pointer;
-  text-align: center;
-  width: 130px;
   display: flex;
   align-items: center;
-  gap: 20px;
   justify-content: center;
-  font-size: var(--tx-nl);
-  color: var(--primary-base);
-  font-weight: 700;
+  gap: 12px;
+  font-size: var(--tx-xs);
   text-transform: uppercase;
+  height: 100%;
+  with: 100%;
+  font-weight: 700;
+  color: var(--primary-base);
 `;
 
 const StyledSortButtonIcon = styled("span")`
+  flex: 0 0 20px;
+  box-sizing: border-box;
+  position: relative;
+  top: -3px;
+  width: 20px;
+  height: 20px;
   transform: rotate(${({ order }) => (order === "asc" ? "0" : "180")}deg);
 `;
 
 const StyledSortButtonStub = styled("span")`
+  flex: 0 0 20px;
+  position: relative;
   box-sizing: border-box;
+  top: -4px;
   border-radius: 50%;
-  padding: 5px;
+  width: 20px;
+  height: 20px;
   background-color: var(--primary-base);
 `;
 

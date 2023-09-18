@@ -30,8 +30,8 @@ import { isObject } from "js_utils/misc";
 import { MUILiveViewTable } from "./components/tables/mui-liveview-table/MUILiveViewTable.jsx";
 
 const PageContainer = styled("div")`
+width: 800px;
   overflow: scroll;
-  margin: auto;
   display: flex;
 `;
 function PageTable({ teams }) {

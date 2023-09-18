@@ -10,8 +10,9 @@ import { Svg } from "react_utils/svgs";
 import { ReactComponent as PersonIcon } from "agent_factory.shared/ui/icons/person-filled.svg";
 import { useHover, useUser } from "/src/hooks/index.js";
 import { Logout } from "/src/components/widgets/WidgetAccountButtons.jsx";
-import { useContextApp } from "/src/contexts/ContextApp.jsx";
 import { PopoverAsyncState } from "/src/components/async/index.js";
+import { displaypoperr } from "/src/utils/index.js";
+import { useSession } from "/src/hooks/index.js";
 
 /**
  * WidgetAccount
@@ -20,21 +21,24 @@ import { PopoverAsyncState } from "/src/components/async/index.js";
  */
 function WidgetAccount() {
   const [hovering, onHover] = useHover();
-  const { session } = useContextApp();
+  const { sLogout, logout } = useSession();
   const { username } = useUser();
   const navigate = useNavigate();
 
   function handleLogout() {
-    session.logout();
+    logout();
   }
 
   return (
     <Dropdown>
       <PopoverAsyncState
-        action={session.logout.states}
-        onSettled={(loggedOut) => {
+        timePending={500}
+        action={sLogout}
+        onSettled={(loggedOut, response) => {
           if (loggedOut) {
             navigate("/login", { replace: true });
+          } else {
+            displaypoperr(response);
           }
         }}
       />

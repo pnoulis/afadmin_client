@@ -19,7 +19,7 @@ function FormLoginAdministrator({ onSubmit, className }) {
   React.useEffect(() => {
     if (!form.submitting) return;
     onSubmit(form.fields, () => setForm("reset"));
-  });
+  }, [form.submitting]);
 
   return (
     <FormProvider value={{ ...form, setForm }}>

@@ -1,8 +1,68 @@
 import * as React from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { FormCashout } from "./FormCashout.jsx";
+import { ButtonCashout } from "./ButtonCashout.jsx";
+import { CashiersName } from "./CashiersName.jsx";
+import { NumberOfPkgs } from "./NumberOfPkgs.jsx";
+import { CommentArea } from "./CommentArea.jsx";
+import { useSession } from "/src/hooks/index.js";
+import { PopoverAsyncState } from "/src/components/async/index.js";
+import { displaypoperr } from "/src/utils/index.js";
+import { renderDialog, ConfirmCashout } from "/src/components/dialogs/index.js";
 
 function PageAdministratorCashout() {
-  return <div>page administrator cashout</div>;
+  const { user, stats, comment, cashout, sCashout } = useSession();
+  const navigate = useNavigate();
+  return (
+    <StyledPageAdministratorCashout
+      fields={{
+        cashierName: user?.username,
+        npkgs: stats?.activatedPkgs,
+        comment: comment || "",
+      }}
+      onSubmit={(fields, cb) => {
+        renderDialog(
+          null,
+          ConfirmCashout,
+          { cashierName: fields.cashierName },
+          (yes) => {
+            if (!yes) {
+              cb("no");
+              return;
+            }
+            cashout(fields)
+              .then((res) => {
+                cb(null);
+              })
+              .catch(cb);
+          },
+        );
+      }}
+    >
+      <PopoverAsyncState
+        timePending={500}
+        action={sCashout}
+        onSettled={(cashedout, response) => {
+          if (!cashedout) {
+            displaypoperr(response);
+          } else {
+            navigate("/login", { replace: true });
+          }
+        }}
+      />
+      <ButtonCashout>cashout</ButtonCashout>
+      <CashiersName />
+      <NumberOfPkgs />
+      <CommentArea />
+    </StyledPageAdministratorCashout>
+  );
 }
+
+const StyledPageAdministratorCashout = styled(FormCashout)`
+  padding: 25px;
+  width: 100%;
+  height: 100%;
+`;
 
 export { PageAdministratorCashout };

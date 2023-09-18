@@ -9,22 +9,28 @@ import { AFLogo2, AFLogo3 } from "/src/components/logos/index.js";
 import { FormLoginAdministrator } from "/src/pages/page-login/FormLoginAdministrator.jsx";
 import background from "agent_factory.shared/ui/backgrounds/homepage-background-1920x1080px.png";
 import { useContextApp } from "/src/contexts/index.js";
+import { displaypoperr } from "/src/utils/index.js";
+import { renderDialog } from "/src/components/dialogs/index.js";
 import { PopoverAsyncState } from "/src/components/async/index.js";
+import { useSession } from "/src/hooks/index.js";
 
 function PageLogin() {
-  const { session } = useContextApp();
+  const { sLogin, login } = useSession();
   const navigate = useNavigate();
 
   function handleFormLoginSubmit(form, cb) {
-    session.login(form).finally(cb);
+    login(form).finally(cb);
   }
   return (
     <StylePageLogin>
       <PopoverAsyncState
-        action={session.login.states}
-        onSettled={(loggedIn) => {
-          if (loggedIn) {
-            navigate("/");
+        timePending={500}
+        action={sLogin}
+        onSettled={(loggedin, response) => {
+          if (!loggedin) {
+            displaypoperr(response);
+          } else {
+            navigate("/", { replace: true });
           }
         }}
       />

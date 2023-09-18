@@ -96,7 +96,7 @@ scratch-build:
 .PHONY: dev
 dev: mode ?= 'development'
 dev: RUNTIME ?= 'browser'
-dev: envars ?= 'BUNDLED=false;RUNTIME=browser'
+dev: envars ?= 'BUNDLED=false;RUNTIME=node'
 dev: mqtt
 	$(DOTENV) --mode=$(mode) --environment=$(envars) \
 	$(ENVDIRS) | $(SORT) > $(SRCDIR)/.env

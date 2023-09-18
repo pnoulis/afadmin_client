@@ -1,8 +1,7 @@
 // ------------------------------ std libs ------------------------------- //
 // ------------------------------ 3rd libs ------------------------------- //
 // ------------------------------ own libs ------------------------------- //
-import { evlogout } from "/src/services/afmachine/statefulActions.js";
-import { afmachine } from "/src/services/afmachine/afmachine.js";
+import { evlogin, evlogout } from "/src/services/afmachine/statefulActions.js";
 // ------------------------------ project  ------------------------------- //
 import { LocalStorageService } from "agent_factory.shared/services/client_storage/local_storage/index.js";
 import { CLIENT_STORAGE_GLOBAL_SESSION_ID } from "agent_factory.shared/constants.js";
@@ -23,13 +22,8 @@ function Session() {
   }
 
   this.sessionlogin = function (login) {
-    this.user = new LocalStorageService(login.jwt);
-    const __session = {
-      user: {
-        ...login,
-        permissions: login.roles.at(-1),
-      },
-    };
+    this.user = new LocalStorageService(login.sessionId);
+    const __session = { user: login };
     const prevSession = this.global.get(login.username);
     if (prevSession) {
       this.global.remove(login.username);
@@ -37,9 +31,11 @@ function Session() {
         __session[k] = v;
       }
     }
-    this.root.set(login.jwt, __session);
+    this.root.set(login.sessionId, __session);
     this.loggedIn = true;
+    this.root.set("sessionId", login.sessionId);
     this.global.set("loggedIn", true);
+    this.sessionId = login.sessionId;
   };
 
   this.sessionlogout = function (drop = false) {
@@ -56,57 +52,21 @@ function Session() {
     this.user = null;
     this.loggedIn = false;
     this.global.set("loggedIn", false);
+    this.root.remove("sessionId");
   };
 
   this.login = function (cashier) {
-    return afmachine
-      .loginAdmin(cashier)
-      .then((res) => {
-        if (!this.sessionId) {
-          return afmachine.startSession(res).then((session) => {
-            this.root.set("sessionId", session.jwt);
-            this.sessionId = session.jwt;
-            return session;
-          });
-        } else {
-          return res;
-        }
-      })
-      .then((res) => {
-        this.sessionlogin(res);
-        return res;
-      })
-      .catch((err) => {
-        console.log(err);
-        throw err;
-      });
-    // return afmachine
-    //   .loginAdmin(cashier)
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.log(err));
-    // return this.loggedIn
-    //   ? evlogout(this.user.get("user"))
-    //       .then(() => this.sessionlogout(false))
-    //       .then(() => evlogin(cashier))
-    //       .then((res) => this.sessionlogin(res))
-    //   : evlogin(cashier).then((res) => this.sessionlogin(res));
+    return this.loggedIn
+      ? evlogout(this.user.get("user"))
+          .then(() => this.sessionlogout(false))
+          .then(() => evlogin(cashier))
+          .then((res) => this.sessionlogin(res))
+      : evlogin(cashier).then((res) => this.sessionlogin(res));
   };
-
-  this.cashout = function (report) {
-    return afmachine
-      .stopSession({
-        ...this.user.get(),
-        report,
-      })
-      .then((res) => {
-        this.logout(true);
-        this.root.remove("sessionId");
-        this.sessionId = null;
-      });
-  };
+  this.login.states = evlogin;
 
   this.logout = function (drop) {
-    return Promise.resolve(this.sessionlogout(drop));
+    return evlogout(this.user.get("user")).then(() => this.sessionlogout(drop));
   };
   this.logout.states = evlogout;
 

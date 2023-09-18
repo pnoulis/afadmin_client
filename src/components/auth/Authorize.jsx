@@ -5,7 +5,7 @@ import * as React from "react";
 // ------------------------------ project  ------------------------------- //
 import { useUser } from "/src/hooks/index.js";
 
-function Authorize({ level = "cashier", children }) {
+function Authorize({ level = "ROLE_CASHIER", children }) {
   const user = useUser();
   return children(level === user.permissions);
 }

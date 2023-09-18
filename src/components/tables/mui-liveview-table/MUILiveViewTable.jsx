@@ -16,14 +16,24 @@ import { MUITeamRow } from "./MUITeamRow.jsx";
 import { MUITeamHeaderRow } from "./MUITeamHeaderRow.jsx";
 import { ContextProvideTable } from "/src/components/tables/ContextTable.jsx";
 import { AncestorDimensions } from "react_utils/misc";
+import { useNavigate } from "react-router-dom";
+import { team as teamLink } from "/src/links.jsx";
 
 function MUILiveViewTable({ teams = [], className, style }) {
+  const navigate = useNavigate();
   const rows = React.useMemo(() => parseTeams(teams), [teams]);
   const ctxTable = useTable({
     data: rows,
     sort: stableSort,
     getComparator,
   });
+
+  function handleTeamClick(teamName) {
+    navigate(teamLink(teamName)?.path, {
+      relative: true,
+    });
+  }
+
   return (
     <ContextProvideTable ctx={ctxTable}>
       <AncestorDimensions ancestor="#panel-live-view-main">
@@ -34,7 +44,13 @@ function MUILiveViewTable({ teams = [], className, style }) {
             </TableHead>
             <TableBody>
               {ctxTable.sortedData.map(function (team) {
-                return <MUITeamRow key={team.name} team={team} />;
+                return (
+                  <MUITeamRow
+                    key={team.name}
+                    team={team}
+                    onTeamClick={handleTeamClick.bind(null, team.name)}
+                  />
+                );
               })}
             </TableBody>
           </Table>
@@ -53,6 +69,13 @@ const StyledTableContainer = styled("div")`
   box-shadow: var(--sd-9);
   border-radius: var(--br-xl);
   max-height: ${({ $height }) => $height - 50 + "px"};
+
+  .MuiTableRow-root {
+    cursor: pointer;
+  }
+  .MuiTableRow-root:hover {
+    background-color: var(--secondary-light);
+  }
 `;
 const StyledTable = styled(Table)``;
 

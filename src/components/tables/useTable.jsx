@@ -1,5 +1,4 @@
 import * as React from "react";
-import { isObject } from "js_utils/misc";
 
 function useTable({
   data,
@@ -7,17 +6,12 @@ function useTable({
   sort,
   orderBy: defaultOrderBy = "",
   order: defaultOrder = "asc",
-  children,
 } = {}) {
   const [order, setOrder] = React.useState(defaultOrder);
   const [orderBy, setOrderBy] = React.useState(defaultOrderBy);
   const [selected, setSelected] = React.useState([]);
 
   function handleChangeOrderBy(newOrderBy) {
-    // const oldOrderByLabel = isObject(orderBy) ? orderBy.label : orderBy;
-    // const newOrderByLabel = isObject(newOrderBy)
-    //   ? newOrderBy.label
-    //   : newOrderBy;
     const isasc = orderBy === newOrderBy && order === "asc";
     setOrder(isasc ? "desc" : "asc");
     setOrderBy(newOrderBy);

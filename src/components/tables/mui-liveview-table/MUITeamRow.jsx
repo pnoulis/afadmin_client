@@ -20,9 +20,9 @@ import {
   PkgTupleName,
 } from "/src/components/packages/data-tuples/index.js";
 
-function MUITeamRow({ team }) {
+function MUITeamRow({ team, onTeamClick}) {
   return (
-    <TableRow>
+    <StyledTeamRow role="link" onClick={onTeamClick}>
       <TableCell align="center">
         <StyledTuple>
           <TeamTupleName nok noc src={team} />
@@ -49,12 +49,8 @@ function MUITeamRow({ team }) {
         </StyledTuple>
       </TableCell>
       <TableCell align="center">
-        <StyledTuple className='cost'>
-          <TeamTupleTotalPkgsCost
-            nok
-            noc
-            value={team.totalPkgsCost}
-          />
+        <StyledTuple className="cost">
+          <TeamTupleTotalPkgsCost nok noc value={team.totalPkgsCost} />
         </StyledTuple>
       </TableCell>
       <TableCell align="center">
@@ -122,7 +118,7 @@ function MUITeamRow({ team }) {
           />
         </StyledTuple>
       </TableCell>
-    </TableRow>
+    </StyledTeamRow>
   );
 }
 
@@ -145,5 +141,7 @@ const StyledTuple = styled("p")`
     font-size: var(--tx-lg);
   }
 `;
+
+const StyledTeamRow = styled(TableRow)``;
 
 export { MUITeamRow };

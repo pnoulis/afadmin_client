@@ -10,7 +10,7 @@ function MUITeamHeaderRow() {
   const ctxTable = useContextTable();
   return (
     <TableRow>
-      <TableCell>
+      <TableCell align='center'>
         <TableSortButton
           orderBy={"name"}
           order={ctxTable.order}
@@ -20,7 +20,7 @@ function MUITeamHeaderRow() {
           <DataTuple nov label="name" />
         </TableSortButton>
       </TableCell>
-      <TableCell>
+      <TableCell align='center'>
         <TableSortButton
           orderBy={"state"}
           order={ctxTable.order}
@@ -30,7 +30,7 @@ function MUITeamHeaderRow() {
           <DataTuple nov label="status" />
         </TableSortButton>
       </TableCell>
-      <TableCell>
+      <TableCell align='center'>
         <TableSortButton
           orderBy={"roster"}
           order={ctxTable.order}
@@ -40,7 +40,7 @@ function MUITeamHeaderRow() {
           <DataTuple nov label="players" />
         </TableSortButton>
       </TableCell>
-      <TableCell>
+      <TableCell align='center'>
         <TableSortButton
           orderBy={"points"}
           order={ctxTable.order}
@@ -50,7 +50,7 @@ function MUITeamHeaderRow() {
           <DataTuple nov label="points" />
         </TableSortButton>
       </TableCell>
-      <TableCell>
+      <TableCell align='center'>
         <TableSortButton
           orderBy={"packages"}
           order={ctxTable.order}
@@ -60,7 +60,7 @@ function MUITeamHeaderRow() {
           <DataTuple nov label="total packages" />
         </TableSortButton>
       </TableCell>
-      <TableCell>
+      <TableCell align='center'>
         <TableSortButton
           orderBy={"totalPkgsCost"}
           order={ctxTable.order}
@@ -70,12 +70,12 @@ function MUITeamHeaderRow() {
           <DataTuple nov label="total packages cost" />
         </TableSortButton>
       </TableCell>
-      <TableCell>
+      <TableCell align='center'>
         <StyledTuple>
           <DataTuple nov label="active package" />
         </StyledTuple>
       </TableCell>
-      <TableCell>
+      <TableCell align='center'>
         <TableSortButton
           orderBy={"activePkgCost"}
           order={ctxTable.order}
@@ -85,7 +85,7 @@ function MUITeamHeaderRow() {
           <DataTuple nov label="active package cost" />
         </TableSortButton>
       </TableCell>
-      <TableCell>
+      <TableCell align='center'>
         <TableSortButton
           orderBy={"activePkgType"}
           order={ctxTable.order}
@@ -95,7 +95,7 @@ function MUITeamHeaderRow() {
           <DataTuple nov label="active package type" />
         </TableSortButton>
       </TableCell>
-      <TableCell>
+      <TableCell align='center'>
         <TableSortButton
           orderBy={"activePkgAmount"}
           order={ctxTable.order}
@@ -105,7 +105,7 @@ function MUITeamHeaderRow() {
           <DataTuple nov label="active package amount" />
         </TableSortButton>
       </TableCell>
-      <TableCell>
+      <TableCell align='center'>
         <TableSortButton
           orderBy={"activePkgRemainder"}
           order={ctxTable.order}
@@ -115,7 +115,7 @@ function MUITeamHeaderRow() {
           <DataTuple nov label="active package remainder" />
         </TableSortButton>
       </TableCell>
-      <TableCell>
+      <TableCell align='center'>
         <TableSortButton
           orderBy={"activePkgTimeStart"}
           order={ctxTable.order}

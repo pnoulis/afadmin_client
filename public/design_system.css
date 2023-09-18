@@ -54,18 +54,6 @@
 
 
   /**
-   * _SECONDARY_
-   * Fuchsia / Magenta
-   * css color keyword: fuchsia
-   * rgb: 255 0 255
-   * hsl: 300 100 50
-   * hex: #ff00ff
-   * web safe hex: #ff00ff
-   **/
-  --base-secondary: 300, 100%;
-  /* rgb(255, 0, 255); */
-
-  /**
    * _SEMANTIC_SUCCESS_
    * Spring Green
    * css color keyword: springgreen
@@ -100,6 +88,17 @@
    **/
   --base-warn: 33, 100%;
   /* rgb(255, 99, 71); */
+
+  /**
+   * _SECONDARY_
+   * Blue grey
+   * css color keyword: -
+   * rgb: 110 128 203
+   * hsl: 228.4 45.8 79.6
+   * hex: #6E80CB
+   * web safe hex: #6699CC
+   **/
+  --base-secondary: 228.4, 45.8%;
 
   /**
    * _SEMANTIC_INFO_
@@ -162,6 +161,9 @@
   --info-base: hsl(var(--base-info), 56%);
   --info-medium: hsl(var(--base-info), 46%);
   --info-strong: hsl(var(--base-info), 36%);
+  --new-blue: #6e80cb;
+  --blue-grey: #6699CC;
+
 
   /**
    * Space

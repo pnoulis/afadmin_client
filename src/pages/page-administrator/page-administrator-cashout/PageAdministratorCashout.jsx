@@ -51,10 +51,10 @@ function PageAdministratorCashout() {
           }
         }}
       />
-      <ButtonCashout>cashout</ButtonCashout>
-      <CashiersName />
-      <NumberOfPkgs />
-      <CommentArea />
+      <ButtonCashout style={{ gridArea: "header", justifySelf: "end" }} />
+      <CashiersName style={{ gridArea: "username" }} />
+      <CommentArea style={{ gridArea: "comments" }} />
+      <NumberOfPkgs style={{ gridArea: "tuples" }} />
     </StyledPageAdministratorCashout>
   );
 }
@@ -63,6 +63,14 @@ const StyledPageAdministratorCashout = styled(FormCashout)`
   padding: 25px;
   width: 100%;
   height: 100%;
+  display: grid;
+  grid-template-rows: max-content max-content 1fr;
+  grid-template-columns: 600px 700px;
+  grid-template-areas: "headear header" "username comments" "tuples comments";
+  justify-content: space-between;
+  align-content: space-between;
+  align-items: start;
+  gap: 70px 0;
 `;
 
 export { PageAdministratorCashout };

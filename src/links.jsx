@@ -112,20 +112,20 @@ const teamPackages = (teamId) => ({
 });
 
 const administrator = {
-  path: "/administrator/cashout",
+  path: "/administrator",
   label: "administration",
   asComponent: ({ children, ...props }) => (
-    <NavLink to="/administrator/cashout" {...props}>
+    <NavLink to="/administrator" {...props}>
       {children}
     </NavLink>
   ),
 };
 
 const administratorCashout = {
-  path: "/administrator/cashout",
+  path: "/administrator",
   label: "cash out",
   asComponent: ({ children, ...props }) => (
-    <NavLink to="/administrator/cashout" {...props}>
+    <NavLink to="/administrator" {...props}>
       {children}
     </NavLink>
   ),
@@ -136,6 +136,16 @@ const administratorHistory = {
   label: "history",
   asComponent: ({ children, ...props }) => (
     <NavLink to="administrator/history" {...props}>
+      {children}
+    </NavLink>
+  ),
+};
+
+const administratorStatistics = {
+  path: "/administrator/statistics",
+  label: "statistics",
+  asComponent: ({ children, ...props }) => (
+    <NavLink to="administrator/statistics" {...props}>
       {children}
     </NavLink>
   ),
@@ -197,6 +207,7 @@ export {
   administrator,
   administratorCashout,
   administratorRooms,
+  administratorStatistics,
   administratorMissions,
   administratorHistory,
   scoreboard,

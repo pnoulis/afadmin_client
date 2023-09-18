@@ -12,8 +12,14 @@ import {
   StyleItemText,
   StyleItemIcon,
 } from "/src/components/panels/index.js";
-import { administratorCashout } from "/src/links.jsx";
-import { ReactComponent as LiveTeamsIcon } from "agent_factory.shared/ui/new-icons/live-teams-icon.svg";
+import {
+  administratorCashout,
+  administratorHistory,
+  administratorStatistics,
+} from "/src/links.jsx";
+import { ReactComponent as CashoutIcon } from "agent_factory.shared/ui/new-icons/cash-out-icon.svg";
+import { ReactComponent as HistoryIcon } from "agent_factory.shared/ui/new-icons/history-icon.svg";
+import { ReactComponent as StatisticsIcon } from "agent_factory.shared/ui/new-icons/stats-icon.svg";
 
 function PanelAdministrator({ children }) {
   return (
@@ -22,9 +28,21 @@ function PanelAdministrator({ children }) {
         <PanelHeaderNavbar>
           <StyleNavbarLink end to={administratorCashout.path}>
             <StyleItemIcon>
-              <LiveTeamsIcon />
+              <CashoutIcon />
             </StyleItemIcon>
             <StyleItemText>{administratorCashout.label}</StyleItemText>
+          </StyleNavbarLink>
+          <StyleNavbarLink end to={administratorStatistics.path}>
+            <StyleItemIcon>
+              <StatisticsIcon />
+            </StyleItemIcon>
+            <StyleItemText>{administratorStatistics.label}</StyleItemText>
+          </StyleNavbarLink>
+          <StyleNavbarLink end to={administratorHistory.path}>
+            <StyleItemIcon>
+              <HistoryIcon />
+            </StyleItemIcon>
+            <StyleItemText>{administratorHistory.label}</StyleItemText>
           </StyleNavbarLink>
         </PanelHeaderNavbar>
       </StylePanelHeader>

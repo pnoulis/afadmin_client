@@ -2,8 +2,10 @@ import * as React from "react";
 import styled from "styled-components";
 import { SimpleInput } from "react_utils";
 
-function CashiersName() {
-  return <StyledSimpleInput name="cashierName" />;
+function CashiersName({ className, style }) {
+  return (
+    <StyledSimpleInput className={className} style={style} name="cashierName" />
+  );
 }
 
 const StyledSimpleInput = styled(SimpleInput)`

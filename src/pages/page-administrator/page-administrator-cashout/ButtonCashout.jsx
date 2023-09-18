@@ -11,7 +11,7 @@ function ButtonCashout({ disabled, formId, className, style, children }) {
       style={style}
       form={formId}
     >
-      {children}
+      cashout
     </StyledButton>
   );
 }

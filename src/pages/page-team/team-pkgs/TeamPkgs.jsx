@@ -53,7 +53,7 @@ const StyledTeamPkgs = styled("div")`
   display: flex;
   flex-flow: column nowrap;
   align-items: start;
-  gap: 20px;
+  gap: 70px;
 
   .pkgs-toolbar {
     width: 100%;

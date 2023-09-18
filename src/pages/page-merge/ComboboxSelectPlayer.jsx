@@ -33,7 +33,7 @@ function ComboboxSelectPlayer({ players, onSelect, Option }) {
           getLabels={getLabels}
         >
           <section className="combobox-select-player-trigger-wrapper">
-            <StyleTrigger placeholder="username" />
+            <StyleTrigger autoFocus placeholder="username" />
           </section>
           <section
             id="select-player-scrollarea"

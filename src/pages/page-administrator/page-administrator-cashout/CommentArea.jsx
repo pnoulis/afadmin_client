@@ -48,8 +48,8 @@ const StyledTextArea = styled.article`
 
 function CommentArea({ className, style }) {
   return (
-    <StyledTextArea tabIndex={2} className={className} style={style}>
-      <TextArea name="comment" className="textarea" placeholder=" " />
+    <StyledTextArea className={className} style={style}>
+      <TextArea autoFocus name="comment" className="textarea" placeholder=" " />
       <label htmlFor="comment">comments...</label>
     </StyledTextArea>
   );

@@ -51,7 +51,7 @@ function ComboboxSearchPlayer({
             options={remoteData.startFetching}
           >
             <section className="combobox-search-player-trigger-wrapper">
-              <StyleTrigger placeholder="search" />
+              <StyleTrigger autoFocus placeholder="search" />
               <div className="combobox-search-player-search-state">
                 <RemoteDataStates
                   RenderPending={<StyleMoonLoader />}

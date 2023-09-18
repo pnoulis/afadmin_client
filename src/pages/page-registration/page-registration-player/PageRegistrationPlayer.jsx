@@ -14,7 +14,7 @@ function PageRegistrationPlayer() {
     sRegisterPlayer(form)
       .then(() => {
         setForm("reset");
-        document.activeElement.blur();
+        document.getElementById("name").focus();
       })
       .catch((err) => {
         if (err.validationErrors) {

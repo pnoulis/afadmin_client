@@ -23,7 +23,7 @@ function FormRegisterPlayer({ onSubmit, className }) {
   React.useEffect(() => {
     if (!form.submitting) return;
     onSubmit(form.fields, setForm);
-  });
+  }, [form.submitting]);
 
   return (
     <FormProvider value={{ ...form, setForm }}>
@@ -35,7 +35,7 @@ function FormRegisterPlayer({ onSubmit, className }) {
           setForm("setSubmit", true);
         }}
       >
-        <TextInput name="name" label="first name" />
+        <TextInput autoFocus={true} name="name" label="first name" />
         <TextInput name="surname" label="last name" />
         <TextInput name="email" type="email" />
         <TextInput name="username" />

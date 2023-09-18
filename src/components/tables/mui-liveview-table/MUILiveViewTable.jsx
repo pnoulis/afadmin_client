@@ -5,6 +5,7 @@ import TableHead from "@mui/material/TableHead";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
+import TablePagination from "@mui/material/TablePagination";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import TableContainer from "@mui/material/TableContainer";
@@ -44,7 +45,13 @@ function MUILiveViewTable({ teams = [], className, style }) {
               <MUITeamHeaderRow />
             </TableHead>
             <TableBody>
-              {ctxTable.sortedData.map(function (team, i) {
+              {(ctxTable.rowsPerPage > 0
+                ? ctxTable.sortedData.slice(
+                    ctxTable.page * ctxTable.rowsPerPage,
+                    ctxTable.page * ctxTable.rowsPerPage + ctxTable.rowsPerPage,
+                  )
+                : ctxTable.sortedData
+              ).map(function (team, i) {
                 return (
                   <MUITeamRow
                     index={i + 1}
@@ -54,7 +61,29 @@ function MUILiveViewTable({ teams = [], className, style }) {
                   />
                 );
               })}
+              {/* {ctxTable.sortedData.map(function (team, i) { */}
+              {/*   return ( */}
+              {/*     <MUITeamRow */}
+              {/*       index={i + 1} */}
+              {/*       key={team.name} */}
+              {/*       team={team} */}
+              {/*       onTeamClick={handleTeamClick.bind(null, team.name)} */}
+              {/*     /> */}
+              {/*   ); */}
+              {/* })} */}
             </TableBody>
+            <TableFooter>
+              <TablePagination
+                showFirstButton
+                showLastButton
+                count={teams.length}
+                rows={teams}
+                page={ctxTable.page}
+                rowsPerPage={ctxTable.rowsPerPage}
+                onPageChange={ctxTable.handlePageChange}
+                onRowsPerPageChange={ctxTable.handleRowsPerPageChange}
+              />
+            </TableFooter>
           </Table>
         </StyledTableContainer>
       </AncestorDimensions>
@@ -71,12 +100,48 @@ const StyledTableContainer = styled("div")`
   box-shadow: var(--sd-9);
   border-radius: var(--br-xl);
   max-height: ${({ $height }) => $height - 50 + "px"};
+  position: relative;
 
+  .MuiTable-root {
+    min-height: ${({ $height }) => $height - 50 + "px"};
+  }
   .MuiTableRow-root {
     cursor: pointer;
   }
   .MuiTableRow-root:hover {
     background-color: var(--secondary-light);
+  }
+  .MuiTableFooter-root {
+    background-color: white;
+    bottom: 0;
+    position: sticky;
+  }
+  .MuiToolbar-root {
+    justify-content: start;
+    border-top: 2px solid var(--grey-medium);
+    padding: 20px 0 15px 40px;
+    font-family: Saira;
+  }
+
+  .MuiTablePagination-spacer {
+    display: none;
+  }
+  .MuiTablePagination-selectLabel {
+    font-family: Saira;
+    font-size: var(--tx-md);
+    font-weight: 450;
+  }
+  .MuiTablePagination-select {
+    font-family: Saira;
+    font-size: var(--tx-md);
+    font-weight: 450;
+    position: relative;
+    top: 5px;
+  }
+  .MuiTablePagination-displayedRows {
+    font-family: Saira;
+    font-size: var(--tx-md);
+    font-weight: 450;
   }
 `;
 const StyledTable = styled(Table)``;

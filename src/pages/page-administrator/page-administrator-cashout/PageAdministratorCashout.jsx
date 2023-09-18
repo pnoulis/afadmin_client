@@ -60,12 +60,12 @@ function PageAdministratorCashout() {
 }
 
 const StyledPageAdministratorCashout = styled(FormCashout)`
-  padding: 25px;
+  padding: 25px 50px;
   width: 100%;
   height: 100%;
   display: grid;
   grid-template-rows: max-content max-content 1fr;
-  grid-template-columns: 600px 700px;
+  grid-template-columns: minmax(auto, 600px) minmax(auto, 650px);
   grid-template-areas: "headear header" "username comments" "tuples comments";
   justify-content: space-between;
   align-content: space-between;

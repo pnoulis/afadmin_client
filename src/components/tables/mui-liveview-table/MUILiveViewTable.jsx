@@ -26,6 +26,7 @@ function MUILiveViewTable({ teams = [], className, style }) {
     data: rows,
     sort: stableSort,
     getComparator,
+    orderBy: "index",
   });
 
   function handleTeamClick(teamName) {
@@ -43,9 +44,10 @@ function MUILiveViewTable({ teams = [], className, style }) {
               <MUITeamHeaderRow />
             </TableHead>
             <TableBody>
-              {ctxTable.sortedData.map(function (team) {
+              {ctxTable.sortedData.map(function (team, i) {
                 return (
                   <MUITeamRow
+                    index={i + 1}
                     key={team.name}
                     team={team}
                     onTeamClick={handleTeamClick.bind(null, team.name)}

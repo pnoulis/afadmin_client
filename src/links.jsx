@@ -112,10 +112,10 @@ const teamPackages = (teamId) => ({
 });
 
 const administrator = {
-  path: "/administrator",
+  path: "/administrator/cashout",
   label: "administration",
   asComponent: ({ children, ...props }) => (
-    <NavLink to="/administrator" {...props}>
+    <NavLink to="/administrator/cashout" {...props}>
       {children}
     </NavLink>
   ),

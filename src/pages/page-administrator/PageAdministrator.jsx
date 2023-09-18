@@ -1,12 +1,17 @@
 // ------------------------------ std libs ------------------------------- //
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
-import styled from "styled-components";
+import { Outlet } from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
+import { PanelAdministrator } from "./PanelAdministrator.jsx";
 
 function PageAdministrator() {
-  return <div>page administrator</div>;
+  return (
+    <PanelAdministrator>
+      <Outlet />
+    </PanelAdministrator>
+  );
 }
 
 export { PageAdministrator };

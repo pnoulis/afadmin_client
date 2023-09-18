@@ -21,6 +21,7 @@ function parseTeams(teams) {
     // parse team[i] data for table
     for (const [k, v] of Object.entries(teamDataMap)) {
       parsed[i][k] = v.gval?.(teams[i]) ?? teams[i][k];
+      parsed[i].index = i + 1;
     }
   }
   debug(teams, parsed, "parse teams");

@@ -26,6 +26,7 @@ import {
   PageLiveView,
   PageLiveViewIndex,
   PageAdministrator,
+  PageAdministratorCashout,
   PageTeam,
 } from "/src/pages/index.js";
 import { ENVIRONMENT } from "agent_factory.shared/config.js";
@@ -105,6 +106,12 @@ const router = createBrowserRouter(
             {
               path: links.administrator.path,
               element: <PageAdministrator />,
+              children: [
+                {
+                  path: links.administratorCashout.path,
+                  element: <PageAdministratorCashout />,
+                },
+              ],
             },
             {
               path: links.scoreboard.path,

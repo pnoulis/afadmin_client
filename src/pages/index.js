@@ -12,6 +12,7 @@ export * from "/src/pages/page-registration/page-registration-player/PageRegistr
 export * from "/src/pages/page-registration/page-registration-wristband/PageRegistrationWristband.jsx";
 export * from "/src/pages/page-registration/page-registration-history/PageRegistrationHistory.jsx";
 export * from "/src/pages/page-administrator/PageAdministrator.jsx";
+export * from "./page-administrator/page-administrator-cashout/PageAdministratorCashout.jsx";
 export * from "./page-live-view/PageLiveView.jsx";
 export * from "./page-live-view/page-live-view-index/PageLiveViewIndex.jsx";
-export * from './page-team/PageTeam.jsx';
+export * from "./page-team/PageTeam.jsx";

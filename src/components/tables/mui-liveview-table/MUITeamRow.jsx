@@ -20,9 +20,12 @@ import {
   PkgTupleName,
 } from "/src/components/packages/data-tuples/index.js";
 
-function MUITeamRow({ team, onTeamClick}) {
+function MUITeamRow({ team, onTeamClick }) {
   return (
     <StyledTeamRow role="link" onClick={onTeamClick}>
+      <TableCell align="center" component="th" scope="row">
+        <StyledTuple>{team.index}</StyledTuple>
+      </TableCell>
       <TableCell align="center">
         <StyledTuple>
           <TeamTupleName nok noc src={team} />

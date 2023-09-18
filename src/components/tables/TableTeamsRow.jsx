@@ -1,22 +1,10 @@
-import * as React from "react";
 import styled from "styled-components";
-import { TableHead } from "./TableHead.jsx";
+import { DataTuple } from "/src/components/misc/index.js";
 import { TableRow } from "./TableRow.jsx";
 import { TableCell } from "./TableCell.jsx";
-import { DataTuple } from "/src/components/misc/index.js";
-import { TableSortButton } from "./TableSortButton.jsx";
-import { useContextTable } from "./ContextTable.jsx";
-import { t_mstom } from "agent_factory.shared/utils/misc.js";
-import { formatTime } from "/src/utils/index.js";
-import { teamDataMap } from "./teamDataMap.js";
+import { teamDataMap } from './teamDataMap.js';
 
-
-const StyledTableCell = styled(TableCell)`
-  background-color: #6e80cb;
-  padding: 0 20px;
-`;
-
-function TableLiveViewRow({ row }) {
+function TableTeamsRow({ row }) {
   return (
     <TableRow>
       <StyledTableData>
@@ -65,6 +53,4 @@ function TableLiveViewRow({ row }) {
   );
 }
 
-const StyledTableData = styled(TableCell)``;
-
-export { TableLiveViewRow };
+export { TableTeamsRow };

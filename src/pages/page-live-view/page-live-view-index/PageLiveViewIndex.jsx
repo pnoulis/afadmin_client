@@ -21,7 +21,7 @@ const StyledPageLiveViewIndex = styled("div")`
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: start;
+  align-items: center;
 `;
 
 export { PageLiveViewIndex };

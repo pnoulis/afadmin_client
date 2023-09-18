@@ -28,27 +28,16 @@ function MUILiveViewTable({ teams = [], className, style }) {
     <ContextProvideTable ctx={ctxTable}>
       <AncestorDimensions ancestor="#panel-live-view-main">
         <StyledTableContainer>
-          <Paper>
-            <Box
-              sx={{
-                display: "table",
-                tableLayout: "fixed",
-              }}
-            >
-              <TableContainer>
-                <Table stickyHeader={true}>
-                  <TableHead>
-                    <MUITeamHeaderRow />
-                  </TableHead>
-                  <TableBody>
-                    {ctxTable.sortedData.map(function (team) {
-                      return <MUITeamRow key={team.name} team={team} />;
-                    })}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Box>
-          </Paper>
+          <Table stickyHeader sx={{ backgroundColor: "white" }}>
+            <TableHead>
+              <MUITeamHeaderRow />
+            </TableHead>
+            <TableBody>
+              {ctxTable.sortedData.map(function (team) {
+                return <MUITeamRow key={team.name} team={team} />;
+              })}
+            </TableBody>
+          </Table>
         </StyledTableContainer>
       </AncestorDimensions>
     </ContextProvideTable>

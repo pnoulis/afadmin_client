@@ -127,6 +127,7 @@ function MUITeamRow({ team }) {
 }
 
 const StyledTuple = styled("p")`
+  font-family: Saira;
   font-size: var(--tx-nl);
   font-weight: 600;
   display: flex;

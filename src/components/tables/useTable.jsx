@@ -14,11 +14,11 @@ function useTable({
   const [selected, setSelected] = React.useState([]);
 
   function handleChangeOrderBy(newOrderBy) {
-    const oldOrderByLabel = isObject(orderBy) ? orderBy.label : orderBy;
-    const newOrderByLabel = isObject(newOrderBy)
-      ? newOrderBy.label
-      : newOrderBy;
-    const isasc = oldOrderByLabel === newOrderByLabel && order === "asc";
+    // const oldOrderByLabel = isObject(orderBy) ? orderBy.label : orderBy;
+    // const newOrderByLabel = isObject(newOrderBy)
+    //   ? newOrderBy.label
+    //   : newOrderBy;
+    const isasc = orderBy === newOrderBy && order === "asc";
     setOrder(isasc ? "desc" : "asc");
     setOrderBy(newOrderBy);
   }

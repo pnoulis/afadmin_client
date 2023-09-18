@@ -135,6 +135,7 @@ const StyledTuple = styled("p")`
   color: var(--primary-base);
   font-weight: 700;
   text-transform: uppercase;
+  font-family: Saira;
 `;
 
 export { MUITeamHeaderRow };

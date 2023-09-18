@@ -65,6 +65,7 @@ function TableSortButton({
 }
 
 const StyledSortButton = styled("button")`
+  font-family: Saira;
   margin: auto;
   cursor: pointer;
   display: flex;
@@ -80,24 +81,23 @@ const StyledSortButton = styled("button")`
 `;
 
 const StyledSortButtonIcon = styled("span")`
-  flex: 0 0 20px;
+  flex: 0 0 15px;
   box-sizing: border-box;
-  position: relative;
-  top: -3px;
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   transform: rotate(${({ order }) => (order === "asc" ? "0" : "180")}deg);
+  svg {
+    fill: #d3aa72;
+  }
 `;
 
 const StyledSortButtonStub = styled("span")`
-  flex: 0 0 20px;
-  position: relative;
+  flex: 0 0 15px;
   box-sizing: border-box;
-  top: -4px;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  background-color: var(--primary-base);
+  width: 15px;
+  height: 15px;
+  background-color: #d3aa72;
 `;
 
 export { TableSortButton };

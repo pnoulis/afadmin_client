@@ -119,7 +119,7 @@ build: mqtt
 	$(DOTENV) --mode=$(mode) --environment=$(envars) \
 	$(ENVDIRS) | $(SORT) > $(SRCDIR)/.env
 	set -a; source ./.env && \
-	$(BUNDLER) build --mode=$(mode)
+	NODE_ENV=production $(BUNDLER) build --mode=$(mode)
 
 # ------------------------------ TEST ------------------------------ #
 .PHONY: test

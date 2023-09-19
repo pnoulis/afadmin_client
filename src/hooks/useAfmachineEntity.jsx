@@ -35,8 +35,8 @@ function useAfmachineEntity(
   }
 
   React.useEffect(() => {
-    console.log(source);
-    console.log(`SOURCE CHANGED ${constructorRef.current.name}`);
+    // console.log(source);
+    // console.log(`SOURCE CHANGED ${constructorRef.current.name}`);
     /*
       createEntity(constructorRef.current.normalize(source).asObject() )
      */

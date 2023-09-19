@@ -24,7 +24,6 @@ function parseTeams(teams) {
       parsed[i].index = i + 1;
     }
   }
-  debug(teams, parsed, "parse teams");
   return parsed;
 }
 

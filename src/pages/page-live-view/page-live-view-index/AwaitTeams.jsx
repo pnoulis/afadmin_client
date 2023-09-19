@@ -12,9 +12,6 @@ function AwaitTeams({ style, children }) {
   const revalidator = useRevalidator();
 
   function handleMsg(...args) {
-    console.log(...args);
-    console.log(revalidator);
-    console.log("NEW MSG CAME");
     revalidator.revalidate();
   }
   useAfmachineSubscription("onMergeGroupTeam", handleMsg);

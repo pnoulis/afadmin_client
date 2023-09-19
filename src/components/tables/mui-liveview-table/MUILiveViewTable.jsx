@@ -92,7 +92,7 @@ const StyledTableWrapper = styled("div")`
 
   .MuiTablePagination-root {
     position: absolute;
-    bottom: 10px;
+    bottom: 0;
     width: 100%;
     background-color: white;
     border-bottom-left-radius: var(--br-xl);
@@ -101,7 +101,7 @@ const StyledTableWrapper = styled("div")`
   .MuiToolbar-root {
     justify-content: start;
     border-top: 2px solid var(--grey-medium);
-    padding: 20px 0 15px 40px;
+    padding: 12px 0 12px 40px;
     font-family: Saira;
   }
 
@@ -136,7 +136,7 @@ const StyledTableContainer = styled("div")`
   overflow: scroll;
   scrollbar-color: black var(--primary-base);
   scrollbar-gutter: stable both-edges;
-background-color: white;
+  background-color: white;
 
   .MuiTable-root {
     // min-height: ${({ $height }) => $height - 50 + "px"};

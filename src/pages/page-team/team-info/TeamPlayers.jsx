@@ -29,7 +29,7 @@ function TeamPlayers({ style }) {
           renderPlayer={(props) => (
             <Player {...props}>
               <Wristband wristband={props.player.wristband}>
-                <TeamPlayerInfoCard disable/>
+                <TeamPlayerInfoCard disable />
               </Wristband>
             </Player>
           )}
@@ -40,8 +40,7 @@ function TeamPlayers({ style }) {
 }
 
 const StyledRegistrationQueue = styled(RegistrationQueue)`
-  height: 500px;
-  max-height: ${({ $height }) => $height + "px"};
+  height: ${({ $height }) => $height + "px"};
 
   ${StyledListPlayers} {
     justify-content: space-around;

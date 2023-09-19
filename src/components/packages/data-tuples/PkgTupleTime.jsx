@@ -34,6 +34,7 @@ function PkgTupleTime({
 }
 
 function getTime(src, value, name) {
+  if (!(value ?? src[name])) return undefined;
   const parsedValue = formatTime(value ?? src[name]);
   return `${parsedValue.hour}${parsedValue.literal}${parsedValue.minute}${parsedValue.literal}${parsedValue.second}`;
 }

@@ -1,15 +1,18 @@
 // ------------------------------ std libs ------------------------------- //
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
-// ------------------------------ own libs ------------------------------- //
 import styled from "styled-components";
+// ------------------------------ own libs ------------------------------- //
+import { Svg } from "react_utils/svgs";
 // ------------------------------ project  ------------------------------- //
-import { WidgetTrash } from "/src/components/widgets/index.js";
+import { TooltipDefault } from "/src/components/tooltips/index.js";
+import { ReactComponent as RosterIcon } from "agent_factory.shared/ui/new-icons/live-view-players-icon.svg";
+import { WidgetRoster } from "/src/components/widgets/index.js";
 
 function TeamInfoToolbarIndexRoute({ className, style }) {
   return (
     <StyledTeamInfoToolbarIndexRoute>
-      <StyledWidgetTrash forwardedAs="li" tooltipContent="team roster" />
+      <StyledWidgetRoster forwardedAs="li" tooltipContent="team roster" />
     </StyledTeamInfoToolbarIndexRoute>
   );
 }
@@ -23,10 +26,10 @@ const StyledTeamInfoToolbarIndexRoute = styled("ul")`
   justify-content: end;
 `;
 
-const StyledWidgetTrash = styled(WidgetTrash)`
+const StyledWidgetRoster = styled(WidgetRoster)`
   background-color: var(--primary-base);
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   svg {
     fill: white;
   }

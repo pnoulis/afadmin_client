@@ -12,6 +12,7 @@ import {
 } from "/src/components/packages/index.js";
 import { WidgetSave } from "/src/components/widgets/index.js";
 import { useContextTeam, useContextPackage } from "/src/contexts/index.js";
+import { renderDialog, Alert } from "/src/components/dialogs/index.js";
 
 function PkgsToolbarPkgConfig() {
   const ctxRouter = useContextPkgActionRouter();
@@ -19,24 +20,31 @@ function PkgsToolbarPkgConfig() {
   const ctxPkg = useContextPackage();
   return (
     <StyledPkgsToolbarPkgConfig>
-      <WidgetArrow
-        style={{
-          width: "40px",
-          height: "40px",
-        }}
-        as="li"
-        tooltipContent="back"
-        onClick={() => {
-          if (ctxTeam.team.packages.length > 0) {
-            ctxPkg.handleSelectedPkgClear();
-            ctxRouter.back();
-          }
-        }}
-      />
+      {ctxTeam.team.packages.length < 1 ? null : (
+        <WidgetArrow
+          style={{
+            width: "50px",
+            height: "50px",
+          }}
+          as="li"
+          tooltipContent="back"
+          onClick={() => {
+            if (ctxTeam.team.packages.length > 0) {
+              ctxPkg.handleSelectedPkgClear();
+              ctxRouter.back();
+            } else {
+              renderDialog(null, Alert, {
+                title: "Back to registered packages",
+                msg: "Team does not have any registered packages",
+              });
+            }
+          }}
+        />
+      )}
       <WidgetSave
         style={{
-          width: "40px",
-          height: "40px",
+          width: "50px",
+          height: "50px",
         }}
         as="li"
         tooltipContent="register package"

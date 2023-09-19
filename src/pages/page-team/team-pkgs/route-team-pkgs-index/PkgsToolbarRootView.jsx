@@ -32,8 +32,8 @@ function PkgsToolbarRootView({ className, style }) {
       />
       <WidgetStart
         style={{
-          width: "40px",
-          height: "40px",
+          width: "50px",
+          height: "50px",
         }}
         as="li"
         tooltipContent="activate package"
@@ -56,16 +56,16 @@ const StyledPkgsToolbarRootView = styled("ul")`
 
 const StyledWidgetPlus = styled(WidgetPlus)`
   background-color: var(--primary-base);
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   svg {
     fill: white;
   }
 `;
 const StyledWidgetTrash = styled(WidgetTrash)`
   background-color: var(--primary-base);
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
 
   svg {
     fill: white;

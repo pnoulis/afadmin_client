@@ -8,3 +8,4 @@ export * from "./WidgetPlus.jsx";
 export * from "./WidgetStart.jsx";
 export * from './WidgetSave.jsx';
 export * from './WidgetArrow.jsx';
+export * from './WidgetRoster.jsx';

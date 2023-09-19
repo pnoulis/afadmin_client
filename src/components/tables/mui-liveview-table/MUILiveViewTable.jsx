@@ -38,83 +38,65 @@ function MUILiveViewTable({ teams = [], className, style }) {
 
   return (
     <ContextProvideTable ctx={ctxTable}>
-      <AncestorDimensions ancestor="#panel-live-view-main">
-        <StyledTableContainer>
-          <Table stickyHeader sx={{ backgroundColor: "white" }}>
-            <TableHead>
-              <MUITeamHeaderRow />
-            </TableHead>
-            <TableBody>
-              {(ctxTable.rowsPerPage > 0
-                ? ctxTable.sortedData.slice(
-                    ctxTable.page * ctxTable.rowsPerPage,
-                    ctxTable.page * ctxTable.rowsPerPage + ctxTable.rowsPerPage,
-                  )
-                : ctxTable.sortedData
-              ).map(function (team, i) {
-                return (
-                  <MUITeamRow
-                    index={i + 1}
-                    key={team.name}
-                    team={team}
-                    onTeamClick={handleTeamClick.bind(null, team.name)}
-                  />
-                );
-              })}
-              {/* {ctxTable.sortedData.map(function (team, i) { */}
-              {/*   return ( */}
-              {/*     <MUITeamRow */}
-              {/*       index={i + 1} */}
-              {/*       key={team.name} */}
-              {/*       team={team} */}
-              {/*       onTeamClick={handleTeamClick.bind(null, team.name)} */}
-              {/*     /> */}
-              {/*   ); */}
-              {/* })} */}
-            </TableBody>
-            <TableFooter>
-              <TablePagination
-                showFirstButton
-                showLastButton
-                count={teams.length}
-                rows={teams}
-                page={ctxTable.page}
-                rowsPerPage={ctxTable.rowsPerPage}
-                onPageChange={ctxTable.handlePageChange}
-                onRowsPerPageChange={ctxTable.handleRowsPerPageChange}
-              />
-            </TableFooter>
-          </Table>
-        </StyledTableContainer>
-      </AncestorDimensions>
+      <StyledTableWrapper>
+        <AncestorDimensions ancestor="#panel-live-view-main">
+          <StyledTableContainer>
+            <Table stickyHeader sx={{ backgroundColor: "white" }}>
+              <TableHead>
+                <MUITeamHeaderRow />
+              </TableHead>
+              <TableBody>
+                {(ctxTable.rowsPerPage > 0
+                  ? ctxTable.sortedData.slice(
+                      ctxTable.page * ctxTable.rowsPerPage,
+                      ctxTable.page * ctxTable.rowsPerPage +
+                        ctxTable.rowsPerPage,
+                    )
+                  : ctxTable.sortedData
+                ).map(function (team, i) {
+                  return (
+                    <MUITeamRow
+                      index={i + 1}
+                      key={team.name}
+                      team={team}
+                      onTeamClick={handleTeamClick.bind(null, team.name)}
+                    />
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </StyledTableContainer>
+        </AncestorDimensions>
+        <TablePagination
+          component="div"
+          showFirstButton
+          showLastButton
+          count={teams.length}
+          rows={teams}
+          page={ctxTable.page}
+          rowsPerPage={ctxTable.rowsPerPage}
+          onPageChange={ctxTable.handlePageChange}
+          onRowsPerPageChange={ctxTable.handleRowsPerPageChange}
+        />
+      </StyledTableWrapper>
     </ContextProvideTable>
   );
 }
 
-const StyledTableContainer = styled("div")`
-  height: 100%;
+const StyledTableWrapper = styled("div")`
   width: 100%;
-  overflow: scroll;
-  scrollbar-color: black var(--primary-base);
-  scrollbar-gutter: stable both-edges;
+  height: 100%;
+  position: relative;
   box-shadow: var(--sd-9);
   border-radius: var(--br-xl);
-  max-height: ${({ $height }) => $height - 50 + "px"};
-  position: relative;
 
-  .MuiTable-root {
-    min-height: ${({ $height }) => $height - 50 + "px"};
-  }
-  .MuiTableRow-root {
-    cursor: pointer;
-  }
-  .MuiTableRow-root:hover {
-    background-color: var(--secondary-light);
-  }
-  .MuiTableFooter-root {
+  .MuiTablePagination-root {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
     background-color: white;
-    bottom: 0;
-    position: sticky;
+    border-bottom-left-radius: var(--br-xl);
+    border-bottom-right-radius: var(--br-xl);
   }
   .MuiToolbar-root {
     justify-content: start;
@@ -142,6 +124,31 @@ const StyledTableContainer = styled("div")`
     font-family: Saira;
     font-size: var(--tx-md);
     font-weight: 450;
+  }
+`;
+
+const StyledTableContainer = styled("div")`
+  height: 100%;
+  width: 100%;
+  max-height: ${({ $height }) => $height - 50 + "px"};
+  position: relative;
+  border-radius: var(--br-xl);
+  overflow: scroll;
+  scrollbar-color: black var(--primary-base);
+  scrollbar-gutter: stable both-edges;
+
+  .MuiTable-root {
+    // min-height: ${({ $height }) => $height - 50 + "px"};
+  }
+
+  .MuiTableHead-root {
+    // height: 70px;
+  }
+  .MuiTableRow-root {
+    cursor: pointer;
+  }
+  .MuiTableRow-root:hover {
+    background-color: var(--secondary-light);
   }
 `;
 const StyledTable = styled(Table)``;

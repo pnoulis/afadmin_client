@@ -92,7 +92,7 @@ const StyledTableWrapper = styled("div")`
 
   .MuiTablePagination-root {
     position: absolute;
-    bottom: 0;
+    bottom: 15px;
     width: 100%;
     background-color: white;
     border-bottom-left-radius: var(--br-xl);
@@ -133,7 +133,8 @@ const StyledTableContainer = styled("div")`
   max-height: ${({ $height }) => $height - 50 + "px"};
   position: relative;
   border-radius: var(--br-xl);
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: scroll;
   scrollbar-color: black var(--primary-base);
   scrollbar-gutter: stable both-edges;
   background-color: white;

@@ -62,6 +62,7 @@ function Session() {
     return afmachine
       .loginAdmin(cashier)
       .then((res) => {
+        this.sessionlogin(res);
         if (!this.sessionId) {
           return afmachine.startSession(res).then((session) => {
             this.root.set("sessionId", session.jwt);
@@ -71,10 +72,6 @@ function Session() {
         } else {
           return res;
         }
-      })
-      .then((res) => {
-        this.sessionlogin(res);
-        return res;
       })
       .catch((err) => {
         console.log(err);

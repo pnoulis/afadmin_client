@@ -11,9 +11,13 @@ function AwaitTeams({ style, children }) {
   const loadTeams = useLoaderData();
   const revalidator = useRevalidator();
 
-  function handleMsg() {
+  function handleMsg(...args) {
+    console.log(...args);
+    console.log(revalidator);
+    console.log("NEW MSG CAME");
     revalidator.revalidate();
   }
+  useAfmachineSubscription("onMergeGroupTeam", handleMsg);
   useAfmachineSubscription("onMergeTeam", handleMsg);
   useAfmachineSubscription("onRemovePackage", handleMsg);
   useAfmachineSubscription("onAddPackage", handleMsg);
@@ -27,7 +31,7 @@ function AwaitTeams({ style, children }) {
       }
     >
       <Await resolve={loadTeams.teams}>
-        {(teams) => children(teams || [])}
+        {(teams) => children(teams || [], revalidator.state)}
       </Await>
     </React.Suspense>
   );

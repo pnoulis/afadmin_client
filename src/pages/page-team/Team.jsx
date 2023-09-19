@@ -10,6 +10,7 @@ import { TeamInfo } from "./team-info/TeamInfo.jsx";
 import { TeamPkgs } from "./team-pkgs/TeamPkgs.jsx";
 import { PanelTeam } from "./PanelTeam.jsx";
 import { PanelActionRoute } from "/src/components/panels/index.js";
+import { useAfmachineSubscription } from "/src/hooks/index.js";
 
 function Team({ team }) {
   const ctxTeam = usePersistentTeam(team);

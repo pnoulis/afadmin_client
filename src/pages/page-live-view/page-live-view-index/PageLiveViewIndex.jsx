@@ -10,7 +10,9 @@ import { MUILiveViewTable } from "/src/components/tables/mui-liveview-table/MUIL
 function PageLiveViewIndex() {
   return (
     <StyledPageLiveViewIndex>
-      <AwaitTeams>{(teams) => <MUILiveViewTable teams={teams} />}</AwaitTeams>
+      <AwaitTeams>
+        {(teams, state) => <MUILiveViewTable key={state} teams={teams} />}
+      </AwaitTeams>
     </StyledPageLiveViewIndex>
   );
 }

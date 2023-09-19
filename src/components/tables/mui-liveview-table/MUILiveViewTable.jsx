@@ -136,6 +136,7 @@ const StyledTableContainer = styled("div")`
   overflow: scroll;
   scrollbar-color: black var(--primary-base);
   scrollbar-gutter: stable both-edges;
+background-color: white;
 
   .MuiTable-root {
     // min-height: ${({ $height }) => $height - 50 + "px"};

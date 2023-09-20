@@ -68,7 +68,10 @@ function Session() {
             this.root.set("sessionId", session.jwt);
             this.sessionId = session.jwt;
             return session;
-          });
+          }).catch(err => {
+            // ignore
+            console.log(err);
+          })
         } else {
           return res;
         }

@@ -8,49 +8,79 @@ import { LocalStorageService } from "agent_factory.shared/services/client_storag
 import { CLIENT_STORAGE_GLOBAL_SESSION_ID } from "agent_factory.shared/constants.js";
 
 function Session() {
+  // localStorage.
   this.root = new LocalStorageService();
+  debug(CLIENT_STORAGE_GLOBAL_SESSION_ID, "client storage global session id");
+  // localStorage.session
   this.global = new LocalStorageService(CLIENT_STORAGE_GLOBAL_SESSION_ID);
   this.sessionId = this.root.get("sessionId") ?? null;
   this.user = null;
   this.loggedIn = false;
 
-  if (this.sessionId) {
-    this.user = new LocalStorageService(this.sessionId);
+  const session = this.global.get();
+  debug(session, "global session");
+
+  if (this.session?.loggedIn) {
     this.loggedIn = true;
-    this.global.set("loggedIn", true);
-  } else {
-    this.global.set("loggedIn", false);
   }
+  // if (this.sessionId) {
+  //   this.user = new LocalStorageService(this.sessionId);
+  //   this.loggedIn = true;
+  //   this.global.set("loggedIn", true);
+  // } else {
+  //   this.global.set("loggedIn", false);
+  // }
 
   this.sessionlogin = function (login) {
-    this.user = new LocalStorageService(login.jwt);
-    const __session = {
-      user: {
+    // const userSession = {
+    //   ...login,
+    //   permissions: login.roles.at(-1),
+    // };
+    let session = {};
+    const prevSession = this.root.get(login.username);
+    if (prevSession) {
+      session = {
+        ...prevSession,
         ...login,
         permissions: login.roles.at(-1),
-      },
-    };
-    const prevSession = this.global.get(login.username);
-    if (prevSession) {
-      this.global.remove(login.username);
-      for (const [k, v] of Object.entries(prevSession)) {
-        __session[k] = v;
-      }
+      };
+    } else {
+      session = {
+        ...login,
+        permissions: login.roles.at(-1),
+      };
     }
-    this.root.set(login.jwt, __session);
-    this.loggedIn = true;
+    this.root.remove(login.username);
+    this.global.set("user", session);
     this.global.set("loggedIn", true);
+    this.loggedIn = true;
+    // this.user = new LocalStorageService(login.username);
+    // const __session = {
+    //   user: {
+    //     ...login,
+    //     permissions: login.roles.at(-1),
+    //   },
+    // };
+    // const prevSession = this.global.get(login.username);
+    // debug(prevSession, 'prev session');
+    // if (prevSession) {
+    //   this.global.remove(login.username);
+    //   for (const [k, v] of Object.entries(prevSession)) {
+    //     __session[k] = v;
+    //   }
+    // }
+    // this.global.set(login.username, __session);
+    // this.root.set('sessionId', login.jwt);
+    // this.loggedIn = true;
+    // this.global.set("loggedIn", true);
   };
 
   this.sessionlogout = function (drop = false) {
-    const prevSession = this.user.get();
-    this.user.persistent.drop();
-    this.user.temporary.drop();
-    if (prevSession?.user?.username) {
-      if (drop) {
-        this.global.remove(prevSession.user.username);
-      } else {
-        this.global.set(prevSession.user.username, prevSession);
+    const prevSession = this.global.get("user");
+    if (prevSession) {
+      this.global.remove("user");
+      if (!drop) {
+        this.root.set(prevSession.username, prevSession);
       }
     }
     this.user = null;
@@ -63,18 +93,13 @@ function Session() {
       .loginAdmin(cashier)
       .then((res) => {
         this.sessionlogin(res);
-        if (!this.sessionId) {
-          return afmachine.startSession(res).then((session) => {
-            this.root.set("sessionId", session.jwt);
-            this.sessionId = session.jwt;
-            return session;
-          }).catch(err => {
-            // ignore
-            console.log(err);
-          })
-        } else {
-          return res;
-        }
+        const sessionId = this.root.get("sessionId");
+        return sessionId
+          ? res
+          : afmachine.startSession(res).then((session) => {
+              this.root.set("sessionId", session.jwt);
+              this.sessionId = session.jwt;
+            });
       })
       .catch((err) => {
         console.log(err);
@@ -95,7 +120,7 @@ function Session() {
   this.cashout = function (report) {
     return afmachine
       .stopSession({
-        ...this.user.get(),
+        jwt: this.root.get("sessionId"),
         report,
       })
       .then((res) => {
@@ -111,11 +136,11 @@ function Session() {
   this.logout.states = evlogout;
 
   this.get = function (key) {
-    return this.loggedIn ? this.user.get(key) : null;
+    return this.loggedIn ? this.global.get(key) : null;
   };
   this.set = function (key, value) {
     if (!this.loggedIn) throw new Error("No session");
-    return this.user.set(key, value);
+    return this.global.set(key, value);
   };
   this.remove = function (key) {
     if (!this.loggedIn) throw new Error("No session");

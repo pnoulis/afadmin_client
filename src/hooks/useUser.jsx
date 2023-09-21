@@ -6,9 +6,10 @@ import { session } from "/src/services/session.js";
 // ------------------------------ project  ------------------------------- //
 
 function useUser() {
-  const user = session.get("user") || {};
+  const loggedIn = session.global.get('loggedIn');
+  const user = session.global.get('user') || {};
   return {
-    loggedIn: session.loggedIn,
+    loggedIn,
     ...user,
   };
 }

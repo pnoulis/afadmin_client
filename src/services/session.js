@@ -96,10 +96,15 @@ function Session() {
         const sessionId = this.root.get("sessionId");
         return sessionId
           ? res
-          : afmachine.startSession(res).then((session) => {
-              this.root.set("sessionId", session.jwt);
-              this.sessionId = session.jwt;
-            });
+          : afmachine
+              .startSession(res)
+              .then((session) => {
+                this.root.set("sessionId", session.jwt);
+                this.sessionId = session.jwt;
+              })
+              .catch((err) => {
+                console.log(err);
+              });
       })
       .catch((err) => {
         console.log(err);
@@ -120,7 +125,7 @@ function Session() {
   this.cashout = function (report) {
     return afmachine
       .stopSession({
-        jwt: this.root.get("sessionId"),
+        jwt: this.global.get("user")?.jwt,
         report,
       })
       .then((res) => {

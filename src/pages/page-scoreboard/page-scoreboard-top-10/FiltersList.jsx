@@ -1,17 +1,14 @@
 // ------------------------------ std libs ------------------------------- //
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
+import styled from "styled-components";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
 
-import { FilterRoomType } from "./FilterRoomType.jsx";
+const FiltersList = styled("ul")`
+display: flex;
+flex-flow: row wrap;
+gap: 10px;
+`;
 
-function PageScoreboardTop10() {
-  return (
-    <div>
-      <FilterRoomType />
-    </div>
-  );
-}
-
-export { PageScoreboardTop10 };
+export { FiltersList };

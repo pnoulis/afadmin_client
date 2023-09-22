@@ -4,14 +4,8 @@ import * as React from "react";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
 
-import { FilterRoomType } from "./FilterRoomType.jsx";
-
-function PageScoreboardTop10() {
-  return (
-    <div>
-      <FilterRoomType />
-    </div>
-  );
+function FilterTime() {
+  return <div>filter time</div>;
 }
 
-export { PageScoreboardTop10 };
+export { FilterTime };

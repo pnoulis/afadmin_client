@@ -181,6 +181,16 @@ const scoreboard = {
   ),
 };
 
+const scoreboardTop10 = {
+  path: "/scoreboard/top10",
+  label: "top 10",
+  asComponent: ({ children, ...props }) => (
+    <NavLink to="/scoreboard/top10" {...props}>
+      {children}
+    </NavLink>
+  ),
+};
+
 function team(teamId) {
   return {
     path: teamId ? `${teamId}` : "/:teamId",
@@ -211,5 +221,6 @@ export {
   administratorMissions,
   administratorHistory,
   scoreboard,
+  scoreboardTop10,
   team,
 };

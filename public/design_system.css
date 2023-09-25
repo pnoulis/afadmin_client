@@ -119,6 +119,7 @@
   --black-medium: hsl(var(--base-black), 4%);
   --black-strong: hsl(var(--base-black), 0%);
 
+  --grey-subtler: hsl(var(--base-grey), 98%);
   --grey-subtle: hsl(var(--base-grey), 95%);
   --grey-light: hsl(var(--base-grey), 90%);
   --grey-base: hsl(var(--base-grey), 85%);

@@ -12,6 +12,8 @@ function WidgetRoomEarth({
   onClick: handleClick,
   as,
   size,
+  fill,
+  bcolor,
   tooltipContent = "earth room",
   className,
   ...props
@@ -21,33 +23,40 @@ function WidgetRoomEarth({
       content={tooltipContent}
       trigger={
         <StyleWidgetRoomEarth
-          as={as}
+          bcolor={bcolor}
           size={size}
-          onClick={handleClick}
+          as={as}
+          onClick={handleClick.bind(null, 'earth')}
           className={className}
           {...props}
         >
-          <Svg>
+          <Svg color={fill}>
             <EarthIcon />
           </Svg>
+          <p>earth</p>
         </StyleWidgetRoomEarth>
       }
     />
   );
 }
 
-const StyleWidgetRoomEarth = styled.div`
+const StyleWidgetRoomEarth = styled("div")`
   cursor: pointer;
   display: flex;
+  flex-flow: column nowrap;
   box-sizing: border-box;
   justify-content: center;
   align-items: center;
-  width: ${({ size }) => size || "50px"};
-  height: ${({ size }) => size || "50px"};
-  border: 3px solid transparent;
-  padding: 8px;
-  border-radius: 50%;
-  background-color: var(--grey-base);
+  width: ${({ size }) => size || "70px"};
+  height: ${({ size }) => size || "70px"};
+  padding: 6px 0 3px 0;
+  font-family: Saira;
+  font-size: var(--tx-xs);
+  letter-spacing: 1px;
+  font-weight: 550;
+  text-transform: uppercase;
+  border-radius: var(--br-nl);
+  background-color: ${({ bcolor }) => bcolor || "var(--grey-base)"};
   &:hover {
     opacity: 0.8;
   }

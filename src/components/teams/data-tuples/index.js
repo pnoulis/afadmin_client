@@ -4,3 +4,7 @@ export * from './TeamTupleRosterSize.jsx';
 export * from './TeamTuplePoints.jsx';
 export * from './TeamTupleTotalPkgs.jsx';
 export * from './TeamTupleTotalPkgsCost.jsx';
+export * from './TeamTupleCreated.jsx';
+export * from './TeamTupleMissionsPlayed.jsx';
+export * from './TeamTupleMissionsWon.jsx';
+export * from './TeamTupleMissionsLost.jsx';

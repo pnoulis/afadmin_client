@@ -12,16 +12,28 @@ import TableContainer from "@mui/material/TableContainer";
 import TableFooter from "@mui/material/TableFooter";
 import { useTable } from "/src/components/tables/useTable.jsx";
 import { stableSort, getComparator } from "../table-liveview-teams/sorts.js";
-import { parseTeams } from "../table-liveview-teams/parseTeams.js";
 import { MUITeamRow } from "./MUITeamRow.jsx";
 import { MUITeamHeaderRow } from "./MUITeamHeaderRow.jsx";
 import { ContextProvideTable } from "/src/components/tables/ContextTable.jsx";
 import { AncestorDimensions } from "react_utils/misc";
-import { useNavigate } from "react-router-dom";
-import { team as teamLink } from "/src/links.jsx";
 
-function MUILiveViewTable({ teams = [], className, style }) {
-  const navigate = useNavigate();
+function parseTeams(teams) {
+  const ln = teams.length;
+  const parsed = new Array(ln);
+
+  for (let i = 0; i < ln; i++) {
+    parsed[i] = teams[i];
+    parsed[i].index = i + 1;
+    // // parse team[i] data for table
+    // for (const [k, v] of Object.entries(teamDataMap)) {
+    //   parsed[i][k] = v.gval?.(teams[i]) ?? teams[i][k];
+    //   parsed[i].index = i + 1;
+    // }
+  }
+  return parsed;
+}
+
+function MUIScoreboardTable({ teams = [], className, style }) {
   const rows = React.useMemo(() => parseTeams(teams), [teams]);
   const ctxTable = useTable({
     data: rows,
@@ -30,16 +42,10 @@ function MUILiveViewTable({ teams = [], className, style }) {
     orderBy: "index",
   });
 
-  function handleTeamClick(teamName) {
-    navigate(teamLink(teamName)?.path, {
-      relative: true,
-    });
-  }
-
   return (
     <ContextProvideTable ctx={ctxTable}>
       <StyledTableWrapper>
-        <AncestorDimensions ancestor="#panel-live-view-main">
+        <AncestorDimensions ancestor="#panel-scoreboard-main">
           <StyledTableContainer>
             <Table stickyHeader sx={{ backgroundColor: "white" }}>
               <TableHead>
@@ -55,12 +61,7 @@ function MUILiveViewTable({ teams = [], className, style }) {
                   : ctxTable.sortedData
                 ).map(function (team, i) {
                   return (
-                    <MUITeamRow
-                      index={i + 1}
-                      key={team.name}
-                      team={team}
-                      onTeamClick={handleTeamClick.bind(null, team.name)}
-                    />
+                    <MUITeamRow index={i + 1} key={team.name} team={team} />
                   );
                 })}
               </TableBody>
@@ -101,7 +102,6 @@ const StyledTableWrapper = styled("div")`
   .MuiToolbar-root {
     border-top: 1px solid var(--grey-base);
     justify-content: end;
-    border: none;
     padding: 0 35px 0 0;
     font-family: Saira;
     height: 30px;
@@ -150,7 +150,6 @@ const StyledTableContainer = styled("div")`
     // height: 70px;
   }
   .MuiTableRow-root {
-    cursor: pointer;
   }
   .MuiTableRow-root:hover {
     background-color: var(--secondary-light);
@@ -158,4 +157,4 @@ const StyledTableContainer = styled("div")`
 `;
 const StyledTable = styled(Table)``;
 
-export { MUILiveViewTable };
+export { MUIScoreboardTable };

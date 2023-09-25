@@ -20,3 +20,4 @@ export * from "./page-live-view/page-live-view-index/PageLiveViewIndex.jsx";
 export * from "./page-team/PageTeam.jsx";
 export * from './page-scoreboard/PageScoreboard.jsx';
 export * from './page-scoreboard/page-scoreboard-top-10/PageScoreboardTop10.jsx';
+export * from './page-scoreboard/page-scoreboard-live/PageScoreboardLive.jsx';

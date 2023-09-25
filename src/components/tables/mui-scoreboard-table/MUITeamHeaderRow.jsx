@@ -37,7 +37,7 @@ function MUITeamHeaderRow() {
           order={ctxTable.order}
           active={ctxTable.orderBy === "state"}
           onSortButtonClick={ctxTable.handleChangeOrderBy}
-          style={{ minWidth: "70px"}}
+          style={{ minWidth: "70px" }}
         >
           <DataTuple nov label="status" />
         </TableSortButton>
@@ -54,87 +54,42 @@ function MUITeamHeaderRow() {
       </TableCell>
       <TableCell align="center">
         <TableSortButton
+          orderBy={"played"}
+          order={ctxTable.order}
+          active={ctxTable.orderBy === "played"}
+          onSortButtonClick={ctxTable.handleChangeOrderBy}
+        >
+          <DataTuple nov label="played" />
+        </TableSortButton>
+      </TableCell>
+      <TableCell align="center">
+        <TableSortButton
+          orderBy={"wins"}
+          order={ctxTable.order}
+          active={ctxTable.orderBy === "wins"}
+          onSortButtonClick={ctxTable.handleChangeOrderBy}
+        >
+          <DataTuple nov label="wins" />
+        </TableSortButton>
+      </TableCell>
+      <TableCell align="center">
+        <TableSortButton
+          orderBy={"losses"}
+          order={ctxTable.order}
+          active={ctxTable.orderBy === "losses"}
+          onSortButtonClick={ctxTable.handleChangeOrderBy}
+        >
+          <DataTuple nov label="losses" />
+        </TableSortButton>
+      </TableCell>
+      <TableCell align="center">
+        <TableSortButton
           orderBy={"points"}
           order={ctxTable.order}
           active={ctxTable.orderBy === "points"}
           onSortButtonClick={ctxTable.handleChangeOrderBy}
         >
           <DataTuple nov label="points" />
-        </TableSortButton>
-      </TableCell>
-      <TableCell align="center">
-        <TableSortButton
-          orderBy={"packages"}
-          order={ctxTable.order}
-          active={ctxTable.orderBy === "packages"}
-          onSortButtonClick={ctxTable.handleChangeOrderBy}
-        >
-          <DataTuple nov label="total packages" />
-        </TableSortButton>
-      </TableCell>
-      <TableCell align="center">
-        <TableSortButton
-          orderBy={"totalPkgsCost"}
-          order={ctxTable.order}
-          active={ctxTable.orderBy === "totalPkgsCost"}
-          onSortButtonClick={ctxTable.handleChangeOrderBy}
-        >
-          <DataTuple nov label="total packages cost" />
-        </TableSortButton>
-      </TableCell>
-      <TableCell align="center">
-        <StyledTuple>
-          <DataTuple nov label="active package" />
-        </StyledTuple>
-      </TableCell>
-      <TableCell align="center">
-        <TableSortButton
-          orderBy={"activePkgCost"}
-          order={ctxTable.order}
-          active={ctxTable.orderBy === "activePkgCost"}
-          onSortButtonClick={ctxTable.handleChangeOrderBy}
-        >
-          <DataTuple nov label="active package cost" />
-        </TableSortButton>
-      </TableCell>
-      <TableCell align="center">
-        <TableSortButton
-          orderBy={"activePkgType"}
-          order={ctxTable.order}
-          active={ctxTable.orderBy === "activePkgType"}
-          onSortButtonClick={ctxTable.handleChangeOrderBy}
-        >
-          <DataTuple nov label="active package type" />
-        </TableSortButton>
-      </TableCell>
-      <TableCell align="center">
-        <TableSortButton
-          orderBy={"activePkgAmount"}
-          order={ctxTable.order}
-          active={ctxTable.orderBy === "activePkgAmount"}
-          onSortButtonClick={ctxTable.handleChangeOrderBy}
-        >
-          <DataTuple nov label="active package amount" />
-        </TableSortButton>
-      </TableCell>
-      <TableCell align="center">
-        <TableSortButton
-          orderBy={"activePkgRemainder"}
-          order={ctxTable.order}
-          active={ctxTable.orderBy === "activePkgRemainder"}
-          onSortButtonClick={ctxTable.handleChangeOrderBy}
-        >
-          <DataTuple nov label="active package remainder" />
-        </TableSortButton>
-      </TableCell>
-      <TableCell align="center">
-        <TableSortButton
-          orderBy={"activePkgTimeStart"}
-          order={ctxTable.order}
-          active={ctxTable.orderBy === "activePkgTimeStart"}
-          onSortButtonClick={ctxTable.handleChangeOrderBy}
-        >
-          <DataTuple nov label="active package start time" />
         </TableSortButton>
       </TableCell>
     </TableRow>

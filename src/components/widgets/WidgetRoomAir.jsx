@@ -13,6 +13,7 @@ function WidgetRoomAir({
   as,
   size,
   fill,
+  bcolor,
   tooltipContent = "air room",
   className,
   ...props
@@ -21,27 +22,40 @@ function WidgetRoomAir({
     <TooltipDefault
       content={tooltipContent}
       trigger={
-        <div as={as} onClick={handleClick} className={className} {...props}>
-          <Svg size={size} color={fill}>
+        <StyledWidgetRoomAir
+          as={as}
+          onClick={handleClick.bind(null, "air")}
+          size={size}
+          bcolor={bcolor}
+          className={className}
+          {...props}
+        >
+          <Svg color={fill}>
             <AirIcon />
           </Svg>
-        </div>
+          <p>air</p>
+        </StyledWidgetRoomAir>
       }
     />
   );
 }
 
-const StyledWidgetRoomAir = styled(WidgetRoomAir)`
+const StyledWidgetRoomAir = styled("div")`
   cursor: pointer;
   display: flex;
+  flex-flow: column nowrap;
   box-sizing: border-box;
   justify-content: center;
   align-items: center;
-  width: ${({ size }) => size || "50px"};
-  height: ${({ size }) => size || "50px"};
-  border: 3px solid transparent;
-  padding: 8px;
-  border-radius: 50%;
+  width: ${({ size }) => size || "70px"};
+  height: ${({ size }) => size || "70px"};
+  padding: 6px 0 3px 0;
+  font-family: Saira;
+  font-size: var(--tx-xs);
+  letter-spacing: 1px;
+  font-weight: 550;
+  text-transform: uppercase;
+  border-radius: var(--br-nl);
   background-color: ${({ bcolor }) => bcolor || "var(--grey-base)"};
   &:hover {
     opacity: 0.8;

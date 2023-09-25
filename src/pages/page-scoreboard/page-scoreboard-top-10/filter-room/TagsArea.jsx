@@ -5,11 +5,12 @@ import styled from "styled-components";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
 
-const FiltersList = styled("ul")`
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  gap: 20px;
+function TagsArea() {
+  return <StyledTagsArea>tags area</StyledTagsArea>;
+}
+
+const StyledTagsArea = styled(TagsArea)`
+background-color: red;
 `;
 
-export { FiltersList };
+export { TagsArea };

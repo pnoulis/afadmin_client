@@ -19,6 +19,7 @@ const StylePanel = styled.div`
   grid-template-columns: 1fr;
   // row-gap: 20px;
   border-radius: var(--br-xl);
+  position: relative;
 `;
 
 const StylePanelHeader = styled.header`

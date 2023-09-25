@@ -31,6 +31,7 @@ import {
   PageAdministratorHistory,
   PageTeam,
   PageScoreboard,
+  PageScoreboardLive,
   PageScoreboardTop10,
 } from "/src/pages/index.js";
 import { ENVIRONMENT } from "agent_factory.shared/config.js";
@@ -39,6 +40,7 @@ import {
   loadPackages,
   loadTeams,
   loadTeam,
+  loadScoreboardTeams,
 } from "/src/loaders/index.js";
 
 /**
@@ -128,7 +130,13 @@ const router = createBrowserRouter(
             {
               path: links.scoreboard.path,
               element: <PageScoreboard />,
+              loader: loadScoreboardTeams,
+              id: "scoreboard-root",
               children: [
+                {
+                  index: true,
+                  element: <PageScoreboardLive />,
+                },
                 {
                   path: links.scoreboardTop10.path,
                   element: <PageScoreboardTop10 />,

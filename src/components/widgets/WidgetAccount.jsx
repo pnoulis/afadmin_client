@@ -60,9 +60,11 @@ function WidgetAccount() {
 const Dropdown = styled("ul")`
   display: flex;
   flex-flow: column nowrap;
+z-index: 100;
 `;
 
 const DropdownTrigger = styled("li")`
+z-index: 100;
   cursor: pointer;
   position: relative;
   box-sizing: border-box;
@@ -89,6 +91,7 @@ const DropdownTrigger = styled("li")`
 
 const DropdownList = styled("ul")`
   display: ${({ open }) => (open ? "flex" : "none")};
+  z-index: 100;
   position: absolute;
   top: 35px;
   padding-top: 10px;
@@ -98,6 +101,7 @@ const DropdownList = styled("ul")`
   min-width: 200px;
 `;
 const DropdownOption = styled("li")`
+z-index: 100;
   background-color: var(--grey-light);
   border-radius: var(--br-nl);
   &:hover {

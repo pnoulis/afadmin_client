@@ -1,13 +1,13 @@
 // ------------------------------ std libs ------------------------------- //
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
-import { useLoaderData, Await, useRouteLoaderData } from "react-router-dom";
+import { useLoaderData, Await } from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
 import { Pending } from "/src/components/async/index.js";
 
-function AwaitScoreboardTeams({ style, children, fallback }) {
-  const loadTeams = useRouteLoaderData("scoreboard-root");
+function AwaitPlayers({ style, children, fallback }) {
+  const loadPlayers = useLoaderData();
   return (
     <React.Suspense
       fallback={
@@ -18,9 +18,9 @@ function AwaitScoreboardTeams({ style, children, fallback }) {
         )
       }
     >
-      <Await resolve={loadTeams.scoreboard}>{children}</Await>
+      <Await resolve={loadPlayers.players}>{children}</Await>
     </React.Suspense>
   );
 }
 
-export { AwaitScoreboardTeams };
+export { AwaitPlayers };

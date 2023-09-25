@@ -2,6 +2,7 @@
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
 import styled from "styled-components";
+import { useRouteLoaderData } from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
 import { FiltersContainer } from "./FiltersContainer.jsx";
@@ -11,9 +12,32 @@ import { AwaitScoreboardTeams } from "/src/pages/page-scoreboard/AwaitScoreboard
 import { MUIScoreboardTable } from "../../../components/tables/mui-scoreboard-table/MUIScoreboardTable.jsx";
 import { FilterRoom } from "./filter-room/FilterRoom.jsx";
 
+const getRooms = (function () {
+  let promised = false;
+  return (roomsPromise, cb) => {
+    if (roomsPromise === 'reset') {
+      promised = false;
+      return;
+    }
+    if (promised) return;
+    promised = true;
+    roomsPromise.then(cb);
+  };
+})();
+
+const RoomTypeEnum = {
+  AIR: 0,
+  FIRE: 1,
+  EARTH: 2,
+  WATER: 3,
+};
+
 function PageScoreboardTop10() {
+  const [rooms, setRooms] = React.useState({});
   const [filters, setFilters] = React.useState([]);
+  const [typeFilters, setTypeFilters] = React.useState([]);
   const [timeFilter, setTimeFilter] = React.useState("");
+  const loadTeams = useRouteLoaderData("scoreboard-root");
 
   function handleFilterSelect(filter) {
     for (let i = 0; i < filters.length; i++) {
@@ -24,9 +48,51 @@ function PageScoreboardTop10() {
     }
     setFilters(filters.concat(filter));
   }
+  function handleRoomTypeSelect(roomType) {
+    for (let i = 0; i < typeFilters.length; i++) {
+      if (typeFilters[i] === roomType) {
+        setTypeFilters(
+          typeFilters.slice(0, i).concat(typeFilters.slice(i + 1)),
+        );
+        return;
+      }
+    }
+    setTypeFilters(typeFilters.concat(roomType));
+  }
+  React.useEffect(() => {
+    if (typeFilters.length < 1) {
+      setFilters(rooms.flat?.());
+      return;
+    }
+    const newFilters = [];
+    for (let i = 0; i < typeFilters.length; i++) {
+      newFilters.push(...rooms[RoomTypeEnum[typeFilters[i].toUpperCase()]]);
+    }
+    setFilters(newFilters);
+  }, [typeFilters]);
+
   React.useEffect(() => {
     debug(filters, "filters changed");
   }, [filters]);
+
+  React.useEffect(() => {
+    debug(rooms, "rooms changed");
+  }, [rooms]);
+
+  React.useEffect(() => {
+    debug(loadTeams, "loadtimse");
+    getRooms(loadTeams.scoreboard, (res) => {
+      const rooms = [[], [], [], []];
+      for (const [k, v] of Object.entries(
+        res.scores?.roomElementAssociations,
+      )) {
+        rooms[RoomTypeEnum[v]].push(k);
+      }
+      setRooms(rooms);
+      setFilters(rooms.flat());
+    });
+    return () => getRooms("reset");
+  }, []);
 
   function handleTimeFilterSelect(filter) {
     setTimeFilter(timeFilter === filter ? "" : filter);
@@ -34,13 +100,20 @@ function PageScoreboardTop10() {
   return (
     <StylePageScoreboardTop10>
       <FiltersContainer>
-        <FilterRoomType filters={filters} onFilterSelect={handleFilterSelect} />
+        <FilterRoomType
+          filters={typeFilters}
+          onFilterSelect={handleRoomTypeSelect}
+        />
         <TimeFilters
           timeFilter={timeFilter}
           onFilterSelect={handleTimeFilterSelect}
           style={{ gridRow: "2 / 3", gridColumn: "1 / 2" }}
         />
-        <FilterRoom style={{ gridRow: "1 / 3", gridColumn: "2 / 3" }} />
+        <FilterRoom
+          filters={filters}
+          onFilterSelect={handleFilterSelect}
+          style={{ gridRow: "1 / 3", gridColumn: "2 / 3" }}
+        />
       </FiltersContainer>
       <AwaitScoreboardTeams>
         {(scoreboard) => {

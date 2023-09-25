@@ -1,27 +1,32 @@
 // ------------------------------ std libs ------------------------------- //
 // ------------------------------ 3rd libs ------------------------------- //
 import * as React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 // ------------------------------ own libs ------------------------------- //
 import { SearchableCombobox as Combobox } from "react_utils/comboboxes";
 // ------------------------------ project  ------------------------------- //
 
+function isActive(filters, filter) {
+  for (let i = 0; i < filters.length; i++) {
+    if (filters[i] === filter) return true;
+  }
+  return false;
+}
 function getLabels(rooms = []) {
   return [...rooms];
 }
 
-function ComboboxSelectRoom({ rooms, onSelect, Option }) {
+function ComboboxSelectRoom({ filters, rooms, onSelect, Option }) {
   rooms ||= [];
-  debug(rooms, "rooms");
   return (
     <StyleComboboxSelectRoom>
       <div className="combobox-select-room-wrapper">
         <Combobox.Provider
           initialOpen
           asTable
-          onSelect={() => {}}
+          onSelect={onSelect}
           name="select-room"
-          options={rooms || []}
+          options={rooms}
           getLabels={getLabels}
         >
           <section className="combobox-select-room-trigger-wrapper">
@@ -40,7 +45,10 @@ function ComboboxSelectRoom({ rooms, onSelect, Option }) {
                     />
                   </StyleOption>
                 ) : (
-                  <StyleOption {...props}>
+                  <StyleOption
+                    $filtered={isActive(filters, props.option)}
+                    {...props}
+                  >
                     <p>{props.option}</p>
                   </StyleOption>
                 )
@@ -166,20 +174,20 @@ const StyleOption = styled(Combobox.Option)`
   text-align: center;
   letter-spacing: 1px;
   font-weight: 550;
+  cursor: pointer;
 
-  &:hover {
-    cursor: pointer;
-    border-color: var(--primary-light);
-  }
-
-  ${({ active }) => {
-    if (active) {
-      return `
-border-color: var(--primary-light);
-cursor: pointer;
-`;
-    }
-  }}
+  ${({ $filtered }) =>
+    $filtered
+      ? css`
+          border-color: var(--primary-base);
+          background-color: var(--primary-base);
+          color: white;
+        `
+      : css`
+          &:hover {
+            border-color: var(--primary-base);
+          }
+        `}
 `;
 
 export { ComboboxSelectRoom };

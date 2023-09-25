@@ -41,6 +41,7 @@ import {
   loadTeams,
   loadTeam,
   loadScoreboardTeams,
+  loadAllPlayers,
 } from "/src/loaders/index.js";
 
 /**
@@ -80,6 +81,7 @@ const router = createBrowserRouter(
                 },
                 {
                   path: links.registrationHistory.path,
+                  loader: loadAllPlayers,
                   element: <PageRegistrationHistory />,
                 },
               ],

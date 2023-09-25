@@ -29,7 +29,6 @@ function useAfmachineSubscription(route, onMsg) {
       unsubRef.current = null;
       setSubscribed(false);
     }
-    console.log(msg);
     setMsg(err || { ...msg });
   };
 

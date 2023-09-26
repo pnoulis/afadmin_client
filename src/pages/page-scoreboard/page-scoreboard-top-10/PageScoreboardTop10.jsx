@@ -12,29 +12,24 @@ import { AwaitScoreboardTeams } from "/src/pages/page-scoreboard/AwaitScoreboard
 import { MUIScoreboardTable } from "../../../components/tables/mui-scoreboard-table/MUIScoreboardTable.jsx";
 import { MUITop10Table } from "../../../components/tables/mui-top10-table/MUITop10Table.jsx";
 import { FilterRoom } from "./filter-room/FilterRoom.jsx";
+import { useRevalidator } from "react-router-dom";
+import { useAfmachineSubscription } from "/src/hooks/index.js";
 
-const getRooms = (function () {
-  let promised = false;
-  return (roomsPromise, cb) => {
-    if (roomsPromise === "reset") {
-      promised = false;
-      return;
+const every6Secs = (function () {
+  let tries = 0;
+  return (revalidator) => {
+    if (++tries > 2) {
+      tries = 0;
+      debug("should revalidate data");
+      revalidator.revalidate();
+    } else {
+      debug("should not revalidate data");
     }
-    if (promised) return;
-    promised = true;
-    roomsPromise.then(cb);
   };
 })();
 
-const RoomTypeEnum = {
-  AIR: 0,
-  FIRE: 1,
-  EARTH: 2,
-  WATER: 3,
-};
-
 function PageScoreboardTop10() {
-  const [rooms, setRooms] = React.useState({});
+  const revalidator = useRevalidator();
   const [filter, setFilter] = React.useState({
     type: "teamAllTime",
     value: "all",
@@ -42,54 +37,8 @@ function PageScoreboardTop10() {
   const loadTeams = useRouteLoaderData("scoreboard-root");
 
   function handleFilterSelect(newFilter) {
-    debug(newFilter, "new filter");
     setFilter(newFilter);
   }
-  // function handleRoomTypeSelect(roomType) {
-  //   for (let i = 0; i < typeFilters.length; i++) {
-  //     if (typeFilters[i] === roomType) {
-  //       setTypeFilters(
-  //         typeFilters.slice(0, i).concat(typeFilters.slice(i + 1)),
-  //       );
-  //       return;
-  //     }
-  //   }
-  //   setTypeFilters(typeFilters.concat(roomType));
-  // }
-  // React.useEffect(() => {
-  //   if (typeFilters.length < 1) {
-  //     setFilters(rooms.flat?.());
-  //     return;
-  //   }
-  //   const newFilters = [];
-  //   for (let i = 0; i < typeFilters.length; i++) {
-  //     newFilters.push(...rooms[RoomTypeEnum[typeFilters[i].toUpperCase()]]);
-  //   }
-  //   setFilters(newFilters);
-  // }, [typeFilters]);
-
-  // React.useEffect(() => {
-  //   debug(filters, "filters changed");
-  // }, [filters]);
-
-  // React.useEffect(() => {
-  //   debug(rooms, "rooms changed");
-  // }, [rooms]);
-
-  React.useEffect(() => {
-    debug(loadTeams, "loadtimse");
-    getRooms(loadTeams.scoreboard, (res) => {
-      const rooms = [[], [], [], []];
-      for (const [k, v] of Object.entries(
-        res.scores?.roomElementAssociations,
-      )) {
-        rooms[RoomTypeEnum[v]].push(k);
-      }
-      setRooms(rooms);
-    });
-    return () => getRooms("reset");
-  }, []);
-
   return (
     <StylePageScoreboardTop10>
       <FiltersContainer>
@@ -107,14 +56,12 @@ function PageScoreboardTop10() {
       </FiltersContainer>
       <AwaitScoreboardTeams>
         {(scoreboard) => {
-          debug(scoreboard.scores, "debug scoreboard");
           let filteredData;
           if (filter?.type === "perElement" || filter?.type === "perRoom") {
             filteredData = scoreboard.scores[filter.type][filter.value];
           } else {
             filteredData = scoreboard.scores[filter?.type];
           }
-          debug(filteredData, "debug filtered data");
           return (
             <MUITop10Table
               key={filter?.type + filter?.value}

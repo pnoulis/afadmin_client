@@ -4,33 +4,51 @@ import * as React from "react";
 import styled, { css } from "styled-components";
 // ------------------------------ own libs ------------------------------- //
 import { SearchableCombobox as Combobox } from "react_utils/comboboxes";
+import { smallid } from "js_utils/uuid";
 // ------------------------------ project  ------------------------------- //
 
-function isActive(filters, filter) {
-  for (let i = 0; i < filters.length; i++) {
-    if (filters[i] === filter) return true;
-  }
-  return false;
-}
 function getLabels(rooms = []) {
   return [...rooms];
 }
 
-function ComboboxSelectRoom({ filters, rooms, onSelect, Option }) {
-  rooms ||= [];
+function ComboboxSelectRoom({ filter, rooms, onSelect, Option }) {
+  const [selected, setSelected] = React.useState("");
+  const [id, setId] = React.useState("");
+  rooms ??= [];
+
+  React.useEffect(() => {
+    selected &&
+      onSelect({
+        type: "perRoom",
+        value: selected.toUpperCase(),
+      });
+  }, [selected, setSelected]);
+
+  React.useLayoutEffect(() => {
+    if (filter?.type !== "perRoom" && selected) setId(smallid());
+  }, [filter?.type]);
+
   return (
-    <StyleComboboxSelectRoom>
+    <StyleComboboxSelectRoom key={id}>
       <div className="combobox-select-room-wrapper">
         <Combobox.Provider
-          initialOpen
-          asTable
-          onSelect={onSelect}
+          onSelect={setSelected}
           name="select-room"
           options={rooms}
+          defaultLabel={filter}
           getLabels={getLabels}
         >
           <section className="combobox-select-room-trigger-wrapper">
-            <StyleTrigger autoFocus placeholder="room name" />
+            <StyleTrigger
+              $isActive={filter?.value && filter?.value === selected}
+              onInputValueChange={(e) => {
+                if (e.target.value.length < selected.length && selected) {
+                  setSelected("");
+                  onSelect(null);
+                }
+              }}
+              placeholder="select top 10 in room"
+            />
           </section>
           <section>
             <StyleListbox
@@ -45,10 +63,7 @@ function ComboboxSelectRoom({ filters, rooms, onSelect, Option }) {
                     />
                   </StyleOption>
                 ) : (
-                  <StyleOption
-                    $filtered={isActive(filters, props.option)}
-                    {...props}
-                  >
+                  <StyleOption {...props}>
                     <p>{props.option}</p>
                   </StyleOption>
                 )
@@ -64,7 +79,8 @@ function ComboboxSelectRoom({ filters, rooms, onSelect, Option }) {
 /* --------------- COMBOBOX --------------- */
 
 const StyleTrigger = styled(Combobox.Trigger)`
-  background-color: var(--grey-base);
+  background-color: ${({ $isActive }) =>
+    $isActive ? "var(--primary-base)" : "var(--grey-base)"};
   border-radius: var(--br-lg);
   pointer-events: auto;
   text-transform: uppercase;
@@ -74,11 +90,11 @@ const StyleTrigger = styled(Combobox.Trigger)`
   padding: 0 15px;
   border-radius: var(--br-nl);
   text-align: center;
-  font-size: var(--tx-sm);
+  font-size: var(--tx-nl);
   font-weight: 550;
   letter-spacing: 1.5px;
   outline: none;
-  color: black;
+  color: ${({ $isActive }) => ($isActive ? "white" : "black")};
 
   &:hover {
     cursor: pointer;
@@ -100,10 +116,8 @@ const StyleOnEmpty = styled.li`
 `;
 
 const StyleComboboxSelectRoom = styled.div`
-  z-index: 1000;
-  position: absolute;
+  z-index: 200;
   background-color: white;
-  top: 135px;
   box-sizing: border-box;
   display: flex;
   flex-flow: column nowrap;
@@ -123,6 +137,7 @@ const StyleComboboxSelectRoom = styled.div`
     flex: 1;
     display: flex;
     flex-flow: column nowrap;
+    justify-content: end;
 
     .combobox-select-room-trigger-wrapper {
       display: flex;
@@ -176,18 +191,25 @@ const StyleOption = styled(Combobox.Option)`
   font-weight: 550;
   cursor: pointer;
 
-  ${({ $filtered }) =>
-    $filtered
-      ? css`
-          border-color: var(--primary-base);
-          background-color: var(--primary-base);
-          color: white;
-        `
-      : css`
-          &:hover {
-            border-color: var(--primary-base);
-          }
-        `}
+  ${({ selected, active }) => {
+    if (selected) {
+      return `
+border-color: var(--primary-base);
+`;
+    } else if (active) {
+      return `
+border-color: var(--primary-base);
+cursor: pointer;
+`;
+    } else {
+      return `
+&: hover {
+cursor: pointer;
+border-color: var(--primary-base);
+}
+`;
+    }
+  }}
 `;
 
 export { ComboboxSelectRoom };

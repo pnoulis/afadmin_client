@@ -26,7 +26,7 @@ function WidgetRoomFire({
           as={as}
           size={size}
           bcolor={bcolor}
-          onClick={handleClick.bind(null, 'fire')}
+          onClick={handleClick}
           className={className}
           {...props}
         >

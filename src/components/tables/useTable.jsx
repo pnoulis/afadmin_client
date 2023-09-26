@@ -6,12 +6,15 @@ function useTable({
   sort,
   orderBy: defaultOrderBy = "",
   order: defaultOrder = "asc",
+  rowsPerPage: initialRowsPerPage,
 } = {}) {
   const [order, setOrder] = React.useState(defaultOrder);
   const [orderBy, setOrderBy] = React.useState(defaultOrderBy);
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(
+    initialRowsPerPage ?? 10,
+  );
 
   function handleChangeOrderBy(newOrderBy) {
     const isasc = orderBy === newOrderBy && order === "asc";

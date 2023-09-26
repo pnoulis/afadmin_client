@@ -9,6 +9,33 @@ import { ComboboxSelectRoom } from "./ComboboxSelectRoom.jsx";
 import { AwaitScoreboardTeams } from "/src/pages/page-scoreboard/AwaitScoreboardTeams.jsx";
 import { TagsArea } from "./TagsArea.jsx";
 
+function FilterRoom2({
+  filter,
+  onFilterSelect: handleFilterSelect,
+  className,
+  style,
+}) {
+  return (
+    <StyledFilterRoom className={className} style={style}>
+      <AwaitScoreboardTeams
+        style={{ width: "100px", height: "100px", margin: "auto" }}
+      >
+        {(scoreboard) => (
+          <>
+            <ComboboxSelectRoom
+              filter={filter}
+              rooms={Object.keys(
+                scoreboard?.scores?.roomElementAssociations || {},
+              )}
+              onSelect={handleFilterSelect}
+            />
+          </>
+        )}
+      </AwaitScoreboardTeams>
+    </StyledFilterRoom>
+  );
+}
+
 function FilterRoom({
   filters,
   onFilterSelect: handleFilterSelect,
@@ -64,9 +91,12 @@ const StyledWidgetArrow = styled(WidgetArrow)`
 //   )}
 
 const StyledFilterRoom = styled("div")`
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-flow: column nowrap;
   align-items: end;
+  justify-content: end;
 `;
 
-export { FilterRoom };
+export { FilterRoom2 as FilterRoom };

@@ -4,3 +4,4 @@ export * from './loadTeams.jsx';
 export * from './loadTeam.jsx';
 export * from './loadScoreboardTeams.jsx';
 export * from './loadAllPlayers.jsx';
+export * from './loadScoreboardDevices.jsx';

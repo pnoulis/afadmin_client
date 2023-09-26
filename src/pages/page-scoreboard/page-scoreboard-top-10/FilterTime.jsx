@@ -9,7 +9,7 @@ import { FiltersList } from "./FiltersList.jsx";
 import { TooltipDefault } from "/src/components/tooltips/index.js";
 
 function TimeFilters({
-  timeFilter,
+  filter,
   onFilterSelect: handleTimeFilterSelect,
   className,
   style,
@@ -17,23 +17,42 @@ function TimeFilters({
   return (
     <FiltersList className={className} style={style}>
       <WidgetTimeFilter
-        $isActive={timeFilter === "day"}
-        onClick={handleTimeFilterSelect.bind(null, "day")}
-        tooltipContent="select today's teams"
+        $isActive={filter?.value === "all"}
+        onClick={handleTimeFilterSelect.bind(null, {
+          type: "teamAllTime",
+          value: "all",
+        })}
+        tooltipContent="select top 10 of all time"
+      >
+        all time
+      </WidgetTimeFilter>
+      <WidgetTimeFilter
+        $isActive={filter?.value === "day"}
+        onClick={handleTimeFilterSelect.bind(null, {
+          type: "teamDaily",
+          value: "day",
+        })}
+        tooltipContent="select today's top 10"
       >
         day
       </WidgetTimeFilter>
       <WidgetTimeFilter
-        $isActive={timeFilter === "week"}
-        onClick={handleTimeFilterSelect.bind(null, "week")}
-        tooltipContent="select week's teams"
+        $isActive={filter?.value === "week"}
+        onClick={handleTimeFilterSelect.bind(null, {
+          type: "teamWeekly",
+          value: "week",
+        })}
+        tooltipContent="select week's top 10"
       >
         week
       </WidgetTimeFilter>
       <WidgetTimeFilter
-        $isActive={timeFilter === "month"}
-        onClick={handleTimeFilterSelect.bind(null, "month")}
-        tooltipContent="select month's teams"
+        $isActive={filter?.value === "month"}
+        onClick={handleTimeFilterSelect.bind(null, {
+          type: "teamMonthly",
+          value: "month",
+        })}
+        tooltipContent="select month's top 10"
       >
         month
       </WidgetTimeFilter>

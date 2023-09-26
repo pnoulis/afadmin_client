@@ -20,31 +20,43 @@ function isActive(filters, filter) {
   return false;
 }
 
-function FilterRoomType({ filters, onFilterSelect: handleFilterSelect }) {
+function FilterRoomType({ filter, onFilterSelect: handleFilterSelect }) {
   return (
     <FiltersList>
-      <FilterListItem $active={isActive(filters, "air")}>
+      <FilterListItem $active={filter?.value === "AIR"}>
         <WidgetRoomAir
-          onClick={handleFilterSelect}
-          tooltipContent="select air rooms"
+          onClick={handleFilterSelect.bind(null, {
+            type: "perElement",
+            value: "AIR",
+          })}
+          tooltipContent="select air room top 10"
         />
       </FilterListItem>
-      <FilterListItem $active={isActive(filters, "fire")}>
+      <FilterListItem $active={filter?.value === "FIRE"}>
         <WidgetRoomFire
-          onClick={handleFilterSelect}
-          tooltipContent="select fire rooms"
+          onClick={handleFilterSelect.bind(null, {
+            type: "perElement",
+            value: "FIRE",
+          })}
+          tooltipContent="select fire room top 10"
         />
       </FilterListItem>
-      <FilterListItem $active={isActive(filters, "earth")}>
+      <FilterListItem $active={filter?.value === "EARTH"}>
         <WidgetRoomEarth
-          onClick={handleFilterSelect}
-          tooltipContent="select earth rooms"
+          onClick={handleFilterSelect.bind(null, {
+            type: "perElement",
+            value: "EARTH",
+          })}
+          tooltipContent="select earth room top 10"
         />
       </FilterListItem>
-      <FilterListItem $active={isActive(filters, "water")}>
+      <FilterListItem $active={filter?.value === "WATER"}>
         <WidgetRoomWater
-          onClick={handleFilterSelect}
-          tooltipContent="select water rooms"
+          onClick={handleFilterSelect.bind(null, {
+            type: "perElement",
+            value: "WATER",
+          })}
+          tooltipContent="select water room top 10"
         />
       </FilterListItem>
     </FiltersList>

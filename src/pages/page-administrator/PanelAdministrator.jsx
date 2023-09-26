@@ -16,6 +16,7 @@ import {
   administratorCashout,
   administratorHistory,
   administratorStatistics,
+  administratorScoreboardDevices,
 } from "/src/links.jsx";
 import { ReactComponent as CashoutIcon } from "agent_factory.shared/ui/new-icons/cash-out-icon.svg";
 import { ReactComponent as HistoryIcon } from "agent_factory.shared/ui/new-icons/history-icon.svg";
@@ -32,17 +33,25 @@ function PanelAdministrator({ children }) {
             </StyleItemIcon>
             <StyleItemText>{administratorCashout.label}</StyleItemText>
           </StyleNavbarLink>
-          <StyleNavbarLink end to={administratorStatistics.path}>
+          {/* <StyleNavbarLink end to={administratorStatistics.path}> */}
+          {/*   <StyleItemIcon> */}
+          {/*     <StatisticsIcon /> */}
+          {/*   </StyleItemIcon> */}
+          {/*   <StyleItemText>{administratorStatistics.label}</StyleItemText> */}
+          {/* </StyleNavbarLink> */}
+          {/* <StyleNavbarLink end to={administratorHistory.path}> */}
+          {/*   <StyleItemIcon> */}
+          {/*     <HistoryIcon /> */}
+          {/*   </StyleItemIcon> */}
+          {/*   <StyleItemText>{administratorHistory.label}</StyleItemText> */}
+          {/* </StyleNavbarLink> */}
+          <StyleNavbarLink end to={administratorScoreboardDevices.path}>
             <StyleItemIcon>
               <StatisticsIcon />
             </StyleItemIcon>
-            <StyleItemText>{administratorStatistics.label}</StyleItemText>
-          </StyleNavbarLink>
-          <StyleNavbarLink end to={administratorHistory.path}>
-            <StyleItemIcon>
-              <HistoryIcon />
-            </StyleItemIcon>
-            <StyleItemText>{administratorHistory.label}</StyleItemText>
+            <StyleItemText>
+              {administratorScoreboardDevices.label}
+            </StyleItemText>
           </StyleNavbarLink>
         </PanelHeaderNavbar>
       </StylePanelHeader>

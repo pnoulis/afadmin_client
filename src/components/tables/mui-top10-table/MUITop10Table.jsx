@@ -12,17 +12,17 @@ import TableContainer from "@mui/material/TableContainer";
 import TableFooter from "@mui/material/TableFooter";
 import { useTable } from "/src/components/tables/useTable.jsx";
 import { stableSort, getComparator } from "../table-liveview-teams/sorts.js";
-import { MUIPlayerHeaderRow } from "./MUIPlayerHeaderRow.jsx";
-import { MUIPlayerRow } from "./MUIPlayerRow.jsx";
+import { MUITop10HeaderRow } from "./MUITop10HeaderRow.jsx";
+import { MUITop10Row } from "./MUITop10Row.jsx";
 import { ContextProvideTable } from "/src/components/tables/ContextTable.jsx";
 import { AncestorDimensions } from "react_utils/misc";
 
-function parsePlayers(players) {
-  const ln = players.length;
+function parseTeams(teams) {
+  const ln = teams.length;
   const parsed = new Array(ln);
 
   for (let i = 0; i < ln; i++) {
-    parsed[i] = players[i];
+    parsed[i] = teams[i];
     parsed[i].index = i + 1;
     // // parse team[i] data for table
     // for (const [k, v] of Object.entries(teamDataMap)) {
@@ -33,24 +33,25 @@ function parsePlayers(players) {
   return parsed;
 }
 
-function MUIPlayersTable({ players = [], className, style }) {
-  const rows = React.useMemo(() => parsePlayers(players), [players]);
+function MUITop10Table({ teams = [], className, style }) {
+  const rows = React.useMemo(() => parseTeams(teams), [teams]);
   const ctxTable = useTable({
     data: rows,
     sort: stableSort,
     getComparator,
     orderBy: "index",
-    rowsPerPage: 25,
+    rowsPerPage: 10,
   });
+  debug(teams, 'mui top 10 table');
 
   return (
     <ContextProvideTable ctx={ctxTable}>
       <StyledTableWrapper>
-        <AncestorDimensions ancestor="#panel-registration-main">
+        <AncestorDimensions ancestor="#panel-scoreboard-main">
           <StyledTableContainer>
             <Table stickyHeader sx={{ backgroundColor: "white" }}>
               <TableHead>
-                <MUIPlayerHeaderRow />
+                <MUITop10HeaderRow />
               </TableHead>
               <TableBody>
                 {(ctxTable.rowsPerPage > 0
@@ -60,12 +61,12 @@ function MUIPlayersTable({ players = [], className, style }) {
                         ctxTable.rowsPerPage,
                     )
                   : ctxTable.sortedData
-                ).map(function (player, i) {
+                ).map(function (team, i) {
                   return (
-                    <MUIPlayerRow
+                    <MUITop10Row
                       index={i + 1}
-                      key={player.name + i}
-                      player={player}
+                      key={team.teamName + i}
+                      team={team}
                     />
                   );
                 })}
@@ -77,8 +78,8 @@ function MUIPlayersTable({ players = [], className, style }) {
           component="div"
           showFirstButton
           showLastButton
-          count={players.length}
-          rows={players}
+          count={teams.length}
+          rows={teams}
           page={ctxTable.page}
           rowsPerPage={ctxTable.rowsPerPage}
           onPageChange={ctxTable.handlePageChange}
@@ -90,7 +91,7 @@ function MUIPlayersTable({ players = [], className, style }) {
 }
 
 const StyledTableWrapper = styled("div")`
-  width: 100%;
+  width: 1000px;
   height: 100%;
   position: relative;
   box-shadow: var(--sd-9);
@@ -162,4 +163,4 @@ const StyledTableContainer = styled("div")`
 `;
 const StyledTable = styled(Table)``;
 
-export { MUIPlayersTable };
+export { MUITop10Table };

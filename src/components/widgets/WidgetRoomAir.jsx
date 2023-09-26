@@ -24,7 +24,7 @@ function WidgetRoomAir({
       trigger={
         <StyledWidgetRoomAir
           as={as}
-          onClick={handleClick.bind(null, "air")}
+          onClick={handleClick}
           size={size}
           bcolor={bcolor}
           className={className}

@@ -22,7 +22,7 @@ function ScoreboardHeader() {
           <StyleItemIcon>
             <ScoreboardIcon />
           </StyleItemIcon>
-          <StyleItemText>{scoreboard.label}</StyleItemText>
+          <StyleItemText>{'live'}</StyleItemText>
         </StyleNavbarLink>
         <StyleNavbarLink end to={scoreboardTop10.path}>
           <StyleItemIcon>

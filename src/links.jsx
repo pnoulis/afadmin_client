@@ -161,6 +161,16 @@ const administratorMissions = {
   ),
 };
 
+const administratorScoreboardDevices = {
+  path: "/administrator/scoreboard-devices",
+  label: "scoreboard devices",
+  asComponent: ({ children, ...props }) => (
+    <NavLink to="administrator/scoreboard-devices" {...props}>
+      {children}
+    </NavLink>
+  ),
+};
+
 const administratorRooms = {
   path: "/administrator/rooms",
   label: "rooms",
@@ -220,6 +230,7 @@ export {
   administratorStatistics,
   administratorMissions,
   administratorHistory,
+  administratorScoreboardDevices,
   scoreboard,
   scoreboardTop10,
   team,

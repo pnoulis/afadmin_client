@@ -13,7 +13,7 @@ const FiltersContainer = styled("section")`
   right: 25px;
   display: grid;
   grid-template-rows: max-content max-content;
-  grid-template-columns: 350px 450px;
+  grid-template-columns: 400px 450px;
   justify-content: space-between;
   gap: 20px;
 `;

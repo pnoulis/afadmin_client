@@ -29,6 +29,7 @@ import {
   PageAdministratorCashout,
   PageAdministratorStatistics,
   PageAdministratorHistory,
+  PageAdministratorScoreboards,
   PageTeam,
   PageScoreboard,
   PageScoreboardLive,
@@ -42,6 +43,7 @@ import {
   loadTeam,
   loadScoreboardTeams,
   loadAllPlayers,
+  loadScoreboardDevices,
 } from "/src/loaders/index.js";
 
 /**
@@ -119,13 +121,18 @@ const router = createBrowserRouter(
                   index: true,
                   element: <PageAdministratorCashout />,
                 },
+                // {
+                //   path: links.administratorHistory.path,
+                //   element: <PageAdministratorHistory />,
+                // },
+                // {
+                //   path: links.administratorStatistics.path,
+                //   element: <PageAdministratorStatistics />,
+                // },
                 {
-                  path: links.administratorHistory.path,
-                  element: <PageAdministratorHistory />,
-                },
-                {
-                  path: links.administratorStatistics.path,
-                  element: <PageAdministratorStatistics />,
+                  path: links.administratorScoreboardDevices.path,
+                  loader: loadScoreboardDevices,
+                  element: <PageAdministratorScoreboards />,
                 },
               ],
             },

@@ -26,7 +26,7 @@ function WidgetRoomEarth({
           bcolor={bcolor}
           size={size}
           as={as}
-          onClick={handleClick.bind(null, 'earth')}
+          onClick={handleClick}
           className={className}
           {...props}
         >

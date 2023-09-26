@@ -26,7 +26,7 @@ function WidgetRoomWater({
           size={size}
           bcolor={bcolor}
           as={as}
-          onClick={handleClick.bind(null, 'water')}
+          onClick={handleClick}
           className={className}
           {...props}
         >

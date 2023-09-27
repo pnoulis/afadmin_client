@@ -14,6 +14,7 @@ import { useAfmachineSubscription } from "/src/hooks/index.js";
 
 function Team({ team }) {
   const ctxTeam = usePersistentTeam(team);
+  debug(".*/" + team?.name, 'panel liveview header mount point');
   return (
     <ContextProvideTeam ctx={ctxTeam}>
       <PanelActionRoute

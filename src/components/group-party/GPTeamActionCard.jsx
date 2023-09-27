@@ -5,6 +5,7 @@ import styled, { css } from "styled-components";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
 import { FormTeamName } from "/src/components/teams/index.js";
+import { isObject } from "js_utils/misc";
 import {
   RegistrationQueue,
   ContextProvideRegistrationQueue,
@@ -30,7 +31,9 @@ function GPTeamActionCard({ failedMerge, className, style }) {
       <StyledFormTeamName
         failedMerge={failedMerge}
         onChange={ctxTeam.changeTeamName}
-        fields={{ teamName: ctxTeam.team.name }}
+        fields={{
+          teamName: isObject(ctxTeam.team.name) ? "" : ctxTeam.team.name,
+        }}
         style={{ gridArea: "team_name" }}
       />
       <StyledToolbar>

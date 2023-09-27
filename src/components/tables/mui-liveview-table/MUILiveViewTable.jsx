@@ -31,6 +31,7 @@ function MUILiveViewTable({ teams = [], className, style }) {
   });
 
   function handleTeamClick(teamName) {
+    // debug(teamLink(teamName)?.path, 'encoded team name');
     navigate(teamLink(teamName)?.path, {
       relative: true,
     });

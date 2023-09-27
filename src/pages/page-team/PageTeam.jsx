@@ -10,10 +10,11 @@ import { Team } from "./Team.jsx";
 
 function PageTeam() {
   const { teamId } = useParams();
-
   return (
     <AwaitTeam fallback={<StubPageTeam teamName={teamId} />}>
-      {(team) => <Team team={team} />}
+      {(team) => {
+        return <Team team={team} />;
+      }}
     </AwaitTeam>
   );
 }

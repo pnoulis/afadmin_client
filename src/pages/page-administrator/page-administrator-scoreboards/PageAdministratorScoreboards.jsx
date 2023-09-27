@@ -12,14 +12,27 @@ import { useRevalidator } from "react-router-dom";
 import { useAfmachineSubscription } from "/src/hooks/index.js";
 import { smallid } from "js_utils/uuid";
 
+const every6Secs = (function () {
+  let tries = 0;
+  return (revalidator) => {
+    if (++tries > 3) {
+      tries = 0;
+      debug("should revalidate data");
+      revalidator.revalidate();
+    } else {
+      debug("should not revalidate data");
+    }
+  };
+})();
+
 function PageAdministratorScoreboards() {
   const revalidator = useRevalidator();
   const { action: sSetDeviceView } = useAfmachineAction(
     afmachine.setScoreboardViews,
   );
+  const listenerRef = React.useRef(null);
 
   function handleDeviceViewChange(deviceId, view) {
-    debug('handle device view change');
     sSetDeviceView.run(() =>
       afmachine.setScoreboardViews({
         deviceId,
@@ -27,19 +40,29 @@ function PageAdministratorScoreboards() {
       }),
     );
   }
-  useAfmachineSubscription("onScoreboardDevicesUpdate", () => {
-    console.log("should revalidate");
-    // revalidator.revalidate();
-  });
+  // const [, , unsub] = useAfmachineSubscription(
+  //   "onScoreboardDevicesUpdate",
+  //   () => {
+  //     console.log("should revalidate");
+  //     listenerRef.current?.();
+  //   },
+  // );
+
+  // React.useEffect(() => {
+  //   listenerRef.current = () => revalidator.revalidate();
+  //   return () => {
+  //     listenerRef.current = null;
+  //   };
+  // }, [unsub]);
 
   return (
     <StyledPageAdministratorScoreboards>
       <PopoverAsyncState timePending={500} action={sSetDeviceView} />
       <AwaitScoreboardDevices>
-        {(scoreboards) => {
+        {(scoreboards, id) => {
           return (
             <AncestorDimensions ancestor="#panel-administrator-main">
-              <ListDevices>
+              <ListDevices key={id}>
                 {scoreboards.devices.map((device, i) => (
                   <DeviceActionCard
                     key={device?.deviceId + i}

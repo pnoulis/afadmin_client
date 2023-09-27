@@ -5,6 +5,7 @@ import { useLoaderData, Await, useRouteLoaderData } from "react-router-dom";
 // ------------------------------ own libs ------------------------------- //
 // ------------------------------ project  ------------------------------- //
 import { Pending } from "/src/components/async/index.js";
+import { smallid } from "js_utils/uuid";
 
 function AwaitScoreboardDevices({ style, children, fallback }) {
   const loadScoreboardDevices = useLoaderData();
@@ -19,7 +20,7 @@ function AwaitScoreboardDevices({ style, children, fallback }) {
       }
     >
       <Await resolve={loadScoreboardDevices.scoreboardDevices}>
-        {(scoreboards) => children(scoreboards)}
+        {(scoreboards) => children(scoreboards, smallid())}
       </Await>
     </React.Suspense>
   );

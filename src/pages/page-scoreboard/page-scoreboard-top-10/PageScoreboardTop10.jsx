@@ -18,7 +18,7 @@ import { useAfmachineSubscription } from "/src/hooks/index.js";
 const every6Secs = (function () {
   let tries = 0;
   return (revalidator) => {
-    if (++tries > 2) {
+    if (++tries > 3) {
       tries = 0;
       debug("should revalidate data");
       revalidator.revalidate();
@@ -39,6 +39,12 @@ function PageScoreboardTop10() {
   function handleFilterSelect(newFilter) {
     setFilter(newFilter);
   }
+
+  // useAfmachineSubscription("onScoreboardUpdate", () => {
+  //   console.log("onscoreboard update");
+  //   every6Secs(revalidator);
+  //   // revalidator.revalidate(),
+  // });
   return (
     <StylePageScoreboardTop10>
       <FiltersContainer>
@@ -55,7 +61,7 @@ function PageScoreboardTop10() {
         />
       </FiltersContainer>
       <AwaitScoreboardTeams>
-        {(scoreboard) => {
+        {(scoreboard, id) => {
           let filteredData;
           if (filter?.type === "perElement" || filter?.type === "perRoom") {
             filteredData = scoreboard.scores[filter.type][filter.value];
@@ -64,7 +70,7 @@ function PageScoreboardTop10() {
           }
           return (
             <MUITop10Table
-              key={filter?.type + filter?.value}
+              key={id + filter?.type + filter?.value}
               teams={filteredData}
             />
           );

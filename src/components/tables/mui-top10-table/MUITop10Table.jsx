@@ -42,7 +42,6 @@ function MUITop10Table({ teams = [], className, style }) {
     orderBy: "index",
     rowsPerPage: 10,
   });
-  debug(teams, 'mui top 10 table');
 
   return (
     <ContextProvideTable ctx={ctxTable}>

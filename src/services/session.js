@@ -23,19 +23,8 @@ function Session() {
   if (this.session?.loggedIn) {
     this.loggedIn = true;
   }
-  // if (this.sessionId) {
-  //   this.user = new LocalStorageService(this.sessionId);
-  //   this.loggedIn = true;
-  //   this.global.set("loggedIn", true);
-  // } else {
-  //   this.global.set("loggedIn", false);
-  // }
 
   this.sessionlogin = function (login) {
-    // const userSession = {
-    //   ...login,
-    //   permissions: login.roles.at(-1),
-    // };
     let session = {};
     const prevSession = this.root.get(login.username);
     if (prevSession) {
@@ -54,25 +43,6 @@ function Session() {
     this.global.set("user", session);
     this.global.set("loggedIn", true);
     this.loggedIn = true;
-    // this.user = new LocalStorageService(login.username);
-    // const __session = {
-    //   user: {
-    //     ...login,
-    //     permissions: login.roles.at(-1),
-    //   },
-    // };
-    // const prevSession = this.global.get(login.username);
-    // debug(prevSession, 'prev session');
-    // if (prevSession) {
-    //   this.global.remove(login.username);
-    //   for (const [k, v] of Object.entries(prevSession)) {
-    //     __session[k] = v;
-    //   }
-    // }
-    // this.global.set(login.username, __session);
-    // this.root.set('sessionId', login.jwt);
-    // this.loggedIn = true;
-    // this.global.set("loggedIn", true);
   };
 
   this.sessionlogout = function (drop = false) {
@@ -94,32 +64,17 @@ function Session() {
       .then((res) => {
         this.sessionlogin(res);
         const sessionId = this.root.get("sessionId");
-        return sessionId
-          ? res
-          : afmachine
-              .startSession(res)
-              .then((session) => {
-                this.root.set("sessionId", session.jwt);
-                this.sessionId = session.jwt;
-              })
-              .catch((err) => {
-                console.log(err);
-              });
+        afmachine.startSession(res).then((session) => {
+          this.root.set("sessionId", session.jwt);
+          this.sessionId = session.jwt;
+        }).catch(err => {
+          console.log(err);
+        }).finally(() => res);
       })
       .catch((err) => {
         console.log(err);
         throw err;
       });
-    // return afmachine
-    //   .loginAdmin(cashier)
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.log(err));
-    // return this.loggedIn
-    //   ? evlogout(this.user.get("user"))
-    //       .then(() => this.sessionlogout(false))
-    //       .then(() => evlogin(cashier))
-    //       .then((res) => this.sessionlogin(res))
-    //   : evlogin(cashier).then((res) => this.sessionlogin(res));
   };
 
   this.cashout = function (report) {

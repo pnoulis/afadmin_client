@@ -27,7 +27,7 @@ export default defineConfig({
       template: ENVIRONMENT.SCRATCH ? "/index.scratch.html" : "/index.html",
       inject: {
         data: {
-          title: "agent factory",
+          title: "Agent Factory",
           BASENAME: ENVIRONMENT.BASENAME,
         },
       },

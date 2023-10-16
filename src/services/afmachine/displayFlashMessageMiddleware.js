@@ -5,6 +5,7 @@
 import { fmAgent } from '/src/components/flash_messages/index.js';
 
 async function displayFlashMessageMiddleware(context, next, err) {
+  debug(context);
   if (err) {
     if (context.res?.msg) {
       fmAgent.warn({ message: context.res.msg });

@@ -77,7 +77,7 @@ scratch: env mqtt
 
 scratch-dev: mode ?= 'development'
 scratch-dev: RUNTIME ?= 'browser'
-scratch-dev: envars ?= "SCRATCH=true;RUNTIME=browser"
+scratch-dev: envars ?= "BUNDLED=false;SCRATCH=true;RUNTIME=browser"
 scratch-dev: mqtt
 	$(DOTENV) --mode=$(mode) --environment=$(envars) \
 	$(ENVDIRS) | $(SORT) > $(SRCDIR)/.env
@@ -114,7 +114,7 @@ preview: env
 .PHONY: build
 build: mode ?= 'production'
 build: RUNTIME = browser
-build: envars ?= "BUNDLED=true;RUNTIME=browser"
+build: envars ?= "BUNDLED=true;RUNTIME=browser;BASENAME=/administration"
 build: mqtt
 	$(DOTENV) --mode=$(mode) --environment=$(envars) \
 	$(ENVDIRS) | $(SORT) > $(SRCDIR)/.env

@@ -30,6 +30,7 @@ import {
   PageAdministratorStatistics,
   PageAdministratorHistory,
   PageAdministratorScoreboards,
+  PageAdministratorDevices,
   PageTeam,
   PageScoreboard,
   PageScoreboardLive,
@@ -44,6 +45,7 @@ import {
   loadScoreboardTeams,
   loadAllPlayers,
   loadScoreboardDevices,
+  loadDevices,
 } from "/src/loaders/index.js";
 
 /**
@@ -133,6 +135,11 @@ const router = createBrowserRouter(
                   path: links.administratorScoreboardDevices.path,
                   loader: loadScoreboardDevices,
                   element: <PageAdministratorScoreboards />,
+                },
+                {
+                  loader: loadDevices,
+                  path: links.administratorDevices.path,
+                  element: <PageAdministratorDevices />,
                 },
               ],
             },

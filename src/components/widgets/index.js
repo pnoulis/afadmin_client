@@ -13,3 +13,6 @@ export * from './WidgetRoomAir.jsx';
 export * from './WidgetRoomFire.jsx';
 export * from './WidgetRoomEarth.jsx';
 export * from './WidgetRoomWater.jsx';
+export * from './WidgetRestart.jsx';
+export * from './WidgetShutdown.jsx';
+export * from './WidgetWakeup.jsx';

@@ -2,6 +2,7 @@ import * as React from "react";
 
 function useTable({
   data,
+  rowId,
   getComparator,
   sort,
   orderBy: defaultOrderBy = "",
@@ -36,6 +37,36 @@ function useTable({
     [order, orderBy],
   );
 
+  function handleRowSelectAll(e) {
+    if (e.target.checked) {
+      setSelected(data);
+    } else {
+      setSelected([]);
+    }
+  }
+  function handleRowSelect(row) {
+    let selectedIndex = -1;
+    for (let i = 0; i < selected.length; i++) {
+      if (selected[i][rowId] === row[rowId]) {
+        selectedIndex = i;
+        break;
+      }
+    }
+    if (selectedIndex === -1) {
+      setSelected(selected.concat(row));
+    } else if (selectedIndex === 0) {
+      setSelected(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      setSelected(selected.slice(0, -1));
+    } else {
+      setSelected(
+        selected
+          .slice(0, selectedIndex)
+          .concat(selected.slice(selectedIndex + 1)),
+      );
+    }
+  }
+
   return {
     order,
     setOrder,
@@ -49,6 +80,10 @@ function useTable({
     rowsPerPage,
     handlePageChange,
     handleRowsPerPageChange,
+    handleRowSelect,
+    handleRowSelectAll,
+    rowCount: data.length,
+    rowSelectedCount: selected.length,
   };
 }
 

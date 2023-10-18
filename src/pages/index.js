@@ -23,3 +23,4 @@ export * from "./page-scoreboard/page-scoreboard-top-10/PageScoreboardTop10.jsx"
 export * from "./page-scoreboard/page-scoreboard-live/PageScoreboardLive.jsx";
 export * from "./page-administrator/page-administrator-scoreboards/PageAdministratorScoreboards.jsx";
 export * from './page-administrator/page-administrator-devices/PageAdministratorDevices.jsx';
+export * from './page-administrator/page-administrator-cashiers/PageAdministratorCashiers.jsx';

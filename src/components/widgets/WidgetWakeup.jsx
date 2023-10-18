@@ -12,7 +12,7 @@ function WidgetWakeup({
   onClick: handleClick,
   size,
   as,
-  tooltipContent = "wakeup",
+  tooltipContent = "boot",
   bColor,
   fColor,
   className,

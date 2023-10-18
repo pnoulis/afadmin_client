@@ -31,6 +31,7 @@ import {
   PageAdministratorHistory,
   PageAdministratorScoreboards,
   PageAdministratorDevices,
+  PageAdministratorCashiers,
   PageTeam,
   PageScoreboard,
   PageScoreboardLive,
@@ -140,6 +141,10 @@ const router = createBrowserRouter(
                   loader: loadDevices,
                   path: links.administratorDevices.path,
                   element: <PageAdministratorDevices />,
+                },
+                {
+                  path: links.administratorCashiers.path,
+                  element: <PageAdministratorCashiers />,
                 },
               ],
             },

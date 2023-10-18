@@ -19,6 +19,10 @@ import {
 } from "/src/components/widgets/index.js";
 import { useContextApp } from "/src/contexts/index.js";
 import { delay } from "js_utils/misc";
+import {
+  renderDialog,
+  ConfirmDeviceAction,
+} from "/src/components/dialogs/index.js";
 
 function PageAdministratorDevices() {
   return (
@@ -57,47 +61,97 @@ function DevicesControlPanel({ devices = [] }) {
 
   function handleRestart() {
     if (ctxTable.rowSelectedCount > 0) {
-      sDeviceAction.run(function () {
-        return Promise.all(
-          ctxTable.selected.map((device) =>
-            ctxApp.afmachine.restartDevice(device),
-          ),
-        );
-      });
+      renderDialog(
+        null,
+        ConfirmDeviceAction,
+        { action: "restart", message: "restart selected devices?" },
+        function (yes) {
+          if (!yes) return;
+          sDeviceAction.run(function () {
+            return Promise.all(
+              ctxTable.selected.map((device) =>
+                ctxApp.afmachine.restartDevice(device),
+              ),
+            );
+          });
+        },
+      );
     } else {
-      sDeviceAction.run(function () {
-        return ctxApp.afmachine.restartDevice();
-      });
+      renderDialog(
+        null,
+        ConfirmDeviceAction,
+        { action: "restart", message: "restart ALL devices?" },
+        function (yes) {
+          if (!yes) return;
+          sDeviceAction.run(function () {
+            return ctxApp.afmachine.restartDevice();
+          });
+        },
+      );
     }
   }
+
   function handleShutdown() {
     if (ctxTable.rowSelectedCount > 0) {
-      sDeviceAction.run(function () {
-        return Promise.all(
-          ctxTable.selected.map((device) =>
-            ctxApp.afmachine.shutdownDevice(device),
-          ),
-        );
-      });
+      renderDialog(
+        null,
+        ConfirmDeviceAction,
+        { action: "shutdown", message: "shutdown selected devices?" },
+        function (yes) {
+          if (!yes) return;
+          sDeviceAction.run(function () {
+            return Promise.all(
+              ctxTable.selected.map((device) =>
+                ctxApp.afmachine.shutdownDevice(device),
+              ),
+            );
+          });
+        },
+      );
     } else {
-      sDeviceAction.run(function () {
-        return ctxApp.afmachine.shutdownDevice();
-      });
+      renderDialog(
+        null,
+        ConfirmDeviceAction,
+        { action: "shutdown", message: "shutdown ALL devices?" },
+        function (yes) {
+          if (!yes) return;
+          sDeviceAction.run(function () {
+            return ctxApp.afmachine.shutdown();
+          });
+        },
+      );
     }
   }
+
   function handleWakeup() {
     if (ctxTable.rowSelectedCount > 0) {
-      sDeviceAction.run(function () {
-        return Promise.all(
-          ctxTable.selected.map((device) =>
-            ctxApp.afmachine.wakeupDevice(device),
-          ),
-        );
-      });
+      renderDialog(
+        null,
+        ConfirmDeviceAction,
+        { action: "boot", message: "boot selected devices?" },
+        function (yes) {
+          if (!yes) return;
+          sDeviceAction.run(function () {
+            return Promise.all(
+              ctxTable.selected.map((device) =>
+                ctxApp.afmachine.wakeupDevice(device),
+              ),
+            );
+          });
+        },
+      );
     } else {
-      sDeviceAction.run(function () {
-        return ctxApp.afmachine.wakeupDevice();
-      });
+      renderDialog(
+        null,
+        ConfirmDeviceAction,
+        { action: "boot", message: "boot ALL devices?" },
+        function (yes) {
+          if (!yes) return;
+          sDeviceAction.run(function () {
+            return ctxApp.afmachine.wakeupDevice();
+          });
+        },
+      );
     }
   }
 

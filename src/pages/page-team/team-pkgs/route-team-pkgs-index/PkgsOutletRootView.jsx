@@ -21,16 +21,24 @@ function PkgsOutletRootView() {
   const ctxTeam = useContextTeam();
   const ctxPkg = useContextPackage();
 
+  debug(ctxPkg, "context pkg");
+
   React.useLayoutEffect(() => {
     if (
       ctxTeam.team.packages.length < 1 &&
       ctxRouter.current()?.name !== "pkgconfig"
     ) {
       ctxRouter.forward("pkgconfig");
-    } else if (!ctxPkg.selectedPkg && ctxTeam.team.packages.length >= 1) {
-      ctxPkg.handlePkgSelection(ctxTeam.team.packages[0]);
     }
-  }, [ctxPkg.selectedPkg]);
+    // if (
+    //   ctxTeam.team.packages.length < 1 &&
+    //   ctxRouter.current()?.name !== "pkgconfig"
+    // ) {
+    //   ctxRouter.forward("pkgconfig");
+    // } else if (!ctxPkg.selectedPkg && ctxTeam.team.packages.length >= 1) {
+    //   ctxPkg.handlePkgSelection(ctxTeam.team.packages[0]);
+    // }
+  }, [ctxPkg.selectedPkg, ctxTeam.team.packages.length]);
 
   return (
     <>
@@ -75,15 +83,22 @@ function PkgsOutletRootView() {
       <StyledPkgsOutletRootView id="scrollarea-outlet-root-view">
         <AncestorDimensions ancestor="#scrollarea-outlet-root-view">
           <StyledListPkgs>
-            {ctxTeam.team.packages.map((pkg, i) => (
-              <Package pkg={pkg} key={i}>
-                <StyledListPkgsItem
-                  selected={pkg.id === ctxPkg.selectedPkg?.id}
-                  forwardedAs="li"
-                  onClick={ctxPkg.handlePkgSelection.bind(null, pkg)}
-                />
-              </Package>
-            ))}
+            {ctxTeam.team.packages
+              .sort((a, b) => (a.state === "playing" ? -1 : 1))
+              .map((pkg, i) => (
+                <Package pkg={pkg} key={i}>
+                  <StyledListPkgsItem
+                    playing={pkg.state === "playing"}
+                    selected={pkg.id === ctxPkg.selectedPkg?.id}
+                    forwardedAs="li"
+                    onClick={
+                      pkg.state === "playing"
+                        ? () => {}
+                        : ctxPkg.handlePkgSelection.bind(null, pkg)
+                    }
+                  />
+                </Package>
+              ))}
           </StyledListPkgs>
         </AncestorDimensions>
       </StyledPkgsOutletRootView>
@@ -109,27 +124,31 @@ const StyledListPkgs = styled("ul")`
 `;
 
 const StyledListPkgsItem = styled(PkgInfoCard)`
-  &:hover {
-    cursor: pointer;
-    background-color: ${({ selected }) => !selected && "#6E80CB"};
-  }
-
-  &:hover ${StyledPkgInfoCardTuple}.state .value {
-    color: white;
-  }
-
-  &:active {
-    background-color: hsl(var(--base-info), 83%);
-  }
-
-  ${({ selected }) =>
-    selected &&
-    css`
-      background-color: #6E80CB;
-      ${StyledPkgInfoCardTuple}.state .value {
-        color: white;
-      }
-    `}
+  ${({ selected, playing }) => {
+    if (playing) {
+      return css`
+        background-color: var(--success-base);
+      `;
+    } else if (selected) {
+      return css`
+        background-color: var(--secondary-base);
+        cursor: pointer;
+        ${StyledPkgInfoCardTuple}.state .value {
+          color: white !important;
+        }
+      `;
+    } else {
+      return css`
+        cursor: pointer;
+        &:hover {
+          background-color: var(--secondary-light);
+        }
+        ${StyledPkgInfoCardTuple}.state .value {
+          color: white !important;
+        }
+      `;
+    }
+  }}
 `;
 
 export { PkgsOutletRootView };

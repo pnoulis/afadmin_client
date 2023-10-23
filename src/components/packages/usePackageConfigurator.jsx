@@ -16,8 +16,14 @@ function usePackageConfigurator(ctxTeam, source, options) {
   const [vid, setvid] = React.useState(smallid());
 
   function handlePkgSelection(pkg) {
-    changeSource(pkg);
-    setSelectedPkg(pkg);
+    if (pkg.id === selectedPkg?.id) {
+      changeSource();
+      setSelectedPkg(null);
+      setvid(smallid());
+    } else {
+      changeSource(pkg);
+      setSelectedPkg(pkg);
+    }
   }
 
   function handleSelectedPkgClear() {

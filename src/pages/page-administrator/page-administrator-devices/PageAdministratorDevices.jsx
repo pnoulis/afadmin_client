@@ -24,12 +24,177 @@ import {
   ConfirmDeviceAction,
 } from "/src/components/dialogs/index.js";
 
+
+const fkDevices = [
+  {
+    "deviceType": "SCOREBOARD_SCREEN",
+    "roomType": "SCOREBOARD1",
+    "deviceId": "scor1",
+    "macAddress": null,
+    "ipAddress": null,
+    "bootedTimestamp": 1697694967035,
+  },
+  {
+    "deviceType": "SCOREBOARD_SCREEN",
+    "roomType": "SCOREBOARD2",
+    "deviceId": "scor2",
+    "macAddress": null,
+    "ipAddress": null,
+    "bootedTimestamp": 1697694967041,
+  },
+  {
+    "deviceType": "REGISTRATION_SCREEN",
+    "roomType": "ADMINISTRATION1",
+    "deviceId": "001",
+    "macAddress": null,
+    "ipAddress": null,
+    "bootedTimestamp": 1698046156272,
+  },
+  {
+    "deviceType": "RPI_READER",
+    "roomType": "ADMINISTRATION1",
+    "deviceId": "ADMINISTRATION1Reader",
+    "macAddress": null,
+    "ipAddress": null,
+    "bootedTimestamp": 1698044846927,
+  },
+
+  {
+    "deviceType": "SCOREBOARD_SCREEN",
+    "roomType": "SCOREBOARD1",
+    "deviceId": "scor1",
+    "macAddress": null,
+    "ipAddress": null,
+    "bootedTimestamp": 1697694967035,
+  },
+  {
+    "deviceType": "SCOREBOARD_SCREEN",
+    "roomType": "SCOREBOARD2",
+    "deviceId": "scor2",
+    "macAddress": null,
+    "ipAddress": null,
+    "bootedTimestamp": 1697694967041,
+  },
+  {
+    "deviceType": "REGISTRATION_SCREEN",
+    "roomType": "ADMINISTRATION1",
+    "deviceId": "001",
+    "macAddress": null,
+    "ipAddress": null,
+    "bootedTimestamp": 1698046156272,
+  },
+  {
+    "deviceType": "RPI_READER",
+    "roomType": "ADMINISTRATION1",
+    "deviceId": "ADMINISTRATION1Reader",
+    "macAddress": null,
+    "ipAddress": null,
+    "bootedTimestamp": 1698044846927,
+  },
+  {
+    "deviceType": "SCOREBOARD_SCREEN",
+    "roomType": "SCOREBOARD1",
+    "deviceId": "scor1",
+    "macAddress": null,
+    "ipAddress": null,
+    "bootedTimestamp": 1697694967035,
+  },
+  {
+    "deviceType": "SCOREBOARD_SCREEN",
+    "roomType": "SCOREBOARD2",
+    "deviceId": "scor2",
+    "macAddress": null,
+    "ipAddress": null,
+    "bootedTimestamp": 1697694967041,
+  },
+  {
+    "deviceType": "REGISTRATION_SCREEN",
+    "roomType": "ADMINISTRATION1",
+    "deviceId": "001",
+    "macAddress": null,
+    "ipAddress": null,
+    "bootedTimestamp": 1698046156272,
+  },
+  {
+    "deviceType": "RPI_READER",
+    "roomType": "ADMINISTRATION1",
+    "deviceId": "ADMINISTRATION1Reader",
+    "macAddress": null,
+    "ipAddress": null,
+    "bootedTimestamp": 1698044846927,
+  },
+  {
+    "deviceType": "SCOREBOARD_SCREEN",
+    "roomType": "SCOREBOARD1",
+    "deviceId": "scor1",
+    "macAddress": null,
+    "ipAddress": null,
+    "bootedTimestamp": 1697694967035,
+  },
+  {
+    "deviceType": "SCOREBOARD_SCREEN",
+    "roomType": "SCOREBOARD2",
+    "deviceId": "scor2",
+    "macAddress": null,
+    "ipAddress": null,
+    "bootedTimestamp": 1697694967041,
+  },
+  {
+    "deviceType": "REGISTRATION_SCREEN",
+    "roomType": "ADMINISTRATION1",
+    "deviceId": "001",
+    "macAddress": null,
+    "ipAddress": null,
+    "bootedTimestamp": 1698046156272,
+  },
+  {
+    "deviceType": "RPI_READER",
+    "roomType": "ADMINISTRATION1",
+    "deviceId": "ADMINISTRATION1Reader",
+    "macAddress": null,
+    "ipAddress": null,
+    "bootedTimestamp": 1698044846927,
+  },
+  {
+    "deviceType": "SCOREBOARD_SCREEN",
+    "roomType": "SCOREBOARD1",
+    "deviceId": "scor1",
+    "macAddress": null,
+    "ipAddress": null,
+    "bootedTimestamp": 1697694967035,
+  },
+  {
+    "deviceType": "SCOREBOARD_SCREEN",
+    "roomType": "SCOREBOARD2",
+    "deviceId": "scor2",
+    "macAddress": null,
+    "ipAddress": null,
+    "bootedTimestamp": 1697694967041,
+  },
+  {
+    "deviceType": "REGISTRATION_SCREEN",
+    "roomType": "ADMINISTRATION1",
+    "deviceId": "001",
+    "macAddress": null,
+    "ipAddress": null,
+    "bootedTimestamp": 1698046156272,
+  },
+  {
+    "deviceType": "RPI_READER",
+    "roomType": "ADMINISTRATION1",
+    "deviceId": "ADMINISTRATION1Reader",
+    "macAddress": null,
+    "ipAddress": null,
+    "bootedTimestamp": 1698044846927,
+  }
+];
+
 function PageAdministratorDevices() {
   return (
     <StyledPageAdministratorDevices>
       <AwaitDevices>
         {(devices, id) => {
-          return <DevicesControlPanel devices={devices} key={id} />;
+          return <DevicesControlPanel devices={fkDevices} key={id} />;
         }}
       </AwaitDevices>
     </StyledPageAdministratorDevices>

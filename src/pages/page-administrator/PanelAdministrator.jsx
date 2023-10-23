@@ -19,6 +19,7 @@ import {
   administratorScoreboardDevices,
   administratorDevices,
   administratorCashiers,
+  administratorWristbands,
 } from "/src/links.jsx";
 import { ReactComponent as CashoutIcon } from "agent_factory.shared/ui/new-icons/cash-out-icon.svg";
 import { ReactComponent as HistoryIcon } from "agent_factory.shared/ui/new-icons/history-icon.svg";
@@ -69,6 +70,14 @@ function PanelAdministrator({ children }) {
             </StyleItemIcon>
             <StyleItemText>{administratorCashiers.label}</StyleItemText>
           </StyleNavbarLink>
+
+          <StyleNavbarLink end to={administratorWristbands.path}>
+            <StyleItemIcon>
+              <DevicesIcon />
+            </StyleItemIcon>
+            <StyleItemText>{administratorWristbands.label}</StyleItemText>
+          </StyleNavbarLink>
+
 
         </PanelHeaderNavbar>
       </StylePanelHeader>

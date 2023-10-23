@@ -32,6 +32,7 @@ import {
   PageAdministratorScoreboards,
   PageAdministratorDevices,
   PageAdministratorCashiers,
+  PageAdministratorWristbands,
   PageTeam,
   PageScoreboard,
   PageScoreboardLive,
@@ -145,6 +146,10 @@ const router = createBrowserRouter(
                 {
                   path: links.administratorCashiers.path,
                   element: <PageAdministratorCashiers />,
+                },
+                {
+                  path: links.administratorWristbands.path,
+                  element: <PageAdministratorWristbands />,
                 },
               ],
             },

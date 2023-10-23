@@ -137,7 +137,7 @@ const StyledTableWrapper = styled("div")`
 const StyledTableContainer = styled("div")`
   height: 100%;
   width: 100%;
-  max-height: ${({ $height }) => $height - 100 + "px"};
+  max-height: ${({ $height }) => $height - 125 + "px"};
   padding-bottom: 10px;
   position: relative;
   border-radius: var(--br-xl);

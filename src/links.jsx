@@ -201,6 +201,16 @@ const administratorCashiers = {
   ),
 };
 
+const administratorWristbands = {
+  path: "/administrator/wristbands",
+  label: "wristbands",
+  asComponent: ({ children, ...props }) => (
+    <NavLink to="administrator/wristbands" {...props}>
+      {children}
+    </NavLink>
+  ),
+};
+
 const scoreboard = {
   path: "/scoreboard",
   label: "scoreboard",
@@ -253,6 +263,7 @@ export {
   administratorScoreboardDevices,
   administratorDevices,
   administratorCashiers,
+  administratorWristbands,
   scoreboard,
   scoreboardTop10,
   team,

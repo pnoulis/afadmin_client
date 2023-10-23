@@ -144,7 +144,11 @@ const StyledTableContainer = styled("div")`
   background-color: white;
 
   .MuiTable-root {
-    // min-height: ${({ $height }) => $height - 50 + "px"};
+    // min-height: ${({ $height }) => $height - 200 + "px"};
+  }
+
+  .MuiTableBody-root {
+    // height: 300px;
   }
 
   .MuiTableHead-root {

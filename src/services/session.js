@@ -64,12 +64,17 @@ function Session() {
       .then((res) => {
         this.sessionlogin(res);
         const sessionId = this.root.get("sessionId");
-        afmachine.startSession(res).then((session) => {
-          this.root.set("sessionId", session.jwt);
-          this.sessionId = session.jwt;
-        }).catch(err => {
-          console.log(err);
-        }).finally(() => res);
+        afmachine
+          .startSession(res)
+          .then((session) => {
+            this.root.set("sessionId", session.jwt);
+            this.sessionId = session.jwt;
+            return res;
+          })
+          .catch((err) => {
+            console.log(err);
+            throw err;
+          });
       })
       .catch((err) => {
         console.log(err);

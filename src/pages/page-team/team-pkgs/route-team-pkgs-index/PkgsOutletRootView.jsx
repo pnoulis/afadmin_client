@@ -142,9 +142,9 @@ const StyledListPkgsItem = styled(PkgInfoCard)`
         cursor: pointer;
         &:hover {
           background-color: var(--secondary-light);
-        }
-        ${StyledPkgInfoCardTuple}.state .value {
-          color: white !important;
+          ${StyledPkgInfoCardTuple}.state .value {
+            color: white !important;
+          }
         }
       `;
     }

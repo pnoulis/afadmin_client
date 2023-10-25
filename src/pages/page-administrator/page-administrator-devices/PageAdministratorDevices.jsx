@@ -281,7 +281,7 @@ function DevicesControlPanel({ devices = [] }) {
         function (yes) {
           if (!yes) return;
           sDeviceAction.run(function () {
-            return ctxApp.afmachine.shutdown();
+            return ctxApp.afmachine.shutdownDevice();
           });
         },
       );

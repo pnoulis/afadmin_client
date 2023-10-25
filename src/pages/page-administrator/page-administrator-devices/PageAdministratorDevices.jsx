@@ -194,7 +194,7 @@ function PageAdministratorDevices() {
     <StyledPageAdministratorDevices>
       <AwaitDevices>
         {(devices, id) => {
-          return <DevicesControlPanel devices={fkDevices} key={id} />;
+          return <DevicesControlPanel devices={devices} key={id} />;
         }}
       </AwaitDevices>
     </StyledPageAdministratorDevices>

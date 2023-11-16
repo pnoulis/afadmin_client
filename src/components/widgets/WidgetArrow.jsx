@@ -7,7 +7,7 @@ import { ReactComponent as ArrowIcon } from "agent_factory.shared/ui/icons/arrow
 function WidgetArrow({
   onClick: handleClick,
   size,
-  tooltipContent,
+  tooltipContent = "back",
   className,
   ...props
 }) {

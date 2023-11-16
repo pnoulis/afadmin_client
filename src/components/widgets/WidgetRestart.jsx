@@ -9,7 +9,7 @@ import { TooltipDefault } from "/src/components/tooltips/index.js";
 import { ReactComponent as RestartIcon } from "agent_factory.shared/ui/new-icons/restart-icon.svg";
 
 function WidgetRestart({
-  onClick: handleClick,
+  onClick: handleClick = () => {},
   size,
   as,
   tooltipContent = "restart",

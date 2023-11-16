@@ -8,11 +8,14 @@ import { Svg } from "react_utils/svgs";
 import { TooltipDefault } from "/src/components/tooltips/index.js";
 import { ReactComponent as TrashIcon } from "agent_factory.shared/ui/icons/trash_2.svg";
 
+
 function WidgetTrash({
-  onClick: handleClick,
+  onClick: handleClick = () => {},
   size,
   as,
-  tooltipContent,
+  tooltipContent = "trash",
+  bColor,
+  fColor,
   className,
   ...props
 }) {
@@ -25,6 +28,8 @@ function WidgetTrash({
           size={size}
           onClick={handleClick}
           className={className}
+          fColor={fColor}
+          bColor={bColor}
           {...props}
         >
           <Svg>
@@ -47,10 +52,17 @@ const StyleWidgetTrash = styled.div`
   border: 3px solid transparent;
   padding: 8px;
   border-radius: 50%;
-  background-color: var(--grey-base);
+  background-color: ${({ bColor }) => (bColor ? bColor : "var(--grey-base)")};
   &:hover {
     opacity: 0.8;
   }
+  ${({ fColor }) =>
+    fColor &&
+    `
+svg {
+  fill: ${fColor}
+}
+`}
 `;
 
 export { WidgetTrash, StyleWidgetTrash };

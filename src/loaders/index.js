@@ -6,3 +6,4 @@ export * from './loadScoreboardTeams.jsx';
 export * from './loadAllPlayers.jsx';
 export * from './loadScoreboardDevices.jsx';
 export * from './loadDevices.jsx';
+export * from './loadCashiers.jsx';

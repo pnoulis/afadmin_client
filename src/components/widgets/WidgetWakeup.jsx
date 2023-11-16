@@ -9,7 +9,7 @@ import { TooltipDefault } from "/src/components/tooltips/index.js";
 import { ReactComponent as WakeupIcon } from "agent_factory.shared/ui/new-icons/wake-up-icon.svg";
 
 function WidgetWakeup({
-  onClick: handleClick,
+  onClick: handleClick = () => {},
   size,
   as,
   tooltipContent = "boot",

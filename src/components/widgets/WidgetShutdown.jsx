@@ -9,7 +9,7 @@ import { TooltipDefault } from "/src/components/tooltips/index.js";
 import { ReactComponent as ShutdownIcon } from "agent_factory.shared/ui/new-icons/power-on-icon.svg";
 
 function WidgetShutdown({
-  onClick: handleClick,
+  onClick: handleClick = () => {},
   size,
   as,
   tooltipContent = "shutdown",

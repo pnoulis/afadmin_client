@@ -48,6 +48,7 @@ import {
   loadAllPlayers,
   loadScoreboardDevices,
   loadDevices,
+  loadCashiers,
 } from "/src/loaders/index.js";
 
 /**
@@ -144,6 +145,7 @@ const router = createBrowserRouter(
                   element: <PageAdministratorDevices />,
                 },
                 {
+                  loader: loadCashiers,
                   path: links.administratorCashiers.path,
                   element: <PageAdministratorCashiers />,
                 },

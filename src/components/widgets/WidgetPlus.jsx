@@ -8,11 +8,14 @@ import { Svg } from "react_utils/svgs";
 import { TooltipDefault } from "/src/components/tooltips/index.js";
 import { ReactComponent as PlusIcon } from "agent_factory.shared/ui/icons/add_0.svg";
 
+
 function WidgetPlus({
-  onClick: handleClick,
-  as,
+  onClick: handleClick = () => {},
   size,
-  tooltipContent = "remove",
+  as,
+  tooltipContent = "plus",
+  bColor,
+  fColor,
   className,
   ...props
 }) {
@@ -25,6 +28,8 @@ function WidgetPlus({
           size={size}
           onClick={handleClick}
           className={className}
+          fColor={fColor}
+          bColor={bColor}
           {...props}
         >
           <Svg>
@@ -47,10 +52,17 @@ const StyleWidgetPlus = styled.div`
   border: 3px solid transparent;
   padding: 8px;
   border-radius: 50%;
-  background-color: var(--grey-base);
+  background-color: ${({ bColor }) => (bColor ? bColor : "var(--grey-base)")};
   &:hover {
     opacity: 0.8;
   }
+  ${({ fColor }) =>
+    fColor &&
+    `
+svg {
+  fill: ${fColor}
+}
+`}
 `;
 
 export { WidgetPlus, StyleWidgetPlus };
